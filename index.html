@@ -7,149 +7,251 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: #f5f5f7;
+    font-family: -apple-system, "PingFang SC", "SF Pro Display", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #f0f2f5 0%, #f5f7fa 100%);
     color: #1d1d1f;
     line-height: 1.7;
+    min-height: 100vh;
   }
+
+  /* ── header ── */
   .hero {
-    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f3460 100%);
     color: #fff;
-    padding: 48px 20px 40px;
+    padding: 52px 20px 42px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
   }
-  .hero h1 { font-size: 2em; margin-bottom: 6px; }
-  .hero .sub { opacity: 0.75; font-size: 0.95em; margin-bottom: 16px; }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(59,130,246,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(99,102,241,0.1) 0%, transparent 60%);
+  }
+  .hero h1 {
+    font-size: 2em; font-weight: 700; margin-bottom: 6px;
+    background: linear-gradient(135deg, #fff 60%, #93c5fd);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    position: relative;
+  }
+  .hero .sub { opacity: 0.7; font-size: 0.9em; margin-bottom: 18px; position: relative; }
   .hero .formula {
-    display: inline-block;
-    background: rgba(255,255,255,0.1);
-    border-radius: 30px;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    border-radius: 40px;
     padding: 10px 22px;
-    font-size: 1em;
+    font-size: 0.95em;
     letter-spacing: 1px;
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.12);
+    position: relative;
   }
-  .hero .formula span { color: #facc15; font-weight: 600; }
-  .hero .meta { margin-top: 14px; font-size: 0.8em; opacity: 0.5; }
-
-  .container { max-width: 900px; margin: 0 auto; padding: 0 16px; }
-
-  /* ── navigation tabs ── */
-  .day-tabs {
-    display: flex; gap: 6px; flex-wrap: wrap;
-    padding: 20px 0 0; justify-content: center;
+  .hero .formula span {
+    color: #facc15; font-weight: 600;
+    text-shadow: 0 0 20px rgba(250,204,21,0.3);
   }
-  .day-tabs a {
-    display: inline-block;
-    padding: 8px 18px;
-    border-radius: 20px;
-    text-decoration: none;
-    font-size: 0.85em; font-weight: 500;
-    background: #e8e8ed; color: #555;
-    transition: all 0.2s;
+  .hero .formula .arrow { color: rgba(255,255,255,0.3); }
+  .hero .meta {
+    margin-top: 16px; font-size: 0.72em; opacity: 0.4;
+    position: relative; letter-spacing: 0.5px;
   }
-  .day-tabs a:hover, .day-tabs a.active { background: #0f3460; color: #fff; }
 
-  /* ── day section ── */
+  /* ── sticky top nav ── */
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding: 0 16px;
+  }
+  .top-nav .inner {
+    max-width: 1160px; margin: 0 auto;
+    display: flex; gap: 2px; justify-content: center; overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .top-nav a {
+    flex-shrink: 0;
+    display: block; padding: 12px 16px;
+    text-decoration: none; color: #64748b;
+    font-size: 0.8em; font-weight: 500;
+    border-bottom: 2.5px solid transparent;
+    transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+  }
+  .top-nav a:hover { color: #1e293b; }
+  .top-nav a.active {
+    color: #0f3460; border-bottom-color: #0f3460;
+    font-weight: 600;
+  }
+
+  /* ── layout: sidebar + main ── */
+  .content-wrapper {
+    display: flex; gap: 28px; max-width: 1160px;
+    margin: 0 auto; padding: 28px 16px 40px; align-items: flex-start;
+  }
+
+  /* ── sidebar ── */
+  .sidebar {
+    flex: 0 0 200px;
+    position: sticky; top: 64px;
+    background: #fff; border-radius: 16px;
+    padding: 16px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+    max-height: calc(100vh - 84px); overflow-y: auto;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .sidebar::-webkit-scrollbar { width: 3px; }
+  .sidebar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+
+  .sidebar .sec-title {
+    padding: 7px 18px 3px;
+    font-size: 0.6em; font-weight: 700;
+    color: #94a3b8; text-transform: uppercase; letter-spacing: 1.2px;
+    margin-top: 14px;
+  }
+  .sidebar .sec-title:first-child { margin-top: 0; }
+  .sidebar a {
+    display: block; padding: 6px 18px; text-decoration: none;
+    color: #475569; font-size: 0.8em; font-weight: 450;
+    border-left: 3px solid transparent;
+    transition: all 0.15s ease;
+  }
+  .sidebar a:hover { color: #0f3460; background: #f0f4ff; }
+  .sidebar a.active {
+    color: #0f3460; background: #eff6ff;
+    border-left-color: #0f3460; font-weight: 600;
+  }
+  .sidebar a.sub { padding-left: 30px; font-size: 0.76em; color: #64748b; }
+
+  /* ── main content ── */
+  .main { flex: 1; min-width: 0; }
+
   .day {
-    background: #fff;
-    border-radius: 14px;
-    padding: 28px 30px;
-    margin: 20px 0;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    scroll-margin-top: 20px;
+    background: #fff; border-radius: 16px;
+    padding: 28px 30px; margin-bottom: 22px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+    scroll-margin-top: 78px;
+    border: 1px solid rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s;
   }
+  .day:hover { box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 6px 20px rgba(0,0,0,0.05); }
+
   .day h2 {
-    font-size: 1.4em;
+    font-size: 1.3em; font-weight: 700;
     border-left: 4px solid #0f3460;
-    padding-left: 14px;
-    margin-bottom: 4px;
+    padding-left: 14px; margin-bottom: 2px;
+    color: #0f172a;
   }
   .day .date-tag {
-    display: inline-block;
-    font-size: 0.75em;
-    color: #888;
-    margin-bottom: 16px;
+    display: block; font-size: 0.7em; color: #94a3b8;
+    margin-bottom: 16px; letter-spacing: 0.3px;
   }
 
-  /* ── 今日重点 ── */
   .focus-box {
-    background: #fef7e0;
+    background: linear-gradient(135deg, #fef7e0, #fef9c3);
     border-left: 4px solid #f59e0b;
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 18px;
-    font-size: 0.92em;
+    border-radius: 10px; padding: 12px 16px; margin-bottom: 18px;
+    font-size: 0.88em; line-height: 1.6;
   }
-  .focus-box strong { color: #92400e; display: block; margin-bottom: 3px; }
+  .focus-box strong {
+    color: #92400e; display: block; margin-bottom: 3px;
+    font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px;
+  }
 
   .day h3 {
-    font-size: 1.05em;
-    margin: 18px 0 8px;
-    color: #1d1d1f;
+    font-size: 1em; font-weight: 600;
+    margin: 20px 0 8px; color: #1e293b;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #f1f5f9;
   }
-  .day h4 { font-size: 0.92em; margin: 12px 0 6px; color: #444; }
-  .day p { margin-bottom: 10px; color: #333; font-size: 0.93em; }
+  .day h4 {
+    font-size: 0.85em; font-weight: 600;
+    margin: 14px 0 6px; color: #475569;
+  }
+  .day p { margin-bottom: 10px; color: #334155; font-size: 0.9em; }
   .day ul { margin: 6px 0 12px 18px; }
-  .day li { margin-bottom: 4px; font-size: 0.93em; }
+  .day li { margin-bottom: 4px; font-size: 0.9em; color: #334155; }
   .day ol { margin: 6px 0 12px 18px; }
-  .day ol li { margin-bottom: 4px; font-size: 0.93em; }
+  .day ol li { margin-bottom: 4px; font-size: 0.9em; color: #334155; }
 
-  /* ── tables ── */
   table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 10px 0 16px;
-    font-size: 0.88em;
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    margin: 10px 0 16px; font-size: 0.84em;
+    border-radius: 10px; overflow: hidden;
+    border: 1px solid #e2e8f0;
   }
   th, td {
-    border: 1px solid #e5e5ea;
-    padding: 8px 12px;
-    text-align: left;
-    vertical-align: top;
+    padding: 9px 13px; text-align: left; vertical-align: top;
+    border-bottom: 1px solid #f1f5f9;
   }
-  th { background: #f8f8fa; font-weight: 600; }
+  th {
+    background: #f8fafc; font-weight: 600; color: #1e293b;
+    font-size: 0.82em; text-transform: uppercase; letter-spacing: 0.3px;
+  }
+  tr:last-child td { border-bottom: none; }
 
   .callout {
-    border-radius: 8px;
-    padding: 10px 14px;
-    margin: 10px 0;
-    font-size: 0.9em;
+    border-radius: 10px; padding: 10px 14px;
+    margin: 10px 0; font-size: 0.87em; line-height: 1.5;
   }
-  .callout.tip { background: #f0f7ff; border-left: 4px solid #0f3460; }
-  .callout.warn { background: #fff8e6; border-left: 4px solid #facc15; }
-  .callout.danger { background: #fff0f0; border-left: 4px solid #e74c3c; }
+  .callout.tip { background: #eff6ff; border-left: 4px solid #3b82f6; }
+  .callout.warn { background: #fef7e0; border-left: 4px solid #f59e0b; }
+  .callout.danger { background: #fef2f2; border-left: 4px solid #ef4444; }
 
   .deadline {
-    background: #f0fdf4;
+    background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
     border: 1px solid #86efac;
-    border-radius: 8px;
-    padding: 10px 14px;
-    margin: 14px 0;
-    font-size: 0.9em;
-    font-weight: 500;
-    color: #166534;
+    border-radius: 10px; padding: 10px 14px; margin: 14px 0;
+    font-size: 0.86em; font-weight: 500; color: #166534;
+    letter-spacing: 0.3px;
   }
 
   .tag {
-    display: inline-block;
-    font-size: 0.7em;
-    padding: 2px 10px;
-    border-radius: 12px;
-    font-weight: 500;
-    margin-right: 4px;
+    display: inline-block; font-size: 0.62em; padding: 2px 10px;
+    border-radius: 20px; font-weight: 600; margin-right: 3px;
+    letter-spacing: 0.3px;
   }
-  .tag.d1 { background: #e8f0fe; color: #1a73e8; }
-  .tag.d2 { background: #e6f4ea; color: #188038; }
-  .tag.d3 { background: #fef7e0; color: #e37400; }
-  .tag.d4 { background: #fce8e6; color: #c5221f; }
+  .tag.d1 { background: #eff6ff; color: #2563eb; }
+  .tag.d2 { background: #f0fdf4; color: #16a34a; }
+  .tag.d3 { background: #fef7e0; color: #d97706; }
+  .tag.d4 { background: #fef2f2; color: #dc2626; }
   .tag.d5 { background: #f3e8ff; color: #7c3aed; }
 
-  hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+  hr { margin: 20px 0; border: none; border-top: 1px solid #f1f5f9; }
 
-  @media (max-width: 640px) {
+  .checklist { list-style: none; margin-left: 0 !important; }
+  .checklist li { padding: 4px 0; font-size: 0.87em; color: #334155; }
+  .checklist li::before { content: "☐ "; color: #94a3b8; font-size: 1.1em; }
+
+  .back-to-top {
+    position: fixed; bottom: 28px; right: 28px;
+    width: 42px; height: 42px; border-radius: 50%;
+    background: #0f3460; color: #fff; border: none; cursor: pointer;
+    font-size: 1.1em;
+    box-shadow: 0 4px 12px rgba(15,52,96,0.25);
+    opacity: 0; transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    pointer-events: none; z-index: 50;
+  }
+  .back-to-top.visible { opacity: 1; pointer-events: auto; }
+  .back-to-top:hover {
+    background: #1a4a7a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(15,52,96,0.35);
+  }
+
+  .footer-note {
+    text-align: center; padding: 20px 0 48px;
+    font-size: 0.7em; color: #94a3b8; letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 800px) {
+    .sidebar { display: none; }
+    .content-wrapper { padding: 16px 8px; }
     .day { padding: 20px 16px; }
-    .hero h1 { font-size: 1.5em; }
+    .hero h1 { font-size: 1.4em; }
+    .hero .formula { font-size: 0.8em; padding: 8px 14px; }
+    .top-nav a { padding: 10px 10px; font-size: 0.75em; }
   }
 </style>
 </head>
@@ -159,131 +261,195 @@
   <h1>闲鱼运营学习手册</h1>
   <p class="sub">从0到1 · 5天速成 · 实操导向</p>
   <div class="formula">
-    <span>精细选品</span> → <span>优质内容</span> → <span>合理价格</span> → <span>高效运营</span> → <span>口碑沉淀</span>
+    <span>精细选品</span><span class="arrow">→</span>
+    <span>优质内容</span><span class="arrow">→</span>
+    <span>合理价格</span><span class="arrow">→</span>
+    <span>高效运营</span><span class="arrow">→</span>
+    <span>口碑沉淀</span>
   </div>
-  <p class="meta">基于 2026年5月 闲鱼无货源电商培训内容整理</p>
+  <p class="meta">基于 2026年5月 闲鱼无货源电商培训内容整理 · 全品类适用</p>
 </div>
 
-<div class="container">
-
-<div class="day-tabs">
-  <a href="#d1">Day 1 准备</a>
-  <a href="#d2">Day 2 发布</a>
-  <a href="#d3">Day 3 冲刺</a>
-  <a href="#d4">Day 4 优化</a>
-  <a href="#d5">Day 5 复盘</a>
+<!-- ─── STICKY TOP NAV ─── -->
+<div class="top-nav">
+  <div class="inner">
+    <a href="#review" class="active">📊 复盘重点</a>
+    <a href="#d1">Day 1 准备</a>
+    <a href="#d2">Day 2 发布</a>
+    <a href="#d3">Day 3 冲刺</a>
+    <a href="#d4">Day 4 优化</a>
+    <a href="#d5">Day 5 复盘</a>
+    <a href="#checklist">✅ 检查清单</a>
+    <a href="#formula">🔑 20字公式</a>
+  </div>
 </div>
 
-<!-- ══════ DAY 1 ══════ -->
+<div class="content-wrapper">
+
+<!-- ─── SIDEBAR ─── -->
+<nav class="sidebar">
+  <div class="sec-title">复盘</div>
+  <a href="#review">📊 复盘重点</a>
+  <div class="sec-title">Day 1</div>
+  <a href="#d1">搭地基</a>
+  <a href="#d1-hw" class="sub">硬件隔离</a>
+  <a href="#d1-persona" class="sub">账号包装</a>
+  <a href="#d1-browse" class="sub">刷对标</a>
+  <a href="#d1-draft" class="sub">发布草稿</a>
+  <div class="sec-title">Day 2</div>
+  <a href="#d2">发布+看数据</a>
+  <a href="#d2-pub" class="sub">批量发布</a>
+  <a href="#d2-data" class="sub">数据检查</a>
+  <a href="#d2-budan" class="sub">安全补单</a>
+  <div class="sec-title">Day 3</div>
+  <a href="#d3">破池+冲刺</a>
+  <a href="#d3-pool" class="sub">破流量池</a>
+  <a href="#d3-order" class="sub">冲刺出单</a>
+  <div class="sec-title">Day 4</div>
+  <a href="#d4">运营优化</a>
+  <a href="#d4-talk" class="sub">客服话术</a>
+  <a href="#d4-return" class="sub">客户回访</a>
+  <div class="sec-title">Day 5</div>
+  <a href="#d5">复盘+定方向</a>
+  <a href="#d5-review" class="sub">全面复盘</a>
+  <a href="#d5-decision" class="sub">产品迭代</a>
+  <div class="sec-title">快查</div>
+  <a href="#checklist">✅ 检查清单</a>
+  <a href="#formula">🔑 20字公式</a>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<div class="main">
+
+<!-- ══ 复盘重点 ══ -->
+<div class="day" id="review">
+  <h2>📊 复盘重点</h2>
+  <p style="margin-bottom:14px;">闲鱼运营的 10 条核心检查项。每天实操前花 3 分钟过一遍，哪个没做到优先补哪个。</p>
+
+  <table>
+    <tr><th style="width:26%;">关键点</th><th>一句话</th><th style="width:36px;">自检</th></tr>
+    <tr><td><b>点击率 ≥ 8%</b></td><td>首日CTR不过8%直接换主图，不要等</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>2小时动态分配</b></td><td>闲鱼每2小时重分配流量，必须持续回复/擦亮维持权重</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>响应速度 ≤ 5分钟</b></td><td>考核红线，5分钟和10分钟以上营业额差2.5倍</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>一机一卡一号</b></td><td>防关联铁律，同WiFi下多号=连坐封号</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>人设"若即若离"</b></td><td>个人卖家人设天然降低买家防御心</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>补单比例 ≤ 30%</b></td><td>补单必须独立设备+模拟真实行为路径</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>严禁违禁词</b></td><td>不用"全新""100%正品"，用图片暗示代替</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>中低价，不做绝对低价</b></td><td>起号低于竞品10-15%，但要保利润</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>话术代入人设</b></td><td>"小哥哥我在上课"比官方话术成交率高8.5倍</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>"免费的是最贵的"</b></td><td>设置门槛才能筛选出有执行力的人</td><td style="text-align:center;">☐</td></tr>
+  </table>
+</div>
+
+<!-- ══ DAY 1 ══ -->
 <div class="day" id="d1">
   <h2>Day 1 · 搭地基</h2>
   <span class="date-tag">不发布，只准备</span>
 
   <div class="focus-box">
     <strong>🔥 今天重点</strong>
-    ① 账号准备完成（3个号） → ② 人设包装到位 → ③ 刷对标养号 → ④ 做好3个商品草稿
+    账号准备（3个）→ 人设包装 → 刷对标养号 → 3个商品草稿
   </div>
 
-  <h3>① 硬件隔离（防关联铁律）</h3>
+  <h3 id="d1-hw">① 硬件隔离（防关联铁律）</h3>
   <ul>
-    <li><b>一机一卡一号</b>：不同账号用不同设备、不同运营商SIM卡</li>
+    <li><b>一机一卡一号</b>：不同账号不同设备、不同运营商SIM卡</li>
     <li>独立设备 + 独立网络 + 独立支付宝收款</li>
     <li>一个人最多3个支付宝 = 3个闲鱼店</li>
     <li>绝对禁止多个账号连同一个WiFi——连坐封号</li>
   </ul>
 
-  <h3>② 账号包装（立人设）</h3>
+  <h3 id="d1-persona">② 账号包装（立人设）</h3>
   <table>
     <tr><th>要素</th><th>要求</th></tr>
-    <tr><td>人设定位</td><td>与品类匹配（二手羽毛球 → 体育生/球馆老板/教练）</td></tr>
+    <tr><td>人设定位</td><td>与品类匹配（体育生/球馆老板/教练等）</td></tr>
     <tr><td>昵称</td><td>AI（豆包/元宝）生成带关键词的名字，可爱有记忆点</td></tr>
-    <tr><td>签名</td><td>隐晦引流，如"球馆清仓"、"训练多了用不完"</td></tr>
+    <tr><td>签名</td><td>隐晦引流："球馆清仓"、"训练多了用不完"</td></tr>
     <tr><td>头像/动态</td><td>真实感强，非网图；发2-3条日常动态</td></tr>
   </table>
 
-  <h3>③ 刷对标（养号）</h3>
+  <h3 id="d1-browse">③ 刷对标（养号）</h3>
   <ul>
-    <li>搜索"二手羽毛球"、"羽毛球拍"等关键词，看竞品排名</li>
-    <li>每天点10-15个"我想要"</li>
-    <li>收藏5-8个商品，浏览详情页停留30秒+</li>
+    <li>搜索品类关键词，看竞品排名</li>
+    <li>每天点10-15个"我想要"，收藏5-8个商品，浏览详情页30秒+</li>
     <li>咨询2-3个竞品，收集话术模板</li>
     <li><b>每号每天刷30分钟+</b></li>
   </ul>
 
-  <h3>④ 准备发布草稿</h3>
-  <p><b>每个账号准备至少2个商品草稿，Day1只准备，不发布。</b></p>
+  <h3 id="d1-draft">④ 准备发布草稿</h3>
+  <p><b>每个账号准备至少2个商品草稿，Day1只准备不发布。</b></p>
   <table>
     <tr><th>要素</th><th>要求</th></tr>
     <tr><td>标题</td><td>品牌词+产品词+核心卖点+场景+人群词，12字左右。用AI生成</td></tr>
     <tr><td>主图</td><td>高清 + 个人手写纸条水印（防盗图）</td></tr>
-    <tr><td>文案</td><td>个人卖家口吻（"买多了用不上"），直击痛点。抄同行→AI改</td></tr>
-    <tr><td>定价</td><td>低于竞品10-15%，不做绝对低价（否则触发风控）</td></tr>
+    <tr><td>文案</td><td>个人卖家口吻（"买多了用不上"），抄同行→AI改</td></tr>
+    <tr><td>定价</td><td>低于竞品10-15%，不做绝对低价（触发风控）</td></tr>
     <tr><td>标签</td><td>选择相关品类标签</td></tr>
   </table>
 
-  <div class="deadline">✅ Day 1 死线：账号备好 + 人设包装完 + 刷对标做完 + 3个商品草稿到位</div>
+  <div class="deadline">✅ 死线：账号备好 + 人设包装完 + 刷对标做完 + 3个商品草稿</div>
 </div>
 
-<!-- ══════ DAY 2 ══════ -->
+<!-- ══ DAY 2 ══ -->
 <div class="day" id="d2">
   <h2>Day 2 · 发布 + 看数据</h2>
   <span class="date-tag">第一天实操，铺量+测数据</span>
 
   <div class="focus-box">
     <strong>🔥 今天重点</strong>
-    ① 早上7:30-9:00上架（每号2个） → ② 中午12:00看首轮数据 → ③ 晚上20:00复盘 → ④ 判断是否补单
+    早7:30上架（每号2个）→ 中午12:00看数据 → 晚20:00复盘 → 判断是否补单
   </div>
 
-  <h3>① 早上批量发布</h3>
-  <p><b>最佳发布时段：07:30 - 09:00</b>（通勤早高峰流量最大）</p>
+  <h3 id="d2-pub">① 早上批量发布</h3>
+  <p><b>最佳发布时段：07:30 - 09:00</b>（通勤早高峰）</p>
   <ul>
     <li>同品不同账号：<b>换主图</b>（不同角度/背景），不要完全一样</li>
-    <li>同品不同账号：<b>微调定价</b>（110 / 115 / 105 分三档）</li>
-    <li>文案相似但<b>改几个关键句</b>，避免系统判定重复铺货</li>
-    <li>标题<b>关键词差异化</b>（一个突出"耐打"，一个突出"飞行稳定"）</li>
+    <li>同品不同账号：<b>微调定价</b>（110/115/105 分三档）</li>
+    <li>文案改几个关键句，避免判定重复铺货</li>
+    <li>标题关键词差异化（一个突出"耐打"，一个突出"飞行稳定"）</li>
   </ul>
 
-  <h3>② 中午12:00 第一次数据检查</h3>
+  <h3 id="d2-data">② 数据检查（12小时判断）</h3>
+  <h4>中午 12:00 第一次</h4>
   <table>
     <tr><th>检查项</th><th>合格线</th><th>不合格→动作</th></tr>
     <tr><td>是否有曝光</td><td>50+</td><td>标题/主图问题，下午调整</td></tr>
     <tr><td>点击率</td><td>≥ 8%</td><td>低于→换主图</td></tr>
     <tr><td>"我想要"</td><td>≥ 3个</td><td>价格或需求问题</td></tr>
   </table>
-
-  <h3>③ 晚上20:00 第二次数据检查</h3>
+  <h4>晚上 20:00 第二次</h4>
   <table>
     <tr><th>检查项</th><th>合格线</th><th>不合格→动作</th></tr>
-    <tr><td>曝光增长趋势</td><td>持续增长</td><td>停滞→考虑补单</td></tr>
+    <tr><td>曝光增长</td><td>持续增长</td><td>停滞→考虑补单</td></tr>
     <tr><td>点击率</td><td>≥ 8%</td><td>未达标→明天优化</td></tr>
-    <tr><td>收藏 / 咨询</td><td>收藏≥5，咨询≥1</td><td>图片吸引力不够 / 被动</td></tr>
+    <tr><td>收藏/咨询</td><td>收藏≥5，咨询≥1</td><td>图片不够/被动</td></tr>
   </table>
 
-  <h3>④ 安全补单（如需）</h3>
+  <h3 id="d2-budan">③ 安全补单（如需）</h3>
   <p class="callout danger"><strong>⚠️ 铁律</strong>补单小号必须独立设备+独立网络。同WiFi下补单=自杀。自然成交:补单 ≥ 7:3</p>
   <ol>
     <li>小号搜索关键词找到自己商品</li>
-    <li>浏览2-3个竞品页面（停留30秒+）</li>
-    <li>回到自己商品，浏览详情（1分钟+）</li>
+    <li>浏览2-3个竞品页面（30秒+）</li>
+    <li>回到自己商品浏览详情（1分钟+）</li>
     <li>点击"我想要"或收藏</li>
     <li>如需补成交：咨询→议价→下单→正常走完</li>
-    <li>同一个品一天不超过1单补单</li>
+    <li>同一个品一天不超过1单</li>
   </ol>
 
-  <div class="deadline">✅ Day 2 死线：早上发布完成 + 两轮数据看完 + 补单决策做完 + 数据记录</div>
+  <div class="deadline">✅ 死线：早上发布 + 两轮数据看完 + 补单决策 + 数据记录</div>
 </div>
 
-<!-- ══════ DAY 3 ══════ -->
+<!-- ══ DAY 3 ══ -->
 <div class="day" id="d3">
   <h2>Day 3 · 破流量池 + 冲刺出单</h2>
   <span class="date-tag">胜负手——晋级+首单</span>
 
   <div class="focus-box">
     <strong>🔥 今天重点</strong>
-    ① 判断流量池状态 → ② 破池动作（擦亮/优化/补单） → ③ 冲刺首单 → ④ 转化率优化
+    判断流量池 → 破池动作（擦亮/优化/补单） → 冲刺首单 → 转化率优化
   </div>
 
-  <h3>① 判断流量池状态</h3>
+  <h3 id="d3-pool">① 判断流量池状态</h3>
   <table>
     <tr><th>状态</th><th>数据特征</th><th>动作</th></tr>
     <tr><td>✅ 已在二级池</td><td>CTR≥8%，曝光持续涨</td><td>维持+冲刺出单</td></tr>
@@ -291,15 +457,15 @@
     <tr><td>❌ 没进池</td><td>CTR<8%，曝光<50</td><td>换主图或下架重发</td></tr>
   </table>
 
-  <h3>② 晋级强化动作</h3>
+  <h4>晋级强化动作</h4>
   <ul>
     <li>早上擦亮所有在售商品</li>
-    <li>全天保持消息秒回（响应速度是红线，5分钟内）</li>
-    <li>对潜力链接做小幅优化（加主图/改文案）</li>
-    <li>补单 + 运营动作推进自然成交</li>
+    <li>全天消息秒回（响应速度红线，5分钟内）</li>
+    <li>对潜力链接小幅优化（加主图/改文案）</li>
+    <li>补单 + 运营推进自然成交</li>
   </ul>
 
-  <h3>③ 冲刺出单</h3>
+  <h3 id="d3-order">② 冲刺出单</h3>
   <table>
     <tr><th>环节</th><th>优化动作</th><th>效果</th></tr>
     <tr><td>点击→浏览</td><td>主图增加吸引力</td><td>提升CTR</td></tr>
@@ -307,22 +473,22 @@
     <tr><td>咨询→成交</td><td>话术优化+快速回复+适当让价</td><td>提升成交率</td></tr>
     <tr><td>下单后</td><td>及时发货+主动告知物流</td><td>提升好评率</td></tr>
   </table>
-  <p class="callout warn"><strong>⚡ 今天目标：至少出1单。</strong>自然成交最好，不行就安全补1单。有成交的链接系统会更积极推流。</p>
+  <p class="callout warn"><strong>⚡ 今天目标：至少出1单。</strong>自然成交最好，不行安全补1单。有成交的链接系统会更积极推流。</p>
 
-  <div class="deadline">✅ Day 3 死线：流量池判断 + 破池动作做完 + 至少1单（自然或安全补单）</div>
+  <div class="deadline">✅ 死线：流量池判断 + 破池动作 + 至少1单（自然或安全补单）</div>
 </div>
 
-<!-- ══════ DAY 4 ══════ -->
+<!-- ══ DAY 4 ══ -->
 <div class="day" id="d4">
   <h2>Day 4 · 运营优化</h2>
   <span class="date-tag">把一单变成持续出单</span>
 
   <div class="focus-box">
     <strong>🔥 今天重点</strong>
-    ① 客服话术系统化 → ② 客户回访体系 → ③ 优化数据瓶颈 → ④ 加大上新品
+    客服话术系统化 → 客户回访体系 → 数据优化 → 继续上新品
   </div>
 
-  <h3>① 客服话术系统化</h3>
+  <h3 id="d4-talk">① 客服话术系统化</h3>
   <table>
     <tr><th>场景</th><th>话术要点</th></tr>
     <tr><td>首次咨询</td><td>"哈喽~这个球拍上周买的，就打了一次，不太适合我"</td></tr>
@@ -330,164 +496,175 @@
     <tr><td>发货延迟</td><td>"不好意思课多，晚上给你发，发的时候拍视频~"</td></tr>
     <tr><td>求好评</td><td>"亲如果觉得ok方便给个好评吗？谢谢你呀~"</td></tr>
   </table>
-  <p class="callout tip">去10家竞品爆店下单，复制所有客服话术，用AI优化成自己的快捷回复库。</p>
+  <p class="callout tip">去10家竞品爆店下单，复制话术，用AI优化成自己的快捷回复库。</p>
 
-  <h3>② 客户回访流程</h3>
+  <h3 id="d4-return">② 客户回访流程</h3>
   <p>发货→告知单号 → 物流→关注进度 → 签收→问候+求好评 → 好评→感谢+邀复购</p>
 
   <h3>③ 数据优化</h3>
   <ul>
-    <li>检查前3天数据，找出最差的环节</li>
-    <li>点击率低的链接→换主图</li>
-    <li>转化率低的链接→优化文案和价格</li>
+    <li>检查前3天数据，找出瓶颈环节</li>
+    <li>CTR低的链接→换主图；转化低的→改文案/调价</li>
     <li>表现好的链接→加库存/增款式</li>
+    <li>继续上新（每号再加1-2个链接）</li>
   </ul>
 
-  <div class="deadline">✅ Day 4 死线：话术库建好 + 客户回访体系搭好 + 全链接数据优化一轮</div>
+  <div class="deadline">✅ 死线：话术库建好 + 回访体系搭好 + 全链接优化一轮 + 上新</div>
 </div>
 
-<!-- ══════ DAY 5 ══════ -->
+<!-- ══ DAY 5 ══ -->
 <div class="day" id="d5">
   <h2>Day 5 · 复盘 + 定方向</h2>
   <span class="date-tag">不是结束，是系统化的起点</span>
 
   <div class="focus-box">
     <strong>🔥 今天重点</strong>
-    ① 全面数据复盘 → ② 产品迭代决策 → ③ 建立SOP → ④ 制定下周计划
+    全面复盘 → 产品迭代决策 → 建立SOP → 制定下周计划
   </div>
 
-  <h3>① 全面复盘</h3>
+  <h3 id="d5-review">① 全面复盘</h3>
   <table>
     <tr><th>维度</th><th>要问的问题</th></tr>
-    <tr><td>产品</td><td>哪些品出单了？共同特征？哪些完全没动？是否要换品？</td></tr>
+    <tr><td>产品</td><td>哪些品出单了？共同特征？哪些没动？要换品吗？</td></tr>
     <tr><td>运营</td><td>响应速度达标？补单安全？每日动作坚持了？</td></tr>
-    <tr><td>账号</td><td>3个号哪个好哪个差？好的可复制？差的哪里出问题？</td></tr>
-    <tr><td>利润</td><td>每单实际利润多少？整体利润率达标？有亏钱在卖的品吗？</td></tr>
+    <tr><td>账号</td><td>3个号哪个好哪个差？好的可复制？差的出什么问题？</td></tr>
+    <tr><td>利润</td><td>每单实际利润多少？整体利润率？有亏钱在卖的品吗？</td></tr>
   </table>
 
-  <h3>② 产品迭代决策</h3>
+  <h3 id="d5-decision">② 产品迭代决策</h3>
   <table>
     <tr><th>决策</th><th>条件</th></tr>
-    <tr><td>淘汰</td><td>曝光<50 且 点击率<8% 且 无咨询 → 直接下架</td></tr>
-    <tr><td>优化</td><td>有曝光无点击 → 换主图；有点击无咨询 → 改文案/降价</td></tr>
-    <tr><td>加码</td><td>出单稳定 + 好评率高 → 加库存 + 升级主图 + 加新款</td></tr>
-    <tr><td>上新</td><td>手上还有没发过的品 → 继续发，矩阵扩展</td></tr>
+    <tr><td>淘汰</td><td>曝光<50 且 CTR<8% 且 无咨询 → 直接下架</td></tr>
+    <tr><td>优化</td><td>有曝光无点击→换主图；有点击无咨询→改文案/降价</td></tr>
+    <tr><td>加码</td><td>出单稳定+好评率高→加库存+升级主图+加新款</td></tr>
+    <tr><td>上新</td><td>手上还有没发过的品→继续发，矩阵扩展</td></tr>
   </table>
 
-  <h3>③ 建立SOP</h3>
+  <h3>③ 建立SOP + 下周计划</h3>
   <ul>
-    <li>把前5天的每日动作写成标准操作流程</li>
-    <li>以后每天对照SOP执行，不用重新想</li>
+    <li>把5天每日动作写成标准流程，以后照做</li>
+    <li>矩阵扩展方向？要不要试投流？（先投20-50元测成本）</li>
+    <li>内容端：小红书/抖音种草引流到闲鱼</li>
   </ul>
 
-  <h3>④ 下周计划</h3>
-  <ul>
-    <li>矩阵扩展方向：多账号铺同类品？还是深挖一个品？</li>
-    <li>要不要试投流？先投20-50元测点击成本</li>
-    <li>内容端：开始在小红书/抖音种草引流到闲鱼</li>
-  </ul>
-
-  <div class="deadline">✅ Day 5 死线：复盘完成 + 产品决策完成 + SOP初版 + 下周计划定好</div>
+  <div class="deadline">✅ 死线：复盘完成 + 产品决策 + SOP初版 + 下周计划</div>
 </div>
 
-<!-- ══════ 检查清单 ══════ -->
-<div class="day" id="checklist" style="margin-top:20px;">
-  <h2 style="text-align:center;border-left:none;padding-left:0;">5天执行检查清单</h2>
-  <p style="text-align:center;font-size:0.9em;color:#666;margin-bottom:18px;">每天做完一项就在前面打 ✅</p>
+<!-- ══ 检查清单 ══ -->
+<div class="day" id="checklist">
+  <h2>✅ 5天执行检查清单</h2>
+  <p style="text-align:center;font-size:0.85em;color:#94a3b8;margin-bottom:16px;">每天做完一项就点一下 ☐</p>
 
   <h3>Day 1 · 准备日</h3>
-  <ul style="list-style:none;margin-left:0;">
-    <li style="padding:4px 0;">☐ 读完平台认知和流量机制</li>
-    <li style="padding:4px 0;">☐ 硬件隔离确认（3账号各自独立设备+网络）</li>
-    <li style="padding:4px 0;">☐ 3个账号人设已确定（昵称/头像/签名/动态）</li>
-    <li style="padding:4px 0;">☐ 刷对标养号完成（每号30分钟+）</li>
-    <li style="padding:4px 0;">☐ 二手羽毛球品类研究到位（竞品/定价/主图）</li>
-    <li style="padding:4px 0;">☐ 发布流程走一遍（不发布，只熟悉界面）</li>
-    <li style="padding:4px 0;">☐ 规则和红线已记住</li>
-    <li style="padding:4px 0;">☐ 每号至少2个商品草稿已准备完毕</li>
+  <ul class="checklist">
+    <li>读完平台认知和流量机制</li>
+    <li>硬件隔离确认（3账号各自独立设备+网络）</li>
+    <li>3个账号人设已确定（昵称/头像/签名/动态）</li>
+    <li>刷对标养号完成（每号30分钟+）</li>
+    <li>品类研究到位（竞品/定价/主图）</li>
+    <li>发布流程走一遍（不发布，只熟悉界面）</li>
+    <li>规则和红线已记住</li>
+    <li>每号至少2个商品草稿已准备完毕</li>
   </ul>
 
   <h3>Day 2 · 发布日</h3>
-  <ul style="list-style:none;margin-left:0;">
-    <li style="padding:4px 0;">☐ 早上07:30-09:00发布商品（每号至少2个）</li>
-    <li style="padding:4px 0;">☐ 中午12:00第一次数据检查（曝光/CTR/我想要）</li>
-    <li style="padding:4px 0;">☐ 晚上20:00第二次数据检查+记录台账</li>
-    <li style="padding:4px 0;">☐ 根据数据决定是否补单（安全操作规范）</li>
-    <li style="padding:4px 0;">☐ 完成今日运营基础动作（回复/擦亮/刷对标）</li>
-    <li style="padding:4px 0;">☐ 记录所有数据到台账</li>
-    <li style="padding:4px 0;">☐ 规划明天的优化方向</li>
+  <ul class="checklist">
+    <li>早上07:30-09:00发布商品（每号至少2个）</li>
+    <li>中午12:00第一次数据检查（曝光/CTR/我想要）</li>
+    <li>晚上20:00第二次数据检查+记录台账</li>
+    <li>根据数据决定是否补单（安全操作规范）</li>
+    <li>完成今日运营基础动作（回复/擦亮/刷对标）</li>
+    <li>记录所有数据到台账</li>
+    <li>规划明天的优化方向</li>
   </ul>
 
   <h3>Day 3 · 冲刺日</h3>
-  <ul style="list-style:none;margin-left:0;">
-    <li style="padding:4px 0;">☐ 判断流量池状态（在哪一级池）</li>
-    <li style="padding:4px 0;">☐ 擦亮所有在售商品</li>
-    <li style="padding:4px 0;">☐ 对未达标链接做优化（换主图/改文案/调价）</li>
-    <li style="padding:4px 0;">☐ 执行补单（精准操作，安全第一）</li>
-    <li style="padding:4px 0;">☐ 检查并优化快捷回复话术</li>
-    <li style="padding:4px 0;">☐ 主动私信收藏用户促成成交</li>
-    <li style="padding:4px 0;">☐ 检查闲鱼币抵扣设置</li>
-    <li style="padding:4px 0;">☐ 至少完成1单（自然成交或安全补单）</li>
-    <li style="padding:4px 0;">☐ 数据完整记录到台账</li>
+  <ul class="checklist">
+    <li>判断流量池状态（在哪一级池）</li>
+    <li>擦亮所有在售商品</li>
+    <li>对未达标链接做优化（换主图/改文案/调价）</li>
+    <li>执行补单（精准操作，安全第一）</li>
+    <li>检查并优化快捷回复话术</li>
+    <li>主动私信收藏用户促成成交</li>
+    <li>检查闲鱼币抵扣设置</li>
+    <li>至少完成1单（自然成交或安全补单）</li>
+    <li>数据完整记录到台账</li>
   </ul>
 
   <h3>Day 4 · 优化日</h3>
-  <ul style="list-style:none;margin-left:0;">
-    <li style="padding:4px 0;">☐ 优化快捷回复库，覆盖所有常见场景</li>
-    <li style="padding:4px 0;">☐ 复盘前3天数据，找出瓶颈</li>
-    <li style="padding:4px 0;">☐ 对表现不佳的链接做调整（换图/改价/下架）</li>
-    <li style="padding:4px 0;">☐ 对表现好的链接加库存/增款式</li>
-    <li style="padding:4px 0;">☐ 建立客户回访体系</li>
-    <li style="padding:4px 0;">☐ 继续上新链接（每号再加1-2个）</li>
+  <ul class="checklist">
+    <li>优化快捷回复库，覆盖所有常见场景</li>
+    <li>复盘前3天数据，找出瓶颈</li>
+    <li>对表现不佳的链接做调整（换图/改价/下架）</li>
+    <li>对表现好的链接加库存/增款式</li>
+    <li>建立客户回访体系</li>
+    <li>继续上新链接（每号再加1-2个）</li>
   </ul>
 
   <h3>Day 5 · 复盘日</h3>
-  <ul style="list-style:none;margin-left:0;">
-    <li style="padding:4px 0;">☐ 完成所有数据复盘（产品/运营/账号/利润四维度）</li>
-    <li style="padding:4px 0;">☐ 产品迭代决策（淘汰/优化/加码/上新）</li>
-    <li style="padding:4px 0;">☐ 建立初步SOP标准操作流程</li>
-    <li style="padding:4px 0;">☐ 进行自我考核评分（首单时间/CTR/响应速度/好评率）</li>
-    <li style="padding:4px 0;">☐ 制定下周计划（矩阵扩张/品类深耕/投流测试）</li>
+  <ul class="checklist">
+    <li>完成所有数据复盘（产品/运营/账号/利润四维度）</li>
+    <li>产品迭代决策（淘汰/优化/加码/上新）</li>
+    <li>建立初步SOP标准操作流程</li>
+    <li>进行自我考核评分（首单时间/CTR/响应速度/好评率）</li>
+    <li>制定下周计划（矩阵扩张/品类深耕/投流测试）</li>
   </ul>
 </div>
 
-<!-- ══════ 公式 ══════ -->
-<div class="day" id="formula" style="margin-top:20px;">
-  <h2 style="text-align:center;border-left:none;padding-left:0;">20字黄金成交公式</h2>
-  <p style="text-align:center;font-size:1.15em;padding:12px 0;letter-spacing:2px;">
-    <b style="color:#0f3460;">精细选品</b> →
-    <b style="color:#1a4a7a;">优质内容</b> →
-    <b style="color:#2a5a8a;">合理价格</b> →
-    <b style="color:#3a6a9a;">高效运营</b> →
+<!-- ══ 20字公式 ══ -->
+<div class="day" id="formula">
+  <h2 style="text-align:center;border-left:none;padding-left:0;">🔑 20字黄金成交公式</h2>
+  <p style="text-align:center;font-size:1.1em;padding:14px 0;letter-spacing:2px;">
+    <b style="color:#0f3460;">精细选品</b>
+    <span style="color:#94a3b8;margin:0 4px;">→</span>
+    <b style="color:#1a4a7a;">优质内容</b>
+    <span style="color:#94a3b8;margin:0 4px;">→</span>
+    <b style="color:#2a5a8a;">合理价格</b>
+    <span style="color:#94a3b8;margin:0 4px;">→</span>
+    <b style="color:#3a6a9a;">高效运营</b>
+    <span style="color:#94a3b8;margin:0 4px;">→</span>
     <b style="color:#4a7aaa;">口碑沉淀</b>
   </p>
   <table>
     <tr><th>环节</th><th>本质</th><th>关键动作</th></tr>
     <tr><td>精细选品</td><td>选对赛道</td><td>近7天有出单记录？利润≥40%？竞品价格区间？</td></tr>
-    <tr><td>优质内容</td><td>决定点击率</td><td>高清主图+手写水印+个人卖家文案+12字标题</td></tr>
+    <tr><td>优质内容</td><td>决定点击率</td><td>高清主图+手写水印+个人文案+12字标题</td></tr>
     <tr><td>合理价格</td><td>引流不亏本</td><td>低于竞品10-15%，保利润，不过分低价</td></tr>
     <tr><td>高效运营</td><td>维持权重</td><td>秒回+擦亮+补单+快捷话术+刷对标</td></tr>
     <tr><td>口碑沉淀</td><td>长期复利</td><td>人设拦截差评+每单主动要好评+回访复购</td></tr>
   </table>
 </div>
 
-<p style="text-align:center;padding:24px 0 40px;font-size:0.8em;color:#999;">
-  闲鱼运营学习手册 · 基于培训内容整理 · 二手羽毛球品类适用
-</p>
+<p class="footer-note">闲鱼运营学习手册 · 基于培训内容整理 · 全品类适用</p>
 
-</div><!-- /container -->
+</div><!-- /main -->
+</div><!-- /content-wrapper -->
+
+<button class="back-to-top" id="backToTop">↑</button>
 
 <script>
-// highlight current tab on scroll
-const tabs = document.querySelectorAll('.day-tabs a');
-const days = document.querySelectorAll('.day');
-window.addEventListener('scroll', () => {
+const navLinks = document.querySelectorAll('.top-nav a, .sidebar a');
+const sections = document.querySelectorAll('.day');
+const backBtn = document.getElementById('backToTop');
+
+function updateActive() {
   let cur = '';
-  days.forEach(d => {
-    if (d.getBoundingClientRect().top <= 120) cur = d.id;
+  sections.forEach(s => { if (s.getBoundingClientRect().top <= 160) cur = s.id; });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
   });
-  tabs.forEach(t => {
-    t.classList.toggle('active', t.getAttribute('href') === '#' + cur);
+  backBtn.classList.toggle('visible', window.scrollY > 400);
+}
+window.addEventListener('scroll', updateActive);
+window.addEventListener('load', updateActive);
+
+navLinks.forEach(a => {
+  a.addEventListener('click', e => {
+    const h = a.getAttribute('href');
+    if (!h || h === '#') return;
+    e.preventDefault();
+    const t = document.querySelector(h);
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
   });
 });
 </script>
