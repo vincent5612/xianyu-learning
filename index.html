@@ -58,21 +58,38 @@
   .top-nav .inner { display: flex; gap: 1px; margin: 0 auto; }
   .top-nav a {
     display: inline-block; padding: 9px 12px; font-size: 0.8em;
-    color: #6b7280; text-decoration: none; border-bottom: 2px solid transparent;
+    text-decoration: none; border-bottom: 2px solid transparent;
     transition: all 0.2s; flex-shrink: 0;
   }
-  .top-nav a:hover { color: #1e293b; background: #f5f3ee; }
-  .top-nav a.active { font-weight: 700; }
+  .top-nav a:hover { opacity: 0.8; }
+  .top-nav a.active { font-weight: 700; border-bottom-width: 3px; }
 
-  /* 标签卡颜色 */
-  .top-nav .tab-review.active { color: #0f3460; border-bottom-color: #0f3460; }
-  .top-nav .tab-d1.active { color: #dc2626; border-bottom-color: #dc2626; }
-  .top-nav .tab-d2.active { color: #ca8a04; border-bottom-color: #ca8a04; }
-  .top-nav .tab-d3.active { color: #16a34a; border-bottom-color: #16a34a; }
+  /* 标签卡颜色 - 柔和版 */
+  .top-nav .tab-review { color: #4a6fa5; }
+  .top-nav .tab-review.active { color: #1a3a6a; border-bottom-color: #1a3a6a; }
+
+  .top-nav .tab-d1 { color: #e06b6b; }
+  .top-nav .tab-d1.active { color: #c0392b; border-bottom-color: #c0392b; }
+
+  .top-nav .tab-d2 { color: #d4a84b; }
+  .top-nav .tab-d2.active { color: #b8860b; border-bottom-color: #b8860b; }
+
+  .top-nav .tab-d3 { color: #5db85d; }
+  .top-nav .tab-d3.active { color: #2d8a2d; border-bottom-color: #2d8a2d; }
+
+  .top-nav .tab-d4 { color: #9b72cf; }
   .top-nav .tab-d4.active { color: #7c3aed; border-bottom-color: #7c3aed; }
+
+  .top-nav .tab-d5 { color: #4db8c4; }
   .top-nav .tab-d5.active { color: #0891b2; border-bottom-color: #0891b2; }
-  .top-nav .tab-check.active { color: #0f3460; border-bottom-color: #0f3460; }
-  .top-nav .tab-formula.active { color: #a16207; border-bottom-color: #a16207; }
+
+  .top-nav .tab-check { color: #4a6fa5; }
+  .top-nav .tab-check.active { color: #1a3a6a; border-bottom-color: #1a3a6a; }
+
+  .top-nav .tab-formula { color: #d4a84b; }
+  .top-nav .tab-formula.active { color: #b8860b; border-bottom-color: #b8860b; }
+
+  .top-nav .tab-exam { color: #9b72cf; }
   .top-nav .tab-exam.active { color: #7c3aed; border-bottom-color: #7c3aed; }
 
   .content-wrapper { display: flex; max-width: 1280px; margin: 0 auto; padding: 0 16px; gap: 20px; }
