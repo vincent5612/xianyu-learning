@@ -750,6 +750,8 @@ navLinks.forEach(a => {
   a.addEventListener('click', e => {
     const h = a.getAttribute('href');
     if (!h || h === '#') return;
+    // 允许外部链接和 target=_blank 正常跳转
+    if (a.target === '_blank' || h.startsWith('http') || !h.startsWith('#')) return;
     e.preventDefault();
     const t = document.querySelector(h);
     if (t) t.scrollIntoView({ behavior: 'smooth' });
