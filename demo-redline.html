@@ -44,18 +44,32 @@
     color: #6b7280;
     margin-top: 4px;
   }
-  .back {
-    display: block;
+  .back-wrap {
     text-align: center;
-    margin: 24px auto 0;
+    margin: 30px auto;
     max-width: 700px;
   }
-  .back a {
-    color: #0f3460;
+  .back-btn {
+    display: inline-block;
+    background: #ffe411;
+    color: #1a1a2e;
+    padding: 10px 32px;
+    border-radius: 24px;
+    font-size: 0.95em;
+    font-weight: 700;
+    font-family: Georgia, 'Times New Roman', serif;
     text-decoration: none;
-    font-size: 0.85em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    transition: box-shadow 0.2s;
+    letter-spacing: 1px;
   }
-  .back a:hover { text-decoration: underline; }
+  .back-btn:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.2); }
+  .back-sub {
+    text-align: center;
+    font-size: 0.78em;
+    color: #9ca3af;
+    margin-top: 6px;
+  }
 </style>
 </head>
 <body>
@@ -86,7 +100,10 @@
   </div>
 </div>
 
-<div class="back"><a href="index.html">← 返回培训手册</a></div>
+<div class="back-wrap">
+  <a href="index.html#d1-rules" class="back-btn">← 返回培训手册</a>
+  <p class="back-sub">将回到规则红线所在位置</p>
+</div>
 
 </body>
 </html>
