@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 5 · 闲鱼运营综合能力考核</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Noto Sans SC", sans-serif;
+    background: #f0f2f5; color: #1d1d1f; line-height: 1.6;
+  }
+  .exam-header {
+    background: linear-gradient(135deg,#0f172a,#1e293b);
+    color: #fff; padding: 36px 20px 28px; text-align: center;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .exam-header h1 { font-size: 1.3em; margin-bottom: 4px; }
+  .exam-header .meta { font-size: 0.75em; opacity: 0.6; max-width: 600px; margin: 0 auto; }
+  .exam-header .timer {
+    display: inline-block; margin-top: 8px;
+    background: rgba(255,255,255,0.1); border-radius: 20px;
+    padding: 4px 18px; font-size: 0.85em; font-weight: 600;
+  }
+  .exam-header .timer.warning { color: #facc15; }
+  .exam-header .timer.danger { color: #ef4444; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+  .container { max-width: 800px; margin: 0 auto; padding: 20px 16px 40px; }
+
+  .question-block {
+    background: #fff; border-radius: 14px;
+    padding: 20px 22px; margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.04);
+    scroll-margin-top: 120px;
+  }
+  .question-block .q-title {
+    font-size: 0.82em; font-weight: 600; color: #6366f1;
+    margin-bottom: 8px;
+  }
+  .question-block .q-text {
+    font-size: 0.92em; font-weight: 500; margin-bottom: 10px;
+    color: #1e293b;
+  }
+  .question-block .q-score {
+    font-size: 0.72em; color: #94a3b8; margin-left: 8px; font-weight: 400;
+  }
+
+  .option { display: block; padding: 8px 14px; margin: 4px 0;
+    border: 1.5px solid #e2e8f0; border-radius: 8px; cursor: pointer;
+    font-size: 0.88em; transition: all 0.15s; color: #334155;
+  }
+  .option:hover { border-color: #6366f1; background: #f8fafc; }
+  .option.selected { border-color: #6366f1; background: #eef2ff; color: #4338ca; }
+
+  .essay-area {
+    width: 100%; min-height: 100px; padding: 10px 14px;
+    border: 1.5px solid #e2e8f0; border-radius: 8px;
+    font-size: 0.85em; font-family: inherit; outline: none; resize: vertical;
+  }
+  .essay-area:focus { border-color: #6366f1; }
+
+  .submit-area { text-align: center; padding: 20px 0 10px; }
+  .btn-submit {
+    background: #6366f1; color: #fff; border: none;
+    padding: 12px 40px; border-radius: 10px; font-size: 1em;
+    font-weight: 600; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-submit:hover { background: #4f46e5; transform: translateY(-1px); }
+  .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
+
+  .result-box {
+    background: linear-gradient(135deg,#f0fdf4,#ecfdf5);
+    border: 1px solid #86efac; border-radius: 14px;
+    padding: 24px; text-align: center; margin-bottom: 20px;
+  }
+  .result-box .score { font-size: 2.2em; font-weight: 700; color: #16a34a; }
+  .result-box .detail { font-size: 0.85em; color: #166534; margin-top: 4px; }
+
+  .review-block {
+    background: #fff; border-radius: 14px;
+    padding: 14px 18px; margin-bottom: 10px;
+    border: 1px solid #e2e8f0; font-size: 0.84em;
+  }
+  .review-block.correct { border-left: 4px solid #22c55e; }
+  .review-block.wrong { border-left: 4px solid #ef4444; background: #fef2f2; }
+  .review-block .r-q { font-weight: 500; margin-bottom: 4px; }
+  .review-block .r-wrong { color: #dc2626; }
+  .review-block .r-right { color: #16a34a; }
+  .ref-answer {
+    margin-top: 8px; padding: 10px 14px; background: #f8fafc;
+    border-radius: 8px; border-left: 3px solid #6366f1; font-size: 0.88em;
+    white-space: pre-line;
+  }
+  .ref-answer strong { color: #1e293b; display: block; margin-bottom: 4px; }
+
+  .section-title {
+    font-size: 1em; font-weight: 700; color: #0f172a;
+    padding: 12px 0 8px; border-bottom: 2px solid #e2e8f0; margin-bottom: 14px;
+  }
+
+  .btn-reset {
+    background: #fff; color: #6366f1; border: 1.5px solid #6366f1;
+    padding: 10px 30px; border-radius: 10px; font-size: 0.9em;
+    font-weight: 500; cursor: pointer; margin: 0 8px; transition: all 0.15s;
+  }
+  .btn-reset:hover { background: #eef2ff; }
+
+  .hidden { display: none; }
+
+  .case-box {
+    background: #f8fafc; border: 1px solid #e2e8f0;
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 12px;
+    font-size: 0.86em; line-height: 1.7;
+  }
+  .case-box strong { color: #1e293b; }
+
+  @media (max-width: 640px) {
+    .question-block { padding: 14px 14px; }
+    .exam-header h1 { font-size: 1.1em; }
+  }
+</style>
+</head>
+<body>
+
+<div class="exam-header">
+  <h1>📝 Day 5 · 闲鱼运营综合能力考核</h1>
+  <div class="meta">考试时长：60分钟 · 满分 110 分 · 考核依据：2026年闲鱼最新权重规则、限流机制、付费流机制、售后权重体系</div>
+  <div class="timer" id="timer">⏱ 剩余 60分 00秒</div>
+</div>
+
+<div class="container" id="examContainer">
+
+  <!-- 单选 -->
+  <div class="section-title">一、单项选择题（共5题，每题4分，共20分）</div>
+  <div id="q-single"></div>
+
+  <!-- 多选 -->
+  <div class="section-title">二、多项选择题（共3题，每题4分，共12分）<span style="font-weight:400;font-size:0.8em;color:#94a3b8;margin-left:8px;">多选/少选/错选不得分</span></div>
+  <div id="q-multi"></div>
+
+  <!-- 数据推理 -->
+  <div class="section-title">三、数据推理题（共2题，每题5分，共10分）</div>
+  <div id="q-data"></div>
+
+  <!-- 策略冲突 -->
+  <div class="section-title">四、策略冲突应用题（共2题，每题6分，共12分）</div>
+  <div id="q-conflict"></div>
+
+  <!-- 简答 -->
+  <div class="section-title">五、简答题（共2题，每题7分，共14分）</div>
+  <div id="q-essay"></div>
+
+  <!-- 案例分析 -->
+  <div class="section-title">六、案例分析计算题（共4小题，共32分）</div>
+  <div id="q-case"></div>
+
+  <!-- 论述 -->
+  <div class="section-title">七、深度论述题（附加10分，不计入总分）</div>
+  <div id="q-discuss"></div>
+
+  <div class="submit-area" id="submitArea">
+    <button class="btn-submit" id="btnSubmit" onclick="submitExam()">📥 提交答卷</button>
+    <button class="btn-reset hidden" id="btnReset" onclick="resetExam()">🔄 重新答题</button>
+  </div>
+
+  <div id="resultArea" class="hidden"></div>
+</div>
+
+<script>
+const LABELS = ['A','B','C','D'];
+let timerInterval;
+let timeLeft = 3600;
+const answers = {};
+
+const examData = {
+  single: [
+    { id:'s1', text:'商品图片被大量抄袭导致流量下滑，正确的解决方式是？', options:['更换商品类目','用原图参数维权下架抄袭者','降低商品价格','频繁擦亮商品'], answer:1 },
+    { id:'s2', text:'2026年鱼小铺卖家的整体软件服务费率是？', options:['0.6%','1%','1.6%','2%'], answer:2 },
+    { id:'s3', text:'闲鱼新号单日安全合规发布商品数量为？', options:['3-5条','10-15条','20条以上','1条'], answer:0 },
+    { id:'s4', text:'店铺首页、猜你喜欢推荐流量过低的核心原因是？', options:['商品价格过高','店铺滞销率过高','芝麻信用分低于600','未开通同城展示'], answer:1 },
+    { id:'s5', text:'买家退款选择"假货"原因，对店铺的影响为？', options:['无影响','仅降低该商品权重','影响店铺整体权重、隐性降权','仅扣取保证金'], answer:2 }
+  ],
+  multi: [
+    { id:'m1', text:'2026年提升账号基础权重的核心合规动作有？', options:['实名认证+芝麻信用≥650分','店铺资料完整度80%以上','30分钟内极速回复咨询','一机一卡一号独立登录'], answer:[0,1,2,3] },
+    { id:'m2', text:'以下哪些行为会直接触发平台限流风控？', options:['站外导流、留微信联系方式','标题主图一致重复铺货','新号每日发布3条商品','商品文案使用"全网最低、绝对正品"等极限词'], answer:[0,1,3] },
+    { id:'m3', text:'关于2026年超级擦亮付费推广，说法正确的是？', options:['适合自然流量薄弱的高竞争类目','长期付费会永久压制自然流量','出价低于同行均值，跑量效果极差','零基础流量商品付费推广转化率极低'], answer:[0,1,2,3] }
+  ],
+  data: [
+    { id:'d1', text:'鱼小铺实体数码配件商品，单日曝光3000、零成交。按照2026转化率阈值，最少需要补多少单维持权重？', options:['1单','3单','5单','无需补单'], answer:1 },
+    { id:'d2', text:'店铺当月总成交10万，粉丝订单5万（权重3倍）、普通订单5万（基础权重），折算有效加权GMV为？', options:['10万','15万','20万','25万'], answer:2 }
+  ],
+  conflict: [
+    { id:'c1', text:'店铺滞销率30%严重超标，同时爆款自然流下滑需要付费擦亮，正确运营优先级为？', options:['先付费推爆款，再处理滞销','分批清理滞销，再推广爆款','全部滞销品清理完毕后，再做付费推广','放弃付费推广，只清滞销'], answer:2 },
+    { id:'c2', text:'低价库存积压需要清仓，规避2026"低价劣质店铺标记"的最低风险方式是？', options:['1元超低价限量冲单','新号单独低价铺货清仓','捆绑高客单正品组合销售清仓','原价投放精准低价流量人群'], answer:2 }
+  ],
+  essay: [
+    { id:'e1', text:'店铺整体曝光稳定，但订单量持续下滑，请说明核心原因与完整解决方案。', score:7,
+      reference:'原因：同行低价内卷、转化率衰减、隐性售后降权、关键词排名下滑。\n解决：对标同行调价、优化主图标题提升转化、清理滞销品、规范售后、微调关键词排名。' },
+    { id:'e2', text:'新品首日曝光暴涨，次日流量直接停滞不增长，请写出标准化优化方案。', score:7,
+      reference:'原因：新品72小时流量扶持结束，无数据承接导致流量断层。\n优化：更新实拍细节图、优化长尾关键词、小幅调价、小额助推、引导收藏咨询成交，激活二次流量。' }
+  ],
+  caseStudy: {
+    background:'某鱼小铺2026年4月完整数据：\n1.总成交GMV：80000元，平台服务费1.6%\n2.粉丝订单占比20%，普通订单占比80%\n3.售后纠纷率6%（超平台5%红线）\n4.滞销商品占比20%，系统限流降权\n5.多笔退款原因为「描述不符、物流延迟」',
+    questions:[
+      { sub:'1', text:'计算店铺扣除服务费后实际到手净收入。', pts:8,
+        reference:'实际收入 = 80000 − (80000 × 1.6%) = 80000 − 1280 = 78720元' },
+      { sub:'2', text:'结合2026闲鱼最新规则，列出店铺3项核心权重问题并说明对应流量危害。', pts:12,
+        reference:'① 粉丝订单占比过低＜30%，店铺加权流量不足；\n② 纠纷率6%＞5%红线，全店隐性降权、减少推荐；\n③ 滞销率超标，系统直接限制自然流量分发。' },
+      { sub:'3', text:'写出一条零成本、可落地提升粉丝订单占比的运营策略。', pts:6,
+        reference:'设置粉丝专属满减券，详情页置顶引导关注店铺，提升粉丝成交占比。' },
+      { sub:'4', text:'针对店铺高纠纷率、描述不符售后、滞销限流问题，给出3条整改方案。', pts:6,
+        reference:'① 批量下架30天无曝光滞销品，改图改文案重发；\n② 详情如实标注瑕疵、新旧程度，杜绝描述不符；\n③ 售后引导协商一致退款，降低纠纷权重扣分。' }
+    ]
+  },
+  discuss: {
+    text:'结合2026年闲鱼流量互斥规则、1.6%服务费、付费流与自然流机制，论述观点：「中小卖家无法同时兼顾精细化自然流运营与付费快速起号，只能二选一深耕。」同意或不同意均可，需结合平台规则+运营成本详细阐述。',
+    reference:'同意。2026闲鱼流量体系互斥：自然流需要长期零违规、低滞销、高回复、精细化维护，极度耗时间精力；付费流依靠资金换流量，1.6%服务费+推广成本压缩利润，且长期付费会弱化自然流量标签。中小卖家资金、时间、人力有限，无法同时深耕两套体系，只能择一专注运营。'
+  }
+};
+
+function render() {
+  // Single
+  let html = '';
+  examData.single.forEach((q,i) => {
+    html += `<div class="question-block" id="q-${q.id}">
+      <div class="q-title">第${i+1}题<span class="q-score">（4分）</span></div>
+      <div class="q-text">${q.text}</div>`;
+    q.options.forEach((opt,oi) => {
+      html += `<label class="option" onclick="selectSingle('${q.id}',${oi})" id="opt-${q.id}-${oi}">${LABELS[oi]}. ${opt}</label>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById('q-single').innerHTML = html;
+
+  // Multi
+  let mhtml = '';
+  examData.multi.forEach((q,i) => {
+    mhtml += `<div class="question-block" id="q-${q.id}">
+      <div class="q-title">第${i+1}题<span class="q-score">（4分）</span></div>
+      <div class="q-text">${q.text}</div>`;
+    q.options.forEach((opt,oi) => {
+      mhtml += `<label class="option" onclick="toggleMulti('${q.id}',${oi})" id="opt-${q.id}-${oi}">${LABELS[oi]}. ${opt}</label>`;
+    });
+    mhtml += `</div>`;
+  });
+  document.getElementById('q-multi').innerHTML = mhtml;
+
+  // Data reasoning
+  let dhtml = '';
+  examData.data.forEach((q,i) => {
+    dhtml += `<div class="question-block" id="q-${q.id}">
+      <div class="q-title">第${i+1}题<span class="q-score">（5分）</span></div>
+      <div class="q-text">${q.text}</div>`;
+    q.options.forEach((opt,oi) => {
+      dhtml += `<label class="option" onclick="selectSingle('${q.id}',${oi})" id="opt-${q.id}-${oi}">${LABELS[oi]}. ${opt}</label>`;
+    });
+    dhtml += `</div>`;
+  });
+  document.getElementById('q-data').innerHTML = dhtml;
+
+  // Conflict
+  let chtml = '';
+  examData.conflict.forEach((q,i) => {
+    chtml += `<div class="question-block" id="q-${q.id}">
+      <div class="q-title">第${i+1}题<span class="q-score">（6分）</span></div>
+      <div class="q-text">${q.text}</div>`;
+    q.options.forEach((opt,oi) => {
+      chtml += `<label class="option" onclick="selectSingle('${q.id}',${oi})" id="opt-${q.id}-${oi}">${LABELS[oi]}. ${opt}</label>`;
+    });
+    chtml += `</div>`;
+  });
+  document.getElementById('q-conflict').innerHTML = chtml;
+
+  // Essay
+  let ehtml = '';
+  examData.essay.forEach((q,i) => {
+    ehtml += `<div class="question-block" id="q-${q.id}">
+      <div class="q-title">第${i+1}题<span class="q-score">（${q.score}分）</span></div>
+      <div class="q-text">${q.text}</div>
+      <textarea class="essay-area" id="input-${q.id}" placeholder="在此作答..."></textarea>
+    </div>`;
+  });
+  document.getElementById('q-essay').innerHTML = ehtml;
+
+  // Case study
+  const cs = examData.caseStudy;
+  let ccase = `<div class="case-box"><strong>📋 案例背景</strong><br>${cs.background.replace(/\n/g,'<br>')}</div>`;
+  cs.questions.forEach((q,i) => {
+    ccase += `<div class="question-block" id="q-case${i}">
+      <div class="q-title">第${q.sub}题<span class="q-score">（${q.pts}分）</span></div>
+      <div class="q-text">${q.text}</div>
+      <textarea class="essay-area" id="input-case${i}" placeholder="在此作答..."></textarea>
+    </div>`;
+  });
+  document.getElementById('q-case').innerHTML = ccase;
+
+  // Discuss
+  document.getElementById('q-discuss').innerHTML = `<div class="question-block">
+    <div class="q-title">论述题<span class="q-score">（附加10分，不计入总分）</span></div>
+    <div class="q-text">${examData.discuss.text}</div>
+    <textarea class="essay-area" id="input-discuss" placeholder="在此作答..." style="min-height:120px;"></textarea>
+  </div>`;
+}
+
+function selectSingle(qid, oi) {
+  document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(el => el.classList.remove('selected'));
+  document.getElementById(`opt-${qid}-${oi}`).classList.add('selected');
+  answers[qid] = oi;
+}
+function toggleMulti(qid, oi) {
+  const el = document.getElementById(`opt-${qid}-${oi}`);
+  el.classList.toggle('selected');
+  if (!answers[qid]) answers[qid] = [];
+  const arr = answers[qid];
+  const idx = arr.indexOf(oi);
+  if (idx > -1) arr.splice(idx,1); else arr.push(oi);
+  answers[qid] = arr;
+}
+
+function submitExam() {
+  clearInterval(timerInterval);
+  document.getElementById('btnSubmit').disabled = true;
+
+  const sections = [
+    { name:'单选', data:examData.single, pts:4 },
+    { name:'多选', data:examData.multi, pts:4, isMulti:true },
+    { name:'数据推理', data:examData.data, pts:5 },
+    { name:'策略冲突', data:examData.conflict, pts:6 }
+  ];
+
+  let score = 0, total = 54;
+  let wrongs = [];
+
+  sections.forEach(sec => {
+    sec.data.forEach(q => {
+      if (sec.isMulti) {
+        const ua = answers[q.id] || [];
+        const correct = q.answer.slice().sort().join(',');
+        const user = ua.slice().sort().join(',');
+        if (correct === user) score += sec.pts;
+        else wrongs.push({q, userAns: ua, type:'multi'});
+      } else {
+        if (answers[q.id] === q.answer) score += sec.pts;
+        else wrongs.push({q, userAns: answers[q.id], type:'single'});
+      }
+    });
+  });
+
+  // Essays + case + discuss: add score but manual
+  const manualPts = 56; // 14 + 32 + 10
+  total += manualPts;
+
+  let resultHtml = `<div class="result-box">
+    <div class="score">${score} / 110</div>
+    <div class="detail">客观题得分：${score} / 54 · 主观题（含简答+案例+论述）：56分（请对照参考答案自评）</div>
+  </div>`;
+
+  if (wrongs.length > 0) {
+    resultHtml += `<div style="font-size:0.9em;font-weight:600;margin-bottom:10px;">❌ 错题回顾（${wrongs.length}题）</div>`;
+    wrongs.forEach(w => {
+      const q = w.q;
+      let userShow, correctShow;
+      if (w.type === 'multi') {
+        const ua = w.userAns || [];
+        userShow = ua.map(i=>LABELS[i]).join(', ') || '（未选）';
+        correctShow = q.answer.map(i=>LABELS[i]).join(', ');
+      } else {
+        userShow = LABELS[w.userAns] + '. ' + q.options[w.userAns];
+        correctShow = LABELS[q.answer] + '. ' + q.options[q.answer];
+      }
+      resultHtml += `<div class="review-block wrong">
+        <div class="r-q">${q.text}</div>
+        <div class="r-wrong">你的答案：${userShow}</div>
+        <div class="r-right">正确答案：${correctShow}</div>
+      </div>`;
+    });
+  } else {
+    resultHtml += `<div style="text-align:center;padding:14px;color:#16a34a;font-weight:500;">🎉 客观题全对！</div>`;
+  }
+
+  // References
+  resultHtml += `<div style="font-size:0.9em;font-weight:600;margin:16px 0 10px;">📖 主观题参考答案</div>`;
+
+  resultHtml += `<div class="ref-answer"><strong>📝 简答题</strong>`;
+  examData.essay.forEach((q,i) => {
+    resultHtml += `<br><br><b>第${i+1}题（${q.score}分）：</b><br>${q.reference}`;
+  });
+  resultHtml += `</div>`;
+
+  const cs = examData.caseStudy;
+  resultHtml += `<div class="ref-answer"><strong>📋 案例分析</strong>`;
+  cs.questions.forEach((q,i) => {
+    resultHtml += `<br><br><b>第${q.sub}题（${q.pts}分）：</b><br>${q.reference}`;
+  });
+  resultHtml += `</div>`;
+
+  resultHtml += `<div class="ref-answer"><strong>💬 论述题参考思路（附加10分）</strong><br><br>${examData.discuss.reference}</div>`;
+
+  resultHtml += `<div style="text-align:center;margin-top:16px;">
+    <button class="btn-reset" onclick="resetExam()">🔄 重新答题</button>
+  </div>`;
+
+  document.getElementById('resultArea').innerHTML = resultHtml;
+  document.getElementById('resultArea').classList.remove('hidden');
+  document.getElementById('btnReset').classList.remove('hidden');
+  document.getElementById('btnSubmit').classList.add('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function resetExam() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.essay-area').forEach(el => el.value = '');
+  document.getElementById('resultArea').innerHTML = '';
+  document.getElementById('resultArea').classList.add('hidden');
+  document.getElementById('btnReset').classList.add('hidden');
+  document.getElementById('btnSubmit').classList.remove('hidden');
+  document.getElementById('btnSubmit').disabled = false;
+  timeLeft = 3600;
+  startTimer();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const m = Math.floor(timeLeft/60);
+    const s = timeLeft%60;
+    const el = document.getElementById('timer');
+    el.textContent = `⏱ 剩余 ${m}分 ${s.toString().padStart(2,'0')}秒`;
+    el.className = 'timer';
+    if (timeLeft < 300) el.classList.add('danger');
+    else if (timeLeft < 600) el.classList.add('warning');
+    if (timeLeft <= 0) { clearInterval(timerInterval); submitExam(); }
+  }, 1000);
+}
+
+render();
+startTimer();
+</script>
+
+</body>
+</html>
