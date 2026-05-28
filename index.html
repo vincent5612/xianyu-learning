@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>闲鱼运营培训 · 讲师手册</title>
+<title>闲鱼运营学习手册 · 5天从0到1</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -16,7 +16,7 @@
   .hero {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f3460 100%);
     color: #fff;
-    padding: 48px 20px 38px;
+    padding: 52px 20px 42px;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -27,30 +27,19 @@
                 radial-gradient(ellipse at 80% 50%, rgba(99,102,241,0.1) 0%, transparent 60%);
   }
   .hero h1 {
-    font-size: 1.8em; font-weight: 700; margin-bottom: 4px;
+    font-size: 2em; font-weight: 700; margin-bottom: 6px;
     background: linear-gradient(135deg, #fff 60%, #93c5fd);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     position: relative;
   }
-  .hero .badge {
-    display: inline-block;
-    background: rgba(250,204,21,0.15);
-    color: #facc15;
-    font-size: 0.75em;
-    padding: 3px 12px;
-    border-radius: 20px;
-    border: 1px solid rgba(250,204,21,0.2);
-    margin-bottom: 8px;
-    position: relative;
-  }
-  .hero .sub { opacity: 0.7; font-size: 0.85em; margin-bottom: 14px; position: relative; }
+  .hero .sub { opacity: 0.7; font-size: 0.9em; margin-bottom: 18px; position: relative; }
   .hero .formula {
-    display: inline-flex; align-items: center; gap: 4px;
+    display: inline-flex; align-items: center; gap: 6px;
     background: rgba(255,255,255,0.08);
     backdrop-filter: blur(8px);
     border-radius: 40px;
-    padding: 8px 18px;
-    font-size: 0.85em;
+    padding: 10px 22px;
+    font-size: 0.95em;
     letter-spacing: 1px;
     border: 1px solid rgba(255,255,255,0.12);
     position: relative;
@@ -58,7 +47,6 @@
   .hero .formula span { color: #facc15; font-weight: 600; }
   .hero .formula .arr { color: rgba(255,255,255,0.3); }
 
-  /* ── TOP NAV ── */
   .top-nav {
     position: sticky; top: 0; z-index: 100;
     background: rgba(255,255,255,0.92);
@@ -78,8 +66,8 @@
   }
   .top-nav a {
     display: inline-block;
-    padding: 8px 10px;
-    font-size: 0.78em;
+    padding: 8px 12px;
+    font-size: 0.82em;
     color: #64748b;
     text-decoration: none;
     border-bottom: 2px solid transparent;
@@ -88,10 +76,9 @@
   }
   .top-nav a:hover { color: #1e293b; background: #f1f5f9; }
   .top-nav a.active { color: #0f3460; border-bottom-color: #0f3460; font-weight: 600; }
-  .top-nav .tab-red { color: #dc2626; }
-  .top-nav .tab-red.active { border-bottom-color: #dc2626; color: #dc2626; }
+  .top-nav .tab-exam { color: #7c3aed; }
+  .top-nav .tab-exam.active { border-bottom-color: #7c3aed; color: #7c3aed; }
 
-  /* ── LAYOUT ── */
   .content-wrapper {
     display: flex;
     max-width: 1280px;
@@ -100,7 +87,6 @@
     gap: 20px;
   }
 
-  /* ── SIDEBAR ── */
   .sidebar {
     width: 200px;
     flex-shrink: 0;
@@ -128,10 +114,6 @@
   .sidebar a:hover { background: #e2e8f0; color: #0f172a; }
   .sidebar a.active { color: #0f3460; background: #dbeafe; border-left-color: #0f3460; font-weight: 600; }
   .sidebar a.sub { padding-left: 24px; font-size: 0.78em; }
-  .sidebar a.red { color: #dc2626; }
-  .sidebar a.red.active { border-left-color: #dc2626; background: #fee2e2; color: #b91c1c; }
-  .sidebar a.gold { color: #a16207; }
-  .sidebar a.gold.active { border-left-color: #a16207; background: #fef9c3; }
   .sidebar .sec-title {
     font-size: 0.7em; font-weight: 700;
     color: #94a3b8; text-transform: uppercase;
@@ -140,7 +122,6 @@
   }
   .sidebar .sec-title.exam { color: #0f3460; padding-top: 18px; border-top: 1px solid #e2e8f0; margin-top: 8px; }
 
-  /* ── MAIN ── */
   .main {
     flex: 1;
     min-width: 0;
@@ -160,10 +141,6 @@
     padding-left: 12px;
     margin-bottom: 12px;
   }
-  .day h2.red-title { border-left-color: #dc2626; }
-  .day h2.gold-title { border-left-color: #a16207; }
-  .day h2.purple-title { border-left-color: #7c3aed; }
-  .day h2.green-title { border-left-color: #16a34a; }
   .day h3 {
     font-size: 0.95em;
     color: #1e293b;
@@ -226,8 +203,6 @@
   }
   th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid #e2e8f0; }
   th { background: #f8fafc; color: #475569; font-weight: 600; }
-  .red-table th { background: #fef2f2; color: #991b1b; }
-  .gold-table th { background: #fefce8; color: #854d0e; }
 
   .img-placeholder {
     background: #f1f5f9;
@@ -276,13 +251,12 @@
 
   @media (max-width: 900px) {
     .sidebar { display: none; }
-    .top-nav { padding: 0 6px; }
-    .top-nav a { font-size: 0.72em; padding: 6px 7px; }
+    .top-nav a { font-size: 0.75em; padding: 7px 8px; }
     .day { padding: 14px 16px; }
   }
   @media (max-width: 420px) {
-    .hero h1 { font-size: 1.4em; }
-    .hero .formula { font-size: 0.7em; padding: 6px 12px; }
+    .hero h1 { font-size: 1.5em; }
+    .hero .formula { font-size: 0.78em; padding: 8px 14px; }
     table { font-size: 0.78em; }
     th, td { padding: 5px 6px; }
   }
@@ -290,481 +264,393 @@
 </head>
 <body>
 
-<!-- ══ HERO ══ -->
 <div class="hero">
-  <div class="badge">👨‍🏫 讲师专用 · 按顺序点链接即可讲课</div>
-  <h1>闲鱼运营 · 讲师培训手册</h1>
-  <p class="sub">基于 2026年5月 闲鱼无货源电商培训 · 杨哥整理</p>
+  <h1>闲鱼运营学习手册 · 5天从0到1</h1>
+  <p class="sub">基于 2026年5月 闲鱼无货源电商培训内容整理 · 杨哥修订</p>
   <div class="formula">
-    <span>精细选品</span><span class="arr">→</span>
-    <span>优质内容</span><span class="arr">→</span>
-    <span>合理价格</span><span class="arr">→</span>
-    <span>高效运营</span><span class="arr">→</span>
+    <span>精细选品</span><span class="arr"> → </span>
+    <span>优质内容</span><span class="arr"> → </span>
+    <span>合理价格</span><span class="arr"> → </span>
+    <span>高效运营</span><span class="arr"> → </span>
     <span>口碑沉淀</span>
   </div>
+  <p style="margin-top:10px;font-size:0.75em;opacity:0.5;position:relative;">👨‍🏫 讲师按顺序讲到哪点哪 · 带 需演示 的当场投屏操作</p>
 </div>
 
-<!-- ─── STICKY TOP NAV ─── -->
 <div class="top-nav">
   <div class="inner">
-    <a href="#redlines" class="tab-red" style="color:#dc2626;font-weight:700;">🚨 规则红线</a>
-    <a href="#persona" class="tab">👤 人设包装</a>
-    <a href="#benchmark" class="tab">🎯 刷对标</a>
-    <a href="#category" class="tab">📦 选品逻辑</a>
-    <a href="#publish" class="tab">📤 每日发布</a>
-    <a href="#data1" class="tab">📊 数据检查①</a>
-    <a href="#data2" class="tab">📊 数据检查②</a>
-    <a href="#budan" class="tab">🛡️ 补单操作</a>
-    <a href="#optimize" class="tab">⚡ 优化未达标</a>
-    <a href="#talk" class="tab">💬 话术优化</a>
-    <a href="#weight" class="tab">⚖️ 账号权重</a>
-    <a href="#xiangyao" class="tab">💰 想要/闪亮</a>
-    <a href="#review" class="tab">📋 复盘</a>
-    <a href="#checklist" class="tab">✅ 清单</a>
-    <a href="#formula" class="tab">🔑 公式</a>
+    <a href="#review" class="active tab-review">📊 复盘重点</a>
+    <a href="#d1" class="tab-d1">Day 1 准备</a>
+    <a href="#d2" class="tab-d2">Day 2 发布</a>
+    <a href="#d3" class="tab-d3">Day 3 冲刺</a>
+    <a href="#d4" class="tab-d4">Day 4 优化</a>
+    <a href="#d5" class="tab-d5">Day 5 复盘</a>
+    <a href="#checklist" class="tab-check">✅ 检查清单</a>
+    <a href="#formula" class="tab-formula">🔑 20字公式</a>
+    <a href="exam-day1.html" target="_blank" class="tab-exam">📝 Day1考试</a>
+    <a href="exam-day5.html" target="_blank" class="tab-exam">📝 Day5考试</a>
   </div>
 </div>
 
 <div class="content-wrapper">
 
-<!-- ─── SIDEBAR ─── -->
 <nav class="sidebar">
-  <div class="sec-title">开篇</div>
-  <a href="#redlines" class="red">🚨 规则红线</a>
-
-  <div class="sec-title">Day 1 · 准备</div>
-  <a href="#persona">👤 人设包装</a>
-  <a href="#benchmark">🎯 刷对标</a>
-  <a href="#category">📦 选品逻辑</a>
-  <a href="#publish">📤 每日发布草稿</a>
-
-  <div class="sec-title">Day 2 · 上线</div>
-  <a href="#data1">📊 第一次数据检查</a>
-  <a href="#data2">📊 第二次数据检查</a>
-  <a href="#budan">🛡️ 安全补单</a>
-
-  <div class="sec-title">Day 3 · 优化</div>
-  <a href="#optimize">⚡ 优化未达标链接</a>
-  <a href="#talk">💬 话术优化</a>
-
-  <div class="sec-title">Day 4 · 进阶</div>
-  <a href="#weight">⚖️ 账号权重</a>
-  <a href="#xiangyao">💰 想要/闪亮收入</a>
-
+  <div class="sec-title">复盘</div>
+  <a href="#review">📊 复盘重点</a>
+  <div class="sec-title">Day 1</div>
+  <a href="#d1">搭地基</a>
+  <a href="#d1-rules" class="sub">规则红线</a>
+  <a href="#d1-hw" class="sub">硬件隔离</a>
+  <a href="#d1-persona" class="sub">账号包装</a>
+  <a href="#d1-browse" class="sub">刷对标</a>
+  <a href="#d1-category" class="sub">选品逻辑</a>
+  <a href="#d1-draft" class="sub">发布草稿</a>
+  <div class="sec-title">Day 2</div>
+  <a href="#d2">发布+看数据</a>
+  <a href="#d2-pub" class="sub">批量发布</a>
+  <a href="#d2-data" class="sub">数据检查</a>
+  <a href="#d2-budan" class="sub">安全补单</a>
+  <div class="sec-title">Day 3</div>
+  <a href="#d3">破池+冲刺</a>
+  <a href="#d3-pool" class="sub">破流量池</a>
+  <a href="#d3-order" class="sub">冲刺出单</a>
+  <div class="sec-title">Day 4</div>
+  <a href="#d4">运营优化</a>
+  <a href="#d4-weight" class="sub">账号权重</a>
+  <a href="#d4-talk" class="sub">客服话术</a>
+  <a href="#d4-xiangyao" class="sub">想要收入</a>
+  <a href="#d4-return" class="sub">客户回访</a>
   <div class="sec-title">Day 5</div>
-  <a href="#review">📋 全面复盘</a>
-  <a href="#sop">📄 SOP + 下周计划</a>
-
+  <a href="#d5">复盘+定方向</a>
+  <a href="#d5-review" class="sub">全面复盘</a>
+  <a href="#d5-decision" class="sub">产品迭代</a>
   <div class="sec-title">快查</div>
   <a href="#checklist">✅ 检查清单</a>
   <a href="#formula">🔑 20字公式</a>
-
   <div class="sec-title exam">📝 考试</div>
   <a href="exam-day1.html" target="_blank" class="exam-link">Day1 · 账号SOP考核</a>
   <a href="exam-day5.html" target="_blank" class="exam-link">Day5 · 综合能力考核</a>
 </nav>
 
-<!-- ─── MAIN ─── -->
 <div class="main">
 
-<!-- ══ 规则红线 ══ -->
-<div class="day" id="redlines">
-  <h2 class="red-title">🚨 规则红线 <span class="demo-note">需演示</span></h2>
-
-  <div class="img-placeholder">
-    <strong>📸 [配图：红底白字弹窗]</strong><br>
-    标题「咸鱼运营 · 绝对不能触碰的 5 条红线」<br>
-    红色背景弹窗，白字显示以下 5 条
-  </div>
-
-  <table class="red-table">
-    <tr><th style="width:36px;">#</th><th>红线</th><th>后果</th></tr>
-    <tr><td style="text-align:center;color:#dc2626;font-weight:700;">1</td><td>⚠️ 同WiFi下多号操作</td><td>连坐封号，全部阵亡</td></tr>
-    <tr><td style="text-align:center;color:#dc2626;font-weight:700;">2</td><td>⚠️ 使用违禁词（"全新""正品保证"等）</td><td>限流/下架/封号</td></tr>
-    <tr><td style="text-align:center;color:#dc2626;font-weight:700;">3</td><td>⚠️ 补单在同一设备/IP</td><td>判虚假交易，账号降权</td></tr>
-    <tr><td style="text-align:center;color:#dc2626;font-weight:700;">4</td><td>⚠️ 重复铺货（完全相同的图/文案）</td><td>判定重复，仅保留一条</td></tr>
-    <tr><td style="text-align:center;color:#dc2626;font-weight:700;">5</td><td>⚠️ 回复不及时（超 5 分钟）</td><td>权重下降，营业额差 2.5 倍</td></tr>
+<!-- ══ 复盘重点 ══ -->
+<div class="day" id="review">
+  <h2>📊 复盘重点</h2>
+  <p style="margin-bottom:14px;">闲鱼运营的 10 条核心检查项。每天实操前花 3 分钟过一遍，哪个没做到优先补哪个。</p>
+  <table>
+    <tr><th style="width:26%;">关键点</th><th>一句话</th><th style="width:36px;">自检</th></tr>
+    <tr><td><b>点击率 ≥ 8%</b></td><td>首日CTR不过8%直接换主图，不要等</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>2小时动态分配</b></td><td>闲鱼每2小时重分配流量，必须持续回复/擦亮维持权重</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>响应速度 ≤ 5分钟</b></td><td>考核红线，5分钟和10分钟以上营业额差2.5倍</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>一机一卡一号</b></td><td>防关联铁律，同WiFi下多号=连坐封号</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>人设"若即若离"</b></td><td>个人卖家人设天然降低买家防御心</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>补单比例 ≤ 30%</b></td><td>补单必须独立设备+模拟真实行为路径</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>严禁违禁词</b></td><td>不用"全新""100%正品"，用图片暗示代替</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>中低价，不做绝对低价</b></td><td>起号低于竞品10-15%，但要保利润</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>话术代入人设</b></td><td>"小哥哥我在上课"比官方话术成交率高8.5倍</td><td style="text-align:center;">☐</td></tr>
+    <tr><td><b>每日数据全记录</b></td><td>台账记录曝光/CTR/成交，运营据此决策</td><td style="text-align:center;">☐</td></tr>
   </table>
-
-  <div class="callout danger">
-    <strong>💡 讲师口诀：</strong>"我讲给你听，我做给你看，你做给我看——鉴定追踪，大部分人要 3-4 遍才能做对。不要觉得讲一遍就够了，以李泽群为例，全职都能全错。"
-  </div>
-
-  <p style="color:#991b1b;font-size:0.85em;"><strong>→ 讲完后让学员现场拍照留存，然后进入下一步。</strong></p>
 </div>
 
-<!-- ══ 人设包装 ══ -->
-<div class="day" id="persona">
-  <h2>👤 人设包装 <span class="demo-note">需配图</span></h2>
+<!-- ══ DAY 1 ══ -->
+<div class="day" id="d1">
+  <h2>Day 1 · 搭地基</h2>
+  <span class="date-tag">不发布，只准备</span>
 
   <div class="focus-box">
-    <strong>🔥 要求：</strong>≥3 种人设，每个账号一个，图文形式展示。<br>
-    讲师准备好截图链接，点进去展示不同人设。
+    <strong>🔥 今天重点</strong>
+    规则红线 → 账号准备（3个）→ 人设包装 → 刷对标 → 选品逻辑 → 3个商品草稿
   </div>
 
-  <div class="img-placeholder">
-    <strong>📸 [配图：人设截图 1 — 体育生]</strong><br>
-    昵称：打球的阿杰 / 签名：球馆存货清一清<br>
-    头像：打球时的自拍 / 动态：2条日常训练
+  <!-- 规则红线 - 新增 -->
+  <h3 id="d1-rules" style="color:#dc2626;">🚨 规则红线 <span class="demo-note">需演示</span></h3>
+  <div class="callout danger">
+    <strong>开篇第一讲。</strong>让学员拍照留存。记住：你讲给他听，你做给他看，他做给你看——大部分人至少要做 3-4 遍才能做对。
   </div>
   <div class="img-placeholder">
-    <strong>📸 [配图：人设截图 2 — 球馆老板]</strong><br>
-    昵称：羽球馆老王 / 签名：馆里货太多了出一点<br>
-    头像：馆内场景 / 动态：球馆日常
+    <strong>📸 [配图：红底白字弹窗]</strong><br>
+    标题「闲鱼运营 · 绝对不能触碰的 5 条红线」
   </div>
-  <div class="img-placeholder">
-    <strong>📸 [配图：人设截图 3 — 教练/爱好者]</strong><br>
-    昵称：小杨教练 / 签名：训练多了用不完<br>
-    头像：教学场景 / 动态：带学员训练
-  </div>
-
   <table>
-    <tr><th>要素</th><th>要求</th></tr>
-    <tr><td>人设定位</td><td>与品类匹配，选用真实身份（参考上方例子）</td></tr>
-    <tr><td>昵称</td><td>AI（豆包/元宝）生成带关键词的名字，可爱有记忆点</td></tr>
-    <tr><td>签名</td><td>隐晦引流："球馆清仓""训练多了用不完"</td></tr>
-    <tr><td>头像/动态</td><td>真实感强，非网图；发 2-3 条日常动态</td></tr>
+    <tr><th style="width:36px;">#</th><th>红线</th><th>后果</th></tr>
+    <tr><td style="text-align:center;color:#dc2626;font-weight:700;">1</td><td>同WiFi下多号操作</td><td>连坐封号，全部阵亡</td></tr>
+    <tr><td style="text-align:center;color:#dc2626;font-weight:700;">2</td><td>使用违禁词（"全新""正品保证"等）</td><td>限流/下架/封号</td></tr>
+    <tr><td style="text-align:center;color:#dc2626;font-weight:700;">3</td><td>补单在同一设备/IP</td><td>判虚假交易，账号降权</td></tr>
+    <tr><td style="text-align:center;color:#dc2626;font-weight:700;">4</td><td>重复铺货（完全相同的图/文案）</td><td>判定重复，仅保留一条</td></tr>
+    <tr><td style="text-align:center;color:#dc2626;font-weight:700;">5</td><td>回复不及时（超 5 分钟）</td><td>权重下降，营业额差 2.5 倍</td></tr>
   </table>
 
-  <div class="callout tip">
-    <strong>💡 讲师提示：</strong>人设若即若离——个人卖家人设天然降低买家防御心。不要写太官方，越像真实个人越好。
-  </div>
-</div>
-
-<!-- ══ 刷对标 ══ -->
-<div class="day" id="benchmark">
-  <h2>🎯 刷对标（养号） <span class="demo-note">需配图文</span></h2>
-
-  <div class="img-placeholder">
-    <strong>📸 [配图：刷对标的完整图文步骤]</strong><br>
-    上方截图（闲鱼搜索页/商品详情页）<br>
-    下方文字步骤 1-2-3-4（类似电竞座椅示例）
-  </div>
-
-  <h3>操作步骤（编号引导）</h3>
-  <ol>
-    <li><b>搜关键词</b> → 搜索你的品类核心词，看竞品排名</li>
-    <li><b>点"我想要"</b> → 每天点 10-15 个</li>
-    <li><b>收藏</b> → 收藏 5-8 个商品</li>
-    <li><b>浏览详情页</b> → 30 秒以上，模拟真实行为</li>
-    <li><b>咨询竞品</b> → 问 2-3 家，收集话术模板</li>
-  </ol>
-
-  <div class="callout warn">
-    <strong>⏱ 每号每天刷 30 分钟+。</strong>刷对标不是没用——它是给你的账号打标签，让系统识别你卖什么的。
-  </div>
-</div>
-
-<!-- ══ 品类研究/选品逻辑 ══ -->
-<div class="day" id="category">
-  <h2 class="gold-title">📦 品类研究 · 选品逻辑</h2>
-
-  <div class="img-placeholder">
-    <strong>📸 [配图：选品逻辑分类图]</strong><br>
-    三类举例 + 供应链分析要点
-  </div>
-
-  <h3>选品三要素</h3>
-  <table class="gold-table">
-    <tr><th>选品逻辑</th><th>核心问题</th><th>举例</th></tr>
-    <tr><td><b>有出单记录</b></td><td>同类品近7天有人出单吗？</td><td>体育用品、母婴用品、数码配件</td></tr>
-    <tr><td><b>利润 ≥ 40%</b></td><td>除去运费和成本，净利够吗？</td><td>羽毛球/球拍/收纳包</td></tr>
-    <tr><td><b>有差异空间</b></td><td>你能做和别人不一样的点吗？</td><td>主图风格/打包方式/话术</td></tr>
-  </table>
-
-  <h3>供应链分析逻辑</h3>
+  <h3 id="d1-hw">① 硬件隔离（防关联铁律）</h3>
   <ul>
-    <li><b>货源渠道</b>：1688、拼多多、线下批发市场</li>
-    <li><b>成本控制</b>：单件成本 + 运费 + 包装 + 损耗</li>
-    <li><b>退货率</b>：预估退货率，算进成本</li>
-    <li><b>补货周期</b>：供应商发货速度，能不能跟得上</li>
+    <li><b>一机一卡一号</b>：不同账号不同设备、不同运营商SIM卡</li>
+    <li>独立设备 + 独立网络 + 独立支付宝收款</li>
+    <li>一个人最多3个支付宝 = 3个闲鱼店</li>
+    <li>绝对禁止多个账号连同一个WiFi——连坐封号</li>
   </ul>
 
+  <h3 id="d1-persona">② 账号包装（立人设）<span class="demo-note">需配图</span></h3>
+  <p>要求：<b>≥3 种人设</b>，每个账号一个，图文形式展示。</p>
+  <div class="img-placeholder">
+    <strong>📸 [配图：3 种人设截图]</strong><br>
+    例：体育生 / 球馆老板 / 教练，每个截图+标注
+  </div>
   <table>
-    <tr><th>品类举例</th><th>选品要点</th><th>利润参考</th></tr>
-    <tr><td>🏸 体育用品（羽毛球/拍）</td><td>品牌货+配件，消耗品复购高</td><td>40-60%</td></tr>
+    <tr><th>要素</th><th>要求</th></tr>
+    <tr><td>人设定位</td><td>与品类匹配（体育生/球馆老板/教练等）</td></tr>
+    <tr><td>昵称</td><td>AI（豆包/元宝）生成带关键词的名字，可爱有记忆点</td></tr>
+    <tr><td>签名</td><td>隐晦引流："球馆清仓"、"训练多了用不完"</td></tr>
+    <tr><td>头像/动态</td><td>真实感强，非网图；发2-3条日常动态</td></tr>
+  </table>
+
+  <h3 id="d1-browse">③ 刷对标（养号）<span class="demo-note">需配图文</span></h3>
+  <div class="img-placeholder">
+    <strong>📸 [配图：刷对标完整图文步骤 1-2-3-4]</strong><br>
+    上方截图（闲鱼搜索页），下方编号步骤
+  </div>
+  <ol>
+    <li>搜关键词 → 看竞品排名</li>
+    <li>每天点 10-15 个"我想要"，收藏 5-8 个商品，浏览详情页 30 秒+</li>
+    <li>咨询 2-3 个竞品，收集话术模板</li>
+    <li><b>每号每天刷 30 分钟+</b> — 给账号打标签</li>
+  </ol>
+
+  <h3 id="d1-category">④ 品类研究 / 选品逻辑</h3>
+  <table>
+    <tr><th>选品逻辑</th><th>核心问题</th></tr>
+    <tr><td>有出单记录</td><td>同类品近7天有人出单吗？</td></tr>
+    <tr><td>利润 ≥ 40%</td><td>除去运费和成本，净利够吗？</td></tr>
+    <tr><td>有差异空间</td><td>你能做和别人不一样的点吗？</td></tr>
+  </table>
+  <table>
+    <tr><th>品类举例</th><th>要点</th><th>利润参考</th></tr>
+    <tr><td>🏸 体育用品</td><td>品牌货+配件，消耗品复购高</td><td>40-60%</td></tr>
     <tr><td>🍼 母婴用品</td><td>必须品，家长舍得花钱</td><td>50-70%</td></tr>
     <tr><td>📱 数码配件</td><td>品类多，需求量大</td><td>30-50%</td></tr>
   </table>
+  <p><b>供应链分析：</b>货源渠道（1688/拼多多/线下）→ 成本控制 → 预估退货率 → 补货周期</p>
 
-  <div class="callout info">
-    <strong>💡 讲师话术：</strong>"你不一定要选这些，但这是让你们理解选品的逻辑。只要能回答上面三个核心问题，什么品都能做。"
-  </div>
-</div>
-
-<!-- ══ 每日发布草稿 ══ -->
-<div class="day" id="publish">
-  <h2>📤 每日发布草稿 <span class="demo-note">需演示</span></h2>
-
-  <div class="focus-box">
-    <strong>🔥 每天 2 个草稿。</strong>讲师投屏自己的手机，在屏幕上演示一遍完整操作。<br>
-    学员跟着做，做完检查。
-  </div>
-
+  <h3 id="d1-draft">⑤ 准备发布草稿</h3>
+  <p><b>每个账号准备至少2个商品草稿，Day1只准备不发布。</b><span class="demo-note" style="background:#a855f7;">需投屏演示</span></p>
   <div class="callout demo">
-    <strong>📱 讲师操作流程（投屏演示）：</strong><br>
-    1. 切出投屏 → 打开自己手机闲鱼APP<br>
-    2. 完整做一个草稿：拍照/选图/写文案/定价/标标签<br>
-    3. 让学员跟着操作 → 做完逐个检查<br>
-    4. "你们做完没有？做完了过来检查"
+    <strong>📱 讲师操作：</strong>投屏自己手机 → 完整做一个草稿演示 → 学员跟着做 → 逐个检查
   </div>
-
-  <h3>草稿要素</h3>
   <table>
     <tr><th>要素</th><th>要求</th></tr>
-    <tr><td>标题</td><td>品牌词+产品词+核心卖点+场景+人群词，12字左右，AI生成</td></tr>
-    <tr><td>主图</td><td>高清 + 个人手写纸条水印（防盗图 + 真实感）</td></tr>
-    <tr><td>文案</td><td>个卖口吻（"买多了用不上"），抄同行→AI改</td></tr>
-    <tr><td>定价</td><td>低于竞品 10-15%，不做绝对低价（触风控）</td></tr>
-    <tr><td>标签</td><td>选相关品类标签</td></tr>
+    <tr><td>标题</td><td>品牌词+产品词+核心卖点+场景+人群词，12字左右。用AI生成</td></tr>
+    <tr><td>主图</td><td>高清 + 个人手写纸条水印（防盗图）</td></tr>
+    <tr><td>文案</td><td>个人卖家口吻（"买多了用不上"），抄同行→AI改</td></tr>
+    <tr><td>定价</td><td>低于竞品10-15%，不做绝对低价（触发风控）</td></tr>
+    <tr><td>标签</td><td>选择相关品类标签</td></tr>
   </table>
 
-  <div class="callout warn">
-    <strong>⚠️ 同品不同账号必须换主图</strong>（不同角度/背景）+ 微调定价（110/115/105 三档）+ 改文案关键词 — 避免判定重复铺货。
-  </div>
+  <div class="deadline">✅ 死线：红线已记 + 账号备好 + 人设包装完 + 刷对标做完 + 选品确认 + 3个商品草稿</div>
 </div>
 
-<!-- ══ 第一次数据检查 ══ -->
-<div class="day" id="data1">
-  <h2>📊 第一次数据检查（12:00 中午） <span class="demo-note">需配图</span></h2>
-
-  <div class="img-placeholder">
-    <strong>📸 [配图：闲鱼数据页面截图]</strong><br>
-    圈出「曝光」「点击率」「我想要」在哪个位置看
-  </div>
-
-  <table>
-    <tr><th>检查项</th><th>合格线</th><th>不合格 → 动作</th></tr>
-    <tr><td>是否有曝光</td><td>50+</td><td>标题/主图问题，下午调整</td></tr>
-    <tr><td>点击率 (CTR)</td><td>≥ 8%</td><td>低于 → 换主图</td></tr>
-    <tr><td>"我想要"</td><td>≥ 3 个</td><td>价格或需求问题</td></tr>
-  </table>
-
-  <div class="callout info">
-    <strong>⏰ 手机订闹钟：</strong>学员设 12:00 闹钟，检查 + 做报告（截图发群里）。
-  </div>
-</div>
-
-<!-- ══ 第二次数据检查 ══ -->
-<div class="day" id="data2">
-  <h2>📊 第二次数据检查（20:00 晚上）+ 补单决策</h2>
+<!-- ══ DAY 2 ══ -->
+<div class="day" id="d2">
+  <h2>Day 2 · 发布 + 看数据</h2>
+  <span class="date-tag">第一天实操，铺量+测数据</span>
 
   <div class="focus-box">
-    <strong>🔥 判断流量池状态：</strong><br>
-    曝光 CTR ≥ 8% → 第二天必涨曝光，只是几千或一两万而已<br>
-    曝光 &lt; 100 → 直接放弃，不等了
+    <strong>🔥 今天重点</strong>
+    早7:30上架（每号2个）→ 中午12:00看数据（设闹钟） → 晚20:00复盘 → 判断是否补单
   </div>
 
+  <h3 id="d2-pub">① 早上批量发布</h3>
+  <p><b>最佳发布时段：07:30 - 09:00</b>（通勤早高峰）</p>
+  <ul>
+    <li>同品不同账号：<b>换主图</b>（不同角度/背景），不要完全一样</li>
+    <li>同品不同账号：<b>微调定价</b>（110/115/105 分三档）</li>
+    <li>文案改几个关键句，避免判定重复铺货</li>
+    <li>标题关键词差异化（一个突出"耐打"，一个突出"飞行稳定"）</li>
+  </ul>
+
+  <h3 id="d2-data">② 数据检查<span class="demo-note">需配图</span></h3>
+  <div class="img-placeholder">
+    <strong>📸 [配图：闲鱼数据页面截图]</strong><br>
+    圈出「曝光」「点击率」「我想要」在哪里看
+  </div>
+  <h4>中午 12:00 第一次 <span style="color:#dc2626;">⏰ 设闹钟</span></h4>
   <table>
-    <tr><th>检查项</th><th>合格线</th><th>不合格 → 动作</th></tr>
-    <tr><td>曝光增长</td><td>持续增长</td><td>停滞 → 考虑补单</td></tr>
-    <tr><td>点击率</td><td>≥ 8%</td><td>未达标 → 明天优化</td></tr>
-    <tr><td>收藏 / 咨询</td><td>收藏 ≥ 5，咨询 ≥ 1</td><td>图片不够吸引/被动</td></tr>
+    <tr><th>检查项</th><th>合格线</th><th>不合格→动作</th></tr>
+    <tr><td>是否有曝光</td><td>50+</td><td>标题/主图问题，下午调整</td></tr>
+    <tr><td>点击率</td><td>≥ 8%</td><td>低于→换主图</td></tr>
+    <tr><td>"我想要"</td><td>≥ 3个</td><td>价格或需求问题</td></tr>
+  </table>
+  <p style="color:#64748b;font-size:0.82em;">→ 检查后做报告（截图发群），运营看台账记录</p>
+
+  <h4>晚上 20:00 第二次</h4>
+  <table>
+    <tr><th>检查项</th><th>合格线</th><th>不合格→动作</th></tr>
+    <tr><td>曝光增长</td><td>持续增长</td><td>停滞→考虑补单</td></tr>
+    <tr><td>点击率</td><td>≥ 8%</td><td>未达标→明天优化</td></tr>
+    <tr><td>收藏/咨询</td><td>收藏≥5，咨询≥1</td><td>图片不够/被动</td></tr>
   </table>
 
-  <h3>流量池判定标准</h3>
+  <h3 id="d2-budan">③ 安全补单（如需）</h3>
+  <p class="callout danger"><strong>⚠️ 铁律</strong>补单小号必须独立设备+独立网络。同WiFi下补单=自杀。自然成交:补单 ≥ 7:3</p>
+  <div class="img-placeholder">
+    <strong>📸 [配图：补单完整图文步骤]</strong><br>
+    编号 1-2-3-4 引导，已有补单文档嵌入
+  </div>
+  <ol>
+    <li>小号搜索关键词找到自己商品</li>
+    <li>浏览2-3个竞品页面（30秒+）</li>
+    <li>回到自己商品浏览详情（1分钟+）</li>
+    <li>点击"我想要"或收藏</li>
+    <li>如需补成交：咨询→议价→下单→正常走完</li>
+    <li>同一个品一天不超过1单</li>
+  </ol>
+  <p><b>补单量参考：</b>曝光小 → 先投点流量 → 再补。正常链接每号每天 ≥ 2 单（自然+补单合计）。</p>
+
+  <div class="deadline">✅ 死线：早上发布 + 两轮数据看完 + 补单决策 + 数据记录到台账</div>
+</div>
+
+<!-- ══ DAY 3 ══ -->
+<div class="day" id="d3">
+  <h2>Day 3 · 破流量池 + 冲刺出单</h2>
+  <span class="date-tag">胜负手——晋级+首单</span>
+
+  <div class="focus-box">
+    <strong>🔥 今天重点</strong>
+    判断流量池 → 破池动作（擦亮/优化/补单） → 冲刺首单 → 优化未达标链接
+  </div>
+
+  <h3 id="d3-pool">① 判断流量池状态</h3>
+  <p><b>核心标准：</b>72小时测试期，但 8~9 成在 24 小时就能体现。曝光 &lt; 100 → 直接放弃，不等第三天爆。</p>
   <table>
     <tr><th>曝光量</th><th>判定</th><th>动作</th></tr>
     <tr><td>&lt; 100</td><td style="color:#dc2626;">❌ 直接放弃</td><td>下架重发或换品</td></tr>
-    <tr><td>200-500</td><td style="color:#f59e0b;">⚠️ 观察</td><td>优化主图/标题</td></tr>
+    <tr><td>200-500</td><td style="color:#f59e0b;">⚠️ 观察</td><td>优化主图/标题，可留</td></tr>
     <tr><td>≥ 500</td><td style="color:#16a34a;">✅ 正常</td><td>内容可用，继续观察</td></tr>
     <tr><td>≥ 1000</td><td style="color:#16a34a;">✅ 可用</td><td>投 5.9 元测 ROI，预期 3 倍+</td></tr>
   </table>
 
-  <div class="callout warn">
-    <strong>⚡ 补单决策：</strong>曝光够但没成交 → 补单。一个链接 ≥ 2 单，配合曝光量级调整。补不动 → 先投点流量再补。
-  </div>
+  <h4>晋级强化动作</h4>
+  <ul>
+    <li>早上擦亮所有在售商品</li>
+    <li>全天消息秒回（响应速度红线，5分钟内）</li>
+    <li>对未达标链接做优化：<b>卡关键词 → 卡地域 → 卡价格</b></li>
+    <li>补单 + 运营推进自然成交</li>
+  </ul>
+
+  <h3 id="d3-order">② 冲刺出单</h3>
+  <table>
+    <tr><th>环节</th><th>优化动作</th><th>效果</th></tr>
+    <tr><td>点击→浏览</td><td>主图增加吸引力</td><td>提升CTR</td></tr>
+    <tr><td>浏览→咨询</td><td>文案加互动引导</td><td>提升咨询量</td></tr>
+    <tr><td>咨询→成交</td><td>话术优化+快速回复+适当让价</td><td>提升成交率</td></tr>
+    <tr><td>下单后</td><td>及时发货+主动告知物流</td><td>提升好评率</td></tr>
+  </table>
+  <p class="callout warn"><strong>⚡ 今天目标：至少出1单。</strong>自然成交最好，不行安全补1单。有成交的链接系统会更积极推流。</p>
+
+  <div class="deadline">✅ 死线：流量池判断 + 未达标链接优化 + 至少1单（自然或安全补单）</div>
 </div>
 
-<!-- ══ 安全补单 ══ -->
-<div class="day" id="budan">
-  <h2>🛡️ 安全补单操作</h2>
-
-  <div class="callout danger">
-    <strong>⚠️ 铁律：</strong>补单小号必须独立设备 + 独立网络。同WiFi下补单 = 自杀。自然成交:补单 ≥ 7:3。
-  </div>
-
-  <div class="img-placeholder">
-    <strong>📸 [配图：补单图文步骤]</strong><br>
-    已有补单文档嵌入此处——编号 1-2-3-4 引导式
-  </div>
-
-  <ol>
-    <li>小号搜关键词找到自己商品</li>
-    <li>浏览 2-3 个竞品页面（30 秒+）</li>
-    <li>回到自己商品浏览详情（1 分钟+）</li>
-    <li>点击"我想要"或收藏</li>
-    <li>如需补成交：咨询 → 议价 → 下单 → 正常走完流程</li>
-    <li>同一个品一天不超过 1 单</li>
-  </ol>
-
-  <div class="callout tip">
-    <strong>📊 补单量参考：</strong><br>
-    曝光小 → 先投点流量 → 再补一单提权重。<br>
-    正常链接每号每天 ≥ 2 单（自然+补单合计）。
-  </div>
-</div>
-
-<!-- ══ 优化未达标链接 ══ -->
-<div class="day" id="optimize">
-  <h2>⚡ 优化未达标链接</h2>
+<!-- ══ DAY 4 ══ -->
+<div class="day" id="d4">
+  <h2>Day 4 · 运营优化</h2>
+  <span class="date-tag">把一单变成持续出单</span>
 
   <div class="focus-box">
-    <strong>🔥 核心判断标准：</strong>72 小时测试期，但 8~9 成在 24 小时就能体现。<br>
-    曝光 &lt; 100 → 直接斩掉，不要等第三天爆。
+    <strong>🔥 今天重点</strong>
+    账号权重 → 话术系统化 → 想要收入模式 → 客户回访 → 继续上新品
   </div>
 
-  <h3>优化三步走</h3>
-  <ol>
-    <li><b>卡关键词</b> → 搜你的关键词，看自己在不在前列。不在 → 换标题</li>
-    <li><b>卡地域</b> → 看同地域竞品，是不是比你好。好 → 学他的主图/定价</li>
-    <li><b>卡价格</b> → 同行突然降价？有人在黑你。考虑微调或换品</li>
-  </ol>
-
-  <div class="callout danger">
-    <strong>🚨 卡关键词找不到 + 卡地域找不到 → 大概率废了。</strong><br>
-    排除老师教的问题后，就是大量竞品在围剿你。价格降 5 毛别人都可能掉下来——你需要差异化突围。
-  </div>
-
-  <table>
-    <tr><th>问题</th><th>动作</th></tr>
-    <tr><td>曝光低（&lt;100）</td><td>下架重发 or 换品</td></tr>
-    <tr><td>有曝光无点击</td><td>换主图（第一张最关键）</td></tr>
-    <tr><td>有点击无咨询</td><td>改文案 + 降价试探</td></tr>
-    <tr><td>有咨询无成交</td><td>话术问题 → 抄竞品话术</td></tr>
-  </table>
-</div>
-
-<!-- ══ 话术优化 ══ -->
-<div class="day" id="talk">
-  <h2>💬 话术优化</h2>
-
+  <!-- 账号权重 - 新增 -->
+  <h3 id="d4-weight">① 账号权重 <span class="demo-note">需配图</span></h3>
   <div class="img-placeholder">
-    <strong>📸 [配图：话术截图示例]</strong><br>
-    找排行头部前几家 + 卡关键词卡地域的头部商家<br>
-    分别截图话术，标注"这些话术你可以直接 copy"
+    <strong>📸 [配图1：显性权重 vs 隐性权重]</strong><br>
+    配图2：个人卖家 vs 专业卖家
   </div>
-
-  <h3>话术来源（两种）</h3>
-  <table>
-    <tr><th>来源</th><th>说明</th></tr>
-    <tr><td>🏆 全国头部前几家</td><td>去开店的前几名商家，copy 他们的回复风格</td></tr>
-    <tr><td>📍 你该地域的头部</td><td>就是你即将攻击的对手，学他们的本地化话术</td></tr>
-  </table>
-
-  <h3>常见场景话术</h3>
-  <table>
-    <tr><th>场景</th><th>话术模板</th></tr>
-    <tr><td>首次咨询</td><td>"哈喽~这个羽毛球拍上周买的就打了一次，不太适合我"</td></tr>
-    <tr><td>议价</td><td>"小哥哥，真的最低了再低要亏邮费了😭 送你几个球行不？"</td></tr>
-    <tr><td>发货延迟</td><td>"不好意思课多，晚上给你发，发的时候拍视频~"</td></tr>
-    <tr><td>求好评</td><td>"亲如果觉得 ok 方便给个好评吗？谢谢你呀~"</td></tr>
-  </table>
-
-  <div class="callout tip">
-    <strong>💡 方法：</strong>去 5-10 家竞品店聊一遍 → 复制好用的 → AI 优化成自己的快捷回复库。
-  </div>
-</div>
-
-<!-- ══ 账号权重 ══ -->
-<div class="day" id="weight">
-  <h2 class="purple-title">⚖️ 账号权重 <span class="demo-note">需配图</span></h2>
-
-  <div class="img-placeholder">
-    <strong>📸 [配图 1：显性权重 vs 隐性权重]</strong><br>
-    左侧：显性权重（芝麻信用分、实名认证、好评率）<br>
-    右侧：隐性权重（活跃度、回复速度、出单率、账号年龄）
-  </div>
-
-  <div class="img-placeholder">
-    <strong>📸 [配图 2：个人卖家 vs 专业卖家]</strong><br>
-    个人卖家 → 看哪几个维度（无工作台，靠自然数据）<br>
-    专业卖家 → 直接看工作台数据面板
-  </div>
-
   <table>
     <tr><th>权重类型</th><th>包含</th><th>提升方法</th></tr>
     <tr><td><b>显性权重</b></td><td>芝麻信用分、实名认证、好评率</td><td>认证完善 + 引导好评</td></tr>
     <tr><td><b>隐性权重</b></td><td>活跃度、回复速度、出单率、账号年龄</td><td>每天登录+秒回+持续出单+养号</td></tr>
   </table>
-
   <table>
     <tr><th>账号类型</th><th>看什么</th><th>优势</th></tr>
     <tr><td>👤 个人卖家</td><td>曝光量、点击率、"我想要"数</td><td>买家防御心低，人设占优</td></tr>
     <tr><td>🏢 专业卖家</td><td>工作台数据（完整面板）</td><td>数据可视化，便于运营决策</td></tr>
   </table>
-</div>
 
-<!-- ══ 想要/闪亮收入 ══ -->
-<div class="day" id="xiangyao">
-  <h2 class="gold-title">💰 想要（闪亮） — 固定收入</h2>
-
-  <div class="callout dollar">
-    <strong>💵 核心：</strong>想要 = 2 毛/个，零成本纯利润。学员配合做成果账号，15 天冲到全国前 10。<br>
-    各带班老师统计谁拿了多少想要 → 算钱。
+  <h3 id="d4-talk">② 客服话术系统化 <span class="demo-note">需配图</span></h3>
+  <div class="img-placeholder">
+    <strong>📸 [配图：话术截图]</strong><br>
+    全国头部 + 本地地域头部商家的话术对比
   </div>
-
-  <h3>为什么重要</h3>
+  <p><b>话术来源（两种）：</b></p>
   <ul>
-    <li>我们卖想要给学员 → 我们的成本 = 0 → 纯捡钱</li>
-    <li>学员用想要做成果账号 → 数据好看 → 学员满意度高</li>
-    <li>我们要保证：15 天/月内做到全国前 10</li>
+    <li>🏆 全国头部前几家 → copy 回复风格</li>
+    <li>📍 你该地域的头部 → 就是你即将攻击的对手，学他们的本地化话术</li>
   </ul>
-
-  <h3>操作方式</h3>
-  <ol>
-    <li>学员每天固定拿想要的量（讲师分配）</li>
-    <li>配合闪亮一起使用，打造账号权重</li>
-    <li>讲师统计谁哪班拿了多少，月底算账</li>
-  </ol>
-
   <table>
-    <tr><th>角色</th><th>动作</th></tr>
-    <tr><td>培训老师</td><td>讲课中着重讲"想要"的重要性（2 分钟）</td></tr>
-    <tr><td>带班运营</td><td>统计各学员想要使用量</td></tr>
-    <tr><td>学员</td><td>配合在账号上使用想要/闪亮</td></tr>
+    <tr><th>场景</th><th>话术模板</th></tr>
+    <tr><td>首次咨询</td><td>"哈喽~这个球拍上周买的，就打了一次，不太适合我"</td></tr>
+    <tr><td>议价</td><td>"小哥哥，真的最低了，再低要亏邮费了😭 送你几个球行不？"</td></tr>
+    <tr><td>发货延迟</td><td>"不好意思课多，晚上给你发，发的时候拍视频~"</td></tr>
+    <tr><td>求好评</td><td>"亲如果觉得ok方便给个好评吗？谢谢你呀~"</td></tr>
   </table>
 
-  <div class="callout tip">
-    <strong>💰 收入模型：</strong>卖 20 个想要 = 成本 0 元，纯利润。卖越多赚越多。固定收入来源。<br>
-    比卖课还稳——学员越用想要，数据越好，越相信你。
+  <h3 id="d4-xiangyao">③ 想要（闪亮）— 固定收入</h3>
+  <div class="callout dollar">
+    <strong>💰 想要 = 2 毛/个，零成本纯利润。</strong>学员配合做成果账号 → 15 天冲到全国前 10。各带班老师统计分账。
   </div>
+  <ul>
+    <li>学员每天拿想要量（讲师分配）</li>
+    <li>配合闪亮使用，打造账号权重</li>
+    <li>带班老师统计谁哪班拿了多少 → 月底算账</li>
+    <li>讲师讲课中着重讲"想要"的重要性（2 分钟洗脑）</li>
+  </ul>
+  <table>
+    <tr><th>谁</th><th>做什么</th></tr>
+    <tr><td>讲师</td><td>讲重要性，分配每日想要量</td></tr>
+    <tr><td>运营</td><td>统计数据，月底分账</td></tr>
+    <tr><td>学员</td><td>配合使用想要/闪亮</td></tr>
+  </table>
+
+  <h3 id="d4-return">④ 客户回访流程</h3>
+  <p>发货→告知单号 → 物流→关注进度 → 签收→问候+求好评 → 好评→感谢+邀复购</p>
+
+  <div class="deadline">✅ 死线：账号权重理解 + 话术库建好 + 回访体系 + 想要模式跑通 + 上新</div>
 </div>
 
-<!-- ══ 全面复盘 ══ -->
-<div class="day" id="review">
-  <h2>📋 全面复盘（Day 5）</h2>
+<!-- ══ DAY 5 ══ -->
+<div class="day" id="d5">
+  <h2>Day 5 · 复盘 + 定方向</h2>
+  <span class="date-tag">不是结束，是系统化的起点</span>
 
+  <div class="focus-box">
+    <strong>🔥 今天重点</strong>
+    全面复盘 → 产品迭代决策 → 建立SOP → 制定下周计划
+  </div>
+
+  <h3 id="d5-review">① 全面复盘</h3>
   <table>
     <tr><th>维度</th><th>要问的问题</th></tr>
     <tr><td>产品</td><td>哪些品出单了？共同特征？哪些没动？要换品吗？</td></tr>
     <tr><td>运营</td><td>响应速度达标？补单安全？每日动作坚持了？</td></tr>
-    <tr><td>账号</td><td>3 个号哪个好哪个差？好的可复制？差的出什么问题？</td></tr>
-    <tr><td>利润</td><td>每单实际利润多少？整体利润率？有亏钱卖的品吗？</td></tr>
+    <tr><td>账号</td><td>3个号哪个好哪个差？好的可复制？差的出什么问题？</td></tr>
+    <tr><td>利润</td><td>每单实际利润多少？整体利润率？有亏钱在卖的品吗？</td></tr>
+  </table>
+  <p><b>台账记录：</b>所有数据记录到飞书多维表格。学员填提交表单，运营查看。</p>
+
+  <h3 id="d5-decision">② 产品迭代决策</h3>
+  <table>
+    <tr><th>决策</th><th>条件</th></tr>
+    <tr><td>淘汰</td><td>曝光&lt;100 且 优化后无效 → 下架</td></tr>
+    <tr><td>优化</td><td>有曝光无点击→换主图；有点击无咨询→改文案/降价</td></tr>
+    <tr><td>加码</td><td>出单稳定+好评率高→加库存+升级主图+加新款</td></tr>
+    <tr><td>上新</td><td>手上还有没发过的品→继续发，矩阵扩展</td></tr>
   </table>
 
-  <div class="callout info">
-    <strong>📊 复盘数据记录：</strong>所有数据记录到台账（飞书多维表格）。学员填提交表单，运营查看数据。<br>
-    "他们记录到台账是为了确认今天发了多少订单给了多少钱——我们会给一个表格，用飞书多维表格直接分享。"
-  </div>
-</div>
-
-<!-- ══ SOP + 下周计划 ══ -->
-<div class="day" id="sop">
-  <h2 class="green-title">📄 SOP 流程 + 下周计划</h2>
-
-  <h3>⑤ 建立 SOP</h3>
+  <h3>③ 建立SOP + 下周计划</h3>
   <ul>
-    <li>把 5 天每日动作写成标准流程，以后照做</li>
-    <li>每个环节标清：做什么 → 怎么做 → 检查什么</li>
-  </ul>
-
-  <h3>⑥ 下周计划</h3>
-  <ul>
-    <li>矩阵扩张方向？要不要试投流？（先投 20-50 元测成本）</li>
-    <li>内容端：小红书 / 抖音种草引流到闲鱼</li>
-    <li>上新计划：每个号再加 1-2 个链接</li>
-    <li>想要/闪亮收入目标定下来</li>
+    <li>把5天每日动作写成标准流程，以后照做</li>
+    <li>矩阵扩张方向？要不要试投流？（先投20-50元测成本）</li>
+    <li>内容端：小红书/抖音种草引流到闲鱼</li>
+    <li>上新计划 + 想要收入目标定下来</li>
   </ul>
 
   <div class="deadline">✅ 死线：复盘完成 + 产品决策 + SOP初版 + 下周计划 + 想要收入目标</div>
@@ -772,16 +658,16 @@
 
 <!-- ══ 检查清单 ══ -->
 <div class="day" id="checklist">
-  <h2>✅ 5 天执行检查清单</h2>
+  <h2>✅ 5天执行检查清单</h2>
   <p style="text-align:center;font-size:0.85em;color:#94a3b8;margin-bottom:16px;">每天做完一项就点一下 ☐</p>
 
   <h3>Day 1 · 准备日</h3>
   <ul class="checklist">
-    <li>☐ 读完规则红线（5条，拍照留存）</li>
+    <li>☐ 规则红线已记住并拍照</li>
     <li>☐ 硬件隔离确认（3账号各自独立设备+网络）</li>
-    <li>☐ 3个人设已确定（≥3种，截图标注）</li>
+    <li>☐ 3个账号人设已确定（≥3种，截图标注）</li>
     <li>☐ 刷对标养号完成（每号30分钟+）</li>
-    <li>☐ 品类研究到位（选品逻辑 + 供应链分析）</li>
+    <li>☐ 品类研究到位（选品逻辑+供应链分析）</li>
     <li>☐ 每号至少2个商品草稿已准备完毕</li>
   </ul>
 
@@ -792,26 +678,23 @@
     <li>☐ 晚上20:00第二次数据检查+记录台账</li>
     <li>☐ 根据数据决定是否补单</li>
     <li>☐ 完成今日运营基础动作</li>
-    <li>☐ 记录所有数据到台账</li>
   </ul>
 
-  <h3>Day 3 · 优化日</h3>
+  <h3>Day 3 · 冲刺日</h3>
   <ul class="checklist">
     <li>☐ 判断流量池状态（按曝光标准决定去留）</li>
     <li>☐ 擦亮所有在售商品</li>
     <li>☐ 对未达标链接做优化（卡关键词/卡地域/卡价格）</li>
     <li>☐ 执行补单（安全操作规范）</li>
-    <li>☐ 检查并优化快捷回复话术</li>
     <li>☐ 至少完成1单（自然成交或安全补单）</li>
   </ul>
 
-  <h3>Day 4 · 进阶日</h3>
+  <h3>Day 4 · 优化日</h3>
   <ul class="checklist">
-    <li>☐ 话术库建好（抄头部→改本地化→AI优化）</li>
-    <li>☐ 前3天数据复盘</li>
-    <li>☐ 对表现不佳的链接做调整</li>
     <li>☐ 理解账号权重（显性/隐性，个人/专业）</li>
+    <li>☐ 话术库建好（抄头部→改本地化→AI优化）</li>
     <li>☐ 熟悉想要/闪亮收入模式</li>
+    <li>☐ 建立客户回访体系</li>
     <li>☐ 继续上新链接（每号再加1-2个）</li>
   </ul>
 
@@ -849,7 +732,7 @@
   </table>
 </div>
 
-<p class="footer-note">闲鱼运营讲师手册 · 基于杨哥 26.5.28 培训内容整理 · 全品类适用</p>
+<p class="footer-note">闲鱼运营学习手册 · 基于2026年5月培训内容整理 · 杨哥修订 · 全品类适用</p>
 
 </div><!-- /main -->
 </div><!-- /content-wrapper -->
