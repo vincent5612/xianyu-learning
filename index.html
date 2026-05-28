@@ -8,13 +8,13 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, "PingFang SC", "SF Pro Display", "Noto Sans SC", "Microsoft YaHei", sans-serif;
-    background: linear-gradient(135deg, #f0f2f5 0%, #f5f7fa 100%);
+    background: #f8f6f0;
     color: #1d1d1f;
     line-height: 1.7;
     min-height: 100vh;
   }
   .hero {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f3460 100%);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     color: #fff;
     padding: 52px 20px 42px;
     text-align: center;
@@ -23,29 +23,31 @@
   }
   .hero::before {
     content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 20% 50%, rgba(59,130,246,0.15) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(99,102,241,0.1) 0%, transparent 60%);
+    background: radial-gradient(ellipse at 20% 50%, rgba(255,228,17,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(255,228,17,0.05) 0%, transparent 60%);
   }
-  .hero h1 { font-size: 2em; font-weight: 700; margin-bottom: 6px; background: linear-gradient(135deg, #fff 60%, #93c5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; position: relative; }
+  .hero h1 { font-size: 2em; font-weight: 700; margin-bottom: 6px; background: linear-gradient(135deg, #fff 60%, #ffe411); -webkit-background-clip: text; -webkit-text-fill-color: transparent; position: relative; }
   .hero .sub { opacity: 0.7; font-size: 0.9em; margin-bottom: 18px; position: relative; }
   .hero .formula {
     display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,228,17,0.1);
     backdrop-filter: blur(8px);
     border-radius: 40px;
     padding: 10px 22px;
     font-size: 0.95em;
     letter-spacing: 1px;
-    border: 1px solid rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,228,17,0.15);
     position: relative;
   }
-  .hero .formula span { color: #facc15; font-weight: 600; }
+  .hero .formula span { color: #ffe411; font-weight: 600; }
   .hero .formula .arr { color: rgba(255,255,255,0.3); }
+
+  /* ── TOP NAV ── */
   .top-nav {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(255,255,255,0.92);
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e8e4dc;
     overflow-x: auto;
     white-space: nowrap;
     padding: 0 12px;
@@ -53,74 +55,118 @@
     display: flex; align-items: center;
   }
   .top-nav::-webkit-scrollbar { display: none; }
-  .top-nav .inner { display: flex; gap: 2px; margin: 0 auto; }
+  .top-nav .inner { display: flex; gap: 1px; margin: 0 auto; }
   .top-nav a {
-    display: inline-block; padding: 8px 12px; font-size: 0.82em;
-    color: #64748b; text-decoration: none; border-bottom: 2px solid transparent;
+    display: inline-block; padding: 9px 12px; font-size: 0.8em;
+    color: #6b7280; text-decoration: none; border-bottom: 2px solid transparent;
     transition: all 0.2s; flex-shrink: 0;
   }
-  .top-nav a:hover { color: #1e293b; background: #f1f5f9; }
-  .top-nav a.active { color: #0f3460; border-bottom-color: #0f3460; font-weight: 600; }
-  .top-nav .tab-exam { color: #7c3aed; }
-  .top-nav .tab-exam.active { border-bottom-color: #7c3aed; color: #7c3aed; }
-  .content-wrapper { display: flex; max-width: 1280px; margin: 0 auto; padding: 0 12px; gap: 20px; }
+  .top-nav a:hover { color: #1e293b; background: #f5f3ee; }
+  .top-nav a.active { font-weight: 700; }
+
+  /* 标签卡颜色 */
+  .top-nav .tab-review.active { color: #0f3460; border-bottom-color: #0f3460; }
+  .top-nav .tab-d1.active { color: #dc2626; border-bottom-color: #dc2626; }
+  .top-nav .tab-d2.active { color: #ca8a04; border-bottom-color: #ca8a04; }
+  .top-nav .tab-d3.active { color: #16a34a; border-bottom-color: #16a34a; }
+  .top-nav .tab-d4.active { color: #7c3aed; border-bottom-color: #7c3aed; }
+  .top-nav .tab-d5.active { color: #0891b2; border-bottom-color: #0891b2; }
+  .top-nav .tab-check.active { color: #0f3460; border-bottom-color: #0f3460; }
+  .top-nav .tab-formula.active { color: #a16207; border-bottom-color: #a16207; }
+  .top-nav .tab-exam.active { color: #7c3aed; border-bottom-color: #7c3aed; }
+
+  .content-wrapper { display: flex; max-width: 1280px; margin: 0 auto; padding: 0 16px; gap: 20px; }
+
+  /* ── SIDEBAR ── */
   .sidebar {
     width: 200px; flex-shrink: 0; position: sticky; top: 50px;
     align-self: flex-start; padding: 16px 0;
     max-height: calc(100vh - 60px); overflow-y: auto; scrollbar-width: thin;
   }
   .sidebar::-webkit-scrollbar { width: 4px; }
-  .sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: #d4d0c8; border-radius: 4px; }
   .sidebar a {
     display: block; padding: 5px 8px 5px 14px; font-size: 0.82em;
-    color: #475569; text-decoration: none; border-left: 3px solid transparent;
+    color: #4b5563; text-decoration: none; border-left: 3px solid transparent;
     border-radius: 0 6px 6px 0; margin: 1px 0; transition: all 0.15s;
   }
-  .sidebar a:hover { background: #e2e8f0; color: #0f172a; }
-  .sidebar a.active { color: #0f3460; background: #dbeafe; border-left-color: #0f3460; font-weight: 600; }
+  .sidebar a:hover { background: #eeeae4; }
+  .sidebar a.active { font-weight: 600; background: #f0edf5; }
   .sidebar a.sub { padding-left: 24px; font-size: 0.78em; }
-  .sidebar .sec-title { font-size: 0.7em; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; padding: 12px 14px 4px; }
-  .sidebar .sec-title.exam { color: #0f3460; padding-top: 18px; border-top: 1px solid #e2e8f0; margin-top: 8px; }
+  .sidebar a.sb-review.active { border-left-color: #0f3460; color: #0f3460; background: #e8edf5; }
+  .sidebar a.sb-d1.active { border-left-color: #dc2626; color: #dc2626; background: #fef2f2; }
+  .sidebar a.sb-d2.active { border-left-color: #ca8a04; color: #854d0e; background: #fefce8; }
+  .sidebar a.sb-d3.active { border-left-color: #16a34a; color: #166534; background: #f0fdf4; }
+  .sidebar a.sb-d4.active { border-left-color: #7c3aed; color: #6b21a8; background: #faf5ff; }
+  .sidebar a.sb-d5.active { border-left-color: #0891b2; color: #155e75; background: #ecfeff; }
+  .sidebar .sec-title {
+    font-size: 0.7em; font-weight: 700;
+    color: #9ca3af; text-transform: uppercase;
+    letter-spacing: 1px; padding: 12px 14px 4px;
+  }
+  .sidebar .sec-title.exam { color: #7c3aed; padding-top: 18px; border-top: 1px solid #e8e4dc; margin-top: 8px; }
+
   .main { flex: 1; min-width: 0; padding: 20px 0 60px; }
   .day {
-    background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    padding: 20px 24px; margin-bottom: 16px;
+    background: #fff; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    padding: 22px 26px; margin-bottom: 18px;
   }
-  .day h2 { font-size: 1.15em; color: #0f172a; border-left: 4px solid #0f3460; padding-left: 12px; margin-bottom: 12px; }
-  .day h3 { font-size: 0.95em; color: #1e293b; margin: 16px 0 8px; }
-  .day h4 { font-size: 0.85em; color: #475569; margin: 12px 0 6px; font-weight: 600; }
+  .day h2 { font-size: 1.15em; color: #0f172a; border-left: 4px solid #0f3460; padding-left: 12px; margin-bottom: 14px; }
+  .day h3 {
+    font-size: 0.95em; color: #1e293b; margin: 20px 0 10px;
+    padding-bottom: 6px; border-bottom: 1px solid #f0ede8;
+  }
+  .day h4 { font-size: 0.85em; color: #475569; margin: 14px 0 8px; font-weight: 600; }
   .day p { margin-bottom: 8px; font-size: 0.88em; color: #334155; }
-  .day ul, .day ol { margin: 4px 0 10px 18px; font-size: 0.88em; color: #334155; }
-  .day li { margin-bottom: 3px; }
+  .day ul, .day ol { margin: 6px 0 14px 20px; font-size: 0.88em; color: #334155; }
+  .day li { margin-bottom: 4px; }
+
   .date-tag {
     display: inline-block; font-size: 0.75em; color: #64748b;
-    background: #f1f5f9; padding: 2px 10px; border-radius: 12px; margin-bottom: 10px;
+    background: #f5f3ee; padding: 2px 10px; border-radius: 12px; margin-bottom: 10px;
   }
   .focus-box {
-    background: #fef9c3; border-left: 4px solid #eab308;
-    border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 12px; font-size: 0.88em;
+    background: #fef9e7;
+    border-left: 4px solid #ffe411;
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px; margin-bottom: 16px; font-size: 0.88em;
   }
   .focus-box strong { color: #a16207; }
+
+  /* 内容区块分隔 */
+  .sec-block {
+    background: #faf9f7;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    border: 1px solid #f0ede8;
+  }
+  .sec-block h4:first-child { margin-top: 0; }
+
   .callout {
-    padding: 10px 14px; border-radius: 8px; margin-bottom: 10px; font-size: 0.85em;
+    padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; font-size: 0.85em;
   }
   .callout.danger { background: #fef2f2; border-left: 4px solid #dc2626; }
   .callout.warn { background: #fffbeb; border-left: 4px solid #f59e0b; }
   .callout.tip { background: #f0fdf4; border-left: 4px solid #22c55e; }
   .callout.info { background: #eff6ff; border-left: 4px solid #3b82f6; }
+
   .deadline {
-    background: linear-gradient(135deg, #052e16, #166534);
-    color: #fff; padding: 10px 14px; border-radius: 8px; font-size: 0.85em; margin-top: 14px;
+    background: linear-gradient(135deg, #1a3a2a, #166534);
+    color: #fff; padding: 12px 16px; border-radius: 10px; font-size: 0.85em; margin-top: 18px;
   }
-  table { width: 100%; border-collapse: collapse; font-size: 0.85em; margin: 8px 0 12px; }
-  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-  th { background: #f8fafc; color: #475569; font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.85em; margin: 8px 0 14px; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #e8e4dc; }
+  th { background: #faf9f7; color: #4b5563; font-weight: 600; font-size: 0.82em; }
+
   .img-placeholder {
-    background: #f1f5f9; border: 2px dashed #cbd5e1; border-radius: 8px;
-    padding: 20px; text-align: center; color: #94a3b8; font-size: 0.85em; margin: 8px 0 12px;
+    background: #faf9f7; border: 2px dashed #d4d0c8; border-radius: 10px;
+    padding: 18px; text-align: center; color: #9ca3af; font-size: 0.85em; margin: 10px 0;
   }
-  .img-placeholder strong { color: #64748b; }
-  .footer-note { text-align: center; font-size: 0.78em; color: #94a3b8; padding: 20px 0; }
+  .img-placeholder strong { color: #6b7280; }
+
+  .footer-note { text-align: center; font-size: 0.78em; color: #9ca3af; padding: 20px 0; }
   .back-to-top {
     position: fixed; bottom: 24px; right: 24px;
     width: 40px; height: 40px; border-radius: 50%; background: #0f3460; color: #fff;
@@ -128,8 +174,9 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.15); opacity: 0; pointer-events: none; transition: opacity 0.3s;
   }
   .back-to-top.visible { opacity: 1; pointer-events: auto; }
-  @media (max-width: 900px) { .sidebar { display: none; } .top-nav a { font-size: 0.75em; padding: 7px 8px; } .day { padding: 14px 16px; } }
-  @media (max-width: 420px) { .hero h1 { font-size: 1.5em; } .hero .formula { font-size: 0.78em; padding: 8px 14px; } table { font-size: 0.78em; } th, td { padding: 5px 6px; } }
+
+  @media (max-width: 900px) { .sidebar { display: none; } .top-nav a { font-size: 0.72em; padding: 7px 7px; } .day { padding: 16px; } }
+  @media (max-width: 420px) { .hero h1 { font-size: 1.4em; } .hero .formula { font-size: 0.7em; padding: 6px 12px; } table { font-size: 0.78em; } th, td { padding: 5px 6px; } }
 </style>
 </head>
 <body>
@@ -165,37 +212,37 @@
 
 <nav class="sidebar">
   <div class="sec-title">复盘</div>
-  <a href="#review">📊 复盘重点</a>
+  <a href="#review" class="sb-review">📊 复盘重点</a>
   <div class="sec-title">Day 1</div>
-  <a href="#d1">搭地基</a>
-  <a href="#d1-rules" class="sub">平台红线</a>
-  <a href="#d1-hw" class="sub">硬件隔离</a>
-  <a href="#d1-persona" class="sub">账号包装</a>
-  <a href="#d1-browse" class="sub">刷对标</a>
-  <a href="#d1-category" class="sub">选品逻辑</a>
-  <a href="#d1-draft" class="sub">上架SOP</a>
+  <a href="#d1" class="sb-d1">搭地基</a>
+  <a href="#d1-rules" class="sub sb-d1">平台红线</a>
+  <a href="#d1-hw" class="sub sb-d1">硬件隔离</a>
+  <a href="#d1-persona" class="sub sb-d1">账号包装</a>
+  <a href="#d1-browse" class="sub sb-d1">刷对标</a>
+  <a href="#d1-category" class="sub sb-d1">选品逻辑</a>
+  <a href="#d1-draft" class="sub sb-d1">上架SOP</a>
   <div class="sec-title">Day 2</div>
-  <a href="#d2">发布+看数据</a>
-  <a href="#d2-pub" class="sub">批量发布</a>
-  <a href="#d2-data" class="sub">数据检查</a>
-  <a href="#d2-budan" class="sub">安全补单</a>
+  <a href="#d2" class="sb-d2">发布+看数据</a>
+  <a href="#d2-pub" class="sub sb-d2">批量发布</a>
+  <a href="#d2-data" class="sub sb-d2">数据检查</a>
+  <a href="#d2-budan" class="sub sb-d2">安全补单</a>
   <div class="sec-title">Day 3</div>
-  <a href="#d3">破池+冲刺</a>
-  <a href="#d3-pool" class="sub">破流量池</a>
-  <a href="#d3-order" class="sub">冲刺出单</a>
+  <a href="#d3" class="sb-d3">破池+冲刺</a>
+  <a href="#d3-pool" class="sub sb-d3">破流量池</a>
+  <a href="#d3-order" class="sub sb-d3">冲刺出单</a>
   <div class="sec-title">Day 4</div>
-  <a href="#d4">运营优化</a>
-  <a href="#d4-weight" class="sub">账号权重</a>
-  <a href="#d4-talk" class="sub">客服话术</a>
-  <a href="#d4-after" class="sub">售后保护</a>
+  <a href="#d4" class="sb-d4">运营优化</a>
+  <a href="#d4-weight" class="sub sb-d4">账号权重</a>
+  <a href="#d4-talk" class="sub sb-d4">客服话术</a>
+  <a href="#d4-after" class="sub sb-d4">售后保护</a>
   <div class="sec-title">Day 5</div>
-  <a href="#d5">复盘+定方向</a>
-  <a href="#d5-review" class="sub">全面复盘</a>
-  <a href="#d5-decision" class="sub">产品迭代</a>
-  <a href="#d5-matrix" class="sub">矩阵放大</a>
+  <a href="#d5" class="sb-d5">复盘+定方向</a>
+  <a href="#d5-review" class="sub sb-d5">全面复盘</a>
+  <a href="#d5-decision" class="sub sb-d5">产品迭代</a>
+  <a href="#d5-matrix" class="sub sb-d5">矩阵放大</a>
   <div class="sec-title">快查</div>
-  <a href="#checklist">✅ 检查清单</a>
-  <a href="#formula">🔑 20字公式</a>
+  <a href="#checklist" class="sb-review">✅ 检查清单</a>
+  <a href="#formula" class="sb-review">🔑 20字公式</a>
   <div class="sec-title exam">📝 考试</div>
   <a href="exam-day1.html" target="_blank" class="exam-link">Day1 · 账号SOP考核</a>
   <a href="exam-day5.html" target="_blank" class="exam-link">Day5 · 综合能力考核</a>
@@ -303,35 +350,43 @@
   <h3 id="d1-draft">⑤ 上架SOP准备</h3>
   <p><b>每个账号准备至少2个商品草稿，Day1只准备不发布。</b></p>
 
-  <h4>标题黄金公式（30字）</h4>
-  <p><b>品牌词 + 产品词 + 属性词 + 人群词 + 状态词</b></p>
-  <div class="callout tip">示例：「99新苹果iPhone15 Pro 256G 蓝色 女生自用全套配件」<br>技巧：核心词前置（前12字黄金法则），填满30字覆盖长尾词。</div>
+  <div class="sec-block">
+    <h4>标题黄金公式（30字）</h4>
+    <p><b>品牌词 + 产品词 + 属性词 + 人群词 + 状态词</b></p>
+    <p style="font-size:0.82em;color:#6b7280;">示例：「99新苹果iPhone15 Pro 256G 蓝色 女生自用全套配件」<br>技巧：核心词前置（前12字黄金法则），填满30字覆盖长尾词。</p>
+  </div>
 
-  <h4>主图9图黄金排列法</h4>
-  <table>
-    <tr><th>位置</th><th>内容</th><th>作用</th></tr>
-    <tr><td>1-3 视觉层</td><td>封面/全景/侧背</td><td>高清实拍建信任</td></tr>
-    <tr><td>4-6 细节层</td><td>细节/瑕疵/配件</td><td>消除信息差</td></tr>
-    <tr><td>7-9 信任层</td><td>场景/凭证/尺寸</td><td>促进下单</td></tr>
-  </table>
-  <p>进阶：主图加材质/型号标签（利用OCR增曝光）；发布15-30s短视频（转化率升120%）</p>
+  <div class="sec-block">
+    <h4>主图9图黄金排列法</h4>
+    <table>
+      <tr><th>位置</th><th>内容</th><th>作用</th></tr>
+      <tr><td>1-3 视觉层</td><td>封面/全景/侧背</td><td>高清实拍建信任</td></tr>
+      <tr><td>4-6 细节层</td><td>细节/瑕疵/配件</td><td>消除信息差</td></tr>
+      <tr><td>7-9 信任层</td><td>场景/凭证/尺寸</td><td>促进下单</td></tr>
+    </table>
+    <p style="font-size:0.82em;color:#6b7280;">进阶：主图加材质/型号标签（利用OCR增曝光）；发布15-30s短视频（转化率升120%）</p>
+  </div>
 
-  <h4>详情页五段式</h4>
-  <ol>
-    <li><b>标题段</b>：一句话概括核心信息</li>
-    <li><b>人设段</b>：介绍身份和转卖原因，拉近距离</li>
-    <li><b>产品段</b>：明确功能状态，塑造专业形象</li>
-    <li><b>规格段</b>：清晰列出配件清单，消除信息差</li>
-    <li><b>结尾段</b>：说明价格策略与退换政策，引导下单</li>
-  </ol>
+  <div class="sec-block">
+    <h4>详情页五段式</h4>
+    <ol>
+      <li><b>标题段</b>：一句话概括核心信息</li>
+      <li><b>人设段</b>：介绍身份和转卖原因，拉近距离</li>
+      <li><b>产品段</b>：明确功能状态，塑造专业形象</li>
+      <li><b>规格段</b>：清晰列出配件清单，消除信息差</li>
+      <li><b>结尾段</b>：说明价格策略与退换政策，引导下单</li>
+    </ol>
+  </div>
 
-  <h4>科学定价法</h4>
-  <ul>
-    <li><b>查同款</b>：参考30天真实成交均价</li>
-    <li><b>评成色</b>：全新95折/99新9折等</li>
-    <li><b>留空间</b>：底价上浮10%-20%预留砍价空间，多用9/8尾数定价</li>
-    <li>若需降价，使用平台"降价急售"功能，利于流量加权</li>
-  </ul>
+  <div class="sec-block">
+    <h4>科学定价法</h4>
+    <ul>
+      <li><b>查同款</b>：参考30天真实成交均价</li>
+      <li><b>评成色</b>：全新95折/99新9折等</li>
+      <li><b>留空间</b>：底价上浮10%-20%预留砍价空间，多用9/8尾数定价</li>
+      <li>若需降价，使用平台"降价急售"功能，利于流量加权</li>
+    </ul>
+  </div>
 
   <div class="deadline">✅ 死线：红线已记 + 硬件隔离 + 人设包装 + 刷对标 + 选品确认 + 上架SOP准备</div>
 </div>
@@ -357,21 +412,25 @@
   <h3 id="d2-data">② 数据检查</h3>
   <div class="img-placeholder"><strong>📸 [配图：闲鱼数据页面截图]</strong><br>圈出「曝光」「点击率」「我想要」位置</div>
 
-  <h4>上午 11:30 第一次 <span style="color:#dc2626;">⏰ 设闹钟</span></h4>
-  <table>
-    <tr><th>检查项</th><th>合格线</th><th>不合格→动作</th></tr>
-    <tr><td>是否有曝光</td><td>50+</td><td>优化关键词/标题/账号权重</td></tr>
-    <tr><td>点击率 (CTR)</td><td>≥ 8%</td><td>低于→换主图</td></tr>
-    <tr><td>"我想要"</td><td>≥ 3个</td><td>价格或需求问题</td></tr>
-  </table>
+  <div class="sec-block">
+    <h4>上午 11:30 第一次 <span style="color:#dc2626;">⏰ 设闹钟</span></h4>
+    <table>
+      <tr><th>检查项</th><th>合格线</th><th>不合格→动作</th></tr>
+      <tr><td>是否有曝光</td><td>50+</td><td>优化关键词/标题/账号权重</td></tr>
+      <tr><td>点击率 (CTR)</td><td>≥ 8%</td><td>低于→换主图</td></tr>
+      <tr><td>"我想要"</td><td>≥ 3个</td><td>价格或需求问题</td></tr>
+    </table>
+  </div>
 
-  <h4>下午 4:00 第二次</h4>
-  <table>
-    <tr><th>检查项</th><th>合格线</th><th>不合格→动作</th></tr>
-    <tr><td>曝光增长</td><td>持续增长</td><td>停滞→考虑补单</td></tr>
-    <tr><td>点击率</td><td>≥ 8%</td><td>未达标→明天优化主图</td></tr>
-    <tr><td>收藏/咨询</td><td>收藏≥5，咨询≥1</td><td>优化详情页/话术</td></tr>
-  </table>
+  <div class="sec-block">
+    <h4>下午 4:00 第二次</h4>
+    <table>
+      <tr><th>检查项</th><th>合格线</th><th>不合格→动作</th></tr>
+      <tr><td>曝光增长</td><td>持续增长</td><td>停滞→考虑补单</td></tr>
+      <tr><td>点击率</td><td>≥ 8%</td><td>未达标→明天优化主图</td></tr>
+      <tr><td>收藏/咨询</td><td>收藏≥5，咨询≥1</td><td>优化详情页/话术</td></tr>
+    </table>
+  </div>
 
   <h3 id="d2-budan">③ 安全补单（如需）</h3>
   <p class="callout danger"><strong>⚠️ 铁律</strong>补单小号必须独立设备+独立网络。自然成交:补单 ≥ 7:3</p>
@@ -408,34 +467,44 @@
     <tr><td>≥ 1000</td><td style="color:#16a34a;">✅ 可用</td><td>投 5.9 元测 ROI，预期 3 倍+</td></tr>
   </table>
 
-  <h4>晋级强化动作</h4>
-  <ul>
-    <li><b>擦亮黄金时段</b>：早7-9 / 午12-14 / 晚19-22（流量高峰前操作）</li>
-    <li>全天消息秒回（响应速度红线，5分钟内）</li>
-    <li>对未达标链接做优化（卡关键词→卡地域→卡价格）</li>
-    <li>补单 + 推进自然成交</li>
-  </ul>
+  <div class="sec-block">
+    <h4>晋级强化动作</h4>
+    <ul>
+      <li><b>擦亮黄金时段</b>：早7-9 / 午12-14 / 晚19-22（流量高峰前操作）</li>
+      <li>全天消息秒回（响应速度红线，5分钟内）</li>
+      <li>对未达标链接做优化（卡关键词→卡地域→卡价格）</li>
+      <li>补单 + 推进自然成交</li>
+    </ul>
+  </div>
 
   <h3 id="d3-order">② 数据诊断三步法 + 冲刺出单</h3>
-  <table>
-    <tr><th>问题</th><th>诊断</th><th>动作</th></tr>
-    <tr><td>曝光低</td><td>关键词/标题/账号权重</td><td>优化标题核心词前置 + 养号提升权重</td></tr>
-    <tr><td>点击低</td><td>主图/价格</td><td>换主图（第一张最关键）</td></tr>
-    <tr><td>转化低</td><td>详情页/话术</td><td>改文案 + 优化快捷回复</td></tr>
-  </table>
 
-  <h4>冲刺出单</h4>
-  <table>
-    <tr><th>环节</th><th>优化动作</th><th>效果</th></tr>
-    <tr><td>点击→浏览</td><td>主图增加吸引力</td><td>提升CTR</td></tr>
-    <tr><td>浏览→咨询</td><td>文案加互动引导</td><td>提升咨询量</td></tr>
-    <tr><td>咨询→成交</td><td>话术优化+快速回复+适当让价</td><td>提升成交率</td></tr>
-    <tr><td>下单后</td><td>及时发货+主动告知物流</td><td>提升好评率</td></tr>
-  </table>
-  <p class="callout warn"><strong>⚡ 今天目标：至少出1单。</strong>自然成交最好，不行安全补1单。</p>
+  <div class="sec-block">
+    <h4>数据诊断</h4>
+    <table>
+      <tr><th>问题</th><th>诊断</th><th>动作</th></tr>
+      <tr><td>曝光低</td><td>关键词/标题/账号权重</td><td>优化标题核心词前置 + 养号提升权重</td></tr>
+      <tr><td>点击低</td><td>主图/价格</td><td>换主图（第一张最关键）</td></tr>
+      <tr><td>转化低</td><td>详情页/话术</td><td>改文案 + 优化快捷回复</td></tr>
+    </table>
+  </div>
 
-  <h4>滞销品清理</h4>
-  <p>30天内零曝光、零咨询的商品直接删除，避免拖累店铺整体权重。</p>
+  <div class="sec-block">
+    <h4>冲刺出单</h4>
+    <table>
+      <tr><th>环节</th><th>优化动作</th><th>效果</th></tr>
+      <tr><td>点击→浏览</td><td>主图增加吸引力</td><td>提升CTR</td></tr>
+      <tr><td>浏览→咨询</td><td>文案加互动引导</td><td>提升咨询量</td></tr>
+      <tr><td>咨询→成交</td><td>话术优化+快速回复+适当让价</td><td>提升成交率</td></tr>
+      <tr><td>下单后</td><td>及时发货+主动告知物流</td><td>提升好评率</td></tr>
+    </table>
+    <p class="callout warn"><strong>⚡ 今天目标：至少出1单。</strong>自然成交最好，不行安全补1单。</p>
+  </div>
+
+  <div class="sec-block">
+    <h4>滞销品清理</h4>
+    <p>30天内零曝光、零咨询的商品直接删除，避免拖累店铺整体权重。</p>
+  </div>
 
   <div class="deadline">✅ 死线：流量池判断 + 数据诊断优化 + 至少1单 + 滞销品清理</div>
 </div>
@@ -466,42 +535,53 @@
   <h3 id="d4-talk">② 客服话术系统化</h3>
   <p><b>话术来源：</b>全国头部前几家（复制风格）+ 本地地域头部（学本地化）</p>
 
-  <h4>议价技巧</h4>
-  <ul>
-    <li><b>小额议价</b>：适当接受，爽快成交</li>
-    <li><b>大额议价</b>：避免直接拒绝，引导关注价值（品质/成色）；用"包邮/送配件"代替直接降价</li>
-  </ul>
+  <div class="sec-block">
+    <h4>议价技巧</h4>
+    <ul>
+      <li><b>小额议价</b>：适当接受，爽快成交</li>
+      <li><b>大额议价</b>：避免直接拒绝，引导关注价值（品质/成色）；用"包邮/送配件"代替直接降价</li>
+    </ul>
+  </div>
 
-  <table>
-    <tr><th>场景</th><th>话术模板</th></tr>
-    <tr><td>首次咨询</td><td>"哈喽~这个球拍上周买的就打了一次，不太适合我"</td></tr>
-    <tr><td>议价</td><td>"小哥哥，真的最低了再低要亏邮费了😭 送你几个球行不？"</td></tr>
-    <tr><td>发货延迟</td><td>"不好意思课多，晚上给你发，发的时候拍视频~"</td></tr>
-    <tr><td>求好评</td><td>"亲如果觉得ok方便给个好评吗？谢谢你呀~"</td></tr>
-  </table>
+  <div class="sec-block">
+    <h4>话术模板</h4>
+    <table>
+      <tr><th>场景</th><th>话术模板</th></tr>
+      <tr><td>首次咨询</td><td>"哈喽~这个球拍上周买的就打了一次，不太适合我"</td></tr>
+      <tr><td>议价</td><td>"小哥哥，真的最低了再低要亏邮费了😭 送你几个球行不？"</td></tr>
+      <tr><td>发货延迟</td><td>"不好意思课多，晚上给你发，发的时候拍视频~"</td></tr>
+      <tr><td>求好评</td><td>"亲如果觉得ok方便给个好评吗？谢谢你呀~"</td></tr>
+    </table>
+  </div>
 
   <h3 id="d4-after">③ 售后保护与防纠纷</h3>
 
-  <h4>无货源发货闭环</h4>
-  <ol>
-    <li>同步下单：获取买家信息去货源平台代拍</li>
-    <li>核心备注：严禁放价格单/店铺卡片</li>
-    <li>回传单号：复制快递单号至闲鱼点击发货</li>
-    <li>售后导流：退货时指导买家退回给供应商</li>
-  </ol>
+  <div class="sec-block">
+    <h4>无货源发货闭环</h4>
+    <ol>
+      <li>同步下单：获取买家信息去货源平台代拍</li>
+      <li>核心备注：严禁放价格单/店铺卡片</li>
+      <li>回传单号：复制快递单号至闲鱼点击发货</li>
+      <li>售后导流：退货时指导买家退回给供应商</li>
+    </ol>
+  </div>
 
-  <h4>防纠纷与"到手刀"策略</h4>
-  <ul>
-    <li><b>发货前</b>：录制完整展示视频（含SN码/序列号）；全流程录像打包；箱体加防拆标记</li>
-    <li><b>遇纠纷</b>：拒绝私下协商（须在闲鱼沟通留证）；坚决拒绝不合理要求；申请小法庭/客服介入</li>
-  </ul>
+  <div class="sec-block">
+    <h4>防纠纷与"到手刀"策略</h4>
+    <ul>
+      <li><b>发货前</b>：录制完整展示视频（含SN码/序列号）；全流程录像打包；箱体加防拆标记</li>
+      <li><b>遇纠纷</b>：拒绝私下协商（须在闲鱼沟通留证）；坚决拒绝不合理要求；申请小法庭/客服介入</li>
+    </ul>
+  </div>
 
-  <h4>售后权重保护</h4>
-  <ul>
-    <li>明确发货时效（如拍下48小时内发货）</li>
-    <li>尽量远离小法庭：友好协商为主，平台介入（无论对错）均损害权重</li>
-    <li>积极处理中差评，真诚沟通引导修改</li>
-  </ul>
+  <div class="sec-block">
+    <h4>售后权重保护</h4>
+    <ul>
+      <li>明确发货时效（如拍下48小时内发货）</li>
+      <li>尽量远离小法庭：友好协商为主，平台介入（无论对错）均损害权重</li>
+      <li>积极处理中差评，真诚沟通引导修改</li>
+    </ul>
+  </div>
 
   <div class="deadline">✅ 死线：账号权重理解 + 话术库建好 + 售后流程跑通 + 上新</div>
 </div>
@@ -513,7 +593,7 @@
 
   <div class="focus-box">
     <strong>🔥 今天重点</strong>
-    全面复盘 → 产品迭代决策 → 矩阵放大 → 考核标准
+    全面复盘 → 产品迭代决策 → 矩阵放大 → 站外引流
   </div>
 
   <h3 id="d5-review">① 全面复盘</h3>
@@ -536,30 +616,36 @@
 
   <h3 id="d5-matrix">③ 矩阵放大 + 站外引流</h3>
 
-  <h4>矩阵协同四大原则</h4>
-  <table>
-    <tr><th>原则</th><th>说明</th></tr>
-    <tr><td>账号隔离</td><td>严格执行一机一卡一号</td></tr>
-    <tr><td>品类细分</td><td>每个账号专注一个垂直品类（数码号/母婴号互不冲突）</td></tr>
-    <tr><td>内容同步</td><td>多平台账号与闲鱼号一一对应</td></tr>
-    <tr><td>团队协作</td><td>制定详细SOP，统一数据记录与操作规范</td></tr>
-  </table>
+  <div class="sec-block">
+    <h4>矩阵协同四大原则</h4>
+    <table>
+      <tr><th>原则</th><th>说明</th></tr>
+      <tr><td>账号隔离</td><td>严格执行一机一卡一IP</td></tr>
+      <tr><td>品类细分</td><td>每个账号专注一个垂直品类（数码号/母婴号互不冲突）</td></tr>
+      <tr><td>内容同步</td><td>多平台账号与闲鱼号一一对应</td></tr>
+      <tr><td>团队协作</td><td>制定详细SOP，统一数据记录与操作规范</td></tr>
+    </table>
+  </div>
 
-  <h4>小红书种草引流</h4>
-  <table>
-    <tr><th>要素</th><th>要点</th></tr>
-    <tr><td>标题</td><td>数字/结果 + 痛点/场景 + 解决方案</td></tr>
-    <tr><td>首图</td><td>高清无水印、构图美观、生活化场景</td></tr>
-    <tr><td>正文</td><td>场景引入→产品展示→真实测评→价值升华</td></tr>
-    <tr><td>钩子</td><td>评论区置顶搜"专属关键词"、简介巧妙植入</td></tr>
-  </table>
+  <div class="sec-block">
+    <h4>小红书种草引流</h4>
+    <table>
+      <tr><th>要素</th><th>要点</th></tr>
+      <tr><td>标题</td><td>数字/结果 + 痛点/场景 + 解决方案</td></tr>
+      <tr><td>首图</td><td>高清无水印、构图美观、生活化场景</td></tr>
+      <tr><td>正文</td><td>场景引入→产品展示→真实测评→价值升华</td></tr>
+      <tr><td>钩子</td><td>评论区置顶搜"专属关键词"、简介巧妙植入</td></tr>
+    </table>
+  </div>
 
-  <h4>动态调价策略</h4>
-  <ul>
-    <li>7天无咨询 → 降价5%-10%，优化主图详情</li>
-    <li>咨询多成交少 → 降价3%-5%或增加高价值赠品</li>
-    <li>发布即售罄 → 判定定价偏低，加价10%-15%利润最大化</li>
-  </ul>
+  <div class="sec-block">
+    <h4>动态调价策略</h4>
+    <ul>
+      <li>7天无咨询 → 降价5%-10%，优化主图详情</li>
+      <li>咨询多成交少 → 降价3%-5%或增加高价值赠品</li>
+      <li>发布即售罄 → 判定定价偏低，加价10%-15%利润最大化</li>
+    </ul>
+  </div>
 
   <div class="deadline">✅ 死线：复盘完成 + 产品决策 + SOP初版 + 下周计划</div>
 </div>
@@ -567,7 +653,7 @@
 <!-- ══ 检查清单 ══ -->
 <div class="day" id="checklist">
   <h2>✅ 5天执行检查清单</h2>
-  <p style="text-align:center;font-size:0.85em;color:#94a3b8;margin-bottom:16px;">每天做完一项就点一下 ☐</p>
+  <p style="text-align:center;font-size:0.85em;color:#9ca3af;margin-bottom:16px;">每天做完一项就点一下 ☐</p>
 
   <h3>Day 1 · 准备日</h3>
   <ul class="checklist">
@@ -578,15 +664,17 @@
     <li>☐ 选品逻辑确认（出单记录/利润≥30%/差异空间）</li>
     <li>☐ 上架SOP准备完（标题公式/9图排列/详情五段/定价法）</li>
   </ul>
+  <div class="img-placeholder"><strong>📸 [此处配图同 Day1]</strong><br>规则红线弹窗 / 人设截图 / 刷对标步骤</div>
 
   <h3>Day 2 · 发布日</h3>
   <ul class="checklist">
-    <li>☐ 早上07:30-10:00前发布商品（每号2-3条）</li>
+    <li>☐ 早上最迟10点前上品（每号2-3条）</li>
     <li>☐ 上午11:30第一次数据检查（曝光/CTR/我想要）</li>
     <li>☐ 下午4:00第二次数据检查+记录台账</li>
     <li>☐ 根据数据决定是否补单</li>
     <li>☐ 完成今日运营基础动作</li>
   </ul>
+  <div class="img-placeholder"><strong>📸 [此处配图同 Day2]</strong><br>数据页面截图 / 补单操作步骤</div>
 
   <h3>Day 3 · 冲刺日</h3>
   <ul class="checklist">
@@ -605,6 +693,7 @@
     <li>☐ 售后保护流程跑通（发货闭环/防纠纷/权重保护）</li>
     <li>☐ 继续上新链接（每号再加1-2个）</li>
   </ul>
+  <div class="img-placeholder"><strong>📸 [此处配图同 Day4]</strong><br>账号权重对比图</div>
 
   <h3>Day 5 · 复盘日</h3>
   <ul class="checklist">
@@ -621,13 +710,13 @@
   <h2 style="text-align:center;border-left:none;padding-left:0;">🔑 20字黄金成交公式</h2>
   <p style="text-align:center;font-size:1.1em;padding:14px 0;letter-spacing:2px;">
     <b style="color:#0f3460;">精细选品</b>
-    <span style="color:#94a3b8;margin:0 4px;">→</span>
+    <span style="color:#9ca3af;margin:0 4px;">→</span>
     <b style="color:#1a4a7a;">优质内容</b>
-    <span style="color:#94a3b8;margin:0 4px;">→</span>
+    <span style="color:#9ca3af;margin:0 4px;">→</span>
     <b style="color:#2a5a8a;">合理价格</b>
-    <span style="color:#94a3b8;margin:0 4px;">→</span>
+    <span style="color:#9ca3af;margin:0 4px;">→</span>
     <b style="color:#3a6a9a;">高效运营</b>
-    <span style="color:#94a3b8;margin:0 4px;">→</span>
+    <span style="color:#9ca3af;margin:0 4px;">→</span>
     <b style="color:#4a7aaa;">口碑沉淀</b>
   </p>
   <table>
