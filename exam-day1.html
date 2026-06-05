@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 1 · 账号与权重SOP考核</title>
+<title>Day 1 考核 · 培训发布</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -25,9 +25,7 @@
   .exam-header .timer.warning { color: #facc15; }
   .exam-header .timer.danger { color: #ef4444; animation: pulse 1s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
-
   .container { max-width: 800px; margin: 0 auto; padding: 20px 16px 40px; }
-
   .question-block {
     background: #fff; border-radius: 14px;
     padding: 20px 22px; margin-bottom: 16px;
@@ -36,7 +34,7 @@
     scroll-margin-top: 120px;
   }
   .question-block .q-title {
-    font-size: 0.82em; font-weight: 600; color: #6366f1;
+    font-size: 0.82em; font-weight: 600; color: #dc2626;
     margin-bottom: 8px;
   }
   .question-block .q-text {
@@ -46,393 +44,201 @@
   .question-block .q-score {
     font-size: 0.72em; color: #94a3b8; margin-left: 8px; font-weight: 400;
   }
-
-  /* options */
-  .option { display: block; padding: 8px 14px; margin: 4px 0;
+  .option {
+    display: block; padding: 8px 14px; margin: 4px 0;
     border: 1.5px solid #e2e8f0; border-radius: 8px; cursor: pointer;
     font-size: 0.88em; transition: all 0.15s; color: #334155;
   }
-  .option:hover { border-color: #6366f1; background: #f8fafc; }
-  .option.selected { border-color: #6366f1; background: #eef2ff; color: #4338ca; }
-
-  /* judgment */
-  .judge-group { display: flex; gap: 12px; margin-top: 8px; }
-  .judge-btn {
-    padding: 6px 24px; border-radius: 8px; border: 1.5px solid #e2e8f0;
-    cursor: pointer; font-size: 0.9em; font-weight: 500; background: #fff;
-    transition: all 0.15s; color: #475569;
+  .option:hover { border-color: #dc2626; background: #f8fafc; }
+  .option.selected { border-color: #dc2626; background: #fef2f2; color: #dc2626; }
+  .option.correct { border-color: #16a34a; background: #f0fdf4; color: #16a34a; }
+  .option.wrong { border-color: #dc2626; background: #fef2f2; color: #dc2626; }
+  .option input { display: none; }
+  .action-bar {
+    position: sticky; bottom: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid #e2e8f0;
+    padding: 14px 16px; text-align: center;
   }
-  .judge-btn:hover { border-color: #6366f1; }
-  .judge-btn.selected-t { border-color: #22c55e; background: #f0fdf4; color: #16a34a; }
-  .judge-btn.selected-f { border-color: #ef4444; background: #fef2f2; color: #dc2626; }
-
-  /* fill-in */
-  .fill-input {
-    width: 100%; padding: 10px 14px; border: 1.5px solid #e2e8f0;
-    border-radius: 8px; font-size: 0.88em; font-family: inherit;
-    outline: none; transition: border-color 0.15s; margin-top: 6px;
+  .action-bar button {
+    background: #dc2626; color: #fff; border: none;
+    padding: 10px 36px; border-radius: 40px;
+    font-size: 0.92em; font-weight: 600; cursor: pointer;
+    transition: all 0.2s;
   }
-  .fill-input:focus { border-color: #6366f1; }
-
-  /* essay */
-  .essay-area {
-    width: 100%; min-height: 100px; padding: 10px 14px;
-    border: 1.5px solid #e2e8f0; border-radius: 8px;
-    font-size: 0.85em; font-family: inherit; outline: none;
-    transition: border-color 0.15s; margin-top: 6px; resize: vertical;
-  }
-  .essay-area:focus { border-color: #6366f1; }
-
-  /* submit */
-  .submit-area { text-align: center; padding: 20px 0 10px; }
-  .btn-submit {
-    background: #6366f1; color: #fff; border: none;
-    padding: 12px 40px; border-radius: 10px; font-size: 1em;
-    font-weight: 600; cursor: pointer; transition: all 0.15s;
-  }
-  .btn-submit:hover { background: #4f46e5; transform: translateY(-1px); }
-  .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
-
-  /* result */
+  .action-bar button:hover { background: #b91c1c; }
+  .action-bar button:disabled { opacity: 0.4; cursor: not-allowed; }
   .result-box {
-    background: linear-gradient(135deg,#f0fdf4,#ecfdf5);
-    border: 1px solid #86efac; border-radius: 14px;
-    padding: 24px; text-align: center; margin-bottom: 20px;
+    display: none; margin-top: 12px;
+    padding: 12px 16px; border-radius: 10px; font-size: 0.9em;
   }
-  .result-box .score { font-size: 2.2em; font-weight: 700; color: #16a34a; }
-  .result-box .score.fail { color: #ef4444; }
-  .result-box .detail { font-size: 0.88em; color: #166534; margin-top: 4px; }
-
-  .review-block {
-    background: #fff; border-radius: 14px;
-    padding: 18px 22px; margin-bottom: 12px;
-    border: 1px solid #e2e8f0; font-size: 0.85em;
-  }
-  .review-block.correct { border-left: 4px solid #22c55e; }
-  .review-block.wrong { border-left: 4px solid #ef4444; background: #fef2f2; }
-  .review-block .r-q { font-weight: 500; margin-bottom: 4px; }
-  .review-block .r-a { color: #64748b; }
-  .review-block .r-wrong { color: #dc2626; font-weight: 500; }
-  .review-block .r-right { color: #16a34a; font-weight: 500; }
-  .ref-answer {
-    margin-top: 8px; padding: 10px 14px; background: #f8fafc;
-    border-radius: 8px; border-left: 3px solid #6366f1; font-size: 0.88em;
-  }
-  .ref-answer strong { color: #1e293b; display: block; margin-bottom: 4px; }
-
-  .section-title {
-    font-size: 1em; font-weight: 700; color: #0f172a;
-    padding: 12px 0 8px; border-bottom: 2px solid #e2e8f0; margin-bottom: 14px;
-  }
-
-  .btn-reset {
-    background: #fff; color: #6366f1; border: 1.5px solid #6366f1;
-    padding: 10px 30px; border-radius: 10px; font-size: 0.9em;
-    font-weight: 500; cursor: pointer; margin: 0 8px; transition: all 0.15s;
-  }
-  .btn-reset:hover { background: #eef2ff; }
-
-  .hidden { display: none; }
-
-  @media (max-width: 640px) {
-    .question-block { padding: 14px 14px; }
+  .result-box.pass { background: #f0fdf4; border: 1px solid #16a34a; color: #166534; display: block; }
+  .result-box.fail { background: #fef2f2; border: 1px solid #dc2626; color: #991b1b; display: block; }
+  .result-box .score { font-size: 1.4em; font-weight: 700; }
+  .multi-hint { font-size: 0.78em; color: #94a3b8; margin-bottom: 6px; }
+  .question-block .q-title.multi { color: #7c3aed; }
+  @media (max-width:600px) {
     .exam-header h1 { font-size: 1.1em; }
-    .judge-group { gap: 8px; }
-    .judge-btn { padding: 6px 16px; font-size: 0.82em; }
+    .question-block { padding: 14px 16px; }
   }
 </style>
 </head>
 <body>
 
 <div class="exam-header">
-  <h1>📝 Day 1 · 账号与权重SOP考核</h1>
-  <div class="meta">满分 100 分 · 及格 70 分 · 账号与权重SOP专项</div>
-  <div class="timer" id="timer">⏱ 剩余 60分 00秒</div>
+  <h1>📦 Day 1 · 培训发布考核</h1>
+  <div class="meta">基于闲鱼2天速成培训 · 单选10题 + 多选5题 · 共100分</div>
+  <div class="timer" id="timer">⏱ 剩余 30分 00秒</div>
 </div>
 
-<div class="container" id="examContainer">
+<div class="container" id="examContainer"></div>
 
-  <!-- 单选 -->
-  <div class="section-title">一、单项选择题（共10题，每题3分，共30分）</div>
-
-  <div id="q-single"></div>
-
-  <!-- 多选 -->
-  <div class="section-title">二、多项选择题（共8题，每题4分，共32分）<span style="font-weight:400;font-size:0.8em;color:#94a3b8;margin-left:8px;">多选/少选/错选不得分</span></div>
-
-  <div id="q-multi"></div>
-
-  <!-- 判断 -->
-  <div class="section-title">三、判断题（共10题，每题2分，共20分）<span style="font-weight:400;font-size:0.8em;color:#94a3b8;margin-left:8px;">✔ 对 ✘ 错</span></div>
-
-  <div id="q-judge"></div>
-
-  <!-- 简答 -->
-  <div class="section-title">四、简答题（共2题，每题9分，共18分）</div>
-
-  <div id="q-essay"></div>
-
-  <div class="submit-area" id="submitArea">
-    <button class="btn-submit" id="btnSubmit" onclick="submitExam()">📥 提交答卷</button>
-    <button class="btn-reset hidden" id="btnReset" onclick="resetExam()">🔄 重新答题</button>
-  </div>
-
-  <div id="resultArea" class="hidden"></div>
+<div class="action-bar">
+  <button id="submitBtn" onclick="submitExam()">📝 提交答卷</button>
+  <div id="resultBox" class="result-box"></div>
 </div>
 
 <script>
 const examData = {
   single: [
-    { id:'s1', text:'闲鱼店铺无违规弹窗通知，但曝光突然腰斩、没咨询没访客，最主要原因是？', options:['手机网络不好','隐性违规触发平台无通知降权限流','平台临时改版','商品不够好看'], answer:1 },
-    { id:'s2', text:'以下哪种行为属于闲鱼严重违规，会直接压低全店流量？', options:['每天擦亮1次商品','同款商品多发多条链接重复铺货','正常回复买家咨询','定期优化商品标题'], answer:1 },
-    { id:'s3', text:'运营规范中，商品定价定好后，建议多久内不要做大调价？', options:['1天','3天','7天','15天'], answer:2 },
-    { id:'s4', text:'买家申请退款时，我们应该引导选择哪类理由，保护店铺权重？', options:['假货、质量问题','描述不符、发货慢','拍错/多拍、不想要、协商一致退款','材质不符'], answer:2 },
-    { id:'s5', text:'闲鱼判定店铺低质、减少流量分发，核心诱因是？', options:['商品价格太低','30天零曝光零咨询滞销僵尸品过多、滞销率超标','没开通付费擦亮','店铺头像普通'], answer:1 },
-    { id:'s6', text:'闲鱼运营账号必须遵守的登录规则是？', options:['一机多号随便切换','同Wi-Fi可以登录10个运营号','严格一机、一号、一IP，不随意切换','借别人手机登录自己运营号'], answer:2 },
-    { id:'s7', text:'新品上新首日有平台扶持曝光，第二天直接断流，核心原因是？', options:['没开会员','收藏、咨询、成交基础数据承接太差','标题太长','发布时间不对'], answer:1 },
-    { id:'s8', text:'商品文案中以下哪类词汇属于极限词，必须删除？', options:['家用、闲置','全网最低、绝对正品、百分百','实拍、实拍如图','包邮、现货'], answer:1 },
-    { id:'s9', text:'遇到有轻微违规预警的商品链接，正确做法是？', options:['改个标题继续挂','隐藏商品即可','直接下架删除，不二次复用','放着不管'], answer:2 },
-    { id:'s10', text:'按SOP全部整改到位后，店铺权重和曝光正常恢复周期大概是？', options:['1天立马恢复','3-7天回暖，7-15天逐步正常','1个月以上','永远无法恢复'], answer:1 }
+    { id:'s1', text:'站外导流（引导买家到微信/QQ交易）的后果是？', options:['警告提醒','封号','限流7天','下架商品'], answer:1 },
+    { id:'s2', text:'闲鱼标题最多写多少个字？', options:['8个字','10个字','12个字','15个字'], answer:2 },
+    { id:'s3', text:'新商品发布至少需要几张主图？', options:['3张','5张','7张','9张'], answer:1 },
+    { id:'s4', text:'首日点击率(CTR)低于多少需要换第一张主图？', options:['5%','8%','10%','15%'], answer:1 },
+    { id:'s5', text:'商品定价时，底价上浮多少留砍价空间比较合理？', options:['5-10%','10-20%','20-30%','30-50%'], answer:1 },
+    { id:'s6', text:'发布当天第一次看数据的时间是？', options:['9:00','10:00','11:30','14:00'], answer:2 },
+    { id:'s7', text:'以下哪个词属于闲鱼极限词，严禁使用？', options:['闲置','实拍','全新','包邮'], answer:2 },
+    { id:'s8', text:'新学员培训完当天应该发布多少个产品？', options:['0个（只准备）','1个','2-3个','5-10个'], answer:2 },
+    { id:'s9', text:'硬件隔离的核心要求是？', options:['用WiFi就可以','一机一卡一IP','可以用双开分身','可以多个号共用一台手机'], answer:1 },
+    { id:'s10', text:'详情页五段式模板中，第一段应该写什么？', options:['价格','规格清单','一句话说清楚卖什么','退换政策'], answer:2 },
   ],
   multi: [
-    { id:'m1', text:'以下哪些属于闲鱼隐性违规，会无通知直接限流？', options:['文案夸大宣传、使用极限词','私聊隐晦留微信、V、手机号','详情页引导站外交易','正常如实描述商品成色'], answer:[0,1,2] },
-    { id:'m2', text:'频繁哪些操作会打乱商品标签，被踢出推荐流量池？', options:['短时间多次大幅改价','反复删除、下架爆款再重新上架','一周只微调一次文案','天天下架重发同款商品'], answer:[0,1,3] },
-    { id:'m3', text:'以下哪些退款原因会扣店铺整体权重，必须规避？', options:['假货、假冒品牌','质量问题、描述不符','协商一致退款','发货延迟、未按约定发货'], answer:[0,1,3] },
-    { id:'m4', text:'清理重复铺货的标准操作有哪些？', options:['同款只留1条数据最好、排名最高的链接','其余同款相似款全部下架删除','禁止同素材换标题反复重发','多留几条同款抢占流量'], answer:[0,1,2] },
-    { id:'m5', text:'处理滞销商品的正确动作包含？', options:['筛选30天零曝光零咨询商品','全部下架删除降低滞销率','有点击没成交的高潜力款：改图改标题微调重上','僵尸商品一直挂着不动'], answer:[0,1,2] },
-    { id:'m6', text:'新品72小时流量承接标准动作包括？', options:['12小时内优化主图、长尾标题','24小时内补齐收藏、咨询、小额成交基础数据','先投大额付费擦亮，不管自然权重','先做自然权重承接，再考虑付费推广'], answer:[0,1,3] },
-    { id:'m7', text:'闲鱼日常运营绝对不能碰的红线有？', options:['任何明里暗里留站外联系方式','同款多发、换图恶意铺货','放任买家选择高危退款理由','一台手机切换多个运营账号'], answer:[0,1,2,3] },
-    { id:'m8', text:'店铺曝光下跌后，错误的做法是？', options:['不查违规直接盲目充值付费擦亮','不清理滞销品，只靠花钱推流量','先自查违规、清铺货、修权重再推广','继续频繁改价、下架重发'], answer:[0,1,3] }
-  ],
-  judge: [
-    { id:'j1', text:'闲鱼只有明显封号才会限流，没有弹窗提示就不会降权。', answer:false },
-    { id:'j2', text:'同款商品多发布几条，可以多拿流量，不会被判定铺货。', answer:false },
-    { id:'j3', text:'商品定价一次性定好，尽量7天内不做大调价。', answer:true },
-    { id:'j4', text:'只要退款最后协商成功，选假货、描述不符也不影响权重。', answer:false },
-    { id:'j5', text:'店铺滞销品越多，全店动销越低，平台给的流量越少。', answer:true },
-    { id:'j6', text:'一台手机可以同时登录3-5个闲鱼运营号，不影响流量。', answer:false },
-    { id:'j7', text:'新品首日流量再好，没有收藏咨询成交，第二天也容易断流。', answer:true },
-    { id:'j8', text:'文案里"全网最低、绝对正品"属于违规极限词，必须删掉。', answer:true },
-    { id:'j9', text:'有违规预警的商品，改下文案就能继续正常售卖。', answer:false },
-    { id:'j10', text:'限流第一件事是自查违规、清滞销，而不是直接花钱投推广。', answer:true }
-  ],
-  essay: [
-    {
-      id:'e1', text:'简述闲鱼店铺曝光断崖式下跌的7大核心原因。', score:9,
-      reference:'1.隐性违规风控触发无通知降权；2.重复铺货触发低质判定；3.频繁异常操作打乱商品标签；4.高危售后理由拉低权重；5.滞销品过多拉低动销率；6.账号关联触发风控；7.新品扶持流量承接失败。答对1点得1.3分。'
-    },
-    {
-      id:'e2', text:'写出闲鱼运营遇到曝光暴跌后，标准修复SOP的完整执行步骤。', score:9,
-      reference:'1.当天完成全店违规自查；2.1天内清理重复铺货；3.固定商品价格稳定标签；4.售后前置干预保护权重；5.批量清理滞销品优化动销；6.规范账号登录环境；7.新品按标准做流量承接。按顺序答对1步得1.3分。'
-    }
+    { id:'m1', text:'以下哪些属于闲鱼平台红线？', options:['站外导流到微信/QQ','标题留手机号','详情页引导站外交易','正常描述商品成色'], answer:[0,1,2] },
+    { id:'m2', text:'主图9图排列法包含哪三个层次？', options:['视觉层（封面/全景/侧背）','细节层（细节/瑕疵/配件）','信任层（场景/凭证/尺寸）','价格层（标价/折扣/优惠券）'], answer:[0,1,2] },
+    { id:'m3', text:'新商品发布后需要关注的三个核心数据指标是？', options:['曝光','点击率(CTR)','"我想要"数量','粉丝数'], answer:[0,1,2] },
+    { id:'m4', text:'标题公式包含哪些要素？', options:['品牌词','产品词','核心卖点','场景/人群词'], answer:[0,1,2,3] },
+    { id:'m5', text:'散场前必须确认的事项包括？', options:['账号已实名+芝麻信用授权','硬件隔离到位','2-3个产品已发布','知道11:30和16:00要看数据'], answer:[0,1,2,3] },
   ]
 };
 
-const LABELS = ['A','B','C','D'];
-let timerInterval;
-let timeLeft = 3600; // 60 minutes
+let submitted = false;
 
-// Render
 function render() {
-  // Single
+  const container = document.getElementById('examContainer');
   let html = '';
-  examData.single.forEach((q,i) => {
-    html += `<div class="question-block" id="q-${q.id}">
-      <div class="q-title">第${i+1}题<span class="q-score">（3分）</span></div>
-      <div class="q-text">${q.text}</div>`;
-    q.options.forEach((opt,oi) => {
-      html += `<label class="option" onclick="selectSingle('${q.id}',${oi})" id="opt-${q.id}-${oi}">${LABELS[oi]}. ${opt}</label>`;
+  // Single choice
+  examData.single.forEach((q, i) => {
+    html += '<div class="question-block" id="q-'+q.id+'">';
+    html += '<div class="q-title">单选题 '+(i+1)+'<span class="q-score">（5分）</span></div>';
+    html += '<div class="q-text">'+q.text+'</div><div class="options">';
+    q.options.forEach((opt, oi) => {
+      html += '<label class="option" onclick="selectSingle(\''+q.id+'\','+oi+')" id="opt-'+q.id+'-'+oi+'">';
+      html += '<input type="radio" name="'+q.id+'" value="'+oi+'">'+opt+'</label>';
     });
-    html += `</div>`;
+    html += '</div></div>';
   });
-  document.getElementById('q-single').innerHTML = html;
-
-  // Multi
-  let mhtml = '';
-  examData.multi.forEach((q,i) => {
-    mhtml += `<div class="question-block" id="q-${q.id}">
-      <div class="q-title">第${i+1}题<span class="q-score">（4分）</span></div>
-      <div class="q-text">${q.text}</div>`;
-    q.options.forEach((opt,oi) => {
-      mhtml += `<label class="option" onclick="toggleMulti('${q.id}',${oi})" id="opt-${q.id}-${oi}">${LABELS[oi]}. ${opt}</label>`;
+  // Multi choice
+  examData.multi.forEach((q, i) => {
+    html += '<div class="question-block" id="q-'+q.id+'">';
+    html += '<div class="q-title multi">多选题 '+(i+1)+'<span class="q-score">（10分）</span></div>';
+    html += '<div class="multi-hint">⚠️ 多选题：选对全部选项才得分，少选/多选/错选均不得分</div>';
+    html += '<div class="q-text">'+q.text+'</div><div class="options">';
+    q.options.forEach((opt, oi) => {
+      html += '<label class="option" onclick="toggleMulti(\''+q.id+'\','+oi+')" id="opt-'+q.id+'-'+oi+'">';
+      html += '<input type="checkbox" name="'+q.id+'" value="'+oi+'">'+opt+'</label>';
     });
-    mhtml += `</div>`;
+    html += '</div></div>';
   });
-  document.getElementById('q-multi').innerHTML = mhtml;
-
-  // Judge
-  let jhtml = '';
-  examData.judge.forEach((q,i) => {
-    jhtml += `<div class="question-block" id="q-${q.id}">
-      <div class="q-title">第${i+1}题<span class="q-score">（2分）</span></div>
-      <div class="q-text">${q.text}</div>
-      <div class="judge-group">
-        <div class="judge-btn" onclick="selectJudge('${q.id}',true)" id="j-${q.id}-t">✔ 正确</div>
-        <div class="judge-btn" onclick="selectJudge('${q.id}',false)" id="j-${q.id}-f">✘ 错误</div>
-      </div>
-    </div>`;
-  });
-  document.getElementById('q-judge').innerHTML = jhtml;
-
-  // Essay
-  let ehtml = '';
-  examData.essay.forEach((q,i) => {
-    ehtml += `<div class="question-block" id="q-${q.id}">
-      <div class="q-title">第${i+1}题<span class="q-score">（${q.score}分）</span></div>
-      <div class="q-text">${q.text}</div>
-      <textarea class="essay-area" id="input-${q.id}" placeholder="在此作答..."></textarea>
-    </div>`;
-  });
-  document.getElementById('q-essay').innerHTML = ehtml;
+  container.innerHTML = html;
 }
 
-const answers = {};
-// Single select
-function selectSingle(qid, oi) {
-  document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(el => el.classList.remove('selected'));
-  document.getElementById(`opt-${qid}-${oi}`).classList.add('selected');
-  answers[qid] = oi;
+function selectSingle(id, idx) {
+  if (submitted) return;
+  const q = examData.single.find(x => x.id === id);
+  if (!q) return;
+  const opts = document.querySelectorAll('#q-'+id+' .option');
+  opts.forEach(o => o.classList.remove('selected'));
+  document.getElementById('opt-'+id+'-'+idx).classList.add('selected');
 }
-// Multi toggle
-function toggleMulti(qid, oi) {
-  const el = document.getElementById(`opt-${qid}-${oi}`);
+
+function toggleMulti(id, idx) {
+  if (submitted) return;
+  const el = document.getElementById('opt-'+id+'-'+idx);
   el.classList.toggle('selected');
-  if (!answers[qid]) answers[qid] = [];
-  const arr = answers[qid];
-  const idx = arr.indexOf(oi);
-  if (idx > -1) arr.splice(idx,1); else arr.push(oi);
-  answers[qid] = arr;
-}
-// Judge select
-function selectJudge(qid, val) {
-  document.getElementById(`j-${qid}-t`).className = 'judge-btn';
-  document.getElementById(`j-${qid}-f`).className = 'judge-btn';
-  document.getElementById(`j-${qid}-${val?'t':'f'}`).className = `judge-btn selected-${val?'t':'f'}`;
-  answers[qid] = val;
 }
 
-// Submit
 function submitExam() {
-  clearInterval(timerInterval);
-  document.getElementById('btnSubmit').disabled = true;
+  if (submitted) return;
+  submitted = true;
+  document.getElementById('submitBtn').disabled = true;
+  let total = 0, maxScore = 0;
 
-  let score = 0, total = 0;
-  let wrongs = [];
-
-  // Single (3pts each)
+  // Grade single (5pts each)
   examData.single.forEach(q => {
-    total += 3;
-    if (answers[q.id] === q.answer) score += 3;
-    else wrongs.push({q, userAns: answers[q.id], type:'single'});
-  });
-
-  // Multi (4pts each, exact match)
-  examData.multi.forEach(q => {
-    total += 4;
-    const ua = answers[q.id] || [];
-    const correct = q.answer.slice().sort().join(',');
-    const user = ua.slice().sort().join(',');
-    if (correct === user) score += 4;
-    else wrongs.push({q, userAns: ua, type:'multi'});
-  });
-
-  // Judge (2pts each)
-  examData.judge.forEach(q => {
-    total += 2;
-    if (answers[q.id] === q.answer) score += 2;
-    else wrongs.push({q, userAns: answers[q.id], type:'judge'});
-  });
-
-  // Essay - show reference, no auto grade
-  examData.essay.forEach(q => {
-    total += q.score;
-  });
-
-  const passed = score >= 70;
-  const ratio = Math.round(score / 82 * 100);
-
-  let resultHtml = `<div class="result-box">
-    <div class="score ${passed?'':'fail'}">${score} / 100</div>
-    <div class="detail">客观题得分：${score} / 82 · 正确率 ${ratio}% · ${passed?'✅ 及格':'❌ 不及格'}</div>
-    <div class="detail" style="margin-top:6px;color:#64748b;">简答题（18分）请对照参考答案自行评分</div>
-  </div>`;
-
-  // Wrong review
-  if (wrongs.length > 0) {
-    resultHtml += `<div style="font-size:0.9em;font-weight:600;margin-bottom:10px;">❌ 错题回顾（${wrongs.length}题）</div>`;
-    wrongs.forEach(w => {
-      const q = w.q;
-      const qText = q.text || '';
-      let userShow, correctShow;
-      if (w.type === 'single') {
-        userShow = LABELS[w.userAns] + '. ' + q.options[w.userAns];
-        correctShow = LABELS[q.answer] + '. ' + q.options[q.answer];
-      } else if (w.type === 'multi') {
-        const ua = w.userAns || [];
-        userShow = ua.map(i=>LABELS[i]).join(', ') || '（未选）';
-        correctShow = q.answer.map(i=>LABELS[i]).join(', ');
+    maxScore += 5;
+    const selected = document.querySelector('#q-'+q.id+' .option.selected');
+    if (selected) {
+      const idx = parseInt(selected.querySelector('input').value);
+      const opt = document.getElementById('opt-'+q.id+'-'+idx);
+      if (idx === q.answer) {
+        opt.classList.add('correct');
+        total += 5;
       } else {
-        userShow = w.userAns === true ? '✔ 正确' : w.userAns === false ? '✘ 错误' : '（未答）';
-        correctShow = q.answer ? '✔ 正确' : '✘ 错误';
+        opt.classList.add('wrong');
+        document.getElementById('opt-'+q.id+'-'+q.answer).classList.add('correct');
       }
-      resultHtml += `<div class="review-block wrong">
-        <div class="r-q">${qText}</div>
-        <div class="r-wrong">你的答案：${userShow}</div>
-        <div class="r-right">正确答案：${correctShow}</div>
-      </div>`;
-    });
-  } else {
-    resultHtml += `<div style="text-align:center;padding:14px;color:#16a34a;font-weight:500;">🎉 客观题全对！</div>`;
-  }
-
-  // Essay reference
-  resultHtml += `<div style="font-size:0.9em;font-weight:600;margin:16px 0 10px;">📖 简答题参考答案</div>`;
-  examData.essay.forEach((q,i) => {
-    resultHtml += `<div class="ref-answer">
-      <strong>简答第${i+1}题（${q.score}分）</strong>
-      ${q.reference}
-    </div>`;
+    } else {
+      // Show correct answer
+      document.getElementById('opt-'+q.id+'-'+q.answer).classList.add('correct');
+    }
   });
 
-  resultHtml += `<div style="text-align:center;margin-top:16px;">
-    <button class="btn-reset" onclick="resetExam()">🔄 重新答题</button>
-  </div>`;
+  // Grade multi (10pts each, all-or-nothing)
+  examData.multi.forEach(q => {
+    maxScore += 10;
+    const selected = document.querySelectorAll('#q-'+q.id+' .option.selected');
+    const answers = [];
+    selected.forEach(el => {
+      const idx = parseInt(el.querySelector('input').value);
+      answers.push(idx);
+      if (q.answer.includes(idx)) {
+        el.classList.add('correct');
+      } else {
+        el.classList.add('wrong');
+      }
+    });
+    // Mark correct answers that weren't selected
+    q.answer.forEach(ai => {
+      const el = document.getElementById('opt-'+q.id+'-'+ai);
+      if (!el.classList.contains('correct') && !el.classList.contains('wrong')) {
+        el.classList.add('correct');
+      }
+    });
+    // All-or-nothing
+    const sortedAns = [...answers].sort();
+    const sortedCorrect = [...q.answer].sort();
+    if (sortedAns.length === sortedCorrect.length && sortedAns.every((v,i) => v === sortedCorrect[i])) {
+      total += 10;
+    }
+  });
 
-  document.getElementById('resultArea').innerHTML = resultHtml;
-  document.getElementById('resultArea').classList.remove('hidden');
-  document.getElementById('btnReset').classList.remove('hidden');
-  document.getElementById('btnSubmit').classList.add('hidden');
-  window.scrollTo({top:0,behavior:'smooth'});
+  const pct = Math.round(total / maxScore * 100);
+  const passed = pct >= 70;
+  const box = document.getElementById('resultBox');
+  box.className = 'result-box ' + (passed ? 'pass' : 'fail');
+  box.innerHTML = '<div class="score">'+total+'/'+maxScore+'分（'+pct+'%）</div>'
+    + (passed ? '✅ 恭喜通过！培训内容已掌握，可以进入实操阶段。' : '❌ 未通过（需≥70%）。建议复习培训手册后重新考试。');
 }
 
-// Reset
-function resetExam() {
-  Object.keys(answers).forEach(k => delete answers[k]);
-  document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
-  document.querySelectorAll('.judge-btn').forEach(el => el.className = 'judge-btn');
-  document.querySelectorAll('.essay-area').forEach(el => el.value = '');
-  document.getElementById('resultArea').innerHTML = '';
-  document.getElementById('resultArea').classList.add('hidden');
-  document.getElementById('btnReset').classList.add('hidden');
-  document.getElementById('btnSubmit').classList.remove('hidden');
-  document.getElementById('btnSubmit').disabled = false;
-  timeLeft = 3600;
-  startTimer();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-// Timer
+let timeLeft = 1800;
 function startTimer() {
-  clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
+  const timerInterval = setInterval(() => {
     timeLeft--;
     const m = Math.floor(timeLeft/60);
     const s = timeLeft%60;
-    const el = document.getElementById('timer');
-    el.textContent = `⏱ 剩余 ${m}分 ${s.toString().padStart(2,'0')}秒`;
-    el.className = 'timer';
-    if (timeLeft < 300) el.classList.add('danger');
-    else if (timeLeft < 600) el.classList.add('warning');
+    document.getElementById('timer').textContent = '⏱ 剩余 '+m+'分 '+s.toString().padStart(2,'0')+'秒';
+    document.getElementById('timer').className = 'timer' + (timeLeft < 300 ? ' danger' : timeLeft < 600 ? ' warning' : '');
     if (timeLeft <= 0) { clearInterval(timerInterval); submitExam(); }
   }, 1000);
 }
@@ -440,6 +246,5 @@ function startTimer() {
 render();
 startTimer();
 </script>
-
 </body>
 </html>
