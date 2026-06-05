@@ -5,128 +5,128 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Day 1 考核 · 培训发布</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, "PingFang SC", "Noto Sans SC", sans-serif;
-    background: #f0f2f5; color: #1d1d1f; line-height: 1.6;
-  }
-  .exam-header {
-    background: linear-gradient(135deg,#0f172a,#1e293b);
-    color: #fff; padding: 36px 20px 28px; text-align: center;
-    position: sticky; top: 0; z-index: 100;
-  }
-  .exam-header h1 { font-size: 1.3em; margin-bottom: 4px; }
-  .exam-header .meta { font-size: 0.78em; opacity: 0.6; }
-  .exam-header .timer {
-    display: inline-block; margin-top: 8px;
-    background: rgba(255,255,255,0.1); border-radius: 20px;
-    padding: 4px 18px; font-size: 0.85em; font-weight: 600;
-  }
-  .exam-header .timer.warning { color: #facc15; }
-  .exam-header .timer.danger { color: #ef4444; animation: pulse 1s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
-  .container { max-width: 800px; margin: 0 auto; padding: 20px 16px 40px; }
-  .question-block {
-    background: #fff; border-radius: 14px;
-    padding: 18px 20px; margin-bottom: 14px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    border: 1px solid rgba(0,0,0,0.04);
-  }
-  .question-block .q-title {
-    font-size: 0.8em; font-weight: 600; color: #dc2626;
-    margin-bottom: 5px;
-  }
-  .question-block .q-title.multi { color: #7c3aed; }
-  .question-block .q-text {
-    font-size: 0.92em; font-weight: 500; margin-bottom: 8px;
-    color: #1e293b;
-  }
-  .question-block .q-score { font-size: 0.7em; color: #94a3b8; margin-left: 6px; font-weight: 400; }
-  .option-row {
-    display: block; padding: 2px 0; cursor: pointer;
-    font-size: 0.88em; color: #334155;
-  }
-  .option-row input { margin-right: 6px; vertical-align: middle; }
-  .option-row input[type="radio"] { accent-color: #dc2626; }
-  .option-row input[type="checkbox"] { accent-color: #7c3aed; }
-  .option-row.correct { color: #16a34a; font-weight: 600; }
-  .option-row.correct input { accent-color: #16a34a; }
-  .option-row.wrong { color: #dc2626; font-weight: 600; }
-  .option-row.wrong input { accent-color: #dc2626; }
-  .multi-hint { font-size: 0.76em; color: #94a3b8; margin-bottom: 6px; }
-  .action-bar {
-    position: sticky; bottom: 0;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(12px);
-    border-top: 1px solid #e2e8f0;
-    padding: 14px 16px; text-align: center;
-  }
-  .action-bar button {
-    background: #dc2626; color: #fff; border: none;
-    padding: 10px 36px; border-radius: 40px;
-    font-size: 0.92em; font-weight: 600; cursor: pointer;
-  }
-  .action-bar button:hover { background: #b91c1c; }
-  .action-bar button:disabled { opacity: 0.4; cursor: not-allowed; }
-  .result-box {
-    display: none; margin-top: 12px;
-    padding: 12px 16px; border-radius: 10px; font-size: 0.9em;
-  }
-  .result-box.pass { background: #f0fdf4; border: 1px solid #16a34a; color: #166534; display: block; }
-  .result-box.fail { background: #fef2f2; border: 1px solid #dc2626; color: #991b1b; display: block; }
-  .result-box .score { font-size: 1.4em; font-weight: 700; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;background:#f0f2f5;color:#1d1d1f;line-height:1.6}
+  .exam-header{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:36px 20px 28px;text-align:center;position:sticky;top:0;z-index:100}
+  .exam-header h1{font-size:1.3em;margin-bottom:4px}
+  .exam-header .meta{font-size:0.78em;opacity:0.6}
+  .exam-header .timer{display:inline-block;margin-top:8px;background:rgba(255,255,255,0.1);border-radius:20px;padding:4px 18px;font-size:0.85em;font-weight:600}
+  .exam-header .timer.warning{color:#facc15}
+  .exam-header .timer.danger{color:#ef4444;animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+  .container{max-width:800px;margin:0 auto;padding:20px 16px 40px}
+  .question-block{background:#fff;border-radius:14px;padding:18px 20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.04)}
+  .question-block .q-title{font-size:0.8em;font-weight:600;color:#dc2626;margin-bottom:5px}
+  .question-block .q-title.multi{color:#7c3aed}
+  .question-block .q-text{font-size:0.92em;font-weight:500;margin-bottom:8px;color:#1e293b}
+  .question-block .q-score{font-size:0.7em;color:#94a3b8;margin-left:6px;font-weight:400}
+  .option-row{display:block;padding:2px 0;cursor:pointer;font-size:0.88em;color:#334155}
+  .option-row input{margin-right:6px;vertical-align:middle}
+  .option-row input[type="radio"]{accent-color:#dc2626}
+  .option-row input[type="checkbox"]{accent-color:#7c3aed}
+  .option-row.correct{color:#16a34a;font-weight:600}
+  .option-row.correct input{accent-color:#16a34a}
+  .option-row.wrong{color:#dc2626;font-weight:600}
+  .option-row.wrong input{accent-color:#dc2626}
+  .multi-hint{font-size:0.76em;color:#94a3b8;margin-bottom:6px}
+  .action-bar{position:sticky;bottom:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-top:1px solid #e2e8f0;padding:14px 16px;text-align:center}
+  .action-bar button{background:#dc2626;color:#fff;border:none;padding:10px 36px;border-radius:40px;font-size:0.92em;font-weight:600;cursor:pointer}
+  .action-bar button:hover{background:#b91c1c}
+  .action-bar button:disabled{opacity:0.4;cursor:not-allowed}
+  .result-box{display:none;margin-top:12px;padding:12px 16px;border-radius:10px;font-size:0.9em;text-align:left}
+  .result-box.pass{background:#f0fdf4;border:1px solid #16a34a;color:#166534;display:block}
+  .result-box.fail{background:#fef2f2;border:1px solid #dc2626;color:#991b1b;display:block}
+  .result-box .score{font-size:1.4em;font-weight:700}
+  .score-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(0,0,0,0.05)}
+
+  /* Name overlay */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;display:flex;align-items:center;justify-content:center}
+  .overlay-box{background:#fff;border-radius:16px;padding:32px 28px;max-width:380px;width:90%;text-align:center}
+  .overlay-box h2{font-size:1.2em;margin-bottom:6px}
+  .overlay-box p{font-size:0.85em;color:#6b7280;margin-bottom:16px}
+  .overlay-box input{width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:1em;outline:none;margin-bottom:16px}
+  .overlay-box input:focus{border-color:#dc2626}
+  .overlay-box .btn-start{background:#dc2626;color:#fff;border:none;padding:10px 36px;border-radius:40px;font-size:1em;font-weight:600;cursor:pointer;width:100%}
+  .overlay-box .btn-start:hover{background:#b91c1c}
+  .overlay-box .btn-start:disabled{opacity:0.4;cursor:not-allowed}
+
+  .copy-btn{background:#1e293b;color:#fff;border:none;padding:8px 20px;border-radius:20px;font-size:0.82em;cursor:pointer;margin-top:8px}
+  .copy-btn:hover{background:#334155}
 </style>
 </head>
 <body>
+
+<!-- Name overlay -->
+<div class="overlay" id="nameOverlay">
+  <div class="overlay-box">
+    <h2>📦 Day 1 · 培训发布考核</h2>
+    <p>请输入你的姓名开始考试</p>
+    <input type="text" id="studentName" placeholder="请输入姓名" maxlength="20">
+    <button class="btn-start" id="startBtn" onclick="startExam()" disabled>开始考试</button>
+  </div>
+</div>
+
 <div class="exam-header">
   <h1>📦 Day 1 · 培训发布考核</h1>
   <div class="meta">单选20题 + 多选10题 · 共200分 · 140分及格</div>
-  <div class="timer" id="timer">⏱ 剩余 45分 00秒</div>
+  <div class="timer" id="timer">⏱ 准备中...</div>
 </div>
-<div class="container" id="examContainer"></div>
-<div class="action-bar">
+<div class="container" id="examContainer" style="display:none"></div>
+<div class="action-bar" id="actionBar" style="display:none">
   <button id="submitBtn" onclick="submitExam()">📝 提交答卷</button>
   <div id="resultBox" class="result-box"></div>
 </div>
+
 <script>
-const S = {
-  single: [
-    {id:'s1',t:'站外导流（引导买家到微信/QQ）的后果是？',o:['警告提醒','封号','限流7天','下架商品'],a:1},
-    {id:'s2',t:'闲鱼标题最多写多少个字？',o:['8个字','10个字','12个字','15个字'],a:2},
-    {id:'s3',t:'新商品发布至少需要几张主图？',o:['3张','5张','7张','9张'],a:1},
-    {id:'s4',t:'首日点击率(CTR)低于多少需要换主图？',o:['5%','8%','10%','15%'],a:1},
-    {id:'s5',t:'合理定价的砍价空间应预留多少？',o:['5-10%','10-20%','20-30%','30-50%'],a:1},
-    {id:'s6',t:'发布当天第一次看数据是几点？',o:['9:00','10:00','11:30','14:00'],a:2},
-    {id:'s7',t:'以下哪个词是闲鱼极限词严禁使用？',o:['闲置','实拍','全新','包邮'],a:2},
-    {id:'s8',t:'培训完当天应发布几个产品？',o:['0个只准备','1个','2-3个','5-10个'],a:2},
-    {id:'s9',t:'硬件隔离的核心要求？',o:['用WiFi即可','一机一卡一IP','可用双开分身','多号共用一台手机'],a:1},
-    {id:'s10',t:'详情页第一段应该写什么？',o:['价格','规格清单','一句话说清卖什么','退换政策'],a:2},
-    {id:'s11',t:'同WiFi下操作多个闲鱼号会导致什么？',o:['没事','连坐封号','限流24小时','仅警告'],a:1},
-    {id:'s12',t:'发布后第二次看数据的时间是？',o:['10:00','12:00','14:00','16:00'],a:3},
-    {id:'s13',t:'9张主图中第1-3张属于什么层？',o:['细节层','信任层','视觉层','价格层'],a:2},
-    {id:'s14',t:'定价时多用哪种尾数？',o:['0和5','9和8','1和2','7和6'],a:1},
-    {id:'s15',t:'标题公式不包含以下哪项？',o:['品牌词','产品词','价格','场景词'],a:2},
-    {id:'s16',t:'芝麻信用分建议达到多少以上？',o:['550','600','650','700'],a:2},
-    {id:'s17',t:'7天内改价超过多少会触发降权？',o:['5%','10%','15%','20%'],a:1},
-    {id:'s18',t:'模拟日常发布描述时使用什么身份最有优势？',o:['专业商家','个人卖家人设','品牌旗舰店','工厂直销'],a:1},
-    {id:'s19',t:'设置简介时应当采用什么结构？',o:['直接写价格','三段式（我是谁/卖什么/给承诺）','只放联系方式','只写欢迎光临'],a:1},
-    {id:'s20',t:'账号权重中以下哪项属于显性权重？',o:['活跃度','回复速度','芝麻信用分','出单率'],a:2},
-  ],
-  multi: [
-    {id:'m1',t:'以下哪些属于闲鱼平台红线？',o:['站外导流到微信/QQ','标题或图片留手机号','详情页引导站外交易','正常描述商品成色'],a:[0,1,2]},
-    {id:'m2',t:'主图9图排列法包括哪三个层次？',o:['视觉层（封面/全景/侧背）','细节层（细节/瑕疵/配件）','信任层（场景/凭证/尺寸）','价格层（标价/折扣）'],a:[0,1,2]},
-    {id:'m3',t:'发布后需要关注的三个核心数据是？',o:['曝光','点击率(CTR)','"我想要"数量','粉丝数'],a:[0,1,2]},
-    {id:'m4',t:'标题公式包含哪些要素？',o:['品牌词','产品词','核心卖点','场景/人群词'],a:[0,1,2,3]},
-    {id:'m5',t:'散场前必须确认的事项？',o:['账号已实名+芝麻信用授权','硬件隔离到位','2-3个产品已发布','知道11:30和16:00看数据'],a:[0,1,2,3]},
-    {id:'m6',t:'平台5大绝对红线包括？',o:['站外导流','留联系方式','极限词','恶意改价（7天超10%）','及时回复买家'],a:[0,1,2,3]},
-    {id:'m7',t:'以下哪些属于其他违规行为？',o:['重复铺货','禁售商品（高仿/假货/盗版）','同WiFi多号操作','每天擦亮商品'],a:[0,1,2]},
-    {id:'m8',t:'详情页五段式模板包含？',o:['标题段（一句话说清卖什么）','人设段（我是谁+为什么卖）','产品段（功能+状态）','规格段（配件清单）','结尾段（价格+退换政策）'],a:[0,1,2,3,4]},
-    {id:'m9',t:'账号包装包括哪些要素？',o:['头像/昵称（高清真人照+含品类核心词）','简介三段式（我是谁/卖什么/给承诺）','动态（发2-3条增强真实感）','芝麻分不用管'],a:[0,1,2]},
-    {id:'m10',t:'哪些指标达到合格线需要关注？',o:['曝光≥50','CTR≥8%','"我想要"≥3个','咨询≥1个'],a:[0,1,2,3]},
-  ]
-};
-let c={},sub=false;
-function r(){
+const S={single:[
+{id:'s1',t:'站外导流（引导买家到微信/QQ）的后果是？',o:['警告提醒','封号','限流7天','下架商品'],a:1},
+{id:'s2',t:'闲鱼标题最多写多少个字？',o:['8个字','10个字','12个字','15个字'],a:2},
+{id:'s3',t:'新商品发布至少需要几张主图？',o:['3张','5张','7张','9张'],a:1},
+{id:'s4',t:'首日点击率(CTR)低于多少需要换主图？',o:['5%','8%','10%','15%'],a:1},
+{id:'s5',t:'合理定价的砍价空间应预留多少？',o:['5-10%','10-20%','20-30%','30-50%'],a:1},
+{id:'s6',t:'发布当天第一次看数据是几点？',o:['9:00','10:00','11:30','14:00'],a:2},
+{id:'s7',t:'以下哪个词是闲鱼极限词严禁使用？',o:['闲置','实拍','全新','包邮'],a:2},
+{id:'s8',t:'培训完当天应发布几个产品？',o:['0个只准备','1个','2-3个','5-10个'],a:2},
+{id:'s9',t:'硬件隔离的核心要求？',o:['用WiFi即可','一机一卡一IP','可用双开分身','多号共用一台手机'],a:1},
+{id:'s10',t:'详情页第一段应该写什么？',o:['价格','规格清单','一句话说清卖什么','退换政策'],a:2},
+{id:'s11',t:'同WiFi下操作多个闲鱼号会导致什么？',o:['没事','连坐封号','限流24小时','仅警告'],a:1},
+{id:'s12',t:'发布后第二次看数据的时间是？',o:['10:00','12:00','14:00','16:00'],a:3},
+{id:'s13',t:'9张主图中第1-3张属于什么层？',o:['细节层','信任层','视觉层','价格层'],a:2},
+{id:'s14',t:'定价时多用哪种尾数？',o:['0和5','9和8','1和2','7和6'],a:1},
+{id:'s15',t:'标题公式不包含以下哪项？',o:['品牌词','产品词','价格','场景词'],a:2},
+{id:'s16',t:'芝麻信用分建议达到多少以上？',o:['550','600','650','700'],a:2},
+{id:'s17',t:'7天内改价超过多少会触发降权？',o:['5%','10%','15%','20%'],a:1},
+{id:'s18',t:'闲鱼运营最推荐用什么身份？',o:['专业商家','个人卖家人设','品牌旗舰店','工厂直销'],a:1},
+{id:'s19',t:'设置简介时应当采用什么结构？',o:['直接写价格','三段式（我是谁/卖什么/给承诺）','只放联系方式','只写欢迎光临'],a:1},
+{id:'s20',t:'以下哪项属于显性权重？',o:['活跃度','回复速度','芝麻信用分','出单率'],a:2}
+],multi:[
+{id:'m1',t:'以下哪些属于闲鱼平台红线？',o:['站外导流到微信/QQ','标题或图片留手机号','详情页引导站外交易','正常描述商品成色'],a:[0,1,2]},
+{id:'m2',t:'主图9图排列法包括哪三个层次？',o:['视觉层（封面/全景/侧背）','细节层（细节/瑕疵/配件）','信任层（场景/凭证/尺寸）','价格层（标价/折扣）'],a:[0,1,2]},
+{id:'m3',t:'发布后需要关注的三个核心数据是？',o:['曝光','点击率(CTR)','"我想要"数量','粉丝数'],a:[0,1,2]},
+{id:'m4',t:'标题公式包含哪些要素？',o:['品牌词','产品词','核心卖点','场景/人群词'],a:[0,1,2,3]},
+{id:'m5',t:'散场前必须确认的事项？',o:['账号已实名+芝麻信用授权','硬件隔离到位','2-3个产品已发布','知道11:30和16:00看数据'],a:[0,1,2,3]},
+{id:'m6',t:'平台5大绝对红线包括？',o:['站外导流','留联系方式','极限词','恶意改价（7天超10%）','及时回复买家'],a:[0,1,2,3]},
+{id:'m7',t:'以下哪些属于其他违规行为？',o:['重复铺货','禁售商品（高仿/假货/盗版）','同WiFi多号操作','每天擦亮商品'],a:[0,1,2]},
+{id:'m8',t:'详情页五段式模板包含？',o:['标题段（一句话说清卖什么）','人设段（我是谁+为什么卖）','产品段（功能+状态）','规格段（配件清单）','结尾段（价格+退换政策）'],a:[0,1,2,3,4]},
+{id:'m9',t:'账号包装包括哪些要素？',o:['头像/昵称（高清真人照+品类核心词）','简介三段式（我是谁/卖什么/给承诺）','动态（发2-3条增强真实感）','芝麻分不用管'],a:[0,1,2]},
+{id:'m10',t:'哪些指标达到合格线需要关注？',o:['曝光≥50','CTR≥8%','"我想要"≥3个','咨询≥1个'],a:[0,1,2,3]}
+]};
+let c={},sub=false,studentName='';
+
+document.getElementById('studentName').addEventListener('input',function(){
+  document.getElementById('startBtn').disabled=this.value.trim().length<2;
+});
+
+function startExam(){
+  studentName=document.getElementById('studentName').value.trim();
+  if(studentName.length<2)return;
+  document.getElementById('nameOverlay').style.display='none';
+  document.getElementById('examContainer').style.display='block';
+  document.getElementById('actionBar').style.display='block';
+  render();startTimer();
+}
+
+function render(){
   let h='';
   S.single.forEach((q,i)=>{
     h+='<div class="question-block"><div class="q-title">单选题 '+(i+1)+'<span class="q-score">（5分）</span></div><div class="q-text">'+q.t+'</div>';
@@ -146,13 +146,13 @@ function pm(id,idx,chk){
   if(chk){if(!c[id].includes(idx))c[id].push(idx)}
   else{c[id]=c[id].filter(v=>v!==idx)}
 }
-function subE(){
-  if(sub)return;
-  sub=true;document.getElementById('submitBtn').disabled=true;
+
+function submitExam(){
+  if(sub)return;sub=true;
+  document.getElementById('submitBtn').disabled=true;
   let t=0,mx=0;
   S.single.forEach((q,i)=>{
-    mx+=5;
-    let sel=c['s'+i];
+    mx+=5;let sel=c['s'+i];
     document.querySelectorAll('input[name="s'+i+'"]').forEach((r,j)=>{
       let lb=r.parentElement;
       if(j===q.a)lb.classList.add('correct');
@@ -162,8 +162,7 @@ function subE(){
     if(sel===q.a)t+=5;
   });
   S.multi.forEach((q,i)=>{
-    mx+=10;
-    let sel=c['m'+i]||[];
+    mx+=10;let sel=c['m'+i]||[];
     let sa=[...sel].sort(),aa=[...q.a].sort();
     let ok=sa.length===aa.length&&sa.every((v,j)=>v===aa[j]);
     document.querySelectorAll('input[name="m'+i+'"]').forEach((r,j)=>{
@@ -174,21 +173,46 @@ function subE(){
     });
     if(ok)t+=10;
   });
+
   let pct=Math.round(t/mx*100),pass=pct>=70;
+  let now=new Date();
+  let dateStr=now.getMonth()+1+'月'+now.getDate()+'日';
+  let timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+
+  // Save to localStorage
+  let results=JSON.parse(localStorage.getItem('xianyu_exam_d1')||'[]');
+  results.push({name:studentName,score:t,total:mx,pct:pct,pass:pass,date:dateStr,time:timeStr});
+  localStorage.setItem('xianyu_exam_d1',JSON.stringify(results));
+
   let box=document.getElementById('resultBox');
   box.className='result-box '+(pass?'pass':'fail');
-  box.innerHTML='<div class="score">'+t+'/'+mx+'分（'+pct+'%）</div>'+(pass?'✅ 恭喜通过！':'❌ 未通过（需≥70%），建议复习后重考。');
+  box.innerHTML='<div style="font-size:0.85em;color:#6b7280;margin-bottom:4px">考生：<strong>'+studentName+'</strong></div>'+
+    '<div class="score">'+t+'/'+mx+'分（'+pct+'%）</div>'+
+    (pass?'<div style="margin-top:6px">✅ 恭喜通过！可以进入实操阶段。</div>':'<div style="margin-top:6px">❌ 未通过（需≥70%），建议复习后重考。</div>')+
+    '<div style="margin-top:10px;padding-top:10px;border-top:1px solid #e2e8f0;font-size:0.82em;color:#6b7280">'+
+    '📅 '+dateStr+' '+timeStr+'</div>'+
+    '<button class="copy-btn" onclick="copyResult()">📋 复制成绩</button>'+
+    ' <a href="rank-d1.html" style="display:inline-block;background:#1e293b;color:#fff;border:none;padding:8px 20px;border-radius:20px;font-size:0.82em;cursor:pointer;text-decoration:none;margin-top:8px">📊 查看成绩汇总</a>';
+
+  clearInterval(window.timerInterval);
 }
+
+function copyResult(){
+  let results=JSON.parse(localStorage.getItem('xianyu_exam_d1')||'[]');
+  let last=results[results.length-1];
+  let txt='【闲鱼Day1考核】\n姓名：'+last.name+'\n成绩：'+last.score+'/'+last.total+'分（'+last.pct+'%）\n结果：'+(last.pass?'✅通过':'❌未通过')+'\n时间：'+last.date+' '+last.time;
+  navigator.clipboard.writeText(txt).then(()=>{alert('✅ 成绩已复制，可粘贴到群聊')});
+}
+
 let tl=2700;
-function st(){
-  setInterval(()=>{
+function startTimer(){
+  window.timerInterval=setInterval(()=>{
     tl--;let m=Math.floor(tl/60),s=tl%60;
     document.getElementById('timer').textContent='⏱ 剩余 '+m+'分 '+String(s).padStart(2,'0')+'秒';
     document.getElementById('timer').className='timer'+(tl<300?' danger':tl<600?' warning':'');
-    if(tl<=0)subE();
+    if(tl<=0)submitExam();
   },1000);
 }
-r();st();
 </script>
 </body>
 </html>
