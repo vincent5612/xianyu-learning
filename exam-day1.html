@@ -28,32 +28,32 @@
   .container { max-width: 800px; margin: 0 auto; padding: 20px 16px 40px; }
   .question-block {
     background: #fff; border-radius: 14px;
-    padding: 20px 22px; margin-bottom: 16px;
+    padding: 18px 20px; margin-bottom: 14px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     border: 1px solid rgba(0,0,0,0.04);
-    scroll-margin-top: 120px;
   }
   .question-block .q-title {
-    font-size: 0.82em; font-weight: 600; color: #dc2626;
-    margin-bottom: 8px;
+    font-size: 0.8em; font-weight: 600; color: #dc2626;
+    margin-bottom: 5px;
   }
+  .question-block .q-title.multi { color: #7c3aed; }
   .question-block .q-text {
-    font-size: 0.92em; font-weight: 500; margin-bottom: 10px;
+    font-size: 0.92em; font-weight: 500; margin-bottom: 8px;
     color: #1e293b;
   }
-  .question-block .q-score {
-    font-size: 0.72em; color: #94a3b8; margin-left: 8px; font-weight: 400;
+  .question-block .q-score { font-size: 0.7em; color: #94a3b8; margin-left: 6px; font-weight: 400; }
+  .option-row {
+    display: block; padding: 2px 0; cursor: pointer;
+    font-size: 0.88em; color: #334155;
   }
-  .option {
-    display: block; padding: 8px 14px; margin: 4px 0;
-    border: 1.5px solid #e2e8f0; border-radius: 8px; cursor: pointer;
-    font-size: 0.88em; transition: all 0.15s; color: #334155;
-  }
-  .option:hover { border-color: #dc2626; background: #f8fafc; }
-  .option.selected { border-color: #dc2626; background: #fef2f2; color: #dc2626; }
-  .option.correct { border-color: #16a34a; background: #f0fdf4; color: #16a34a; }
-  .option.wrong { border-color: #dc2626; background: #fef2f2; color: #dc2626; }
-  .option input { display: none; }
+  .option-row input { margin-right: 6px; vertical-align: middle; }
+  .option-row input[type="radio"] { accent-color: #dc2626; }
+  .option-row input[type="checkbox"] { accent-color: #7c3aed; }
+  .option-row.correct { color: #16a34a; font-weight: 600; }
+  .option-row.correct input { accent-color: #16a34a; }
+  .option-row.wrong { color: #dc2626; font-weight: 600; }
+  .option-row.wrong input { accent-color: #dc2626; }
+  .multi-hint { font-size: 0.76em; color: #94a3b8; margin-bottom: 6px; }
   .action-bar {
     position: sticky; bottom: 0;
     background: rgba(255,255,255,0.95);
@@ -65,7 +65,6 @@
     background: #dc2626; color: #fff; border: none;
     padding: 10px 36px; border-radius: 40px;
     font-size: 0.92em; font-weight: 600; cursor: pointer;
-    transition: all 0.2s;
   }
   .action-bar button:hover { background: #b91c1c; }
   .action-bar button:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -76,175 +75,120 @@
   .result-box.pass { background: #f0fdf4; border: 1px solid #16a34a; color: #166534; display: block; }
   .result-box.fail { background: #fef2f2; border: 1px solid #dc2626; color: #991b1b; display: block; }
   .result-box .score { font-size: 1.4em; font-weight: 700; }
-  .multi-hint { font-size: 0.78em; color: #94a3b8; margin-bottom: 6px; }
-  .question-block .q-title.multi { color: #7c3aed; }
-  @media (max-width:600px) {
-    .exam-header h1 { font-size: 1.1em; }
-    .question-block { padding: 14px 16px; }
-  }
 </style>
 </head>
 <body>
-
 <div class="exam-header">
   <h1>📦 Day 1 · 培训发布考核</h1>
-  <div class="meta">基于闲鱼2天速成培训 · 单选10题 + 多选5题 · 共100分</div>
-  <div class="timer" id="timer">⏱ 剩余 30分 00秒</div>
+  <div class="meta">单选20题 + 多选10题 · 共200分 · 140分及格</div>
+  <div class="timer" id="timer">⏱ 剩余 45分 00秒</div>
 </div>
-
 <div class="container" id="examContainer"></div>
-
 <div class="action-bar">
   <button id="submitBtn" onclick="submitExam()">📝 提交答卷</button>
   <div id="resultBox" class="result-box"></div>
 </div>
-
 <script>
-const examData = {
+const S = {
   single: [
-    { id:'s1', text:'站外导流（引导买家到微信/QQ交易）的后果是？', options:['警告提醒','封号','限流7天','下架商品'], answer:1 },
-    { id:'s2', text:'闲鱼标题最多写多少个字？', options:['8个字','10个字','12个字','15个字'], answer:2 },
-    { id:'s3', text:'新商品发布至少需要几张主图？', options:['3张','5张','7张','9张'], answer:1 },
-    { id:'s4', text:'首日点击率(CTR)低于多少需要换第一张主图？', options:['5%','8%','10%','15%'], answer:1 },
-    { id:'s5', text:'商品定价时，底价上浮多少留砍价空间比较合理？', options:['5-10%','10-20%','20-30%','30-50%'], answer:1 },
-    { id:'s6', text:'发布当天第一次看数据的时间是？', options:['9:00','10:00','11:30','14:00'], answer:2 },
-    { id:'s7', text:'以下哪个词属于闲鱼极限词，严禁使用？', options:['闲置','实拍','全新','包邮'], answer:2 },
-    { id:'s8', text:'新学员培训完当天应该发布多少个产品？', options:['0个（只准备）','1个','2-3个','5-10个'], answer:2 },
-    { id:'s9', text:'硬件隔离的核心要求是？', options:['用WiFi就可以','一机一卡一IP','可以用双开分身','可以多个号共用一台手机'], answer:1 },
-    { id:'s10', text:'详情页五段式模板中，第一段应该写什么？', options:['价格','规格清单','一句话说清楚卖什么','退换政策'], answer:2 },
+    {id:'s1',t:'站外导流（引导买家到微信/QQ）的后果是？',o:['警告提醒','封号','限流7天','下架商品'],a:1},
+    {id:'s2',t:'闲鱼标题最多写多少个字？',o:['8个字','10个字','12个字','15个字'],a:2},
+    {id:'s3',t:'新商品发布至少需要几张主图？',o:['3张','5张','7张','9张'],a:1},
+    {id:'s4',t:'首日点击率(CTR)低于多少需要换主图？',o:['5%','8%','10%','15%'],a:1},
+    {id:'s5',t:'合理定价的砍价空间应预留多少？',o:['5-10%','10-20%','20-30%','30-50%'],a:1},
+    {id:'s6',t:'发布当天第一次看数据是几点？',o:['9:00','10:00','11:30','14:00'],a:2},
+    {id:'s7',t:'以下哪个词是闲鱼极限词严禁使用？',o:['闲置','实拍','全新','包邮'],a:2},
+    {id:'s8',t:'培训完当天应发布几个产品？',o:['0个只准备','1个','2-3个','5-10个'],a:2},
+    {id:'s9',t:'硬件隔离的核心要求？',o:['用WiFi即可','一机一卡一IP','可用双开分身','多号共用一台手机'],a:1},
+    {id:'s10',t:'详情页第一段应该写什么？',o:['价格','规格清单','一句话说清卖什么','退换政策'],a:2},
+    {id:'s11',t:'同WiFi下操作多个闲鱼号会导致什么？',o:['没事','连坐封号','限流24小时','仅警告'],a:1},
+    {id:'s12',t:'发布后第二次看数据的时间是？',o:['10:00','12:00','14:00','16:00'],a:3},
+    {id:'s13',t:'9张主图中第1-3张属于什么层？',o:['细节层','信任层','视觉层','价格层'],a:2},
+    {id:'s14',t:'定价时多用哪种尾数？',o:['0和5','9和8','1和2','7和6'],a:1},
+    {id:'s15',t:'标题公式不包含以下哪项？',o:['品牌词','产品词','价格','场景词'],a:2},
+    {id:'s16',t:'芝麻信用分建议达到多少以上？',o:['550','600','650','700'],a:2},
+    {id:'s17',t:'7天内改价超过多少会触发降权？',o:['5%','10%','15%','20%'],a:1},
+    {id:'s18',t:'模拟日常发布描述时使用什么身份最有优势？',o:['专业商家','个人卖家人设','品牌旗舰店','工厂直销'],a:1},
+    {id:'s19',t:'设置简介时应当采用什么结构？',o:['直接写价格','三段式（我是谁/卖什么/给承诺）','只放联系方式','只写欢迎光临'],a:1},
+    {id:'s20',t:'账号权重中以下哪项属于显性权重？',o:['活跃度','回复速度','芝麻信用分','出单率'],a:2},
   ],
   multi: [
-    { id:'m1', text:'以下哪些属于闲鱼平台红线？', options:['站外导流到微信/QQ','标题留手机号','详情页引导站外交易','正常描述商品成色'], answer:[0,1,2] },
-    { id:'m2', text:'主图9图排列法包含哪三个层次？', options:['视觉层（封面/全景/侧背）','细节层（细节/瑕疵/配件）','信任层（场景/凭证/尺寸）','价格层（标价/折扣/优惠券）'], answer:[0,1,2] },
-    { id:'m3', text:'新商品发布后需要关注的三个核心数据指标是？', options:['曝光','点击率(CTR)','"我想要"数量','粉丝数'], answer:[0,1,2] },
-    { id:'m4', text:'标题公式包含哪些要素？', options:['品牌词','产品词','核心卖点','场景/人群词'], answer:[0,1,2,3] },
-    { id:'m5', text:'散场前必须确认的事项包括？', options:['账号已实名+芝麻信用授权','硬件隔离到位','2-3个产品已发布','知道11:30和16:00要看数据'], answer:[0,1,2,3] },
+    {id:'m1',t:'以下哪些属于闲鱼平台红线？',o:['站外导流到微信/QQ','标题或图片留手机号','详情页引导站外交易','正常描述商品成色'],a:[0,1,2]},
+    {id:'m2',t:'主图9图排列法包括哪三个层次？',o:['视觉层（封面/全景/侧背）','细节层（细节/瑕疵/配件）','信任层（场景/凭证/尺寸）','价格层（标价/折扣）'],a:[0,1,2]},
+    {id:'m3',t:'发布后需要关注的三个核心数据是？',o:['曝光','点击率(CTR)','"我想要"数量','粉丝数'],a:[0,1,2]},
+    {id:'m4',t:'标题公式包含哪些要素？',o:['品牌词','产品词','核心卖点','场景/人群词'],a:[0,1,2,3]},
+    {id:'m5',t:'散场前必须确认的事项？',o:['账号已实名+芝麻信用授权','硬件隔离到位','2-3个产品已发布','知道11:30和16:00看数据'],a:[0,1,2,3]},
+    {id:'m6',t:'平台5大绝对红线包括？',o:['站外导流','留联系方式','极限词','恶意改价（7天超10%）','及时回复买家'],a:[0,1,2,3]},
+    {id:'m7',t:'以下哪些属于其他违规行为？',o:['重复铺货','禁售商品（高仿/假货/盗版）','同WiFi多号操作','每天擦亮商品'],a:[0,1,2]},
+    {id:'m8',t:'详情页五段式模板包含？',o:['标题段（一句话说清卖什么）','人设段（我是谁+为什么卖）','产品段（功能+状态）','规格段（配件清单）','结尾段（价格+退换政策）'],a:[0,1,2,3,4]},
+    {id:'m9',t:'账号包装包括哪些要素？',o:['头像/昵称（高清真人照+含品类核心词）','简介三段式（我是谁/卖什么/给承诺）','动态（发2-3条增强真实感）','芝麻分不用管'],a:[0,1,2]},
+    {id:'m10',t:'哪些指标达到合格线需要关注？',o:['曝光≥50','CTR≥8%','"我想要"≥3个','咨询≥1个'],a:[0,1,2,3]},
   ]
 };
-
-let submitted = false;
-
-function render() {
-  const container = document.getElementById('examContainer');
-  let html = '';
-  // Single choice
-  examData.single.forEach((q, i) => {
-    html += '<div class="question-block" id="q-'+q.id+'">';
-    html += '<div class="q-title">单选题 '+(i+1)+'<span class="q-score">（5分）</span></div>';
-    html += '<div class="q-text">'+q.text+'</div><div class="options">';
-    q.options.forEach((opt, oi) => {
-      html += '<label class="option" onclick="selectSingle(\''+q.id+'\','+oi+')" id="opt-'+q.id+'-'+oi+'">';
-      html += '<input type="radio" name="'+q.id+'" value="'+oi+'">'+opt+'</label>';
-    });
-    html += '</div></div>';
+let c={},sub=false;
+function r(){
+  let h='';
+  S.single.forEach((q,i)=>{
+    h+='<div class="question-block"><div class="q-title">单选题 '+(i+1)+'<span class="q-score">（5分）</span></div><div class="q-text">'+q.t+'</div>';
+    q.o.forEach((o,oi)=>{h+='<label class="option-row"><input type="radio" name="s'+i+'" value="'+oi+'" onchange="p(\'s'+i+'\','+oi+')">'+o+'</label>'});
+    h+='</div>';
   });
-  // Multi choice
-  examData.multi.forEach((q, i) => {
-    html += '<div class="question-block" id="q-'+q.id+'">';
-    html += '<div class="q-title multi">多选题 '+(i+1)+'<span class="q-score">（10分）</span></div>';
-    html += '<div class="multi-hint">⚠️ 多选题：选对全部选项才得分，少选/多选/错选均不得分</div>';
-    html += '<div class="q-text">'+q.text+'</div><div class="options">';
-    q.options.forEach((opt, oi) => {
-      html += '<label class="option" onclick="toggleMulti(\''+q.id+'\','+oi+')" id="opt-'+q.id+'-'+oi+'">';
-      html += '<input type="checkbox" name="'+q.id+'" value="'+oi+'">'+opt+'</label>';
-    });
-    html += '</div></div>';
+  S.multi.forEach((q,i)=>{
+    h+='<div class="question-block"><div class="q-title multi">多选题 '+(i+1)+'<span class="q-score">（10分·全对才得分）</span></div><div class="q-text">'+q.t+'</div>';
+    q.o.forEach((o,oi)=>{h+='<label class="option-row"><input type="checkbox" name="m'+i+'" value="'+oi+'" onchange="pm(\'m'+i+'\','+oi+',this.checked)">'+o+'</label>'});
+    h+='</div>';
   });
-  container.innerHTML = html;
+  document.getElementById('examContainer').innerHTML=h;
 }
-
-function selectSingle(id, idx) {
-  if (submitted) return;
-  const q = examData.single.find(x => x.id === id);
-  if (!q) return;
-  const opts = document.querySelectorAll('#q-'+id+' .option');
-  opts.forEach(o => o.classList.remove('selected'));
-  document.getElementById('opt-'+id+'-'+idx).classList.add('selected');
+function p(id,idx){c[id]=idx}
+function pm(id,idx,chk){
+  if(!c[id])c[id]=[];
+  if(chk){if(!c[id].includes(idx))c[id].push(idx)}
+  else{c[id]=c[id].filter(v=>v!==idx)}
 }
-
-function toggleMulti(id, idx) {
-  if (submitted) return;
-  const el = document.getElementById('opt-'+id+'-'+idx);
-  el.classList.toggle('selected');
-}
-
-function submitExam() {
-  if (submitted) return;
-  submitted = true;
-  document.getElementById('submitBtn').disabled = true;
-  let total = 0, maxScore = 0;
-
-  // Grade single (5pts each)
-  examData.single.forEach(q => {
-    maxScore += 5;
-    const selected = document.querySelector('#q-'+q.id+' .option.selected');
-    if (selected) {
-      const idx = parseInt(selected.querySelector('input').value);
-      const opt = document.getElementById('opt-'+q.id+'-'+idx);
-      if (idx === q.answer) {
-        opt.classList.add('correct');
-        total += 5;
-      } else {
-        opt.classList.add('wrong');
-        document.getElementById('opt-'+q.id+'-'+q.answer).classList.add('correct');
-      }
-    } else {
-      // Show correct answer
-      document.getElementById('opt-'+q.id+'-'+q.answer).classList.add('correct');
-    }
-  });
-
-  // Grade multi (10pts each, all-or-nothing)
-  examData.multi.forEach(q => {
-    maxScore += 10;
-    const selected = document.querySelectorAll('#q-'+q.id+' .option.selected');
-    const answers = [];
-    selected.forEach(el => {
-      const idx = parseInt(el.querySelector('input').value);
-      answers.push(idx);
-      if (q.answer.includes(idx)) {
-        el.classList.add('correct');
-      } else {
-        el.classList.add('wrong');
-      }
+function subE(){
+  if(sub)return;
+  sub=true;document.getElementById('submitBtn').disabled=true;
+  let t=0,mx=0;
+  S.single.forEach((q,i)=>{
+    mx+=5;
+    let sel=c['s'+i];
+    document.querySelectorAll('input[name="s'+i+'"]').forEach((r,j)=>{
+      let lb=r.parentElement;
+      if(j===q.a)lb.classList.add('correct');
+      else if(sel!==undefined&&j===sel&&j!==q.a)lb.classList.add('wrong');
+      r.disabled=true;
     });
-    // Mark correct answers that weren't selected
-    q.answer.forEach(ai => {
-      const el = document.getElementById('opt-'+q.id+'-'+ai);
-      if (!el.classList.contains('correct') && !el.classList.contains('wrong')) {
-        el.classList.add('correct');
-      }
-    });
-    // All-or-nothing
-    const sortedAns = [...answers].sort();
-    const sortedCorrect = [...q.answer].sort();
-    if (sortedAns.length === sortedCorrect.length && sortedAns.every((v,i) => v === sortedCorrect[i])) {
-      total += 10;
-    }
+    if(sel===q.a)t+=5;
   });
-
-  const pct = Math.round(total / maxScore * 100);
-  const passed = pct >= 70;
-  const box = document.getElementById('resultBox');
-  box.className = 'result-box ' + (passed ? 'pass' : 'fail');
-  box.innerHTML = '<div class="score">'+total+'/'+maxScore+'分（'+pct+'%）</div>'
-    + (passed ? '✅ 恭喜通过！培训内容已掌握，可以进入实操阶段。' : '❌ 未通过（需≥70%）。建议复习培训手册后重新考试。');
+  S.multi.forEach((q,i)=>{
+    mx+=10;
+    let sel=c['m'+i]||[];
+    let sa=[...sel].sort(),aa=[...q.a].sort();
+    let ok=sa.length===aa.length&&sa.every((v,j)=>v===aa[j]);
+    document.querySelectorAll('input[name="m'+i+'"]').forEach((r,j)=>{
+      let lb=r.parentElement;
+      if(q.a.includes(j))lb.classList.add('correct');
+      else if(sel.includes(j)&&!q.a.includes(j))lb.classList.add('wrong');
+      r.disabled=true;
+    });
+    if(ok)t+=10;
+  });
+  let pct=Math.round(t/mx*100),pass=pct>=70;
+  let box=document.getElementById('resultBox');
+  box.className='result-box '+(pass?'pass':'fail');
+  box.innerHTML='<div class="score">'+t+'/'+mx+'分（'+pct+'%）</div>'+(pass?'✅ 恭喜通过！':'❌ 未通过（需≥70%），建议复习后重考。');
 }
-
-let timeLeft = 1800;
-function startTimer() {
-  const timerInterval = setInterval(() => {
-    timeLeft--;
-    const m = Math.floor(timeLeft/60);
-    const s = timeLeft%60;
-    document.getElementById('timer').textContent = '⏱ 剩余 '+m+'分 '+s.toString().padStart(2,'0')+'秒';
-    document.getElementById('timer').className = 'timer' + (timeLeft < 300 ? ' danger' : timeLeft < 600 ? ' warning' : '');
-    if (timeLeft <= 0) { clearInterval(timerInterval); submitExam(); }
-  }, 1000);
+let tl=2700;
+function st(){
+  setInterval(()=>{
+    tl--;let m=Math.floor(tl/60),s=tl%60;
+    document.getElementById('timer').textContent='⏱ 剩余 '+m+'分 '+String(s).padStart(2,'0')+'秒';
+    document.getElementById('timer').className='timer'+(tl<300?' danger':tl<600?' warning':'');
+    if(tl<=0)subE();
+  },1000);
 }
-
-render();
-startTimer();
+r();st();
 </script>
 </body>
 </html>
