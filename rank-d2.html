@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 2 考核 · 成绩汇总</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;background:#f0f2f5;color:#1d1d1f;line-height:1.6}
+  .header{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:#fff;padding:28px 20px;text-align:center}
+  .header h1{font-size:1.3em;margin-bottom:4px}
+  .header p{font-size:0.82em;opacity:0.6}
+  .container{max-width:800px;margin:0 auto;padding:20px 16px 60px}
+  .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px}
+  .stat-box{background:#fff;border-radius:12px;padding:14px;text-align:center;border:1px solid #e2e8f0}
+  .stat-box .num{font-size:1.6em;font-weight:700;color:#b8860b}
+  .stat-box .label{font-size:0.78em;color:#6b7280;margin-top:2px}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+  th{background:#e8e4dc;padding:10px 12px;font-size:0.85em;font-weight:600;text-align:left}
+  td{padding:8px 12px;border-bottom:1px solid #f0f0f0;font-size:0.88em}
+  tr:last-child td{border-bottom:none}
+  .rank-1{color:#b8860b;font-weight:700}
+  .rank-2{color:#6b7280;font-weight:600}
+  .rank-3{color:#0f3460;font-weight:600}
+  .badge-pass{display:inline-block;background:#dcfce7;color:#16a34a;padding:2px 10px;border-radius:12px;font-size:0.78em;font-weight:600}
+  .badge-fail{display:inline-block;background:#fef2f2;color:#dc2626;padding:2px 10px;border-radius:12px;font-size:0.78em;font-weight:600}
+  .empty{text-align:center;padding:40px;color:#9ca3af;font-size:0.9em}
+  .clear-btn{display:inline-block;background:#dc2626;color:#fff;border:none;padding:6px 16px;border-radius:20px;font-size:0.78em;cursor:pointer;margin-top:12px}
+  .clear-btn:hover{background:#b91c1c}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>📊 Day 2 · 复盘优化考核 · 成绩汇总</h1>
+  <p>数据来自本地存储 · 每台设备独立</p>
+</div>
+<div class="container" id="app">
+  <div class="stats">
+    <div class="stat-box"><div class="num" id="totalCount">0</div><div class="label">总考试人次</div></div>
+    <div class="stat-box"><div class="num" id="passCount" style="color:#16a34a">0</div><div class="label">通过人数</div></div>
+    <div class="stat-box"><div class="num" id="avgScore" style="color:#0f3460">0</div><div class="label">平均分</div></div>
+  </div>
+  <div id="tableArea"></div>
+  <div style="text-align:center;margin-top:12px">
+    <button class="clear-btn" onclick="clearAll()">🗑️ 清空所有成绩</button>
+    <a href="exam-day2.html" style="display:inline-block;background:#1e293b;color:#fff;padding:6px 16px;border-radius:20px;font-size:0.78em;text-decoration:none;margin-left:8px">← 返回考试</a>
+  </div>
+</div>
+<script>
+function loadData(){
+  let data=JSON.parse(localStorage.getItem('xianyu_exam_d2')||'[]');
+  let total=data.length;
+  document.getElementById('totalCount').textContent=total;
+  document.getElementById('passCount').textContent=data.filter(d=>d.pass).length;
+  document.getElementById('avgScore').textContent=total>0?Math.round(data.reduce((s,d)=>s+d.pct,0)/total)+'%':'0';
+
+  let area=document.getElementById('tableArea');
+  if(total===0){area.innerHTML='<div class="empty">📭 暂无考试成绩记录</div>';return;}
+
+  let sorted=[...data].sort((a,b)=>b.score-a.score);
+  let h='<table><tr><th>排名</th><th>姓名</th><th>成绩</th><th>正确率</th><th>结果</th><th>时间</th></tr>';
+  sorted.forEach((d,i)=>{
+    let rc=i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'';
+    h+='<tr><td class="'+rc+'">'+(i+1)+'</td><td>'+d.name+'</td><td>'+d.score+'/'+d.total+'</td><td>'+d.pct+'%</td>'+
+      '<td>'+(d.pass?'<span class="badge-pass">✅通过</span>':'<span class="badge-fail">❌未过</span>')+'</td>'+
+      '<td style="font-size:0.8em;color:#94a3b8">'+d.date+' '+d.time+'</td></tr>';
+  });
+  h+='</table>';
+  area.innerHTML=h;
+}
+
+function clearAll(){
+  if(confirm('确定清空所有Day2考试成绩？')){localStorage.removeItem('xianyu_exam_d2');loadData();}
+}
+loadData();
+</script>
+</body>
+</html>
