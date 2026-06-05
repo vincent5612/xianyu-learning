@@ -184,16 +184,27 @@ function submitExam(){
   results.push({name:studentName,score:t,total:mx,pct:pct,pass:pass,date:dateStr,time:timeStr});
   localStorage.setItem('xianyu_exam_d1',JSON.stringify(results));
 
-  let box=document.getElementById('resultBox');
-  box.className='result-box '+(pass?'pass':'fail');
-  box.innerHTML='<div style="font-size:0.85em;color:#6b7280;margin-bottom:4px">考生：<strong>'+studentName+'</strong></div>'+
+  // Show result at top of page (not in sticky bar)
+  let topResult=document.createElement('div');
+  topResult.className='result-box '+(pass?'pass':'fail');
+  topResult.style.marginBottom='20px';
+  topResult.innerHTML='<div style="font-size:0.9em;color:#6b7280;margin-bottom:6px;border-bottom:1px solid rgba(0,0,0,0.08);padding-bottom:8px">考生：<strong>'+studentName+'</strong> ｜ 📅 '+dateStr+' '+timeStr+'</div>'+
+    '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">'+
     '<div class="score">'+t+'/'+mx+'分（'+pct+'%）</div>'+
-    (pass?'<div style="margin-top:6px">✅ 恭喜通过！可以进入实操阶段。</div>':'<div style="margin-top:6px">❌ 未通过（需≥70%），建议复习后重考。</div>')+
-    '<div style="margin-top:10px;padding-top:10px;border-top:1px solid #e2e8f0;font-size:0.82em;color:#6b7280">'+
-    '📅 '+dateStr+' '+timeStr+'</div>'+
-    '<button class="copy-btn" onclick="copyResult()">📋 复制成绩</button>'+
-    ' <a href="rank-d1.html" style="display:inline-block;background:#1e293b;color:#fff;border:none;padding:8px 20px;border-radius:20px;font-size:0.82em;cursor:pointer;text-decoration:none;margin-top:8px">📊 查看成绩汇总</a>';
+    '<div>'+(pass?'<span style="background:#16a34a;color:#fff;padding:4px 14px;border-radius:20px;font-size:0.85em;font-weight:600">✅ 通过</span>':'<span style="background:#dc2626;color:#fff;padding:4px 14px;border-radius:20px;font-size:0.85em;font-weight:600">❌ 未通过</span>')+'</div>'+
+    '</div>'+
+    '<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,0.08);display:flex;gap:8px;flex-wrap:wrap">'+
+    '<button class="copy-btn" onclick="copyResult()" style="margin:0">📋 复制成绩</button>'+
+    '<a href="rank-d1.html" style="display:inline-block;background:#1e293b;color:#fff;padding:8px 20px;border-radius:20px;font-size:0.82em;text-decoration:none">📊 查看成绩汇总</a>'+
+    '<a href="exam-day1.html" style="display:inline-block;background:#dc2626;color:#fff;padding:8px 20px;border-radius:20px;font-size:0.82em;text-decoration:none">🔄 重新考试</a></div>';
+  document.getElementById('examContainer').insertBefore(topResult, document.getElementById('examContainer').firstChild);
 
+  // Hide submit button
+  document.getElementById('submitBtn').style.display='none';
+  document.getElementById('resultBox').style.display='none';
+
+  // Scroll to top so user sees result
+  window.scrollTo({top:0,behavior:'smooth'});
   clearInterval(window.timerInterval);
 }
 
