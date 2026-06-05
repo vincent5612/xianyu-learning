@@ -5,128 +5,124 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Day 2 考核 · 复盘优化</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, "PingFang SC", "Noto Sans SC", sans-serif;
-    background: #f0f2f5; color: #1d1d1f; line-height: 1.6;
-  }
-  .exam-header {
-    background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);
-    color: #fff; padding: 36px 20px 28px; text-align: center;
-    position: sticky; top: 0; z-index: 100;
-  }
-  .exam-header h1 { font-size: 1.3em; margin-bottom: 4px; }
-  .exam-header .meta { font-size: 0.78em; opacity: 0.6; }
-  .exam-header .timer {
-    display: inline-block; margin-top: 8px;
-    background: rgba(255,255,255,0.1); border-radius: 20px;
-    padding: 4px 18px; font-size: 0.85em; font-weight: 600;
-  }
-  .exam-header .timer.warning { color: #facc15; }
-  .exam-header .timer.danger { color: #ef4444; animation: pulse 1s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
-  .container { max-width: 800px; margin: 0 auto; padding: 20px 16px 40px; }
-  .question-block {
-    background: #fff; border-radius: 14px;
-    padding: 18px 20px; margin-bottom: 14px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    border: 1px solid rgba(0,0,0,0.04);
-  }
-  .question-block .q-title {
-    font-size: 0.8em; font-weight: 600; color: #b8860b;
-    margin-bottom: 5px;
-  }
-  .question-block .q-title.multi { color: #7c3aed; }
-  .question-block .q-text {
-    font-size: 0.92em; font-weight: 500; margin-bottom: 8px;
-    color: #1e293b;
-  }
-  .question-block .q-score { font-size: 0.7em; color: #94a3b8; margin-left: 6px; font-weight: 400; }
-  .option-row {
-    display: block; padding: 2px 0; cursor: pointer;
-    font-size: 0.88em; color: #334155;
-  }
-  .option-row input { margin-right: 6px; vertical-align: middle; }
-  .option-row input[type="radio"] { accent-color: #b8860b; }
-  .option-row input[type="checkbox"] { accent-color: #7c3aed; }
-  .option-row.correct { color: #16a34a; font-weight: 600; }
-  .option-row.correct input { accent-color: #16a34a; }
-  .option-row.wrong { color: #dc2626; font-weight: 600; }
-  .option-row.wrong input { accent-color: #dc2626; }
-  .multi-hint { font-size: 0.76em; color: #94a3b8; margin-bottom: 6px; }
-  .action-bar {
-    position: sticky; bottom: 0;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(12px);
-    border-top: 1px solid #e2e8f0;
-    padding: 14px 16px; text-align: center;
-  }
-  .action-bar button {
-    background: #ca8a04; color: #fff; border: none;
-    padding: 10px 36px; border-radius: 40px;
-    font-size: 0.92em; font-weight: 600; cursor: pointer;
-  }
-  .action-bar button:hover { background: #a16207; }
-  .action-bar button:disabled { opacity: 0.4; cursor: not-allowed; }
-  .result-box {
-    display: none; margin-top: 12px;
-    padding: 12px 16px; border-radius: 10px; font-size: 0.9em;
-  }
-  .result-box.pass { background: #f0fdf4; border: 1px solid #16a34a; color: #166534; display: block; }
-  .result-box.fail { background: #fef2f2; border: 1px solid #dc2626; color: #991b1b; display: block; }
-  .result-box .score { font-size: 1.4em; font-weight: 700; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;background:#f0f2f5;color:#1d1d1f;line-height:1.6}
+  .exam-header{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:#fff;padding:36px 20px 28px;text-align:center;position:sticky;top:0;z-index:100}
+  .exam-header h1{font-size:1.3em;margin-bottom:4px}
+  .exam-header .meta{font-size:0.78em;opacity:0.6}
+  .exam-header .timer{display:inline-block;margin-top:8px;background:rgba(255,255,255,0.1);border-radius:20px;padding:4px 18px;font-size:0.85em;font-weight:600}
+  .exam-header .timer.warning{color:#facc15}
+  .exam-header .timer.danger{color:#ef4444;animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+  .container{max-width:800px;margin:0 auto;padding:20px 16px 40px}
+  .question-block{background:#fff;border-radius:14px;padding:18px 20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.04)}
+  .question-block .q-title{font-size:0.8em;font-weight:600;color:#b8860b;margin-bottom:5px}
+  .question-block .q-title.multi{color:#7c3aed}
+  .question-block .q-text{font-size:0.92em;font-weight:500;margin-bottom:8px;color:#1e293b}
+  .question-block .q-score{font-size:0.7em;color:#94a3b8;margin-left:6px;font-weight:400}
+  .option-row{display:block;padding:2px 0;cursor:pointer;font-size:0.88em;color:#334155}
+  .option-row input{margin-right:6px;vertical-align:middle}
+  .option-row input[type="radio"]{accent-color:#b8860b}
+  .option-row input[type="checkbox"]{accent-color:#7c3aed}
+  .option-row.correct{color:#16a34a;font-weight:600}
+  .option-row.correct input{accent-color:#16a34a}
+  .option-row.wrong{color:#dc2626;font-weight:600}
+  .option-row.wrong input{accent-color:#dc2626}
+  .multi-hint{font-size:0.76em;color:#94a3b8;margin-bottom:6px}
+  .action-bar{position:sticky;bottom:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-top:1px solid #e2e8f0;padding:14px 16px;text-align:center}
+  .action-bar button{background:#ca8a04;color:#fff;border:none;padding:10px 36px;border-radius:40px;font-size:0.92em;font-weight:600;cursor:pointer}
+  .action-bar button:hover{background:#a16207}
+  .action-bar button:disabled{opacity:0.4;cursor:not-allowed}
+  .result-box{display:none;margin-top:12px;padding:12px 16px;border-radius:10px;font-size:0.9em;text-align:left}
+  .result-box.pass{background:#f0fdf4;border:1px solid #16a34a;color:#166534;display:block}
+  .result-box.fail{background:#fef2f2;border:1px solid #dc2626;color:#991b1b;display:block}
+  .result-box .score{font-size:1.4em;font-weight:700}
+
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;display:flex;align-items:center;justify-content:center}
+  .overlay-box{background:#fff;border-radius:16px;padding:32px 28px;max-width:380px;width:90%;text-align:center}
+  .overlay-box h2{font-size:1.2em;margin-bottom:6px}
+  .overlay-box p{font-size:0.85em;color:#6b7280;margin-bottom:16px}
+  .overlay-box input{width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:1em;outline:none;margin-bottom:16px}
+  .overlay-box input:focus{border-color:#ca8a04}
+  .overlay-box .btn-start{background:#ca8a04;color:#fff;border:none;padding:10px 36px;border-radius:40px;font-size:1em;font-weight:600;cursor:pointer;width:100%}
+  .overlay-box .btn-start:hover{background:#a16207}
+  .overlay-box .btn-start:disabled{opacity:0.4;cursor:not-allowed}
+  .copy-btn{background:#1e293b;color:#fff;border:none;padding:8px 20px;border-radius:20px;font-size:0.82em;cursor:pointer;margin-top:8px}
+  .copy-btn:hover{background:#334155}
 </style>
 </head>
 <body>
+
+<div class="overlay" id="nameOverlay">
+  <div class="overlay-box">
+    <h2>📊 Day 2 · 复盘优化考核</h2>
+    <p>请输入你的姓名开始考试</p>
+    <input type="text" id="studentName" placeholder="请输入姓名" maxlength="20">
+    <button class="btn-start" id="startBtn" onclick="startExam()" disabled>开始考试</button>
+  </div>
+</div>
+
 <div class="exam-header">
   <h1>📊 Day 2 · 复盘优化考核</h1>
   <div class="meta">单选20题 + 多选10题 · 共200分 · 140分及格</div>
-  <div class="timer" id="timer">⏱ 剩余 45分 00秒</div>
+  <div class="timer" id="timer">⏱ 准备中...</div>
 </div>
-<div class="container" id="examContainer"></div>
-<div class="action-bar">
+<div class="container" id="examContainer" style="display:none"></div>
+<div class="action-bar" id="actionBar" style="display:none">
   <button id="submitBtn" onclick="submitExam()">📝 提交答卷</button>
   <div id="resultBox" class="result-box"></div>
 </div>
+
 <script>
-const S={
-  single:[
-    {id:'s1',t:'新品曝光低于多少时应直接放弃下架重发？',o:['<50','<100','<200','<500'],a:1},
-    {id:'s2',t:'擦亮商品的最佳时间段是？',o:['凌晨1-3点','早7-9/午12-14/晚19-22','中午12点整','晚上23点后'],a:1},
-    {id:'s3',t:'买家消息超过几分钟未回复会影响权重？',o:['2分钟','5分钟','10分钟','30分钟'],a:1},
-    {id:'s4',t:'自然成交与补单的安全比例是？',o:['5:5','7:3','9:1','10:0'],a:1},
-    {id:'s5',t:'滞销品零曝光零咨询超过多久应删除？',o:['1-2天','3-5天','5-7天','15天'],a:2},
-    {id:'s6',t:'投流测试的最低曝光条件是？',o:['>200','>500','>1000','>5000'],a:2},
-    {id:'s7',t:'点击率不达标时优先优化哪里？',o:['改标题','换第一张主图','降价','补单'],a:1},
-    {id:'s8',t:'售后纠纷处理的核心原则是？',o:['拉到微信沟通','闲鱼内沟通留证','直接退款了事','打电话解决'],a:1},
-    {id:'s9',t:'申请退货时引导买家选哪个理由保护权重？',o:['质量问题','描述不符','协商一致退款/不想要','假货'],a:2},
-    {id:'s10',t:'同个商品一天最多补几单？',o:['1单','3单','5单','不限'],a:0},
-    {id:'s11',t:'曝光≥1000时建议做什么？',o:['下架商品','投5.9元测ROI','大幅降价','停更'],a:1},
-    {id:'s12',t:'补单的铁律是什么？',o:['用同一个WiFi','必须独立设备独立网络','多号在同一手机操作','随便找人点一下'],a:1},
-    {id:'s13',t:'首次咨询买家的开场白应采用什么身份？',o:['官方客服语气','个人卖家语气（哈喽~这个上周买的）','自动回复机器人','直接报价'],a:1},
-    {id:'s14',t:'ROI达到多少以上继续投流？',o:['>2','>3','>5','>10'],a:2},
-    {id:'s15',t:'账号隐性权重不包括以下哪项？',o:['活跃度','回复速度','芝麻信用分','出单率'],a:2},
-    {id:'s16',t:'曝光200-500时建议做什么？',o:['放弃下架','观察并优化主图/标题','直接投流','什么都不做'],a:1},
-    {id:'s17',t:'议价时用什么方式代替直接降价？',o:['告知最低价','送配件/包邮代替降价','直接拒绝','拉黑买家'],a:1},
-    {id:'s18',t:'滞销品不处理会有什么影响？',o:['没事','拖累店铺整体权重','平台会奖励','增加曝光'],a:1},
-    {id:'s19',t:'每天必做的运营动作不包括？',o:['擦亮','看数据记台账','上新1个','发朋友圈推广'],a:3},
-    {id:'s20',t:'数据诊断时转化低应优先优化？',o:['标题','主图','详情页和快捷回复','价格'],a:2},
-  ],
-  multi:[
-    {id:'m1',t:'曝光量分级标准中哪些正确？',o:['<100：放弃下架重发','200-500：观察优化主图/标题','≥500：正常继续推进','≥1000：可用投5.9元测ROI'],a:[0,1,2,3]},
-    {id:'m2',t:'售后保护的正确操作？',o:['发货前拍完整视频含SN码','箱体加防拆标记','在闲鱼内沟通留证','私下微信协商解决'],a:[0,1,2]},
-    {id:'m3',t:'晋级三件套包含？',o:['擦亮（流量高峰前操作）','秒回（5分钟内回复）','补数据（达标的链接继续发）','投大额广告'],a:[0,1,2]},
-    {id:'m4',t:'数据诊断的对应关系？',o:['曝光低→优化标题核心词前置','点击低→换第一张主图','转化低→改文案优化快捷回复','曝光低→直接投流'],a:[0,1,2]},
-    {id:'m5',t:'补单安全规范？',o:['独立设备+独立网络','自然成交:补单≥7:3','同个品一天不超过1单','随便找朋友点一下'],a:[0,1,2]},
-    {id:'m6',t:'话术模板中的常见场景？',o:['首次咨询（哈喽~）','议价（送配件代替降价）','发货延迟（拍视频~）','求好评（方便给个好评吗）'],a:[0,1,2,3]},
-    {id:'m7',t:'日常必做清单包括？',o:['每天擦亮','消息5分钟内回复','每天看数据记台账','每天至少上新1个'],a:[0,1,2,3]},
-    {id:'m8',t:'账号权重的构成？',o:['显性权重（芝麻分/好评率/实名）','隐性权重（活跃度/回复速度/出单率）','账号年龄','点击率'],a:[0,1,2]},
-    {id:'m9',t:'发货和售后流程包括？',o:['获取买家信息→货源平台代拍','备注禁止放价格单','回传快递单号至闲鱼','退货指导买家退回供应商'],a:[0,1,2,3]},
-    {id:'m10',t:'优化动作的正确做法？',o:['出单的品：加库存+升级主图','不出单的品：5-7天删除重发','数据不好的链接：优化后观察3天','所有品都不管'],a:[0,1,2]},
-  ]
-};
-let c={},sub=false;
-function r(){
+const S={single:[
+{id:'s1',t:'新品曝光低于多少时应直接放弃下架重发？',o:['<50','<100','<200','<500'],a:1},
+{id:'s2',t:'擦亮商品的最佳时间段是？',o:['凌晨1-3点','早7-9/午12-14/晚19-22','中午12点整','晚上23点后'],a:1},
+{id:'s3',t:'买家消息超过几分钟未回复会影响权重？',o:['2分钟','5分钟','10分钟','30分钟'],a:1},
+{id:'s4',t:'自然成交与补单的安全比例是？',o:['5:5','7:3','9:1','10:0'],a:1},
+{id:'s5',t:'滞销品零曝光零咨询超过多久应删除？',o:['1-2天','3-5天','5-7天','15天'],a:2},
+{id:'s6',t:'投流测试的最低曝光条件是？',o:['>200','>500','>1000','>5000'],a:2},
+{id:'s7',t:'点击率不达标时优先优化哪里？',o:['改标题','换第一张主图','降价','补单'],a:1},
+{id:'s8',t:'售后纠纷处理的核心原则是？',o:['拉到微信沟通','闲鱼内沟通留证','直接退款了事','打电话解决'],a:1},
+{id:'s9',t:'申请退货时引导买家选哪个理由保护权重？',o:['质量问题','描述不符','协商一致退款/不想要','假货'],a:2},
+{id:'s10',t:'同个商品一天最多补几单？',o:['1单','3单','5单','不限'],a:0},
+{id:'s11',t:'曝光≥1000时建议做什么？',o:['下架商品','投5.9元测ROI','大幅降价','停更'],a:1},
+{id:'s12',t:'补单的铁律是什么？',o:['用同一个WiFi','必须独立设备独立网络','多号在同一手机操作','随便找人点一下'],a:1},
+{id:'s13',t:'首次咨询应采用什么语气身份？',o:['官方客服语气','个人卖家语气（哈喽~）','自动回复机器人','直接报价'],a:1},
+{id:'s14',t:'ROI达到多少以上继续投流？',o:['>2','>3','>5','>10'],a:2},
+{id:'s15',t:'隐性权重不包括以下哪项？',o:['活跃度','回复速度','芝麻信用分','出单率'],a:2},
+{id:'s16',t:'曝光200-500时建议？',o:['放弃下架','观察并优化主图/标题','直接投流','什么都不做'],a:1},
+{id:'s17',t:'议价时最好用什么方式代替直接降价？',o:['告知最低价','送配件/包邮代替','直接拒绝','拉黑买家'],a:1},
+{id:'s18',t:'滞销品不处理有什么影响？',o:['没事','拖累店铺整体权重','平台会奖励','增加曝光'],a:1},
+{id:'s19',t:'以下哪项不是每天必做的？',o:['擦亮','看数据记台账','上新1个','发朋友圈推广'],a:3},
+{id:'s20',t:'转化低应优先优化什么？',o:['标题','主图','详情页和快捷回复','价格'],a:2}
+],multi:[
+{id:'m1',t:'曝光量分级标准中哪些正确？',o:['<100：放弃下架重发','200-500：观察优化主图/标题','≥500：正常继续推进','≥1000：可用投5.9元测ROI'],a:[0,1,2,3]},
+{id:'m2',t:'售后保护的正确操作？',o:['发货前拍完整视频含SN码','箱体加防拆标记','在闲鱼内沟通留证','私下微信协商解决'],a:[0,1,2]},
+{id:'m3',t:'晋级三件套包含？',o:['擦亮（流量高峰前）','秒回（5分钟内回复）','补数据（达标链接继续发）','投大额广告'],a:[0,1,2]},
+{id:'m4',t:'数据诊断对应关系？',o:['曝光低→优化标题核心词前置','点击低→换第一张主图','转化低→改文案优化快捷回复','曝光低→直接投流'],a:[0,1,2]},
+{id:'m5',t:'补单安全规范？',o:['独立设备+独立网络','自然成交:补单≥7:3','同个品一天不超过1单','随便找朋友点一下'],a:[0,1,2]},
+{id:'m6',t:'话术模板常见场景包括？',o:['首次咨询（哈喽~）','议价（送配件代替降价）','发货延迟（拍视频~）','求好评（方便给个好评吗）'],a:[0,1,2,3]},
+{id:'m7',t:'日常必做清单包括？',o:['每天擦亮','消息5分钟内回复','每天看数据记台账','每天至少上新1个'],a:[0,1,2,3]},
+{id:'m8',t:'账号权重的构成？',o:['显性权重（芝麻分/好评率/实名）','隐性权重（活跃度/回复速度/出单率）','账号年龄','点击率'],a:[0,1,2]},
+{id:'m9',t:'发货和售后流程包括？',o:['获取买家信息→货源平台代拍','备注禁止放价格单','回传快递单号至闲鱼','退货指导买家退回供应商'],a:[0,1,2,3]},
+{id:'m10',t:'优化动作的正确做法？',o:['出单的品：加库存+升级主图','不出单的品：5-7天删除重发','数据不好的链接：优化后观察3天','所有品都不管'],a:[0,1,2]}
+]};
+let c={},sub=false,studentName='';
+
+document.getElementById('studentName').addEventListener('input',function(){
+  document.getElementById('startBtn').disabled=this.value.trim().length<2;
+});
+
+function startExam(){
+  studentName=document.getElementById('studentName').value.trim();
+  if(studentName.length<2)return;
+  document.getElementById('nameOverlay').style.display='none';
+  document.getElementById('examContainer').style.display='block';
+  document.getElementById('actionBar').style.display='block';
+  render();startTimer();
+}
+
+function render(){
   let h='';
   S.single.forEach((q,i)=>{
     h+='<div class="question-block"><div class="q-title">单选题 '+(i+1)+'<span class="q-score">（5分）</span></div><div class="q-text">'+q.t+'</div>';
@@ -146,13 +142,13 @@ function pm(id,idx,chk){
   if(chk){if(!c[id].includes(idx))c[id].push(idx)}
   else{c[id]=c[id].filter(v=>v!==idx)}
 }
-function subE(){
-  if(sub)return;
-  sub=true;document.getElementById('submitBtn').disabled=true;
+
+function submitExam(){
+  if(sub)return;sub=true;
+  document.getElementById('submitBtn').disabled=true;
   let t=0,mx=0;
   S.single.forEach((q,i)=>{
-    mx+=5;
-    let sel=c['s'+i];
+    mx+=5;let sel=c['s'+i];
     document.querySelectorAll('input[name="s'+i+'"]').forEach((r,j)=>{
       let lb=r.parentElement;
       if(j===q.a)lb.classList.add('correct');
@@ -162,8 +158,7 @@ function subE(){
     if(sel===q.a)t+=5;
   });
   S.multi.forEach((q,i)=>{
-    mx+=10;
-    let sel=c['m'+i]||[];
+    mx+=10;let sel=c['m'+i]||[];
     let sa=[...sel].sort(),aa=[...q.a].sort();
     let ok=sa.length===aa.length&&sa.every((v,j)=>v===aa[j]);
     document.querySelectorAll('input[name="m'+i+'"]').forEach((r,j)=>{
@@ -174,21 +169,45 @@ function subE(){
     });
     if(ok)t+=10;
   });
+
   let pct=Math.round(t/mx*100),pass=pct>=70;
+  let now=new Date();
+  let dateStr=now.getMonth()+1+'月'+now.getDate()+'日';
+  let timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+
+  // Save to localStorage
+  let results=JSON.parse(localStorage.getItem('xianyu_exam_d2')||'[]');
+  results.push({name:studentName,score:t,total:mx,pct:pct,pass:pass,date:dateStr,time:timeStr});
+  localStorage.setItem('xianyu_exam_d2',JSON.stringify(results));
+
   let box=document.getElementById('resultBox');
   box.className='result-box '+(pass?'pass':'fail');
-  box.innerHTML='<div class="score">'+t+'/'+mx+'分（'+pct+'%）</div>'+(pass?'✅ 恭喜通过！':'❌ 未通过（需≥70%），建议复习后重考。');
+  box.innerHTML='<div style="font-size:0.85em;color:#6b7280;margin-bottom:4px">考生：<strong>'+studentName+'</strong></div>'+
+    '<div class="score">'+t+'/'+mx+'分（'+pct+'%）</div>'+
+    (pass?'<div style="margin-top:6px">✅ 恭喜通过！</div>':'<div style="margin-top:6px">❌ 未通过（需≥70%），建议复习后重考。</div>')+
+    '<div style="margin-top:10px;padding-top:10px;border-top:1px solid #e2e8f0;font-size:0.82em;color:#6b7280">📅 '+dateStr+' '+timeStr+'</div>'+
+    '<button class="copy-btn" onclick="copyResult()">📋 复制成绩</button>'+
+    ' <a href="rank-d2.html" style="display:inline-block;background:#1e293b;color:#fff;border:none;padding:8px 20px;border-radius:20px;font-size:0.82em;cursor:pointer;text-decoration:none;margin-top:8px">📊 查看成绩汇总</a>';
+
+  clearInterval(window.timerInterval);
 }
+
+function copyResult(){
+  let results=JSON.parse(localStorage.getItem('xianyu_exam_d2')||'[]');
+  let last=results[results.length-1];
+  let txt='【闲鱼Day2考核】\n姓名：'+last.name+'\n成绩：'+last.score+'/'+last.total+'分（'+last.pct+'%）\n结果：'+(last.pass?'✅通过':'❌未通过')+'\n时间：'+last.date+' '+last.time;
+  navigator.clipboard.writeText(txt).then(()=>{alert('✅ 成绩已复制')});
+}
+
 let tl=2700;
-function st(){
-  setInterval(()=>{
+function startTimer(){
+  window.timerInterval=setInterval(()=>{
     tl--;let m=Math.floor(tl/60),s=tl%60;
     document.getElementById('timer').textContent='⏱ 剩余 '+m+'分 '+String(s).padStart(2,'0')+'秒';
     document.getElementById('timer').className='timer'+(tl<300?' danger':tl<600?' warning':'');
-    if(tl<=0)subE();
+    if(tl<=0)submitExam();
   },1000);
 }
-r();st();
 </script>
 </body>
 </html>
