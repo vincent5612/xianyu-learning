@@ -219,37 +219,7 @@ function startTimer(){
   },1000);
 }
 
-// Cloud submit disabled - token embedded in server
-  var path="data/results_d2.json";
-  var url="https://api.github.com/repos/vincent5612/xianyu-learning/contents/"+path;
-  try{
-    var x=new XMLHttpRequest();
-    x.open("GET",url,false);
-    x.setRequestHeader("Accept","application/vnd.github.v3+json");
-    x.send();
-    if(x.status==200){
-      var r=JSON.parse(x.responseText);
-      var s=r.sha;
-      d.push({name:studentName,score:t,total:mx,pct:pct,pass:pass,date:dateStr,time:timeStr,day:"Day2"});
-      var c=btoa(unescape(encodeURIComponent(JSON.stringify(d))));
-      var x2=new XMLHttpRequest();
-      x2.open("PUT",url,false);
-      x2.setRequestHeader("Content-Type","application/json");
-      x2.send(JSON.stringify({message:"submit: "+studentName+" Day2",content:c,sha:s}));
-    }
-  }catch(e){console.log(e)}
-}
+
 </script>
-
-// Submit to local API server (same network)
-function submitToLocal(){
-  var localIP = "172.16.30.246";
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://"+localIP+":8787/api/results/d2", true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.send(JSON.stringify({name:studentName,score:t,total:mx,pct:pct,pass:pass,date:dateStr,time:timeStr}));
-}
-setTimeout(submitToLocal, 1000);
-
 </body>
 </html>
