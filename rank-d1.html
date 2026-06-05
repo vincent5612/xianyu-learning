@@ -48,8 +48,34 @@
 </div>
 <script>
 function loadData(){
+  // Try to fetch from cloud
+  var cloudUrl="https://raw.githubusercontent.com/vincent5612/xianyu-learning/main/data/results_d1.json";
+  var xhr=new XMLHttpRequest();
+  xhr.open("GET",cloudUrl,false);
+  try{xhr.send();if(xhr.status===200){
+    var cloudData=JSON.parse(xhr.responseText);
+    if(cloudData.length>0){
+      // Merge with local
+      var localData=JSON.parse(localStorage.getItem("xianyu_exam_d1")||"[]");
+      var merged=[...cloudData];
+      localData.forEach(function(item){
+        var exists=merged.some(function(m){return m.name===item.name&&m.score===item.score&&m.date===item.date});
+        if(!exists)merged.push(item);
+      });
+      renderData(merged);
+      return;
+    }
+  }}catch(e){}
+  // Fallback to local
+  var local=JSON.parse(localStorage.getItem("xianyu_exam_d1")||"[]");
+  renderData(local);
+}
+
+function renderData(data){
+{
   let data=JSON.parse(localStorage.getItem('xianyu_exam_d1')||'[]');
   let area=document.getElementById('tableArea');
+  if(!data)data=JSON.parse(localStorage.getItem('xianyu_exam_d1')||'[]');
   let total=data.length;
   let passCount=data.filter(d=>d.pass).length;
   let avg=total>0?Math.round(data.reduce((s,d)=>s+d.pct,0)/total):0;
