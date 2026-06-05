@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>闲鱼运营培训 · 2天速成版</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "SF Pro Display", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    background: #f8f6f0;
+    color: #1d1d1f;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #fff;
+    padding: 42px 20px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(255,228,17,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(255,228,17,0.05) 0%, transparent 60%);
+  }
+  .hero h1 { font-size: 1.7em; font-weight: 700; margin-bottom: 4px; background: linear-gradient(135deg, #fff 60%, #ffe411); -webkit-background-clip: text; -webkit-text-fill-color: transparent; position: relative; }
+  .hero .sub { opacity: 0.7; font-size: 0.85em; margin-bottom: 14px; position: relative; }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(255,228,17,0.12);
+    backdrop-filter: blur(8px);
+    border-radius: 40px;
+    padding: 7px 18px;
+    font-size: 0.8em;
+    border: 1px solid rgba(255,228,17,0.15);
+    position: relative;
+  }
+  .hero .badge span { color: #ffe411; font-weight: 600; }
+
+  /* ── TOP NAV ── */
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #e8e4dc;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 0 12px;
+    scrollbar-width: none;
+    display: flex; align-items: center;
+  }
+  .top-nav::-webkit-scrollbar { display: none; }
+  .top-nav .inner { display: flex; gap: 1px; margin: 0 auto; }
+  .top-nav a {
+    display: inline-block; padding: 9px 12px; font-size: 0.8em;
+    text-decoration: none; border-bottom: 2px solid transparent;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .top-nav a:hover { opacity: 0.8; }
+  .top-nav a.active { font-weight: 700; border-bottom-width: 3px; }
+
+  .top-nav .tab-d1 { color: #e06b6b; }
+  .top-nav .tab-d1.active { color: #c0392b; border-bottom-color: #c0392b; }
+  .top-nav .tab-d2 { color: #d4a84b; }
+  .top-nav .tab-d2.active { color: #b8860b; border-bottom-color: #b8860b; }
+  .top-nav .tab-ref { color: #5db85d; }
+  .top-nav .tab-ref.active { color: #2d8a2d; border-bottom-color: #2d8a2d; }
+
+  .content-wrapper { display: flex; max-width: 1280px; margin: 0 auto; padding: 0 16px; gap: 20px; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 200px; flex-shrink: 0; position: sticky; top: 50px;
+    align-self: flex-start; padding: 16px 0;
+    max-height: calc(100vh - 60px); overflow-y: auto; scrollbar-width: thin;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: #d4d0c8; border-radius: 4px; }
+  .sidebar a {
+    display: block; padding: 5px 8px 5px 14px; font-size: 0.82em;
+    color: #4b5563; text-decoration: none; border-left: 3px solid transparent;
+    border-radius: 0 6px 6px 0; margin: 1px 0; transition: all 0.15s;
+  }
+  .sidebar a:hover { background: #eeeae4; }
+  .sidebar a.active { font-weight: 600; background: #f0edf5; }
+  .sidebar a.sub { padding-left: 24px; font-size: 0.78em; }
+  .sidebar a.sb-d1.active { border-left-color: #dc2626; color: #dc2626; background: #fef2f2; }
+  .sidebar a.sb-d2.active { border-left-color: #ca8a04; color: #854d0e; background: #fefce8; }
+  .sidebar a.sb-ref.active { border-left-color: #16a34a; color: #166534; background: #f0fdf4; }
+  .sidebar .sec-title {
+    font-size: 0.7em; font-weight: 700;
+    color: #9ca3af; text-transform: uppercase; letter-spacing: 1px;
+    padding: 12px 8px 4px 14px;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main { flex: 1; min-width: 0; padding: 24px 0 60px; max-width: 800px; }
+  .section { scroll-margin-top: 60px; margin-bottom: 32px; }
+
+  .section h2 {
+    font-size: 1.3em; font-weight: 700; margin-bottom: 10px;
+    padding-bottom: 6px; border-bottom: 2px solid #e8e4dc;
+  }
+  .section h2.d1 { color: #c0392b; border-bottom-color: #c0392b; }
+  .section h2.d2 { color: #b8860b; border-bottom-color: #b8860b; }
+  .section h2.ref { color: #2d8a2d; border-bottom-color: #2d8a2d; }
+
+  .section h3 {
+    font-size: 1em; font-weight: 700; margin: 18px 0 8px; color: #1d1d1f;
+  }
+  .section h4 {
+    font-size: 0.9em; font-weight: 600; margin: 14px 0 6px; color: #374151;
+  }
+  .section p { margin: 6px 0; font-size: 0.92em; color: #374151; }
+
+  .tagline {
+    background: #f0ede8; border-radius: 8px; padding: 8px 14px;
+    font-size: 0.88em; font-weight: 600; margin: 10px 0;
+    border-left: 4px solid #0f3460;
+  }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 0.88em;
+  }
+  th { background: #e8e4dc; font-weight: 600; padding: 7px 10px; text-align: left; }
+  td { padding: 6px 10px; border-bottom: 1px solid #e8e4dc; }
+  tr:last-child td { border-bottom: none; }
+
+  /* ── CARDS ── */
+  .card {
+    background: #fff; border-radius: 10px; padding: 14px 16px;
+    margin: 10px 0; border: 1px solid #e8e4dc;
+  }
+  .card.red { border-left: 4px solid #dc2626; }
+  .card.yellow { border-left: 4px solid #ca8a04; }
+  .card.green { border-left: 4px solid #16a34a; }
+  .card.blue { border-left: 4px solid #0f3460; }
+  .card.purple { border-left: 4px solid #7c3aed; }
+  .card-title { font-weight: 700; font-size: 0.92em; margin-bottom: 4px; }
+  .card-body { font-size: 0.88em; color: #4b5563; }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    padding: 5px 0 5px 28px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Crect x='3' y='3' width='18' height='18' rx='3'/%3E%3C/svg%3E") left center no-repeat;
+    background-size: 18px;
+    font-size: 0.88em;
+  }
+
+  /* ── REFERENCE SECTION ── */
+  .ref-box {
+    background: #f0fdf4; border-radius: 8px; padding: 12px 14px;
+    margin: 8px 0; border-left: 3px solid #16a34a;
+    font-size: 0.88em;
+  }
+  .ref-box .label {
+    font-weight: 700; color: #166534; font-size: 0.9em; margin-bottom: 4px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 820px) {
+    .sidebar { display: none; }
+    .main { max-width: 100%; }
+    .hero h1 { font-size: 1.4em; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>闲鱼运营培训 · 2天速成版</h1>
+  <div class="sub">不讲理论，只教动作。培训完当天就发产品。</div>
+  <div class="badge">🎯 <span>Day1 培训发布</span> → <span>Day2 复盘优化</span> → 📖 参考材料课后查</div>
+</div>
+
+<nav class="top-nav" id="topNav">
+  <div class="inner">
+    <a href="#d1" class="tab-d1" onclick="switchTab('d1')">Day 1 · 培训发布</a>
+    <a href="#d2" class="tab-d2" onclick="switchTab('d2')">Day 2 · 复盘优化</a>
+    <a href="#ref" class="tab-ref" onclick="switchTab('ref')">📖 参考材料</a>
+  </div>
+</nav>
+
+<div class="content-wrapper">
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sec-title">DAY 1</div>
+  <a href="#d1-1" class="sub sb-d1" data-section="d1">红线</a>
+  <a href="#d1-2" class="sub sb-d1" data-section="d1">上架三件套</a>
+  <a href="#d1-3" class="sub sb-d1" data-section="d1">今天发的品</a>
+  <a href="#d1-4" class="sub sb-d1" data-section="d1">讲师演示</a>
+  <a href="#d1-5" class="sub sb-d1" data-section="d1">看数据</a>
+  <a href="#d1-6" class="sub sb-d1" data-section="d1">确认散场</a>
+
+  <div class="sec-title">DAY 2</div>
+  <a href="#d2-1" class="sub sb-d2" data-section="d2">数据复盘</a>
+  <a href="#d2-2" class="sub sb-d2" data-section="d2">流量池晋级</a>
+  <a href="#d2-3" class="sub sb-d2" data-section="d2">客服售后</a>
+  <a href="#d2-4" class="sub sb-d2" data-section="d2">安全操作</a>
+  <a href="#d2-5" class="sub sb-d2" data-section="d2">后续路径</a>
+
+  <div class="sec-title">参考资料</div>
+  <a href="#ref-1" class="sub sb-ref" data-section="ref">复盘重点12条</a>
+  <a href="#ref-2" class="sub sb-ref" data-section="ref">检查清单</a>
+  <a href="#ref-3" class="sub sb-ref" data-section="ref">20字公式</a>
+  <a href="#ref-4" class="sub sb-ref" data-section="ref">硬件与账号详解</a>
+  <a href="#ref-5" class="sub sb-ref" data-section="ref">选品逻辑</a>
+  <a href="#ref-6" class="sub sb-ref" data-section="ref">售后保护详解</a>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- ==================== DAY 1 ==================== -->
+  <div id="d1" class="section">
+    <h2 class="d1">Day 1 · 培训完即发布</h2>
+    <div class="tagline">🔥 目标：培训结束后，每个学员发布2-3个产品</div>
+
+    <!-- 1.1 -->
+    <div id="d1-1">
+      <h3>一、平台红线（10分钟）</h3>
+      <div class="card red">
+        <div class="card-title">🚫 五大绝对红线</div>
+        <div class="card-body">
+          <table>
+            <tr><th>红线</th><th>后果</th></tr>
+            <tr><td>站外导流：引导微信/QQ/淘宝等外部平台交易</td><td>封号</td></tr>
+            <tr><td>留联系方式：标题/描述/图片/私聊留任何联系方式</td><td>限流/下架</td></tr>
+            <tr><td>极限词："全新""100%正品""全网最低"</td><td>限流/下架</td></tr>
+            <tr><td>恶意改价：频繁/大幅调价（7天内超10%）</td><td>降权</td></tr>
+            <tr><td>高危售后：拖延发货/无理拒退/态度恶劣</td><td>降权/封号</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="card yellow">
+        <div class="card-title">⚠️ 其他违规</div>
+        <div class="card-body">
+          · 重复铺货（同一商品多个链接霸屏）<br>
+          · 禁售商品（高仿/假货/盗版/管制刀具/易燃易爆）<br>
+          · 同WiFi下多号操作 → 连坐封号
+        </div>
+      </div>
+      <div class="card blue">
+        <div class="card-title">📌 散场前必须记住的3条</div>
+        <div class="card-body">
+          ① 不要在闲鱼提微信<br>
+          ② 标题不要写"全新"<br>
+          ③ 7天内别大幅改价
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.2 -->
+    <div id="d1-2">
+      <h3>二、上架三件套（25分钟）</h3>
+
+      <h4>① 标题公式（5分钟）</h4>
+      <div class="card">
+        <div class="card-body">
+          <strong>品牌词 + 产品词 + 核心卖点 + 场景</strong><br>
+          ≤12字，核心词放前面。不要堆词。
+        </div>
+      </div>
+      <p>示例：<code>亚狮龙7号耐打训练球 家庭装</code></p>
+
+      <h4>② 主图9图排列法（10分钟）</h4>
+      <table>
+        <tr><th>位置</th><th>内容</th><th>作用</th></tr>
+        <tr><td>1-3 视觉层</td><td>封面/全景/侧背</td><td>高清实拍建信任</td></tr>
+        <tr><td>4-6 细节层</td><td>细节/瑕疵/配件</td><td>消除信息差</td></tr>
+        <tr><td>7-9 信任层</td><td>场景/凭证/尺寸</td><td>促进下单</td></tr>
+      </table>
+      <p><strong>第一张图决定生死。</strong> 买家不点进去，后面全是废的。</p>
+
+      <h4>③ 详情页五段式模板（5分钟）</h4>
+      <div class="card green">
+        <div class="card-body">
+          ① <strong>标题段</strong>：一句话说清楚卖什么<br>
+          ② <strong>人设段</strong>：我是谁+为什么卖（拉近距离）<br>
+          ③ <strong>产品段</strong>：功能+状态（塑造专业感）<br>
+          ④ <strong>规格段</strong>：配件清单（消除疑问）<br>
+          ⑤ <strong>结尾段</strong>：价格+退换政策（引导下单）
+        </div>
+      </div>
+
+      <h4>④ 科学定价法（5分钟）</h4>
+      <div class="card">
+        <div class="card-title">定价三步</div>
+        <div class="card-body">
+          查同款均价 → 评成色 → 留10-20%砍价空间<br>
+          多用9/8尾数（39/48）<br>
+          闲鱼用户心理：比淘宝便宜，但别太便宜
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.3 -->
+    <div id="d1-3">
+      <h3>三、今天要发的品（5分钟）</h3>
+      <div class="card purple">
+        <div class="card-title">🎯 今天发的3个品（讲师填写）</div>
+        <div class="card-body">
+          品A：____________ 标题：____________ 定价：____<br>
+          品B：____________ 标题：____________ 定价：____<br>
+          品C：____________ 标题：____________ 定价：____<br>
+          <br>
+          <em>以上品已备好素材包，直接复制发布即可</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.4 -->
+    <div id="d1-4">
+      <h3>四、讲师完整演示（15分钟）</h3>
+      <div class="card blue">
+        <div class="card-body">
+          讲师投屏展示一个完整上架流程：<br><br>
+          ① 打开闲鱼 → ② 点"卖闲置" → ③ 选今天要发的品<br>
+          ④ 写标题（套公式） → ⑤ 排9张图 → ⑥ 填详情（套模板）<br>
+          ⑦ 定价 → ⑧ 发布<br>
+          <br>
+          <strong>学员同步在自己的手机上操作。</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.5 -->
+    <div id="d1-5">
+      <h3>五、发布后怎么看数据（10分钟）</h3>
+      <table>
+        <tr><th>指标</th><th>合格线</th><th>不合格→动作</th></tr>
+        <tr><td>曝光</td><td>≥50</td><td>优化标题/关键词</td></tr>
+        <tr><td>点击率(CTR)</td><td>≥8%</td><td>换第一张主图</td></tr>
+        <tr><td>"我想要"</td><td>≥3个</td><td>价格或需求问题</td></tr>
+        <tr><td>咨询</td><td>≥1个</td><td>优化详情页/话术</td></tr>
+      </table>
+      <div class="card yellow">
+        <div class="card-title">⏰ 设闹钟</div>
+        <div class="card-body">
+          11:30 第一次看数据<br>
+          16:00 第二次看数据<br>
+          <strong>数据记到台账</strong>：曝光 / CTR / 想要 / 成交，每天就记这4个数
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.6 -->
+    <div id="d1-6">
+      <h3>六、散场确认（5分钟）</h3>
+      <ul class="checklist">
+        <li>账号已实名 + 芝麻信用已授权</li>
+        <li>硬件隔离确认（独立手机 + 独立SIM卡 + 4G/5G）</li>
+        <li>2-3个产品已发布</li>
+        <li>知道11:30和16:00要看数据</li>
+        <li>知道台账怎么记</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== DAY 2 ==================== -->
+  <div id="d2" class="section">
+    <h2 class="d2">Day 2 · 复盘优化</h2>
+    <div class="tagline">🔥 目标：逐人过数据，没出单的知道怎么调，出单的知道怎么放大</div>
+
+    <div id="d2-1">
+      <h3>一、数据复盘（15分钟）</h3>
+      <div class="card">
+        <div class="card-title">逐人过昨天数据</div>
+        <div class="card-body">
+          · 曝光多少？CTR多少？有人出单吗？<br>
+          · <strong>出单的人分享</strong>——为什么能出？做了什么不一样的事？<br>
+          · 没出单的诊断——问题出在哪？
+        </div>
+      </div>
+      <table>
+        <tr><th>问题</th><th>诊断</th><th>动作</th></tr>
+        <tr><td>曝光低</td><td>关键词/标题/权重</td><td>优化标题核心词前置 + 养号</td></tr>
+        <tr><td>点击低</td><td>主图/价格</td><td>换第一张主图</td></tr>
+        <tr><td>咨询少</td><td>详情页/话术</td><td>改文案 + 优化快捷回复</td></tr>
+        <tr><td>零成交</td><td>价格或信任不足</td><td>降5%或考虑补1单</td></tr>
+      </table>
+      <p><strong>滞销品处理：</strong> 5-7天零曝光零咨询的商品直接删除，避免拖累店铺权重。</p>
+    </div>
+
+    <div id="d2-2">
+      <h3>二、流量池晋级（15分钟）</h3>
+      <h4>曝光量分级速查</h4>
+      <table>
+        <tr><th>曝光量</th><th>判断</th><th>动作</th></tr>
+        <tr><td>&lt;100</td><td>❌ 放弃</td><td>下架重发或换品</td></tr>
+        <tr><td>200-500</td><td>⚠️ 观察</td><td>优化主图/标题</td></tr>
+        <tr><td>≥500</td><td>✅ 正常</td><td>可用，继续推进</td></tr>
+        <tr><td>≥1000</td><td>✅ 可用</td><td>投5.9元测ROI</td></tr>
+      </table>
+
+      <h4>晋级三件套</h4>
+      <div class="card">
+        <div class="card-body">
+          ① <strong>擦亮</strong>：早7-9/午12-14/晚19-22（流量高峰前操作）<br>
+          ② <strong>秒回</strong>：消息5分钟内回复，平台给快响账号更多流量<br>
+          ③ <strong>补数据</strong>：数据达标的链接继续发布同款<br>
+          <br>
+          <strong>投流入门：</strong>曝光>1000才投。5.9元测试，ROI>5继续投，不达标停。
+        </div>
+      </div>
+
+      <h4>数据诊断三步法</h4>
+      <table>
+        <tr><th>问题</th><th>诊断</th><th>动手</th></tr>
+        <tr><td>曝光低</td><td>关键词/权重</td><td>标题核心词前置 + 养号提升权重</td></tr>
+        <tr><td>点击低</td><td>主图不行</td><td>换第一张主图（最关键的）</td></tr>
+        <tr><td>转化低</td><td>详情/话术</td><td>改文案 + 优化快捷回复</td></tr>
+      </table>
+    </div>
+
+    <div id="d2-3">
+      <h3>三、客服话术与售后（15分钟）</h3>
+
+      <h4>话术模板</h4>
+      <table>
+        <tr><th>场景</th><th>直接说</th></tr>
+        <tr><td>首次咨询</td><td>"哈喽~这个上周买的就用了一次，不太适合我"</td></tr>
+        <tr><td>议价</td><td>"真的最低了哥，再低要亏邮费了😭 送你个小配件行不？"</td></tr>
+        <tr><td>发货延迟</td><td>"不好意思课多，晚上给你发，发的时候拍视频~"</td></tr>
+        <tr><td>求好评</td><td>"亲如果觉得ok方便给个好评吗？谢谢你呀~"</td></tr>
+      </table>
+      <p><strong>核心：</strong> 个人卖家身份，别像客服机器人。</p>
+
+      <h4>售后保护</h4>
+      <div class="card purple">
+        <div class="card-body">
+          <strong>发货闭环：</strong> 获取买家信息 → 去货源平台代拍 → 回传单号<br>
+          <strong>防"到手刀"：</strong> 发货前拍完整视频（含SN码）→ 全流程录像打包 → 箱体加防拆标记<br>
+          <strong>纠纷原则：</strong> 闲鱼内沟通留证，拒绝私下协商。<br>
+          <strong>售后权重保护：</strong> 明确发货时效 → 友好协商为主 → 积极处理中差评
+        </div>
+      </div>
+    </div>
+
+    <div id="d2-4">
+      <h3>四、安全操作须知（10分钟）</h3>
+
+      <h4>补单安全规范</h4>
+      <div class="card yellow">
+        <div class="card-title">⚠️ 铁律</div>
+        <div class="card-body">
+          · <strong>独立设备 + 独立网络</strong>（不满足这条就别补）<br>
+          · 自然成交:补单 ≥ 7:3<br>
+          · 同一个品一天不超过1单
+        </div>
+      </div>
+      <p><strong>操作流程：</strong> 小号搜关键词找到你 → 先看2-3个竞品（30秒+） → 回来看你的详情页（1分钟+） → 点"我想要"或收藏</p>
+
+      <h4>日常必做清单</h4>
+      <ul class="checklist">
+        <li>每天擦亮（流量高峰前操作）</li>
+        <li>消息5分钟内回复</li>
+        <li>每天看数据 + 记台账</li>
+        <li>每天至少上新1个</li>
+      </ul>
+    </div>
+
+    <div id="d2-5">
+      <h3>五、后续路径（5分钟）</h3>
+      <div class="card green">
+        <div class="card-title">🚀 后续方向</div>
+        <div class="card-body">
+          · <strong>出单的品 → </strong>加库存 + 升级主图 + 继续发同款<br>
+          · <strong>不出单的品 → </strong>5-7天零数据 → 删掉重发<br>
+          · <strong>进阶自学 → </strong>看下方「参考材料」<br>
+          · <strong>有问题 → </strong>找____（讲师填写对接人）
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== REFERENCE ==================== -->
+  <div id="ref" class="section">
+    <h2 class="ref">📖 参考材料</h2>
+    <p style="margin-bottom:16px; color:#6b7280;">以下内容不占课时，学员课后查阅。培训时只讲Day1和Day2的内容。</p>
+
+    <div id="ref-1">
+      <h3>参考①：复盘重点（12条核心检查项）</h3>
+      <p>每天实操前花3分钟过一遍，哪个没做到优先补哪个。</p>
+      <table>
+        <tr><th>关键点</th><th>一句话</th><th>自检</th></tr>
+        <tr><td>一机一卡一IP</td><td>物理隔离，杜绝WiFi共享，禁分身/双开</td><td>☐</td></tr>
+        <tr><td>芝麻信用≥650</td><td>授权芝麻分，分数越高搜索排位越前</td><td>☐</td></tr>
+        <tr><td>点击率≥8%</td><td>首日CTR不过8%直接换主图</td><td>☐</td></tr>
+        <tr><td>响应≤5分钟</td><td>超时成交率骤降，平台给快响账号更多流量</td><td>☐</td></tr>
+        <tr><td>严禁站外导流</td><td>不引流微信/QQ/淘宝</td><td>☐</td></tr>
+        <tr><td>严禁违禁词</td><td>不用"全新""100%正品""全网最低"</td><td>☐</td></tr>
+        <tr><td>补单≤30%</td><td>独立设备+独立网络</td><td>☐</td></tr>
+        <tr><td>7天内避免大幅改价</td><td>大幅调价打乱标签导致降权</td><td>☐</td></tr>
+        <tr><td>人设"若即若离"</td><td>个人卖家人设天然降低买家防御心</td><td>☐</td></tr>
+        <tr><td>每日擦亮</td><td>早7-9/午12-14/晚19-22流量高峰前操作</td><td>☐</td></tr>
+        <tr><td>滞销品5-7天清理</td><td>零曝光零咨询直接删除</td><td>☐</td></tr>
+        <tr><td>每日数据全记录</td><td>台账记录曝光/CTR/成交</td><td>☐</td></tr>
+      </table>
+    </div>
+
+    <div id="ref-2">
+      <h3>参考②：检查清单</h3>
+      <p style="color:#6b7280; font-size:0.88em;">每天做完一项点一下 ☐</p>
+
+      <h4>Day1课后自查</h4>
+      <ul class="checklist">
+        <li>平台红线已记住</li>
+        <li>硬件隔离到位（一机一卡一IP）</li>
+        <li>账号人设已搞定（头像/简介/动态）</li>
+        <li>刷对标养号完成（每号30分钟+）</li>
+        <li>选品确认（出单记录/利润≥30%）</li>
+        <li>上架SOP准备完（标题/9图/详情/定价）</li>
+        <li>至少发布2个产品</li>
+      </ul>
+
+      <h4>每日必做</h4>
+      <ul class="checklist">
+        <li>早上10点前上品</li>
+        <li>11:30看数据（曝光/CTR/想要）</li>
+        <li>16:00再看数据 + 记台账</li>
+        <li>擦亮操作</li>
+        <li>消息秒回</li>
+      </ul>
+    </div>
+
+    <div id="ref-3">
+      <h3>参考③：20字黄金成交公式</h3>
+      <div class="ref-box">
+        <div class="card-body" style="text-align:center; font-size:1.1em; font-weight:700;">
+          精细选品 → 优质内容 → 合理价格 → 高效运营 → 口碑沉淀
+        </div>
+      </div>
+      <table>
+        <tr><th>环节</th><th>本质</th><th>关键动作</th></tr>
+        <tr><td>精细选品</td><td>选对赛道</td><td>近7天出单？利润≥30%？货源验证？</td></tr>
+        <tr><td>优质内容</td><td>决定点击率</td><td>标题12字+9图排列+详情五段</td></tr>
+        <tr><td>合理价格</td><td>引流不亏本</td><td>低于竞品10-15%，留砍价空间</td></tr>
+        <tr><td>高效运营</td><td>维持权重</td><td>秒回+擦亮+补单+话术库+数据记录</td></tr>
+        <tr><td>口碑沉淀</td><td>长期复利</td><td>人设拦截差评+主动要好评+售后保护</td></tr>
+      </table>
+    </div>
+
+    <div id="ref-4">
+      <h3>参考④：硬件与账号详解</h3>
+
+      <h4>一机一卡一IP</h4>
+      <table>
+        <tr><th>要求</th><th>说明</th></tr>
+        <tr><td>一机一卡一IP</td><td>物理隔离独立手机+专属SIM卡+4G/5G移动数据</td></tr>
+        <tr><td>严禁分身</td><td>禁止应用分身、双开、虚拟机</td></tr>
+        <tr><td>SIM卡优选</td><td>不同运营商及归属地</td></tr>
+        <tr><td>实名认证</td><td>真实身份，完成人脸核验</td></tr>
+        <tr><td>资金隔离</td><td>每个闲鱼号绑定独立实名的支付宝</td></tr>
+      </table>
+
+      <h4>账号包装三要素</h4>
+      <table>
+        <tr><th>要素</th><th>要求</th></tr>
+        <tr><td>头像/昵称</td><td>高清真人照或品类相关图；昵称含核心词（如"数码玩家小李"）</td></tr>
+        <tr><td>简介三段式</td><td>①我是谁 ②卖什么 ③给承诺</td></tr>
+        <tr><td>动态</td><td>发2-3条日常动态增强真实感</td></tr>
+      </table>
+
+      <h4>刷对标操作</h4>
+      <p>搜品类关键词 → 每天点10-15个"我想要" → 收藏5-8个 → 浏览详情页30秒+ → 咨询2-3个竞品收集话术 → 每号每天刷30分钟+</p>
+    </div>
+
+    <div id="ref-5">
+      <h3>参考⑤：选品逻辑</h3>
+      <h4>选品三条件</h4>
+      <table>
+        <tr><th>条件</th><th>核心问题</th></tr>
+        <tr><td>有出单记录</td><td>同类品近7天有人出单吗？</td></tr>
+        <tr><td>利润≥30%</td><td>毛利率基准30%，验证1688/拼多多货源</td></tr>
+        <tr><td>有差异空间</td><td>你能做和别人不一样的点吗？</td></tr>
+      </table>
+      <p><strong>数据化选品流程：</strong> 搜核心词 → 看下拉推荐词（需求分析）→ 看"相似商品"及"已卖出"记录（供给分析）→ 测利润</p>
+
+      <h4>品类利润参考</h4>
+      <table>
+        <tr><th>品类</th><th>要点</th><th>利润参考</th></tr>
+        <tr><td>🏸 体育用品</td><td>品牌货+配件，消耗品复购高</td><td>40-60%</td></tr>
+        <tr><td>🍼 母婴用品</td><td>必须品，家长舍得花钱</td><td>50-70%</td></tr>
+        <tr><td>📱 数码配件</td><td>品类多，需求量大</td><td>30-50%</td></tr>
+      </table>
+    </div>
+
+    <div id="ref-6">
+      <h3>参考⑥：售后保护详细操作</h3>
+      <h4>无货源发货闭环</h4>
+      <div class="card">
+        <div class="card-body">
+          ① 获取买家信息 → ② 去货源平台代拍 → ③ 备注：严禁放价格单/店铺卡片 → ④ 复制快递单号 → ⑤ 回传闲鱼点击发货 → ⑥ 退货时指导买家退回给供应商
+        </div>
+      </div>
+
+      <h4>防"到手刀"检查清单</h4>
+      <ul class="checklist">
+        <li>发货前录制完整展示视频（含SN码/序列号）</li>
+        <li>全流程录像打包</li>
+        <li>箱体加防拆标记</li>
+        <li>遇纠纷：拒绝私下协商（须在闲鱼沟通留证）</li>
+        <li>坚决拒绝不合理要求</li>
+        <li>申请小法庭/客服介入</li>
+      </ul>
+
+      <h4>售后权重保护</h4>
+      <p>明确发货时效（如拍下48小时内发货）→ 尽量远离小法庭（友好协商为主）→ 平台介入无论对错均损害权重 → 积极处理中差评 → 真诚沟通引导修改</p>
+    </div>
+
+    <p style="margin-top:32px;padding:12px 0;border-top:1px solid #e8e4dc;text-align:center;font-size:0.82em;color:#9ca3af;">
+      闲鱼运营培训手册 · 基于2026年5月闲鱼无货源电商培训内容整理<br>
+      <a href="https://vincent5612.github.io/xianyu-learning/" style="color:#0f3460;">← 返回完整5天版手册</a>
+    </p>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /content-wrapper -->
+
+<script>
+// Tab switching
+function switchTab(tab) {
+  document.querySelectorAll('.top-nav a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll(`.top-nav a[href="#${tab}"]`).forEach(a => a.classList.add('active'));
+}
+// Active nav on scroll
+document.addEventListener('scroll', function() {
+  var sidebarLinks = document.querySelectorAll('.sidebar a');
+  var sections = [];
+  sidebarLinks.forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      var el = document.getElementById(href.slice(1));
+      if (el) sections.push({ el: el, a: a });
+    }
+  });
+  var scrollY = window.scrollY + 80;
+  var activeFound = false;
+  sections.forEach(function(s) {
+    if (s.el.offsetTop <= scrollY) {
+      sidebarLinks.forEach(l => l.classList.remove('active'));
+      s.a.classList.add('active');
+      activeFound = true;
+    }
+  });
+  // Top nav active
+  var d1 = document.getElementById('d1');
+  var d2 = document.getElementById('d2');
+  var ref = document.getElementById('ref');
+  document.querySelectorAll('.top-nav a').forEach(a => a.classList.remove('active'));
+  if (ref && scrollY >= ref.offsetTop - 100) {
+    document.querySelector('.top-nav a[href="#ref"]')?.classList.add('active');
+  } else if (d2 && scrollY >= d2.offsetTop - 100) {
+    document.querySelector('.top-nav a[href="#d2"]')?.classList.add('active');
+  } else {
+    document.querySelector('.top-nav a[href="#d1"]')?.classList.add('active');
+  }
+});
+// Init
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('.top-nav a[href="#d1"]')?.classList.add('active');
+});
+</script>
+</body>
+</html>
