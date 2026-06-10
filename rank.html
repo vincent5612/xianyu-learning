@@ -41,30 +41,46 @@ const RESULTS_URL='https://raw.githubusercontent.com/vincent5612/xianyu-learning
 
 async function loadRank(){
   document.getElementById('rankList').innerHTML='<div class="loading">加载中...</div>';
+  let allResults = [];
+  
+  // 1. 从GitHub API读取（共享数据）
   try{
-    let resp=await fetch(RESULTS_URL+'?t='+Date.now());
-    let data=await resp.json();
-    let list=data.results||[];
-    list.sort((a,b)=>b.pct-a.pct);
-    if(list.length===0){
-      document.getElementById('rankList').innerHTML='<div class="loading">暂无成绩记录</div>';return;
+    let resp=await fetch('https://api.github.com/repos/vincent5612/xianyu-learning/contents/exam_results.json?t='+Date.now());
+    if(resp.ok){
+      let d2=await resp.json();
+      let jsonStr=new TextDecoder().decode(Uint8Array.from(atob(d2.content),c=>c.charCodeAt(0)));
+      let data=JSON.parse(jsonStr);
+      allResults = data.results||[];
     }
-    let h='<div class="rank-card">';
-    list.forEach((r,i)=>{
-      let medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
-      let nc=i===0?'top1':i===1?'top2':i===2?'top3':'';
-      h+='<div class="rank-item"><div class="rank-num '+nc+'">'+medal+' '+(i+1)+'</div>';
-      h+='<div class="rank-name">'+r.name+'</div>';
-      h+='<div class="rank-score">'+r.score+'<span class="rank-pct">/'+r.total+'分（'+r.pct+'%）</span></div>';
-      h+='<div class="rank-pass '+(r.pass?'pass':'fail')+'">'+(r.pass?'✅通过':'❌未过')+'</div></div>';
+  }catch(e){}
+  
+  // 2. 从localStorage读取（本地测试数据）
+  try{
+    let local = JSON.parse(localStorage.getItem('xianyu_exam_local')||'[]');
+    // 合并去重
+    local.forEach(function(item){
+      var exists = allResults.some(function(r){return r.name===item.name && r.score===item.score});
+      if(!exists) allResults.push(item);
     });
-    h+='</div>';
-    document.getElementById('rankList').innerHTML=h;
-  }catch(e){
-    document.getElementById('rankList').innerHTML='<div class="loading">❌ 排名加载失败<br><span style="font-size:0.85em;color:#64748b">请检查网络后重试</span></div>';
+  }catch(e){}
+  
+  // 渲染
+  if(allResults.length===0){
+    document.getElementById('rankList').innerHTML='<div class="loading">暂无成绩记录</div>';
+    return;
   }
-}
-loadRank();
-</script>
+  allResults.sort((a,b)=>b.pct-a.pct);
+  let h='<div class="rank-card">';
+  allResults.forEach((r,i)=>{
+    let medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+    let nc=i===0?'top1':i===1?'top2':i===2?'top3':'';
+    h+='<div class="rank-item"><div class="rank-num '+nc+'">'+medal+' '+(i+1)+'</div>';
+    h+='<div class="rank-name">'+r.name+'</div>';
+    h+='<div class="rank-score">'+r.score+'<span class="rank-pct">/'+r.total+'分（'+r.pct+'%）</span></div>';
+    h+='<div class="rank-pass '+(r.pass?'pass':'fail')+'">'+(r.pass?'✅通过':'❌未过')+'</div></div>';
+  });
+  h+='</div>';
+  document.getElementById('rankList').innerHTML=h;
+}</script>
 </body>
 </html>
