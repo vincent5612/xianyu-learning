@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>闲鱼培训 · 结业考核</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;background:#f0f2f5;color:#1d1d1f;line-height:1.6}
+  .exam-header{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:36px 20px 20px;text-align:center;position:sticky;top:0;z-index:100}
+  .exam-header h1{font-size:1.3em;margin-bottom:4px}
+  .exam-header .sub{font-size:0.78em;opacity:0.6;margin-bottom:4px}
+  .exam-header .meta{font-size:0.72em;opacity:0.5}
+  .exam-header .timer{display:inline-block;margin-top:8px;background:rgba(255,255,255,0.1);border-radius:20px;padding:4px 18px;font-size:0.85em;font-weight:600}
+  .exam-header .timer.warning{color:#facc15}
+  .exam-header .timer.danger{color:#ef4444;animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+  .container{max-width:800px;margin:0 auto;padding:20px 16px 40px}
+  .section-title{font-size:1em;font-weight:700;color:#1e293b;margin:24px 0 12px;padding:8px 0 6px;border-bottom:2px solid #d97706}
+  .question-block{background:#fff;border-radius:14px;padding:18px 20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.04)}
+  .question-block .q-title{font-size:0.8em;font-weight:600;color:#dc2626;margin-bottom:8px}
+  .question-block .q-title.multi{color:#7c3aed}
+  .question-block .q-title.judge{color:#0891b2}
+  .question-block .q-text{font-size:0.92em;font-weight:500;margin-bottom:10px;color:#1e293b}
+  .question-block .q-score{font-size:0.7em;color:#94a3b8;margin-left:6px;font-weight:400}
+  .option-row{display:flex;align-items:center;padding:5px 10px;cursor:pointer;font-size:0.88em;color:#334155;border-radius:6px;margin-bottom:3px;border:1px solid transparent}
+  .option-row:hover{background:#f8fafc;border-color:#e2e8f0}
+  .option-row input{margin-right:10px;vertical-align:middle;width:16px;height:16px}
+  .option-row input[type="radio"]{accent-color:#d97706}
+  .option-row input[type="checkbox"]{accent-color:#7c3aed}
+  .option-row .opt-label{display:inline-block;width:22px;font-weight:600;color:#64748b;flex-shrink:0}
+  .option-row.correct{background:#f0fdf4;border-color:#86efac;color:#166534}
+  .option-row.correct .opt-label{color:#16a34a}
+  .option-row.wrong{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+  .option-row.wrong .opt-label{color:#dc2626}
+  .correct-answer{font-size:0.82em;color:#16a34a;font-weight:600;margin-top:6px;padding:4px 10px;background:#f0fdf4;border-radius:4px;display:none}
+  .show-correct .correct-answer{display:block}
+  .multi-hint{font-size:0.76em;color:#94a3b8;margin-bottom:6px}
+  .action-bar{position:sticky;bottom:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-top:1px solid #e2e8f0;padding:14px 16px;text-align:center}
+  .action-bar button{background:#d97706;color:#fff;border:none;padding:10px 36px;border-radius:40px;font-size:0.92em;font-weight:600;cursor:pointer}
+  .action-bar button:hover{background:#b45309}
+  .action-bar button:disabled{opacity:0.4;cursor:not-allowed}
+  .result-box{display:none;margin-top:12px;padding:16px 20px;border-radius:12px;font-size:0.9em;text-align:left}
+  .result-box.pass{background:#f0fdf4;border:1px solid #16a34a;color:#166534;display:block}
+  .result-box.fail{background:#fef2f2;border:1px solid #dc2626;color:#991b1b;display:block}
+  .result-box .score{font-size:1.6em;font-weight:700}
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;display:flex;align-items:center;justify-content:center}
+  .overlay-box{background:#fff;border-radius:16px;padding:32px 28px;max-width:380px;width:90%;text-align:center}
+  .overlay-box h2{font-size:1.2em;margin-bottom:6px}
+  .overlay-box p{font-size:0.85em;color:#6b7280;margin-bottom:16px}
+  .overlay-box input{width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:1em;outline:none;margin-bottom:16px}
+  .overlay-box input:focus{border-color:#d97706}
+  .overlay-box .btn-start{background:#d97706;color:#fff;border:none;padding:10px 36px;border-radius:40px;font-size:1em;font-weight:600;cursor:pointer;width:100%}
+  .overlay-box .btn-start:hover{background:#b45309}
+  .overlay-box .btn-start:disabled{opacity:0.4;cursor:not-allowed}
+  .copy-btn{background:#1e293b;color:#fff;border:none;padding:8px 20px;border-radius:20px;font-size:0.82em;cursor:pointer}
+  .copy-btn:hover{background:#334155}
+  .rank-btn{background:#7c3aed;color:#fff;border:none;padding:8px 20px;border-radius:20px;font-size:0.82em;cursor:pointer}
+  .rank-btn:hover{background:#6d28d9}
+  .tab-bar{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="nameOverlay">
+  <div class="overlay-box">
+    <h2>📦 闲鱼培训 · 结业考核</h2>
+    <p>请输入你的姓名开始考试</p>
+    <input type="text" id="studentName" placeholder="请输入姓名" maxlength="20">
+    <button class="btn-start" id="startBtn" onclick="startExam()" disabled>开始考试</button>
+  </div>
+</div>
+
+<div class="exam-header">
+  <h1>📦 闲鱼培训 · 结业考核</h1>
+  <div class="sub">两天培训内容综合测试</div>
+  <div class="meta">单选10题 + 多选5题 + 判断5题 · 共100分 · 70分及格</div>
+  <div class="timer" id="timer">⏱ 准备中...</div>
+</div>
+<div class="container" id="examContainer" style="display:none"></div>
+<div class="action-bar" id="actionBar" style="display:none">
+  <button id="submitBtn" onclick="submitExam()">📝 提交答卷</button>
+  <div id="resultBox" class="result-box"></div>
+</div>
+
+<!-- 排名弹窗 -->
+<div class="overlay" id="rankOverlay" style="display:none">
+  <div class="overlay-box" style="max-width:500px;max-height:80vh;overflow-y:auto">
+    <h2>🏆 成绩排名</h2>
+    <p>所有人共享实时排名</p>
+    <div id="rankList" style="text-align:left;margin-bottom:16px">
+      <p style="color:#94a3b8;font-size:0.85em">加载中...</p>
+    </div>
+    <button class="btn-start" onclick="document.getElementById('rankOverlay').style.display='none'">关闭</button>
+  </div>
+</div>
+
+<script>
+// ===== 题库 =====
+const LABELS=['A','B','C','D','E'];
+const S={single:[
+{id:'s1',t:'闲鱼标题最多写多少个字？',o:['8个字','10个字','12个字','15个字'],a:2},
+{id:'s2',t:'新商品发布至少需要几张主图？',o:['3张','5张','7张','9张'],a:0},
+{id:'s3',t:'以下哪个词是闲鱼平台严禁使用的极限词？',o:['闲置','实拍','全新','包邮'],a:2},
+{id:'s4',t:'硬件隔离的核心要求是什么？',o:['用WiFi即可','一机一卡一IP','可用双开分身','多号共用一台手机'],a:1},
+{id:'s5',t:'详情页第一段应该写什么？',o:['价格和规格','一句话说清卖什么','个人介绍','退换政策'],a:1},
+{id:'s6',t:'科学定价应预留多少砍价空间？',o:['5-10%','10-20%','20-30%','30-50%'],a:0},
+{id:'s7',t:'新品曝光低于多少时应直接下架重发？',o:['低于100','低于300','低于500','低于800'],a:0},
+{id:'s8',t:'擦亮商品的最佳时间段是？',o:['凌晨0-2点','早上6-8点','中午12-14点','晚上20-22点'],a:3},
+{id:'s9',t:'买家消息超过几分钟未回复会影响权重？',o:['5分钟','10分钟','30分钟','60分钟'],a:0},
+{id:'s10',t:'主图第1-3张属于什么层？',o:['细节层','信任层','视觉层','价格层'],a:2}
+],multi:[
+{id:'m1',t:'以下哪些属于闲鱼平台红线？（选3项）',o:['站外导流到微信/QQ','标题或图片留手机号','详情页引导站外交易','正常描述商品成色'],a:[0,1,2]},
+{id:'m2',t:'发布后需要关注哪三个核心数据？（选3项）',o:['曝光量','点击率(CTR)','"我想要"数量','粉丝数'],a:[0,1,2]},
+{id:'m3',t:'晋级三件套包含哪些？（选3项）',o:['持续上新（每天1-2个）','及时回复（5分钟内）','数据复盘（每天看曝光/CTR/我想要）','大量刷单冲销量'],a:[0,1,2]},
+{id:'m4',t:'账号包装包括哪些要素？（选3项）',o:['头像/昵称（高清真人照+品类词）','简介三段式（我是谁/卖什么/给承诺）','动态（发2-3条增强真实感）','芝麻分不需要管'],a:[0,1,2]},
+{id:'m5',t:'数据诊断三步法对应哪些动作？（选3项）',o:['曝光低→优化标题核心词前置','点击低→换第一张主图','转化低→改文案+优化快捷回复','不出单→立刻降价50%'],a:[0,1,2]}
+],judge:[
+{id:'j1',t:'闲鱼上可以在标题写"全新"这个词。',a:0},
+{id:'j2',t:'同WiFi下操作多个闲鱼号可能导致连坐封号。',a:1},
+{id:'j3',t:'曝光超过1000的商品可以直接投5.9元测ROI。',a:1},
+{id:'j4',t:'详情页五段式模板中，第一段应该写退换政策。',a:0},
+{id:'j5',t:'7天内改价超过10%会触发降权。',a:1}
+]};
+let c={},sub=false,studentName='',examId='exam_'+Date.now();
+
+document.getElementById('studentName').addEventListener('input',function(){
+  document.getElementById('startBtn').disabled=this.value.trim().length<2;
+});
+
+// ===== 辅助函数 =====
+function getCorrectText(q){
+  if(q.o){
+    if(Array.isArray(q.a))return q.a.map(i=>LABELS[i]).join('、');
+    return LABELS[q.a];
+  }
+  return q.a===1?'正确':'错误';
+}
+
+function buildOptions(q,prefix,name,isMulti,onChange){
+  let h='';
+  q.o.forEach((o,i)=>{
+    let label=LABELS[i];
+    let inputType=isMulti?'checkbox':'radio';
+    h+='<label class="option-row">';
+    h+='<input type="'+inputType+'" name="'+name+'" value="'+i+'" onchange="'+onChange+'">';
+    h+='<span class="opt-label">'+label+'</span>';
+    h+=o+'</label>';
+  });
+  // 正确答案行
+  let correctText=getCorrectText(q);
+  if(isMulti){
+    let parts=q.a.map(i=>LABELS[i]+'. '+q.o[i]);
+    correctText=parts.join('；');
+  }
+  h+='<div class="correct-answer">✅ 正确答案：'+correctText+'</div>';
+  return h;
+}
+
+// ===== 渲染 =====
+function render(){
+  let h='';
+  h+='<div class="section-title">📤 一、单选题（每题5分，共50分）</div>';
+  S.single.forEach((q,i)=>{
+    h+='<div class="question-block" id="qb_s'+i+'"><div class="q-title">第'+(i+1)+'题<span class="q-score">（5分）</span></div><div class="q-text">'+q.t+'</div>';
+    h+=buildOptions(q,'s','s'+i,false,"p('s"+i+"',this.value)");
+    h+='</div>';
+  });
+  h+='<div class="section-title">📋 二、多选题（每题6分，共30分·全对才得分）</div>';
+  S.multi.forEach((q,i)=>{
+    h+='<div class="question-block" id="qb_m'+i+'"><div class="q-title multi">第'+(i+11)+'题<span class="q-score">（6分·全对才得分）</span></div><div class="q-text">'+q.t+'</div><div class="multi-hint">（至少选2项）</div>';
+    h+=buildOptions(q,'m','m'+i,true,"pm('m"+i+"',this.value,this.checked)");
+    h+='</div>';
+  });
+  h+='<div class="section-title">⚖️ 三、判断题（每题4分，共20分）</div>';
+  S.judge.forEach((q,i)=>{
+    h+='<div class="question-block" id="qb_j'+i+'"><div class="q-title judge">第'+(i+16)+'题<span class="q-score">（4分）</span></div><div class="q-text">'+q.t+'</div>';
+    h+='<label class="option-row"><input type="radio" name="j'+i+'" value="1" onchange="pj(\'j'+i+'\',1)"><span class="opt-label">A</span>✅ 正确</label>';
+    h+='<label class="option-row"><input type="radio" name="j'+i+'" value="0" onchange="pj(\'j'+i+'\',0)"><span class="opt-label">B</span>❌ 错误</label>';
+    h+='<div class="correct-answer">✅ 正确答案：'+(q.a===1?'A. 正确':'B. 错误')+'</div>';
+    h+='</div>';
+  });
+  document.getElementById('examContainer').innerHTML=h;
+}
+
+function p(id,val){c[id]=parseInt(val)}
+function pj(id,val){c[id]=val}
+function pm(id,val,chk){
+  let idx=parseInt(val);
+  if(!c[id])c[id]=[];
+  if(chk){if(!c[id].includes(idx))c[id].push(idx)}
+  else{c[id]=c[id].filter(v=>v!==idx)}
+}
+
+// ===== 交卷 =====
+function submitExam(){
+  if(sub)return;sub=true;
+  document.getElementById('submitBtn').disabled=true;
+  let t=0;
+  // 单选
+  S.single.forEach((q,i)=>{
+    let sel=c['s'+i];
+    let el=document.getElementById('qb_s'+i);
+    el.classList.add('show-correct');
+    document.querySelectorAll('#qb_s'+i+' .option-row').forEach((r,j)=>{
+      if(j===q.a)r.classList.add('correct');
+      else if(sel!==undefined&&j===sel&&j!==q.a)r.classList.add('wrong');
+    });
+    if(sel===q.a)t+=5;
+  });
+  // 多选
+  S.multi.forEach((q,i)=>{
+    let sel=c['m'+i]||[];
+    let sa=[...sel].sort(),aa=[...q.a].sort();
+    let ok=sa.length===aa.length&&sa.every((v,j)=>v===aa[j]);
+    let el=document.getElementById('qb_m'+i);
+    el.classList.add('show-correct');
+    document.querySelectorAll('#qb_m'+i+' .option-row').forEach((r,j)=>{
+      if(q.a.includes(j))r.classList.add('correct');
+      else if(sel.includes(j)&&!q.a.includes(j))r.classList.add('wrong');
+    });
+    if(ok)t+=6;
+  });
+  // 判断
+  S.judge.forEach((q,i)=>{
+    let sel=c['j'+i];
+    let el=document.getElementById('qb_j'+i);
+    el.classList.add('show-correct');
+    document.querySelectorAll('#qb_j'+i+' .option-row').forEach((r,j)=>{
+      if((j===1&&q.a===1)||(j===0&&q.a===0))r.classList.add('correct');
+      else if(sel!==undefined&&((j===1&&sel===1)||(j===0&&sel===0))&&sel!==q.a)r.classList.add('wrong');
+    });
+    if(sel===q.a)t+=4;
+  });
+
+  let mx=100,pct=Math.round(t/mx*100),pass=pct>=70;
+  let now=new Date();
+  let dateStr=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  let timeStr=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+
+  // 本地存一份
+  let result={id:examId,name:studentName,score:t,total:mx,pct:pct,pass:pass,date:dateStr,time:timeStr};
+  let local=JSON.parse(localStorage.getItem('xianyu_exam_local')||'[]');
+  local.push(result);
+  localStorage.setItem('xianyu_exam_local',JSON.stringify(local));
+
+  // 提交到共享排名
+  submitRank(result);
+
+  showResult(result);
+  document.getElementById('submitBtn').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+  clearInterval(window.timerInterval);
+}
+
+// ===== 共享排名（用npoint.io）=====
+const NPOINT_URL='https://api.npoint.io/91a6d2d9e97242bce4b8';
+
+function submitRank(result){
+  // 读取现有数据
+  fetch(NPOINT_URL)
+    .then(r=>r.json())
+    .then(data=>{
+      let list=data.results||[];
+      list.push(result);
+      // 按分数降序
+      list.sort((a,b)=>b.pct-a.pct);
+      // 更新
+      fetch(NPOINT_URL,{
+        method:'PUT',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({results:list})
+      }).catch(()=>{});
+    })
+    .catch(()=>{});
+}
+
+function showRank(){
+  document.getElementById('rankOverlay').style.display='flex';
+  document.getElementById('rankList').innerHTML='<p style="color:#94a3b8">加载中...</p>';
+  fetch(NPOINT_URL)
+    .then(r=>r.json())
+    .then(data=>{
+      let list=data.results||[];
+      list.sort((a,b)=>b.pct-a.pct);
+      if(list.length===0){
+        document.getElementById('rankList').innerHTML='<p style="color:#94a3b8">暂无成绩</p>';
+        return;
+      }
+      let h='<table style="width:100%;border-collapse:collapse;font-size:0.88em">';
+      h+='<tr style="border-bottom:2px solid #e2e8f0"><th style="padding:6px 4px;text-align:left">#</th><th style="padding:6px 4px;text-align:left">姓名</th><th style="padding:6px 4px;text-align:center">分数</th><th style="padding:6px 4px;text-align:center">结果</th></tr>';
+      list.forEach((r,i)=>{
+        let medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+        h+='<tr style="border-bottom:1px solid #f1f5f9">';
+        h+='<td style="padding:6px 4px">'+medal+' '+(i+1)+'</td>';
+        h+='<td style="padding:6px 4px;font-weight:600">'+r.name+'</td>';
+        h+='<td style="padding:6px 4px;text-align:center">'+r.score+'/'+r.total+'分（'+r.pct+'%）</td>';
+        h+='<td style="padding:6px 4px;text-align:center">'+(r.pass?'✅通过':'❌未过')+'</td>';
+        h+='</tr>';
+      });
+      h+='</table>';
+      document.getElementById('rankList').innerHTML=h;
+    })
+    .catch(()=>{
+      document.getElementById('rankList').innerHTML='<p style="color:#dc2626">排名加载失败，请检查网络</p>';
+    });
+}
+
+function showResult(r){
+  let topResult=document.createElement('div');
+  topResult.className='result-box '+(r.pass?'pass':'fail');
+  topResult.style.marginBottom='20px';
+  topResult.innerHTML='<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">'+
+    '<div class="score">'+r.score+'/'+r.total+'分（'+r.pct+'%）</div>'+
+    '<div>'+(r.pass?'<span style="background:#16a34a;color:#fff;padding:4px 14px;border-radius:20px;font-size:0.85em;font-weight:600">✅ 通过</span>':'<span style="background:#dc2626;color:#fff;padding:4px 14px;border-radius:20px;font-size:0.85em;font-weight:600">❌ 未通过</span>')+'</div>'+
+    '</div>'+
+    '<div class="tab-bar">'+
+    '<button class="copy-btn" onclick="copyResult()">📋 复制成绩</button>'+
+    '<button class="rank-btn" onclick="showRank()">🏆 查看排名</button>'+
+    '<a href="exam-final.html" style="display:inline-block;background:#d97706;color:#fff;padding:8px 20px;border-radius:20px;font-size:0.82em;text-decoration:none">🔄 重新考试</a></div>';
+  document.getElementById('examContainer').insertBefore(topResult,document.getElementById('examContainer').firstChild);
+  document.getElementById('resultBox').style.display='none';
+}
+
+function copyResult(){
+  let r={name:studentName,score:t,total:100,pct:Math.round(t)};
+  let txt='【闲鱼培训·结业考核】\n姓名：'+r.name+'\n成绩：'+r.score+'/'+r.total+'分（'+r.pct+'%）\n结果：'+(r.pct>=70?'✅通过':'❌未通过');
+  navigator.clipboard.writeText(txt).then(()=>{alert('✅ 已复制')});
+}
+
+// ===== 计时 =====
+let tl=3000;
+function startTimer(){
+  window.timerInterval=setInterval(()=>{
+    tl--;let m=Math.floor(tl/60),s=tl%60;
+    document.getElementById('timer').textContent='⏱ 剩余 '+m+'分 '+String(s).padStart(2,'0')+'秒';
+    document.getElementById('timer').className='timer'+(tl<300?' danger':tl<600?' warning':'');
+    if(tl<=0)submitExam();
+  },1000);
+}
+
+function startExam(){
+  studentName=document.getElementById('studentName').value.trim();
+  if(studentName.length<2)return;
+  document.getElementById('nameOverlay').style.display='none';
+  document.getElementById('examContainer').style.display='block';
+  document.getElementById('actionBar').style.display='block';
+  render();startTimer();
+}
+</script>
+</body>
+</html>
