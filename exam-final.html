@@ -309,7 +309,8 @@ function showResult(r){
     '<div class="tab-bar">'+
     '<button class="copy-btn" onclick="copyResult()">📋 复制成绩</button>'+
     '<button class="rank-btn" onclick="showRank()">🏆 查看排名</button>'+
-    '<a href="exam-final.html" style="display:inline-block;background:#d97706;color:#fff;padding:8px 20px;border-radius:20px;font-size:0.82em;text-decoration:none">🔄 重新考试</a></div>';
+    '<a href="exam-final.html" style="display:inline-block;background:#d97706;color:#fff;padding:8px 20px;border-radius:20px;font-size:0.82em;text-decoration:none">🔄 重新考试</a>'+
+    '<a href="rank.html" target="_blank" style="display:inline-block;background:#7c3aed;color:#fff;padding:8px 20px;border-radius:20px;font-size:0.82em;text-decoration:none;margin-left:6px">🏆 查看排名</a></div>';
   document.getElementById('examContainer').insertBefore(topResult,document.getElementById('examContainer').firstChild);
   document.getElementById('resultBox').style.display='none';
 }
