@@ -263,86 +263,39 @@ async function submitRank(result){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify(result)
     });
-  }catch(e){
-    console.log('排名提交跳过（未连上服务器）');
-  }
+  }catch(e){}
 }
 
 async function loadRank(){
+  document.getElementById('rankList').innerHTML='<p style="color:#94a3b8;text-align:center">加载中...</p>';
   try{
     let resp=await fetch('https://api.github.com/repos/vincent5612/xianyu-learning/contents/exam_results.json?t='+Date.now());
-    let d2=await resp.json();let jsonStr=atob(d2.content.replace(/\n/g,''));let data=JSON.parse(jsonStr);let list=data.results||[];
-    list.sort((a,b)=>b.pct-a.pct);
-    if(list.length===0){
-      document.getElementById('rankList').innerHTML='<p style="color:#94a3b8;text-align:center">暂无成绩</p>';
-      return;
-    }
-    let h='<table style="width:100%;border-collapse:collapse;font-size:0.88em">';
-    h+='<tr style="border-bottom:2px solid #e2e8f0"><th style="padding:6px 4px;text-align:left">#</th><th style="padding:6px 4px;text-align:left">姓名</th><th style="padding:6px 4px;text-align:center">分数</th><th style="padding:6px 4px;text-align:center">结果</th></tr>';
-    list.forEach((r,i)=>{
-      let medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
-      h+='<tr style="border-bottom:1px solid #f1f5f9">';
-      h+='<td style="padding:6px 4px">'+medal+' '+(i+1)+'</td>';
-      h+='<td style="padding:6px 4px;font-weight:600">'+r.name+'</td>';
-      h+='<td style="padding:6px 4px;text-align:center">'+r.score+'/'+r.total+'分（'+r.pct+'%）</td>';
-      h+='<td style="padding:6px 4px;text-align:center">'+(r.pass?'✅通过':'❌未过')+'</td>';
-      h+='</tr>';
-    });
-    h+='</table>';
-    document.getElementById('rankList').innerHTML=h;
+    let d2=await resp.json();
+    let jsonStr=atob(d2.content.replace(/\\n/g,''));
+    let data=JSON.parse(jsonStr);
+    let list=data.results||[];
+    renderRankList(list);
   }catch(e){
-    document.getElementById('rankList').innerHTML='<p style="color:#dc2626;text-align:center">排名加载失败</p>';
+    let local=JSON.parse(localStorage.getItem('xianyu_exam_local')||'[]');
+    if(local.length>0)renderRankList(local);
+    else document.getElementById('rankList').innerHTML='<p style="color:#94a3b8;text-align:center">暂无成绩</p>';
   }
 }
 
-function submitRank(result){
-  // 读取现有数据
-  fetch(RANK_URL)
-    .then(r=>r.json())
-    .then(data=>{
-      let list=data.results||[];
-      list.push(result);
-      // 按分数降序
-      list.sort((a,b)=>b.pct-a.pct);
-      // 更新
-      fetch(NPOINT_URL,{
-        method:'PUT',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({results:list})
-      }).catch(()=>{});
-    })
-    .catch(()=>{});
+function renderRankList(list){
+  list.sort((a,b)=>b.pct-a.pct);
+  let h='<table style="width:100%;border-collapse:collapse;font-size:0.88em"><tr style="border-bottom:2px solid #e2e8f0"><th style="padding:6px 4px;text-align:left">#</th><th style="padding:6px 4px;text-align:left">姓名</th><th style="padding:6px 4px;text-align:center">分数</th><th style="padding:6px 4px;text-align:center">结果</th></tr>';
+  list.forEach((r,i)=>{
+    let m=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+    h+='<tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px 4px">'+m+' '+(i+1)+'</td><td style="padding:6px 4px;font-weight:600">'+r.name+'</td><td style="padding:6px 4px;text-align:center">'+r.score+'/'+r.total+'分（'+r.pct+'%）</td><td style="padding:6px 4px;text-align:center">'+(r.pass?'✅通过':'❌未过')+'</td></tr>';
+  });
+  h+='</table>';
+  document.getElementById('rankList').innerHTML=h;
 }
-
 function showRank(){
   document.getElementById('rankOverlay').style.display='flex';
   document.getElementById('rankList').innerHTML='<p style="color:#94a3b8">加载中...</p>';
-  fetch(RANK_URL)
-    .then(r=>r.json())
-    .then(data=>{
-      let list=data.results||[];
-      list.sort((a,b)=>b.pct-a.pct);
-      if(list.length===0){
-        document.getElementById('rankList').innerHTML='<p style="color:#94a3b8">暂无成绩</p>';
-        return;
-      }
-      let h='<table style="width:100%;border-collapse:collapse;font-size:0.88em">';
-      h+='<tr style="border-bottom:2px solid #e2e8f0"><th style="padding:6px 4px;text-align:left">#</th><th style="padding:6px 4px;text-align:left">姓名</th><th style="padding:6px 4px;text-align:center">分数</th><th style="padding:6px 4px;text-align:center">结果</th></tr>';
-      list.forEach((r,i)=>{
-        let medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
-        h+='<tr style="border-bottom:1px solid #f1f5f9">';
-        h+='<td style="padding:6px 4px">'+medal+' '+(i+1)+'</td>';
-        h+='<td style="padding:6px 4px;font-weight:600">'+r.name+'</td>';
-        h+='<td style="padding:6px 4px;text-align:center">'+r.score+'/'+r.total+'分（'+r.pct+'%）</td>';
-        h+='<td style="padding:6px 4px;text-align:center">'+(r.pass?'✅通过':'❌未过')+'</td>';
-        h+='</tr>';
-      });
-      h+='</table>';
-      document.getElementById('rankList').innerHTML=h;
-    })
-    .catch(()=>{
-      document.getElementById('rankList').innerHTML='<p style="color:#dc2626">排名加载失败，请检查网络</p>';
-    });
+  loadRank();
 }
 
 function showResult(r){
