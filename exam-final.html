@@ -271,7 +271,7 @@ async function loadRank(){
   try{
     let resp=await fetch('https://api.github.com/repos/vincent5612/xianyu-learning/contents/exam_results.json?t='+Date.now());
     let d2=await resp.json();
-    let jsonStr=atob(d2.content.replace(/\\n/g,''));
+    let jsonStr = new TextDecoder().decode(Uint8Array.from(atob(d2.content),c=>c.charCodeAt(0)));
     let data=JSON.parse(jsonStr);
     let list=data.results||[];
     renderRankList(list);
