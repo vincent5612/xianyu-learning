@@ -254,7 +254,47 @@ function submitExam(){
 }
 
 // ===== 共享排名（用npoint.io）=====
-const RANK_URL='http://'+window.location.hostname+':8899';
+// 使用GitHub API存储和读取排名
+
+async function submitRank(result){
+  try{
+    let resp=await fetch('http://'+window.location.hostname+':8899',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(result)
+    });
+  }catch(e){
+    console.log('排名提交跳过（未连上服务器）');
+  }
+}
+
+async function loadRank(){
+  try{
+    let resp=await fetch('http://'+window.location.hostname+':8899');
+    let data=await resp.json();
+    let list=data.results||[];
+    list.sort((a,b)=>b.pct-a.pct);
+    if(list.length===0){
+      document.getElementById('rankList').innerHTML='<p style="color:#94a3b8;text-align:center">暂无成绩</p>';
+      return;
+    }
+    let h='<table style="width:100%;border-collapse:collapse;font-size:0.88em">';
+    h+='<tr style="border-bottom:2px solid #e2e8f0"><th style="padding:6px 4px;text-align:left">#</th><th style="padding:6px 4px;text-align:left">姓名</th><th style="padding:6px 4px;text-align:center">分数</th><th style="padding:6px 4px;text-align:center">结果</th></tr>';
+    list.forEach((r,i)=>{
+      let medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+      h+='<tr style="border-bottom:1px solid #f1f5f9">';
+      h+='<td style="padding:6px 4px">'+medal+' '+(i+1)+'</td>';
+      h+='<td style="padding:6px 4px;font-weight:600">'+r.name+'</td>';
+      h+='<td style="padding:6px 4px;text-align:center">'+r.score+'/'+r.total+'分（'+r.pct+'%）</td>';
+      h+='<td style="padding:6px 4px;text-align:center">'+(r.pass?'✅通过':'❌未过')+'</td>';
+      h+='</tr>';
+    });
+    h+='</table>';
+    document.getElementById('rankList').innerHTML=h;
+  }catch(e){
+    document.getElementById('rankList').innerHTML='<p style="color:#dc2626;text-align:center">排名加载失败</p>';
+  }
+}
 
 function submitRank(result){
   // 读取现有数据
