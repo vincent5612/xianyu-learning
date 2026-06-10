@@ -1,1 +1,18 @@
-{"results":[]}
+{
+  "results": [
+    {
+      "name": "安叔测试",
+      "score": 92,
+      "total": 100,
+      "pct": 92,
+      "pass": true
+    },
+    {
+      "name": "测试",
+      "score": 85,
+      "total": 100,
+      "pct": 85,
+      "pass": true
+    }
+  ]
+}
