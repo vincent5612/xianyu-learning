@@ -270,9 +270,8 @@ async function submitRank(result){
 
 async function loadRank(){
   try{
-    let resp=await fetch('https://raw.githubusercontent.com/vincent5612/xianyu-learning/main/exam_results.json?t='+Date.now());
-    let data=await resp.json();
-    let list=data.results||[];
+    let resp=await fetch('https://api.github.com/repos/vincent5612/xianyu-learning/contents/exam_results.json?t='+Date.now());
+    let d2=await resp.json();let jsonStr=atob(d2.content.replace(/\n/g,''));let data=JSON.parse(jsonStr);let list=data.results||[];
     list.sort((a,b)=>b.pct-a.pct);
     if(list.length===0){
       document.getElementById('rankList').innerHTML='<p style="color:#94a3b8;text-align:center">暂无成绩</p>';
