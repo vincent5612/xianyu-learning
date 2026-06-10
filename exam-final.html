@@ -258,33 +258,19 @@ function submitExam(){
 
 async function submitRank(result){
   try{
-    // 读取现有数据
-    let resp=await fetch('https://jsonblob.com/api/jsonBlob/019eaf60-1345-7f1d-8944-42f4a40690ee?t='+Date.now());
-    let data=await resp.json();
-    let list=data.results||[];
-    // 去重：同一个人保留最高分
-    let idx=list.findIndex(r=>r.name===result.name);
-    if(idx>=0){
-      if(result.pct>list[idx].pct)list[idx]=result;
-    }else{
-      list.push(result);
-    }
-    // 按分数降序
-    list.sort((a,b)=>b.pct-a.pct);
-    // 提交更新
-    await fetch('https://jsonblob.com/api/jsonBlob/019eaf60-1345-7f1d-8944-42f4a40690ee',{
-      method:'PUT',
+    await fetch('http://localhost:8899/submit',{
+      method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({results:list})
+      body:JSON.stringify(result)
     });
   }catch(e){
-    console.log('排名提交失败');
+    console.log('排名提交跳过（未连上服务器）');
   }
 }
 
 async function loadRank(){
   try{
-    let resp=await fetch('https://jsonblob.com/api/jsonBlob/019eaf60-1345-7f1d-8944-42f4a40690ee?t='+Date.now());
+    let resp=await fetch('https://raw.githubusercontent.com/vincent5612/xianyu-learning/main/exam_results.json?t='+Date.now());
     let data=await resp.json();
     let list=data.results||[];
     list.sort((a,b)=>b.pct-a.pct);

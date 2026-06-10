@@ -37,12 +37,12 @@
   <p class="info">成绩提交后自动同步，所有人可见</p>
 </div>
 <script>
-const BLOB_URL='https://jsonblob.com/api/jsonBlob/019eaf60-1345-7f1d-8944-42f4a40690ee';
+const RESULTS_URL='https://raw.githubusercontent.com/vincent5612/xianyu-learning/main/exam_results.json';
 
 async function loadRank(){
   document.getElementById('rankList').innerHTML='<div class="loading">加载中...</div>';
   try{
-    let resp=await fetch(BLOB_URL+'?t='+Date.now());
+    let resp=await fetch(RESULTS_URL+'?t='+Date.now());
     let data=await resp.json();
     let list=data.results||[];
     list.sort((a,b)=>b.pct-a.pct);
