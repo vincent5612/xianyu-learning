@@ -43,13 +43,11 @@ async function loadRank(){
   document.getElementById('rankList').innerHTML='<div class="loading">加载中...</div>';
   let allResults = [];
   
-  // 1. 从GitHub API读取（共享数据）
+  // 1. 从jsonblob云端读取（共享数据）
   try{
-    let resp=await fetch('https://api.github.com/repos/vincent5612/xianyu-learning/contents/exam_results.json?t='+Date.now());
+    let resp=await fetch('https://jsonblob.com/api/jsonBlob/019eb04d-18e0-7fdf-936b-619ae2b7cd57?t='+Date.now());
     if(resp.ok){
-      let d2=await resp.json();
-      let jsonStr=new TextDecoder().decode(Uint8Array.from(atob(d2.content),c=>c.charCodeAt(0)));
-      let data=JSON.parse(jsonStr);
+      let data=await resp.json();
       allResults = data.results||[];
     }
   }catch(e){}

@@ -257,25 +257,39 @@ function submitExam(){
 // 使用GitHub API存储和读取排名
 
 async function submitRank(result){
+  // 1. 读取云端现有数据
   try{
-    await fetch('http://localhost:8899/submit',{
-      method:'POST',
+    let resp=await fetch('https://jsonblob.com/api/jsonBlob/019eb04d-18e0-7fdf-936b-619ae2b7cd57?t='+Date.now());
+    let data=await resp.json();
+    let list=data.results||[];
+    // 去重：已有同名学生保留最高分
+    let idx=list.findIndex(r=>r.name===result.name);
+    if(idx>=0){
+      if(result.pct>list[idx].pct)list[idx]=result;
+    }else{
+      list.push(result);
+    }
+    list.sort((a,b)=>b.pct-a.pct);
+    // 2. 写回云端
+    await fetch('https://jsonblob.com/api/jsonBlob/019eb04d-18e0-7fdf-936b-619ae2b7cd57',{
+      method:'PUT',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(result)
+      body:JSON.stringify({results:list})
     });
-  }catch(e){}
+  }catch(e){
+    console.log('云端同步失败');
+  }
 }
 
 async function loadRank(){
   document.getElementById('rankList').innerHTML='<p style="color:#94a3b8;text-align:center">加载中...</p>';
   try{
-    let resp=await fetch('https://api.github.com/repos/vincent5612/xianyu-learning/contents/exam_results.json?t='+Date.now());
-    let d2=await resp.json();
-    let jsonStr = new TextDecoder().decode(Uint8Array.from(atob(d2.content),c=>c.charCodeAt(0)));
-    let data=JSON.parse(jsonStr);
+    let resp=await fetch('https://jsonblob.com/api/jsonBlob/019eb04d-18e0-7fdf-936b-619ae2b7cd57?t='+Date.now());
+    let data=await resp.json();
     let list=data.results||[];
     renderRankList(list);
   }catch(e){
+    // 降级：读本地
     let local=JSON.parse(localStorage.getItem('xianyu_exam_local')||'[]');
     if(local.length>0)renderRankList(local);
     else document.getElementById('rankList').innerHTML='<p style="color:#94a3b8;text-align:center">暂无成绩</p>';
