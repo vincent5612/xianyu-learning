@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>安叔 · 个人驾驶舱</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,"PingFang SC",sans-serif;background:#f5f6f8;color:#1e293b;padding:16px}
+  .header{text-align:center;margin-bottom:20px}
+  .header h1{font-size:24px;font-weight:800;color:#1e293b}
+  .header .date{font-size:13px;color:#94a3b8;margin-top:2px}
+  
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:600px;margin:0 auto}
+  .card{background:#fff;border-radius:12px;padding:14px 16px;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+  .card.full{grid-column:1/-1}
+  .card-title{font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+  
+  .project{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
+  .project:last-child{border-bottom:none}
+  .proj-status{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:8px}
+  .proj-status.green{background:#16a34a}
+  .proj-status.yellow{background:#eab308}
+  .proj-status.red{background:#ef4444}
+  .proj-status.gray{background:#94a3b8}
+  .proj-name{flex:1;font-weight:600}
+  .proj-desc{font-size:11px;color:#64748b}
+
+  .w5{display:flex;gap:6px;flex-wrap:wrap}
+  .w5-item{flex:1;min-width:50px;text-align:center;padding:8px 4px;border-radius:8px;font-size:11px}
+  .w5-item .icon{font-size:18px;display:block;margin-bottom:2px}
+  .w5-item .label{color:#64748b;font-size:10px}
+  .w5-item.up{background:#f0fdf4;border:1px solid #bbf7d0}
+  .w5-item.down{background:#fef2f2;border:1px solid #fecaca}
+  .w5-item.flat{background:#f8fafc;border:1px solid #e2e8f0}
+
+  .today-item{display:flex;align-items:center;padding:5px 0;font-size:12px;border-bottom:1px solid #f8fafc}
+  .today-pri{font-weight:700;font-size:11px;width:28px;flex-shrink:0}
+  .today-pri.p0{color:#ef4444}
+  .today-pri.p1{color:#eab308}
+  .today-pri.p2{color:#94a3b8}
+  .today-text{flex:1}
+  .today-done{color:#16a34a;font-size:11px}
+
+  .phase{display:flex;gap:8px;margin-top:4px}
+  .phase-item{flex:1;padding:6px;border-radius:6px;font-size:10px;text-align:center}
+  .phase-item.s{background:#fef2f2;color:#991b1b}
+  .phase-item.m{background:#fef9c3;color:#854d0e}
+  .phase-item.l{background:#f0fdf4;color:#166534}
+
+  .tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;margin-right:4px}
+  .tag.ai{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
+  .tag.biz{background:#fef3c7;color:#d97706;border:1px solid #fde68a}
+  .tag.tech{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
+
+  .stat-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:12px;border-bottom:1px solid #f8fafc}
+  .stat-label{color:#64748b}
+  .stat-val{font-weight:700}
+
+  .tip{font-size:11px;color:#94a3b8;text-align:center;margin-top:16px;max-width:600px;margin-left:auto;margin-right:auto}
+  
+  @media(max-width:400px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📊 安叔 · 个人驾驶舱</h1>
+  <div class="date" id="todayDate"></div>
+</div>
+
+<div class="grid">
+
+  <!-- 项目全景 -->
+  <div class="card full">
+    <div class="card-title">📋 项目全景</div>
+    <div class="project"><span class="proj-status green"></span><span class="proj-name">京东店群招商</span><span class="proj-desc">主线现金流 · 成长期</span></div>
+    <div class="project"><span class="proj-status green"></span><span class="proj-name">公众号「伯乐说创业」</span><span class="proj-desc">内容引流 · 第一篇已发</span></div>
+    <div class="project"><span class="proj-status gray"></span><span class="proj-name">RPO招聘</span><span class="proj-desc">核心护城河 · 待重启</span></div>
+    <div class="project"><span class="proj-status red"></span><span class="proj-name">闲鱼合作</span><span class="proj-desc">评估中 · 财务测算不理想</span></div>
+    <div class="project"><span class="proj-status red"></span><span class="proj-name">语聊</span><span class="proj-desc">搁置</span></div>
+    <div class="project"><span class="proj-status yellow"></span><span class="proj-name">学霸计划</span><span class="proj-desc">暂停 · API余额不足</span></div>
+    <div class="project"><span class="proj-status yellow"></span><span class="proj-name">小程序「伯乐说RPO」</span><span class="proj-desc">待备案上线</span></div>
+  </div>
+
+  <!-- 五维财富 -->
+  <div class="card full">
+    <div class="card-title">🧭 五维财富</div>
+    <div class="w5">
+      <div class="w5-item flat"><span class="icon">🏃</span><span class="label">身体</span></div>
+      <div class="w5-item down"><span class="icon">⏰</span><span class="label">时间</span></div>
+      <div class="w5-item up"><span class="icon">💰</span><span class="label">金钱</span></div>
+      <div class="w5-item up"><span class="icon">🧠</span><span class="label">认知</span></div>
+      <div class="w5-item up"><span class="icon">👥</span><span class="label">人际</span></div>
+    </div>
+    <div style="font-size:11px;color:#94a3b8;margin-top:6px;text-align:center">🟢增厚 ⚪持平 🔴消耗</div>
+  </div>
+
+  <!-- 三期目标 -->
+  <div class="card full">
+    <div class="card-title">🎯 三期目标</div>
+    <div class="phase">
+      <div class="phase-item s">短期<br>内容启动+客户交付</div>
+      <div class="phase-item m">中期<br>内容稳定+项目跑通</div>
+      <div class="phase-item l">长期<br>手动招商→内容引流</div>
+    </div>
+  </div>
+
+  <!-- 今日日程 -->
+  <div class="card full">
+    <div class="card-title">📅 今日日程</div>
+    <div class="today-item"><span class="today-pri p0">P0</span><span class="today-text">京东第二期开班培训</span></div>
+    <div class="today-item"><span class="today-pri p1">P1</span><span class="today-text">龙华见汤总</span></div>
+    <div class="today-item"><span class="today-pri p1">P1</span><span class="today-text">Marry备案 / 吴红秀客服 / 雷总抖音</span></div>
+    <div class="today-item"><span class="today-pri p2">P2</span><span class="today-text">公众号第二篇群发</span></div>
+  </div>
+
+  <!-- 关键数据 -->
+  <div class="card">
+    <div class="card-title">📈 京东关键数据</div>
+    <div class="stat-row"><span class="stat-label">学员案例</span><span class="stat-val">25天¥18,000</span></div>
+    <div class="stat-row"><span class="stat-label">当前月收入</span><span class="stat-val">~¥2,100</span></div>
+    <div class="stat-row"><span class="stat-label">启动成本</span><span class="stat-val">¥2,500/人</span></div>
+  </div>
+
+  <!-- 内容产出 -->
+  <div class="card">
+    <div class="card-title">✍️ 内容产出</div>
+    <div class="stat-row"><span class="stat-label">公众号已发</span><span class="stat-val">1篇</span></div>
+    <div class="stat-row"><span class="stat-label">第二篇存稿</span><span class="stat-val">✅ 待群发</span></div>
+    <div class="stat-row"><span class="stat-label">口播素材</span><span class="stat-val">7条</span></div>
+  </div>
+
+  <!-- 决策框架 -->
+  <div class="card full">
+    <div class="card-title">🧠 决策框架</div>
+    <div style="font-size:12px;line-height:1.8">
+      ① <strong>安叔三问</strong>：积累性？可带走？归零稳？<br>
+      ② <strong>五维加减</strong>：身体/时间/金钱/认知/人际<br>
+      ③ <strong>大佬验算</strong>：芒格逆向→德马科五戒→姜胡说VFS
+    </div>
+  </div>
+
+  <!-- 今日建议 -->
+  <div class="card full">
+    <div class="card-title">💡 Hermes建议</div>
+    <div style="font-size:12px;color:#64748b;line-height:1.7">
+      忙完今天客户事项，抽空把公众号第二篇发了。别断更。
+    </div>
+  </div>
+
+</div>
+
+<div class="tip">
+  ⚡ 数据由 Hermes 自动更新 · 每日同步
+</div>
+
+<script>
+document.getElementById('todayDate').textContent = new Date().toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric',weekday:'long'});
+</script>
+</body>
+</html>
