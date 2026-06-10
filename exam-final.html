@@ -254,11 +254,11 @@ function submitExam(){
 }
 
 // ===== 共享排名（用npoint.io）=====
-const NPOINT_URL='https://api.npoint.io/91a6d2d9e97242bce4b8';
+const RANK_URL='http://'+window.location.hostname+':8899';
 
 function submitRank(result){
   // 读取现有数据
-  fetch(NPOINT_URL)
+  fetch(RANK_URL)
     .then(r=>r.json())
     .then(data=>{
       let list=data.results||[];
@@ -278,7 +278,7 @@ function submitRank(result){
 function showRank(){
   document.getElementById('rankOverlay').style.display='flex';
   document.getElementById('rankList').innerHTML='<p style="color:#94a3b8">加载中...</p>';
-  fetch(NPOINT_URL)
+  fetch(RANK_URL)
     .then(r=>r.json())
     .then(data=>{
       let list=data.results||[];

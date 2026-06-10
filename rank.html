@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>闲鱼培训 · 成绩排名</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,"PingFang SC",sans-serif;background:#f0f2f5;color:#1d1d1f;min-height:100vh}
+  .header{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:30px 20px 24px;text-align:center}
+  .header h1{font-size:1.3em}
+  .header p{font-size:0.82em;opacity:0.6;margin-top:4px}
+  .container{max-width:600px;margin:0 auto;padding:20px 16px}
+  .rank-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+  .rank-item{display:flex;align-items:center;padding:14px 18px;border-bottom:1px solid #f1f5f9}
+  .rank-item:last-child{border-bottom:none}
+  .rank-item.me{background:#fef3c7}
+  .rank-num{width:40px;font-weight:700;font-size:1.1em;color:#94a3b8;flex-shrink:0}
+  .rank-num.top1{color:#f59e0b}
+  .rank-num.top2{color:#94a3b8}
+  .rank-num.top3{color:#b45309}
+  .rank-name{flex:1;font-weight:600;font-size:0.95em}
+  .rank-score{font-size:0.9em;color:#1e293b;font-weight:600}
+  .rank-pct{font-size:0.75em;color:#94a3b8;margin-left:6px}
+  .rank-pass{font-size:0.75em;padding:2px 8px;border-radius:10px;margin-left:8px}
+  .rank-pass.pass{background:#f0fdf4;color:#16a34a}
+  .rank-pass.fail{background:#fef2f2;color:#dc2626}
+  .loading{text-align:center;padding:40px;color:#94a3b8}
+  .error{text-align:center;padding:40px;color:#dc2626}
+  .refresh-btn{background:#d97706;color:#fff;border:none;padding:8px 24px;border-radius:20px;font-size:0.85em;font-weight:600;cursor:pointer;margin:16px auto 0;display:block}
+  .refresh-btn:hover{background:#b45309}
+  .server-tip{text-align:center;margin-top:12px;font-size:0.78em;color:#94a3b8}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🏆 闲鱼培训 · 成绩排名</h1>
+  <p>实时更新 · 全体学员共享</p>
+</div>
+<div class="container">
+  <div id="rankList" class="loading">加载中...</div>
+  <button class="refresh-btn" onclick="loadRank()">🔄 刷新排名</button>
+  <p class="server-tip">排名数据来自讲师电脑，请确保排名服务器已启动</p>
+</div>
+<script>
+async function loadRank(){
+  document.getElementById('rankList').innerHTML='<div class="loading">加载中...</div>';
+  try{
+    let url='http://'+window.location.hostname+':8899';
+    let resp=await fetch(url);
+    let data=await resp.json();
+    let list=data.results||[];
+    list.sort((a,b)=>b.pct-a.pct);
+    if(list.length===0){
+      document.getElementById('rankList').innerHTML='<div class="loading">暂无成绩记录</div>';
+      return;
+    }
+    let h='<div class="rank-card">';
+    list.forEach((r,i)=>{
+      let medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+      let numClass=i===0?'top1':i===1?'top2':i===2?'top3':'';
+      h+='<div class="rank-item">';
+      h+='<div class="rank-num '+numClass+'">'+medal+' '+(i+1)+'</div>';
+      h+='<div class="rank-name">'+r.name+'</div>';
+      h+='<div class="rank-score">'+r.score+'<span class="rank-pct">/'+r.total+'分（'+r.pct+'%）</span></div>';
+      h+='<div class="rank-pass '+(r.pass?'pass':'fail')+'">'+(r.pass?'✅通过':'❌未过')+'</div>';
+      h+='</div>';
+    });
+    h+='</div>';
+    document.getElementById('rankList').innerHTML=h;
+  }catch(e){
+    document.getElementById('rankList').innerHTML='<div class="error">❌ 无法连接到排名服务器<br><span style="font-size:0.85em;color:#64748b">请让老师在电脑上启动排名服务器</span></div>';
+  }
+}
+loadRank();
+</script>
+</body>
+</html>
