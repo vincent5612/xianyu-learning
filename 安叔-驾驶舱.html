@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>安叔 · 产物总览台</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif; background: #f5f2ee; min-height: 100vh; }
+
+  .header { background: #2d2a24; padding: 24px 16px 0; position: sticky; top: 0; z-index: 50; text-align: center; }
+  .header h1 { font-size: 22px; font-weight: 900; color: #f0ebe4; }
+  .header .sub { font-size: 11px; color: #d4a574; margin-top: 2px; margin-bottom: 14px; letter-spacing: 1px; }
+
+  .tab-nav { display: flex; justify-content: center; gap: 4px; overflow-x: auto; padding: 0 8px; }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn { flex-shrink: 0; padding: 10px 18px; font-size: 14px; font-weight: 600; color: #6a6052; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.15s; border-radius: 8px 8px 0 0; }
+  .tab-btn.active { color: #d4a574; border-bottom-color: #d4a574; background: rgba(212,165,116,0.06); }
+
+  .main { max-width: 640px; margin: 0 auto; padding: 12px 14px 60px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .card { background: #fff; border-radius: 10px; margin-bottom: 8px; border: 1px solid #ede6dc; overflow: hidden; }
+  .card-title { font-size: 12px; font-weight: 600; color: #2d2a24; padding: 12px 16px 8px; display: flex; align-items: center; gap: 6px; }
+  .card-title .badge { font-size: 10px; background: #ede6dc; color: #6a6052; padding: 1px 8px; border-radius: 10px; font-weight: 400; margin-left: auto; }
+
+  /* 列表项 */
+  .list-item { display: flex; align-items: center; padding: 11px 16px; border-bottom: 1px solid #f5f2ee; gap: 10px; }
+  .list-item:last-child { border-bottom: none; }
+  .item-icon { width: 24px; text-align: center; font-size: 14px; flex-shrink: 0; }
+  .item-name { font-size: 13px; color: #2d2a24; flex: 1; line-height: 1.3; font-weight: 500; }
+  .item-meta { font-size: 10px; color: #b0a898; flex-shrink: 0; }
+  .item-badge { font-size: 9px; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; font-weight: 500; }
+  .item-badge.green { background: #e8f5e9; color: #27ae60; }
+  .item-badge.orange { background: #fef5e7; color: #e67e22; }
+  .item-badge.gray { background: #f5f2ee; color: #8a8072; }
+
+  /* CTA条 */
+  .cta-bar { background: linear-gradient(135deg, #faf6f0, #f5f0eb); border: 1px solid #ede6dc; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .cta-bar p { font-size: 12px; color: #4a4035; flex: 1; }
+  .cta-bar .btn { font-size: 11px; background: #2d2a24; color: #f0ebe4; padding: 5px 14px; border-radius: 6px; cursor: pointer; flex-shrink: 0; border: none; font-weight: 500; }
+
+  /* 统计条 */
+  .stat-bar { display: flex; align-items: center; gap: 8px; padding: 8px 16px; }
+  .stat-bar .label { font-size: 12px; color: #6a6052; width: 60px; flex-shrink: 0; }
+  .stat-bar .bar-wrap { flex: 1; height: 6px; background: #ede6dc; border-radius: 3px; overflow: hidden; }
+  .stat-bar .bar-fill { height: 100%; border-radius: 3px; }
+  .stat-bar .num { font-size: 11px; color: #8a8072; width: 24px; text-align: right; }
+
+  .footer { text-align: center; padding: 24px 16px; font-size: 10px; color: #d4a574; letter-spacing: 1px; }
+
+  @media (max-width: 420px) {
+    .header h1 { font-size: 18px; }
+    .tab-btn { font-size: 12px; padding: 8px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>产物总览台</h1>
+  <div class="sub">安叔 · 创作指挥中心</div>
+  <div class="tab-nav" id="tabNav">
+    <span class="tab-btn active" data-tab="assets">长期资产</span>
+    <span class="tab-btn" data-tab="cards">知识卡片</span>
+    <span class="tab-btn" data-tab="iterating">迭代中</span>
+    <span class="tab-btn" data-tab="products">知识产物</span>
+    <span class="tab-btn" data-tab="todo">近期代办</span>
+    <span class="tab-btn" data-tab="archived">已归档</span>
+    <span class="tab-btn" data-tab="wechat">公众号</span>
+    <span class="tab-btn" data-tab="video">视频脚本</span>
+    <span class="tab-btn" data-tab="models">思维模型</span>
+    <span class="tab-btn" data-tab="methods">方法论</span>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ===== 长期资产 ===== -->
+<div class="tab-content active" id="tab-assets">
+  <div class="cta-bar">
+    <p>⚡ 长期资产是你不做也会自动增值的东西</p>
+    <span class="btn" onclick="alert('建议：知识卡片库 + 朋友圈文案集 + 招商文件')">+ 新增</span>
+  </div>
+  <div class="card">
+    <div class="card-title">📚 知识与内容资产 <span class="badge">4项</span></div>
+    <div class="list-item"><span class="item-icon">🧠</span><span class="item-name">知识卡片库（12张）</span><span class="item-meta">持续增长</span><span class="item-badge green">自动</span></div>
+    <div class="list-item"><span class="item-icon">📝</span><span class="item-name">朋友圈文案集（37条）</span><span class="item-meta">已归档</span><span class="item-badge green">自动</span></div>
+    <div class="list-item"><span class="item-icon">📄</span><span class="item-name">京东招商文件</span><span class="item-meta">已更新v3</span><span class="item-badge orange">需维护</span></div>
+    <div class="list-item"><span class="item-icon">📊</span><span class="item-name">学员数据档案</span><span class="item-meta">9人</span><span class="item-badge green">自动</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🛠 工具与系统 <span class="badge">4项</span></div>
+    <div class="list-item"><span class="item-icon">🤖</span><span class="item-name">Hermes Agent</span><span class="item-meta">就绪</span><span class="item-badge green">自动</span></div>
+    <div class="list-item"><span class="item-icon">🖼</span><span class="item-name">Kindle知识卡片生成器</span><span class="item-meta">就绪</span><span class="item-badge green">自动</span></div>
+    <div class="list-item"><span class="item-icon">🎬</span><span class="item-name">MoneyPrinterTurbo</span><span class="item-meta">就绪</span><span class="item-badge gray">待用</span></div>
+    <div class="list-item"><span class="item-icon">📐</span><span class="item-name">灵感炼金炉 + 门禁四问</span><span class="item-meta">就绪</span><span class="item-badge green">自动</span></div>
+  </div>
+</div>
+
+<!-- ===== 知识卡片 ===== -->
+<div class="tab-content" id="tab-cards" style="display:none;">
+  <div class="cta-bar">
+    <p>📇 每张卡片都是可复用的认知资产</p>
+    <span class="btn" onclick="alert('直接说"帮我铸卡"')">+ 铸卡</span>
+  </div>
+  <div class="card">
+    <div class="card-title">🧠 安叔原创 <span class="badge">5张</span></div>
+    <div class="list-item"><span class="item-icon">🔴</span><span class="item-name">执行力不是0/1，是3-10</span><span class="item-badge orange">L1</span></div>
+    <div class="list-item"><span class="item-icon">🟠</span><span class="item-name">乘法思维（缺一归零修正版）</span><span class="item-badge orange">L1</span></div>
+    <div class="list-item"><span class="item-icon">🟡</span><span class="item-name">内容即筛选（漏斗思维）</span><span class="item-badge orange">L1</span></div>
+    <div class="list-item"><span class="item-icon">🟢</span><span class="item-name">长期vs清零（复利判断法）</span><span class="item-badge orange">L1</span></div>
+    <div class="list-item"><span class="item-icon">🔵</span><span class="item-name">让利即壁垒</span><span class="item-badge orange">L1</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📚 姜胡说提炼 <span class="badge">4张</span></div>
+    <div class="list-item"><span class="item-icon">✍</span><span class="item-name">写→拍→盘飞轮</span><span class="item-badge orange">L1</span></div>
+    <div class="list-item"><span class="item-icon">🔨</span><span class="item-name">三块法（理解→连接→落地）</span><span class="item-badge orange">L1</span></div>
+    <div class="list-item"><span class="item-icon">🚪</span><span class="item-name">门禁四问（素材筛选）</span><span class="item-badge orange">L1</span></div>
+    <div class="list-item"><span class="item-icon">🔥</span><span class="item-name">灵感炼金炉（7刃切割）</span><span class="item-badge orange">L1</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🏗 安叔体系 <span class="badge">3张</span></div>
+    <div class="list-item"><span class="item-icon">⚔</span><span class="item-name">将军与监军</span><span class="item-badge orange">L1</span></div>
+    <div class="list-item"><span class="item-icon">📇</span><span class="item-name">洞见卡锻造法（L1/L2/L3）</span><span class="item-badge orange">L1</span></div>
+    <div class="list-item"><span class="item-icon">🎯</span><span class="item-name">朋友圈招商三段式</span><span class="item-badge orange">L1</span></div>
+  </div>
+</div>
+
+<!-- ===== 迭代中 ===== -->
+<div class="tab-content" id="tab-iterating" style="display:none;">
+  <div class="cta-bar">
+    <p>🔧 正在打磨中的半成品</p>
+    <span class="btn" onclick="alert('目前迭代中的内容会在此显示')">刷新</span>
+  </div>
+  <div class="card">
+    <div class="card-title">📝 内容迭代 <span class="badge">3项</span></div>
+    <div class="list-item"><span class="item-icon">1️⃣</span><span class="item-name">京东 vs 抖店/拼多多/闲鱼对比图</span><span class="item-badge orange">素材已攒</span></div>
+    <div class="list-item"><span class="item-icon">2️⃣</span><span class="item-name">口播素材待拍（执行力/三块法/京东对比）</span><span class="item-badge orange">文案已出</span></div>
+    <div class="list-item"><span class="item-icon">3️⃣</span><span class="item-name">公众号第7篇 止损线草稿</span><span class="item-badge gray">待定稿</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🧠 认知迭代 <span class="badge">2项</span></div>
+    <div class="list-item"><span class="item-icon">🔄</span><span class="item-name">三块法练习第2轮</span><span class="item-badge orange">待启动</span></div>
+    <div class="list-item"><span class="item-icon">📇</span><span class="item-name">知识卡片L1→L2升级验证</span><span class="item-badge gray">需场景</span></div>
+  </div>
+</div>
+
+<!-- ===== 知识产物 ===== -->
+<div class="tab-content" id="tab-products" style="display:none;">
+  <div class="cta-bar">
+    <p>🎁 已经产出的可交付物</p>
+    <span class="btn" onclick="alert('包括：招商文件/公众号文章/口播文案/知识卡片')">说明</span>
+  </div>
+  <div class="card">
+    <div class="card-title">📦 已产出 <span class="badge">6项</span></div>
+    <div class="list-item"><span class="item-icon">📄</span><span class="item-name">京东招商文件（含新规）</span><span class="item-badge green">已更新</span></div>
+    <div class="list-item"><span class="item-icon">📰</span><span class="item-name">公众号文章 6 篇（1-4已发+2待发）</span><span class="item-badge green">已发布</span></div>
+    <div class="list-item"><span class="item-icon">🎬</span><span class="item-name">口播素材文案 3 条（6月12日）</span><span class="item-badge orange">待拍摄</span></div>
+    <div class="list-item"><span class="item-icon">🖼</span><span class="item-name">Kindle知识卡片 12 张</span><span class="item-badge green">已生成</span></div>
+    <div class="list-item"><span class="item-icon">🧠</span><span class="item-name">朋友圈底层思维模型提炼</span><span class="item-badge green">已入库</span></div>
+    <div class="list-item"><span class="item-icon">📊</span><span class="item-name">产物总览库/台 上线</span><span class="item-badge green">已上线</span></div>
+  </div>
+</div>
+
+<!-- ===== 近期代办 ===== -->
+<div class="tab-content" id="tab-todo" style="display:none;">
+  <div class="cta-bar">
+    <p>📋 优先级排序，先做P0</p>
+    <span class="btn" onclick="alert('完成一项后告诉我，我来更新')">标记完成</span>
+  </div>
+  <div class="card">
+    <div class="card-title">🔴 P0 · 今天要做 <span class="badge">2项</span></div>
+    <div class="list-item"><span class="item-icon">📱</span><span class="item-name">发朋友圈 · 京东新规让利</span><span class="item-badge orange">未做</span></div>
+    <div class="list-item"><span class="item-icon">🎥</span><span class="item-name">拍1条口播</span><span class="item-badge orange">未做</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🟡 P1 · 本周内 <span class="badge">3项</span></div>
+    <div class="list-item"><span class="item-icon">📄</span><span class="item-name">闲鱼合同修改 → 发汤总</span><span class="item-badge orange">待签</span></div>
+    <div class="list-item"><span class="item-icon">📊</span><span class="item-name">电商平台对比图</span><span class="item-badge orange">待制作</span></div>
+    <div class="list-item"><span class="item-icon">🧠</span><span class="item-name">三块法第2轮练习</span><span class="item-badge orange">待启动</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🟢 P2 · 有空再做 <span class="badge">2项</span></div>
+    <div class="list-item"><span class="item-icon">🔧</span><span class="item-name">Mac微信70G清理决策</span><span class="item-badge gray">待定</span></div>
+    <div class="list-item"><span class="item-icon">📖</span><span class="item-name">拆解姜胡说表达风格</span><span class="item-badge gray">待启动</span></div>
+  </div>
+</div>
+
+<!-- ===== 已归档 ===== -->
+<div class="tab-content" id="tab-archived" style="display:none;">
+  <div class="cta-bar">
+    <p>📦 已完成或暂停的项目</p>
+    <span class="btn" onclick="alert('可随时恢复')">恢复</span>
+  </div>
+  <div class="card">
+    <div class="card-title">✅ 已完成 <span class="badge">4项</span></div>
+    <div class="list-item"><span class="item-icon">✅</span><span class="item-name">京东新规讲解（工作群）</span><span class="item-badge green">6.12</span></div>
+    <div class="list-item"><span class="item-icon">✅</span><span class="item-name">Mac存储清理</span><span class="item-badge green">6.12</span></div>
+    <div class="list-item"><span class="item-icon">✅</span><span class="item-name">朋友圈文案归档（37条）</span><span class="item-badge green">6.13</span></div>
+    <div class="list-item"><span class="item-icon">✅</span><span class="item-name">12张知识卡片生成</span><span class="item-badge green">6.14</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">⏸ 已暂停 <span class="badge">3项</span></div>
+    <div class="list-item"><span class="item-icon">⏸</span><span class="item-name">RPO招聘业务</span><span class="item-badge gray">暂停</span></div>
+    <div class="list-item"><span class="item-icon">⏸</span><span class="item-name">语聊测试</span><span class="item-badge gray">搁置</span></div>
+    <div class="list-item"><span class="item-icon">⏸</span><span class="item-name">学霸小程序</span><span class="item-badge gray">API余额不足</span></div>
+  </div>
+</div>
+
+<!-- ===== 公众号 ===== -->
+<div class="tab-content" id="tab-wechat" style="display:none;">
+  <div class="cta-bar">
+    <p>📰 伯乐说创业 · 内容管线</p>
+    <span class="btn" onclick="alert('直接说"写一篇公众号"')">+ 写作</span>
+  </div>
+  <div class="card">
+    <div class="card-title">📰 已发布 <span class="badge">4篇</span></div>
+    <div class="list-item"><span class="item-icon">1️⃣</span><span class="item-name">副业实验 · 从零开始</span><span class="item-badge green">已发</span></div>
+    <div class="list-item"><span class="item-icon">2️⃣</span><span class="item-name">京东案例 · 25天18000</span><span class="item-badge green">已发</span></div>
+    <div class="list-item"><span class="item-icon">3️⃣</span><span class="item-name">避坑指南 · 新人必看</span><span class="item-badge green">已发</span></div>
+    <div class="list-item"><span class="item-icon">4️⃣</span><span class="item-name">副业三问 · 筛80%项目</span><span class="item-badge green">已发</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📝 待产出 <span class="badge">3篇</span></div>
+    <div class="list-item"><span class="item-icon">5️⃣</span><span class="item-name">精力分配6-3-1</span><span class="item-badge orange">待发</span></div>
+    <div class="list-item"><span class="item-icon">6️⃣</span><span class="item-name">听话照做</span><span class="item-badge orange">待发</span></div>
+    <div class="list-item"><span class="item-icon">7️⃣</span><span class="item-name">止损线（草稿）</span><span class="item-badge gray">草稿</span></div>
+  </div>
+</div>
+
+<!-- ===== 视频脚本 ===== -->
+<div class="tab-content" id="tab-video" style="display:none;">
+  <div class="cta-bar">
+    <p>🎬 口播素材库，手机直接拍</p>
+    <span class="btn" onclick="alert('直接说"出口播素材"')">+ 生成</span>
+  </div>
+  <div class="card">
+    <div class="card-title">🎥 待拍摄 <span class="badge">3条</span></div>
+    <div class="list-item"><span class="item-icon">⭐</span><span class="item-name">执行力是3-10不是0-1</span><span class="item-badge orange">文案已出</span></div>
+    <div class="list-item"><span class="item-icon">⭐</span><span class="item-name">京东 vs 其他平台</span><span class="item-badge orange">文案已出</span></div>
+    <div class="list-item"><span class="item-icon">⭐</span><span class="item-name">三块法体验分享</span><span class="item-badge orange">文案已出</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📝 文案储备 <span class="badge">3条</span></div>
+    <div class="list-item"><span class="item-icon">📄</span><span class="item-name">长期vs清零</span><span class="item-badge green">就绪</span></div>
+    <div class="list-item"><span class="item-icon">📄</span><span class="item-name">让利即壁垒</span><span class="item-badge green">就绪</span></div>
+    <div class="list-item"><span class="item-icon">📄</span><span class="item-name">先动手再学会</span><span class="item-badge green">就绪</span></div>
+  </div>
+</div>
+
+<!-- ===== 思维模型 ===== -->
+<div class="tab-content" id="tab-models" style="display:none;">
+  <div class="cta-bar">
+    <p>🧠 你正在用的思考框架</p>
+    <span class="btn" onclick="alert('来自你的朋友圈和日常复盘')">来源</span>
+  </div>
+  <div class="card">
+    <div class="card-title">🔴 安叔自创 <span class="badge">5个</span></div>
+    <div class="list-item"><span class="item-icon">✖️</span><span class="item-name">乘法思维</span><span class="item-badge green">自创</span></div>
+    <div class="list-item"><span class="item-icon">🔄</span><span class="item-name">长期vs清零</span><span class="item-badge green">自创</span></div>
+    <div class="list-item"><span class="item-icon">🔽</span><span class="item-name">内容即筛选</span><span class="item-badge green">自创</span></div>
+    <div class="list-item"><span class="item-icon">⚔️</span><span class="item-name">将军与监军</span><span class="item-badge green">自创</span></div>
+    <div class="list-item"><span class="item-icon">💰</span><span class="item-name">让利即壁垒</span><span class="item-badge green">自创</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🟠 借用模型 <span class="badge">5个</span></div>
+    <div class="list-item"><span class="item-icon">✍</span><span class="item-name">写→拍→盘飞轮</span><span class="item-badge gray">姜胡说</span></div>
+    <div class="list-item"><span class="item-icon">🔨</span><span class="item-name">三块法</span><span class="item-badge gray">姜胡说</span></div>
+    <div class="list-item"><span class="item-icon">🚪</span><span class="item-name">门禁四问</span><span class="item-badge gray">姜胡说</span></div>
+    <div class="list-item"><span class="item-icon">🔥</span><span class="item-name">灵感炼金炉</span><span class="item-badge gray">姜胡说</span></div>
+    <div class="list-item"><span class="item-icon">📇</span><span class="item-name">洞见卡锻造法</span><span class="item-badge gray">姜胡说</span></div>
+  </div>
+</div>
+
+<!-- ===== 方法论 ===== -->
+<div class="tab-content" id="tab-methods" style="display:none;">
+  <div class="cta-bar">
+    <p>📐 你的操作手册级方法</p>
+    <span class="btn" onclick="alert('每个方法论都可展开')">展开</span>
+  </div>
+  <div class="card">
+    <div class="card-title">🎯 创作类 <span class="badge">3项</span></div>
+    <div class="list-item"><span class="item-icon">1️⃣</span><span class="item-name">朋友圈文案：钩子→数据→打消顾虑→CTA</span></div>
+    <div class="list-item"><span class="item-icon">2️⃣</span><span class="item-name">口播素材：问题→经历→结论→互动</span></div>
+    <div class="list-item"><span class="item-icon">3️⃣</span><span class="item-name">公众号：一句话本质→短段→引用→CTA</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">💼 招商类 <span class="badge">3项</span></div>
+    <div class="list-item"><span class="item-icon">1️⃣</span><span class="item-name">学员三档分成制</span></div>
+    <div class="list-item"><span class="item-icon">2️⃣</span><span class="item-name">客户启动成本规划</span></div>
+    <div class="list-item"><span class="item-icon">3️⃣</span><span class="item-name">多平台对比话术</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🧠 学习类 <span class="badge">2项</span></div>
+    <div class="list-item"><span class="item-icon">1️⃣</span><span class="item-name">三块法：理解→连接→落地</span></div>
+    <div class="list-item"><span class="item-icon">2️⃣</span><span class="item-name">灵感炼金炉：7刃切割→输出</span></div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">安叔 · 产物总览台 · 数据实时更新</div>
+
+<script>
+const tabs = document.querySelectorAll('#tabNav .tab-btn');
+tabs.forEach(t => {
+  t.addEventListener('click', function() {
+    tabs.forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
