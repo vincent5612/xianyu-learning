@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>安叔 · 资源导航</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif; background: #f5f2ee; min-height: 100vh; }
+
+  .header { background: #2d2a24; padding: 20px 16px 0; position: sticky; top: 0; z-index: 50; }
+  .header h1 { font-size: 18px; font-weight: 900; color: #f0ebe4; }
+  .header .sub { font-size: 10px; color: #6a6052; margin-bottom: 10px; }
+
+  .tab-nav { display: flex; gap: 0; overflow-x: auto; margin: 0 -16px; padding: 0 12px; }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn { flex-shrink: 0; padding: 7px 12px 9px; font-size: 12px; color: #6a6052; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.15s; }
+  .tab-btn.active { color: #d4a574; border-bottom-color: #d4a574; }
+
+  .main { max-width: 600px; margin: 0 auto; padding: 12px 14px 60px; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .card { background: #fff; border-radius: 10px; margin-bottom: 6px; border: 1px solid #ede6dc; overflow: hidden; }
+  .card-header { padding: 10px 14px; font-size: 11px; font-weight: 500; color: #8a8072; border-bottom: 1px solid #f5f2ee; }
+
+  a.link { display: flex; align-items: center; gap: 10px; padding: 11px 14px; text-decoration: none; border-bottom: 1px solid #f5f2ee; transition: 0.1s; }
+  a.link:last-child { border-bottom: none; }
+  a.link:hover { background: #faf6f0; }
+  a.link:active { background: #f5f2ee; }
+
+  .link-icon { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+  .li-orange { background: #fef5e7; }
+  .li-blue { background: #e8f0fe; }
+  .li-green { background: #e8f5e9; }
+  .li-gold { background: #fef7e0; }
+  .li-gray { background: #f5f2ee; }
+  .li-purple { background: #f3e8ff; }
+
+  .link-name { font-size: 13px; color: #2d2a24; flex: 1; font-weight: 500; }
+  .link-desc { font-size: 10px; color: #b0a898; }
+
+  .tag { font-size: 9px; padding: 1px 6px; border-radius: 3px; flex-shrink: 0; }
+  .tag-web { background: #e8f0fe; color: #3b82f6; }
+  .tag-local { background: #ede6dc; color: #6a6052; }
+  .tag-done { background: #e8f5e9; color: #27ae60; }
+  .tag-draft { background: #fef7e0; color: #d4a574; }
+
+  .footer { text-align: center; padding: 30px 16px; font-size: 10px; color: #ccc; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>安叔 · 资源导航</h1>
+  <div class="sub">点击标签分类 · 快速定位资源</div>
+  <div class="tab-nav" id="tabNav">
+    <span class="tab-btn active" data-tab="xiuxian">闲鱼</span>
+    <span class="tab-btn" data-tab="rpo">RPO</span>
+    <span class="tab-btn" data-tab="cockpit">驾驶舱</span>
+    <span class="tab-btn" data-tab="knowledge">知识</span>
+    <span class="tab-btn" data-tab="articles">公众号</span>
+    <span class="tab-btn" data-tab="tools">工具</span>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ===== 闲鱼 ===== -->
+<div class="tab-content active" id="tab-xiuxian">
+  <div class="card">
+    <a class="link" href="https://vincent5612.github.io/xianyu-learning/" target="_blank">
+      <span class="link-icon li-orange">📖</span>
+      <span class="link-name">闲鱼运营学习手册</span>
+      <span class="tag tag-web">网页</span>
+    </a>
+    <a class="link" href="https://vincent5612.github.io/xianyu-learning/exam-final.html" target="_blank">
+      <span class="link-icon li-orange">📝</span>
+      <span class="link-name">闲鱼考试系统</span>
+      <span class="tag tag-web">网页</span>
+    </a>
+    <a class="link" href="https://vincent5612.github.io/xianyu-learning/rank.html" target="_blank">
+      <span class="link-icon li-orange">🏆</span>
+      <span class="link-name">闲鱼考试排名</span>
+      <span class="tag tag-web">网页</span>
+    </a>
+  </div>
+</div>
+
+<!-- ===== RPO ===== -->
+<div class="tab-content" id="tab-rpo">
+  <div class="card">
+    <a class="link" href="https://vincent5612.github.io/xianyu-exam/rpo-sop.html" target="_blank">
+      <span class="link-icon li-blue">📋</span>
+      <span class="link-name">RPO SOP 操作手册</span>
+      <span class="tag tag-web">网页</span>
+    </a>
+    <a class="link" href="https://vincent5612.github.io/xianyu-learning/jd-recruit.html" target="_blank">
+      <span class="link-icon li-blue">📄</span>
+      <span class="link-name">京东招商项目说明页</span>
+      <span class="tag tag-web">网页</span>
+    </a>
+  </div>
+</div>
+
+<!-- ===== 驾驶舱 ===== -->
+<div class="tab-content" id="tab-cockpit">
+  <div class="card">
+    <a class="link" onclick="window.open('file:///Users/apple/Desktop/安叔-产物总览台.html')">
+      <span class="link-icon li-green">📊</span>
+      <span class="link-name">产物总览台 ✅ 主用</span>
+      <span class="tag tag-local">本地</span>
+    </a>
+    <a class="link" onclick="window.open('file:///Users/apple/Desktop/安叔-今日指挥中心.html')">
+      <span class="link-icon li-green">🎯</span>
+      <span class="link-name">今日指挥中心</span>
+      <span class="tag tag-local">本地</span>
+    </a>
+    <a class="link" href="https://vincent5612.github.io/xianyu-learning/dashboard.html" target="_blank">
+      <span class="link-icon li-green">📈</span>
+      <span class="link-name">旧版驾驶舱</span>
+      <span class="tag tag-web">网页</span>
+    </a>
+  </div>
+</div>
+
+<!-- ===== 知识 ===== -->
+<div class="tab-content" id="tab-knowledge">
+  <div class="card">
+    <div class="card-header">🧠 Kindle知识卡片</div>
+    <a class="link" onclick="window.open('file:///Users/apple/Desktop/知识卡片-下坠螺旋.html')">
+      <span class="link-icon li-gold">🔄</span>
+      <span class="link-name">下坠螺旋（警示模型）</span>
+      <span class="tag tag-local">本地</span>
+    </a>
+    <a class="link" onclick="window.open('file:///Users/apple/Desktop/知识卡片-写拍盘飞轮.html')">
+      <span class="link-icon li-gold">✍</span>
+      <span class="link-name">写拍盘飞轮（姜胡说）</span>
+      <span class="tag tag-local">本地</span>
+    </a>
+    <a class="link" onclick="window.open('file:///Users/apple/Desktop/知识卡片-将军与监军.html')">
+      <span class="link-icon li-gold">⚔️</span>
+      <span class="link-name">将军与监军（团队架构）</span>
+      <span class="tag tag-local">本地</span>
+    </a>
+    <a class="link" onclick="window.open('file:///Users/apple/Desktop/知识卡片-执行力不是01.html')">
+      <span class="link-icon li-gold">📇</span>
+      <span class="link-name">执行力不是0/1，是3-10</span>
+      <span class="tag tag-local">本地</span>
+    </a>
+  </div>
+  <div class="card">
+    <div class="card-header">📚 知识库文档</div>
+    <a class="link" onclick="window.open('file:///Users/apple/Documents/Obsidian%20Vault/知识卡片/安叔创作逻辑-朋友圈底层思维模型.md')">
+      <span class="link-icon li-gold">🧠</span>
+      <span class="link-name">安叔创作逻辑（5模型+9卡）</span>
+      <span class="tag tag-local">本地</span>
+    </a>
+    <a class="link" onclick="window.open('file:///Users/apple/Documents/Obsidian%20Vault/知识卡片/朋友圈文案全集-2026.6.12.md')">
+      <span class="link-icon li-gold">📝</span>
+      <span class="link-name">朋友圈文案全集（37条）</span>
+      <span class="tag tag-local">本地</span>
+    </a>
+  </div>
+</div>
+
+<!-- ===== 公众号 ===== -->
+<div class="tab-content" id="tab-articles">
+  <div class="card">
+    <div class="card-header">📰 副业实验室 · 伯乐说创业</div>
+    <a class="link" onclick="window.open('file:///Users/apple/Documents/Obsidian%20Vault/伯乐说创业/副业实验室-第004篇-副业三问.md')">
+      <span class="link-icon li-gray">4</span>
+      <span class="link-name">第004篇 · 副业三问</span>
+      <span class="tag tag-done">已发</span>
+    </a>
+    <a class="link" onclick="window.open('file:///Users/apple/Documents/Obsidian%20Vault/伯乐说创业/副业实验室-第005篇-精力分配6-3-1.md')">
+      <span class="link-icon li-gray">5</span>
+      <span class="link-name">第005篇 · 精力分配6-3-1</span>
+      <span class="tag tag-done">已发</span>
+    </a>
+    <a class="link" onclick="window.open('file:///Users/apple/Documents/Obsidian%20Vault/伯乐说创业/副业实验室-第006篇-听话照做.md')">
+      <span class="link-icon li-gray">6</span>
+      <span class="link-name">第006篇 · 听话照做</span>
+      <span class="tag tag-draft">待发</span>
+    </a>
+    <a class="link" onclick="window.open('file:///Users/apple/Desktop/副业实验室-第007篇-止损线.md')">
+      <span class="link-icon li-gray">7</span>
+      <span class="link-name">第007篇 · 止损线（草稿）</span>
+      <span class="tag tag-draft">草稿</span>
+    </a>
+  </div>
+</div>
+
+<!-- ===== 工具 ===== -->
+<div class="tab-content" id="tab-tools">
+  <div class="card">
+    <a class="link" onclick="window.open('file:///Users/apple/Desktop/口播素材-2026-06-12.md')">
+      <span class="link-icon li-purple">🎙️</span>
+      <span class="link-name">口播素材（3条）</span>
+      <span class="tag tag-local">本地</span>
+    </a>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">安叔 · 资源导航 · 持续更新</div>
+
+<script>
+const tabs = document.querySelectorAll('.tab-btn');
+tabs.forEach(t => {
+  t.addEventListener('click', function() {
+    tabs.forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
