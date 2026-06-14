@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>安叔 · 资源导航</title>
+<title>安叔 · 产物总览库</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif; background: #f5f2ee; min-height: 100vh; }
 
-  .header { background: #2d2a24; padding: 24px 16px 0; position: sticky; top: 0; z-index: 50; text-align: center; }
-  .header h1 { font-size: 20px; font-weight: 900; color: #f0ebe4; }
-  .header .sub { font-size: 11px; color: #6a6052; margin-bottom: 14px; }
+  .header { background: #2d2a24; padding: 28px 16px 0; position: sticky; top: 0; z-index: 50; text-align: center; }
+  .header h1 { font-size: 22px; font-weight: 900; color: #f0ebe4; }
+  .header .sub { font-size: 11px; color: #d4a574; margin-top: 2px; margin-bottom: 16px; letter-spacing: 1px; }
 
-  .tab-nav { display: flex; justify-content: center; gap: 4px; overflow-x: auto; padding: 0 12px; }
+  .tab-nav { display: flex; justify-content: center; gap: 6px; overflow-x: auto; padding: 0 12px; }
   .tab-nav::-webkit-scrollbar { display: none; }
-  .tab-btn { flex-shrink: 0; padding: 10px 20px; font-size: 14px; font-weight: 500; color: #6a6052; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.15s; border-radius: 8px 8px 0 0; }
+  .tab-btn { flex-shrink: 0; padding: 12px 24px; font-size: 15px; font-weight: 600; color: #6a6052; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.15s; border-radius: 8px 8px 0 0; }
   .tab-btn.active { color: #d4a574; border-bottom-color: #d4a574; background: rgba(212,165,116,0.06); }
 
   .main { max-width: 600px; margin: 0 auto; padding: 12px 14px 60px; }
@@ -22,14 +22,14 @@
   .tab-content { display: none; }
   .tab-content.active { display: block; }
 
-  .card { background: #fff; border-radius: 10px; margin-bottom: 6px; border: 1px solid #ede6dc; overflow: hidden; }
+  .card { background: #fff; border-radius: 10px; margin-bottom: 8px; border: 1px solid #ede6dc; overflow: hidden; }
 
-  a.link { display: flex; align-items: center; gap: 12px; padding: 14px 16px; text-decoration: none; border-bottom: 1px solid #f5f2ee; transition: 0.1s; }
+  a.link { display: flex; align-items: center; gap: 14px; padding: 16px 18px; text-decoration: none; border-bottom: 1px solid #f5f2ee; transition: 0.1s; }
   a.link:last-child { border-bottom: none; }
   a.link:hover { background: #faf6f0; }
   a.link:active { background: #f5f2ee; }
 
-  .link-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .link-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
   .li-orange { background: #fef5e7; }
   .li-blue { background: #e8f0fe; }
   .li-green { background: #e8f5e9; }
@@ -38,25 +38,47 @@
   .li-purple { background: #f3e8ff; }
 
   .link-text { flex: 1; min-width: 0; }
-  .link-title { font-size: 14px; font-weight: 500; color: #2d2a24; }
-  .link-desc { font-size: 11px; color: #8a8072; margin-top: 2px; line-height: 1.3; }
+  .link-title { font-size: 15px; font-weight: 500; color: #2d2a24; }
+  .link-desc { font-size: 12px; color: #8a8072; margin-top: 3px; line-height: 1.3; }
 
-  .tag { font-size: 9px; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; }
+  .tag { font-size: 10px; padding: 3px 10px; border-radius: 4px; flex-shrink: 0; font-weight: 500; }
   .tag-web { background: #e8f0fe; color: #3b82f6; }
   .tag-local { background: #ede6dc; color: #6a6052; }
   .tag-done { background: #e8f5e9; color: #27ae60; }
   .tag-draft { background: #fef7e0; color: #d4a574; }
 
-  .footer { text-align: center; padding: 30px 16px; font-size: 10px; color: #ccc; }
+  .tag-red { background: #fce4e4; color: #c0392b; }
+  .tag-orange { background: #fef5e7; color: #e67e22; }
+
+  .footer { text-align: center; padding: 24px 16px; font-size: 10px; color: #ccc; }
+
+  /* 待办区域 */
+  .todo-subnav { display: flex; gap: 4px; margin-bottom: 8px; }
+  .todo-btn { flex: 1; text-align: center; padding: 8px; font-size: 12px; font-weight: 500; color: #8a8072; cursor: pointer; border-radius: 6px; transition: 0.1s; background: #fff; border: 1px solid #ede6dc; }
+  .todo-btn.active { background: #2d2a24; color: #f0ebe4; border-color: #2d2a24; }
+  .todo-btn .badge { font-size: 10px; background: rgba(255,255,255,0.15); padding: 0 5px; border-radius: 4px; margin-left: 4px; }
+  .todo-btn.active .badge { background: rgba(255,255,255,0.15); }
+
+  .todo-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #fff; border-radius: 8px; margin-bottom: 4px; border: 1px solid #ede6dc; }
+  .todo-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .todo-dot.red { background: #e74c3c; }
+  .todo-dot.orange { background: #f0ad4e; }
+  .todo-dot.green { background: #5cb85c; }
+  .todo-dot.gray { background: #ccc; }
+  .todo-text { font-size: 13px; color: #2d2a24; flex: 1; }
+  .todo-text.done { text-decoration: line-through; color: #b0a898; }
+  .todo-action { font-size: 10px; color: #8a8072; }
+  .todo-empty { text-align: center; padding: 20px; color: #b0a898; font-size: 12px; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>安叔 · 资源导航</h1>
-  <div class="sub">点击标签分类 · 快速定位资源</div>
+  <h1>产物总览库</h1>
+  <div class="sub">🤖 by Hermes · 安叔的私人资源中枢</div>
   <div class="tab-nav" id="tabNav">
-    <span class="tab-btn active" data-tab="xiuxian">📦 闲鱼</span>
+    <span class="tab-btn active" data-tab="todo">📋 待办</span>
+    <span class="tab-btn" data-tab="xiuxian">📦 闲鱼</span>
     <span class="tab-btn" data-tab="rpo">🔵 RPO</span>
     <span class="tab-btn" data-tab="cockpit">🚀 驾驶舱</span>
     <span class="tab-btn" data-tab="knowledge">🧠 知识</span>
@@ -67,14 +89,45 @@
 
 <div class="main">
 
+<!-- ===== 待办 ===== -->
+<div class="tab-content active" id="tab-todo">
+  <div class="todo-subnav">
+    <span class="todo-btn active" data-todo="today">今日待办 <span class="badge">3</span></span>
+    <span class="todo-btn" data-todo="overdue">过期待办 <span class="badge">1</span></span>
+    <span class="todo-btn" data-todo="done">已归档</span>
+  </div>
+
+  <!-- 今日待办 -->
+  <div class="todo-list" id="todo-today">
+    <div class="todo-item"><span class="todo-dot red"></span><span class="todo-text">公众号第7篇 · 止损线定稿发布</span><span class="todo-action">今天</span></div>
+    <div class="todo-item"><span class="todo-dot orange"></span><span class="todo-text">京东招商朋友圈 · 新规卖点发布</span><span class="todo-action">今天</span></div>
+    <div class="todo-item"><span class="todo-dot orange"></span><span class="todo-text">闲鱼合同修改 → 发汤总确认</span><span class="todo-action">本周</span></div>
+  </div>
+
+  <!-- 过期待办 -->
+  <div class="todo-list" id="todo-overdue" style="display:none;">
+    <div class="todo-item"><span class="todo-dot red"></span><span class="todo-text">拍第一条口播视频（素材已有3条）</span><span class="todo-action">超1天</span></div>
+  </div>
+
+  <!-- 已归档 -->
+  <div class="todo-list" id="todo-done" style="display:none;">
+    <div class="todo-item"><span class="todo-dot gray"></span><span class="todo-text done">第004篇 · 副业三问发布</span></div>
+    <div class="todo-item"><span class="todo-dot gray"></span><span class="todo-text done">第005篇 · 精力分配6-3-1发布</span></div>
+    <div class="todo-item"><span class="todo-dot gray"></span><span class="todo-text done">第006篇 · 听话照做入草稿箱</span></div>
+    <div class="todo-item"><span class="todo-dot gray"></span><span class="todo-text done">京东新规三档分成方案上线</span></div>
+    <div class="todo-item"><span class="todo-dot gray"></span><span class="todo-text done">朋友圈文案37条归档入库</span></div>
+    <div class="todo-item"><span class="todo-dot gray"></span><span class="todo-text done">产物总览库上线</span></div>
+  </div>
+</div>
+
 <!-- ===== 闲鱼 ===== -->
-<div class="tab-content active" id="tab-xiuxian">
+<div class="tab-content" id="tab-xiuxian">
   <div class="card">
     <a class="link" href="https://vincent5612.github.io/xianyu-learning/" target="_blank">
       <span class="link-icon li-orange">📖</span>
       <div class="link-text">
         <div class="link-title">闲鱼运营学习手册</div>
-        <div class="link-desc">完整培训手册 · 5天学习计划 · 核心公式</div>
+        <div class="link-desc">完整培训体系 · 5天学习计划 · 核心运营公式</div>
       </div>
       <span class="tag tag-web">网页</span>
     </a>
@@ -82,7 +135,7 @@
       <span class="link-icon li-orange">📝</span>
       <div class="link-text">
         <div class="link-title">闲鱼考试系统</div>
-        <div class="link-desc">在线考试 · 自动判分 · 及格70分</div>
+        <div class="link-desc">在线答题 · 自动判分 · 70分及格</div>
       </div>
       <span class="tag tag-web">网页</span>
     </a>
@@ -90,7 +143,7 @@
       <span class="link-icon li-orange">🏆</span>
       <div class="link-text">
         <div class="link-title">闲鱼考试排名</div>
-        <div class="link-desc">云端排名 · 所有学员成绩一览</div>
+        <div class="link-desc">云端实时排名 · 所有学员成绩一目了然</div>
       </div>
       <span class="tag tag-web">网页</span>
     </a>
@@ -104,7 +157,7 @@
       <span class="link-icon li-blue">📋</span>
       <div class="link-text">
         <div class="link-title">RPO SOP 操作手册</div>
-        <div class="link-desc">完整招聘SOP流程 · 标准化操作指南</div>
+        <div class="link-desc">14年沉淀 · 完整招聘流程 · 标准化执行指南</div>
       </div>
       <span class="tag tag-web">网页</span>
     </a>
@@ -112,7 +165,7 @@
       <span class="link-icon li-blue">📄</span>
       <div class="link-text">
         <div class="link-title">京东招商项目说明页</div>
-        <div class="link-desc">京东店群招商 · 三档分成 · 收益模型</div>
+        <div class="link-desc">店群运营 · 三档分成 · 收益模型全解析</div>
       </div>
       <span class="tag tag-web">网页</span>
     </a>
@@ -126,7 +179,7 @@
       <span class="link-icon li-green">📊</span>
       <div class="link-text">
         <div class="link-title">产物总览台 ✅ 主用</div>
-        <div class="link-desc">10个标签卡 · 长期资产/项目/待办/内容管线</div>
+        <div class="link-desc">10个标签卡 · 资产/项目/待办/内容管线 · 全局掌控</div>
       </div>
       <span class="tag tag-local">本地</span>
     </a>
@@ -134,7 +187,7 @@
       <span class="link-icon li-green">🎯</span>
       <div class="link-text">
         <div class="link-title">今日指挥中心</div>
-        <div class="link-desc">深色版 · 今日聚焦/待办/打卡链/工具箱</div>
+        <div class="link-desc">深色界面 · 今日聚焦/待办/连续打卡/快捷工具箱</div>
       </div>
       <span class="tag tag-local">本地</span>
     </a>
@@ -142,7 +195,7 @@
       <span class="link-icon li-green">📈</span>
       <div class="link-text">
         <div class="link-title">旧版驾驶舱</div>
-        <div class="link-desc">五维财富 · 项目全景 · 统计报表</div>
+        <div class="link-desc">五维财富 · 项目全景 · 历史数据统计</div>
       </div>
       <span class="tag tag-web">网页</span>
     </a>
@@ -156,7 +209,7 @@
       <span class="link-icon li-gold">🔄</span>
       <div class="link-text">
         <div class="link-title">下坠螺旋（警示模型）</div>
-        <div class="link-desc">焦虑→乱抓→踩坑→更焦虑 · 破解：回到主场</div>
+        <div class="link-desc">赚钱焦虑→机会乱抓→踩坑→更焦虑 · 破解方法是回到主场</div>
       </div>
       <span class="tag tag-local">本地</span>
     </a>
@@ -164,7 +217,7 @@
       <span class="link-icon li-gold">✍</span>
       <div class="link-text">
         <div class="link-title">写拍盘飞轮（姜胡说）</div>
-        <div class="link-desc">写是内核 · 拍是杠杆 · 盘是引擎</div>
+        <div class="link-desc">写是内核 · 拍是杠杆 · 盘是引擎 · 持续增值的复利系统</div>
       </div>
       <span class="tag tag-local">本地</span>
     </a>
@@ -172,7 +225,7 @@
       <span class="link-icon li-gold">⚔️</span>
       <div class="link-text">
         <div class="link-title">将军与监军（团队架构）</div>
-        <div class="link-desc">安叔自创 · 战略层强 · 执行层缺搭档</div>
+        <div class="link-desc">安叔自创组织模型 · 战略层强 · 执行层需要找对搭档</div>
       </div>
       <span class="tag tag-local">本地</span>
     </a>
@@ -180,7 +233,7 @@
       <span class="link-icon li-gold">📇</span>
       <div class="link-text">
         <div class="link-title">执行力不是0/1，是3-10</div>
-        <div class="link-desc">大小问题不是判断题 · 从淘汰改反复提醒</div>
+        <div class="link-desc">从淘汰思维转向数值思维 · 学员执行力值30就帮他提到50</div>
       </div>
       <span class="tag tag-local">本地</span>
     </a>
@@ -210,7 +263,7 @@
       <span class="link-icon li-gray">6</span>
       <div class="link-text">
         <div class="link-title">第006篇 · 听话照做</div>
-        <div class="link-desc">先复制再超越 · 用思考代替执行是最大的坑</div>
+        <div class="link-desc">聪明人最容易犯的错 · 用思考代替执行 · 待发布</div>
       </div>
       <span class="tag tag-draft">待发</span>
     </a>
@@ -218,7 +271,7 @@
       <span class="link-icon li-gray">7</span>
       <div class="link-text">
         <div class="link-title">第007篇 · 止损线（草稿）</div>
-        <div class="link-desc">比赚钱更重要的能力，是知道什么时候该停</div>
+        <div class="link-desc">比赚钱更重要的能力，是知道什么时候该停 · 草稿待修</div>
       </div>
       <span class="tag tag-draft">草稿</span>
     </a>
@@ -232,7 +285,7 @@
       <span class="link-icon li-purple">🎙️</span>
       <div class="link-text">
         <div class="link-title">口播素材（3条）</div>
-        <div class="link-desc">执行力/京东对比/三块法 · 待拍摄</div>
+        <div class="link-desc">执行力3-10 / 京东对比 / 三块法体验 · 待拍摄</div>
       </div>
       <span class="tag tag-local">本地</span>
     </a>
@@ -241,16 +294,28 @@
 
 </div>
 
-<div class="footer">安叔 · 资源导航 · 持续更新</div>
+<div class="footer">🤖 by Hermes · 持续更新中</div>
 
 <script>
-const tabs = document.querySelectorAll('.tab-btn');
+// 资源标签页切换
+const tabs = document.querySelectorAll('#tabNav .tab-btn');
 tabs.forEach(t => {
   t.addEventListener('click', function() {
     tabs.forEach(x => x.classList.remove('active'));
     this.classList.add('active');
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+  });
+});
+
+// 待办子标签切换
+const todoBtns = document.querySelectorAll('.todo-btn');
+todoBtns.forEach(b => {
+  b.addEventListener('click', function() {
+    todoBtns.forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+    document.querySelectorAll('.todo-list').forEach(l => l.style.display = 'none');
+    document.getElementById('todo-' + this.dataset.todo).style.display = 'block';
   });
 });
 </script>
