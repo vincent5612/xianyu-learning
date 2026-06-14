@@ -8,14 +8,14 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif; background: #f5f2ee; min-height: 100vh; }
 
-  .header { background: #2d2a24; padding: 20px 16px 0; position: sticky; top: 0; z-index: 50; }
-  .header h1 { font-size: 18px; font-weight: 900; color: #f0ebe4; }
-  .header .sub { font-size: 10px; color: #6a6052; margin-bottom: 10px; }
+  .header { background: #2d2a24; padding: 24px 16px 0; position: sticky; top: 0; z-index: 50; text-align: center; }
+  .header h1 { font-size: 20px; font-weight: 900; color: #f0ebe4; }
+  .header .sub { font-size: 11px; color: #6a6052; margin-bottom: 14px; }
 
-  .tab-nav { display: flex; gap: 0; overflow-x: auto; margin: 0 -16px; padding: 0 12px; }
+  .tab-nav { display: flex; justify-content: center; gap: 4px; overflow-x: auto; padding: 0 12px; }
   .tab-nav::-webkit-scrollbar { display: none; }
-  .tab-btn { flex-shrink: 0; padding: 7px 12px 9px; font-size: 12px; color: #6a6052; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.15s; }
-  .tab-btn.active { color: #d4a574; border-bottom-color: #d4a574; }
+  .tab-btn { flex-shrink: 0; padding: 10px 20px; font-size: 14px; font-weight: 500; color: #6a6052; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.15s; border-radius: 8px 8px 0 0; }
+  .tab-btn.active { color: #d4a574; border-bottom-color: #d4a574; background: rgba(212,165,116,0.06); }
 
   .main { max-width: 600px; margin: 0 auto; padding: 12px 14px 60px; }
 
@@ -23,14 +23,13 @@
   .tab-content.active { display: block; }
 
   .card { background: #fff; border-radius: 10px; margin-bottom: 6px; border: 1px solid #ede6dc; overflow: hidden; }
-  .card-header { padding: 10px 14px; font-size: 11px; font-weight: 500; color: #8a8072; border-bottom: 1px solid #f5f2ee; }
 
-  a.link { display: flex; align-items: center; gap: 10px; padding: 11px 14px; text-decoration: none; border-bottom: 1px solid #f5f2ee; transition: 0.1s; }
+  a.link { display: flex; align-items: center; gap: 12px; padding: 14px 16px; text-decoration: none; border-bottom: 1px solid #f5f2ee; transition: 0.1s; }
   a.link:last-child { border-bottom: none; }
   a.link:hover { background: #faf6f0; }
   a.link:active { background: #f5f2ee; }
 
-  .link-icon { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+  .link-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
   .li-orange { background: #fef5e7; }
   .li-blue { background: #e8f0fe; }
   .li-green { background: #e8f5e9; }
@@ -38,10 +37,11 @@
   .li-gray { background: #f5f2ee; }
   .li-purple { background: #f3e8ff; }
 
-  .link-name { font-size: 13px; color: #2d2a24; flex: 1; font-weight: 500; }
-  .link-desc { font-size: 10px; color: #b0a898; }
+  .link-text { flex: 1; min-width: 0; }
+  .link-title { font-size: 14px; font-weight: 500; color: #2d2a24; }
+  .link-desc { font-size: 11px; color: #8a8072; margin-top: 2px; line-height: 1.3; }
 
-  .tag { font-size: 9px; padding: 1px 6px; border-radius: 3px; flex-shrink: 0; }
+  .tag { font-size: 9px; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; }
   .tag-web { background: #e8f0fe; color: #3b82f6; }
   .tag-local { background: #ede6dc; color: #6a6052; }
   .tag-done { background: #e8f5e9; color: #27ae60; }
@@ -56,12 +56,12 @@
   <h1>安叔 · 资源导航</h1>
   <div class="sub">点击标签分类 · 快速定位资源</div>
   <div class="tab-nav" id="tabNav">
-    <span class="tab-btn active" data-tab="xiuxian">闲鱼</span>
-    <span class="tab-btn" data-tab="rpo">RPO</span>
-    <span class="tab-btn" data-tab="cockpit">驾驶舱</span>
-    <span class="tab-btn" data-tab="knowledge">知识</span>
-    <span class="tab-btn" data-tab="articles">公众号</span>
-    <span class="tab-btn" data-tab="tools">工具</span>
+    <span class="tab-btn active" data-tab="xiuxian">📦 闲鱼</span>
+    <span class="tab-btn" data-tab="rpo">🔵 RPO</span>
+    <span class="tab-btn" data-tab="cockpit">🚀 驾驶舱</span>
+    <span class="tab-btn" data-tab="knowledge">🧠 知识</span>
+    <span class="tab-btn" data-tab="articles">📰 公众号</span>
+    <span class="tab-btn" data-tab="tools">🔧 工具</span>
   </div>
 </div>
 
@@ -72,17 +72,26 @@
   <div class="card">
     <a class="link" href="https://vincent5612.github.io/xianyu-learning/" target="_blank">
       <span class="link-icon li-orange">📖</span>
-      <span class="link-name">闲鱼运营学习手册</span>
+      <div class="link-text">
+        <div class="link-title">闲鱼运营学习手册</div>
+        <div class="link-desc">完整培训手册 · 5天学习计划 · 核心公式</div>
+      </div>
       <span class="tag tag-web">网页</span>
     </a>
     <a class="link" href="https://vincent5612.github.io/xianyu-learning/exam-final.html" target="_blank">
       <span class="link-icon li-orange">📝</span>
-      <span class="link-name">闲鱼考试系统</span>
+      <div class="link-text">
+        <div class="link-title">闲鱼考试系统</div>
+        <div class="link-desc">在线考试 · 自动判分 · 及格70分</div>
+      </div>
       <span class="tag tag-web">网页</span>
     </a>
     <a class="link" href="https://vincent5612.github.io/xianyu-learning/rank.html" target="_blank">
       <span class="link-icon li-orange">🏆</span>
-      <span class="link-name">闲鱼考试排名</span>
+      <div class="link-text">
+        <div class="link-title">闲鱼考试排名</div>
+        <div class="link-desc">云端排名 · 所有学员成绩一览</div>
+      </div>
       <span class="tag tag-web">网页</span>
     </a>
   </div>
@@ -93,12 +102,18 @@
   <div class="card">
     <a class="link" href="https://vincent5612.github.io/xianyu-exam/rpo-sop.html" target="_blank">
       <span class="link-icon li-blue">📋</span>
-      <span class="link-name">RPO SOP 操作手册</span>
+      <div class="link-text">
+        <div class="link-title">RPO SOP 操作手册</div>
+        <div class="link-desc">完整招聘SOP流程 · 标准化操作指南</div>
+      </div>
       <span class="tag tag-web">网页</span>
     </a>
     <a class="link" href="https://vincent5612.github.io/xianyu-learning/jd-recruit.html" target="_blank">
       <span class="link-icon li-blue">📄</span>
-      <span class="link-name">京东招商项目说明页</span>
+      <div class="link-text">
+        <div class="link-title">京东招商项目说明页</div>
+        <div class="link-desc">京东店群招商 · 三档分成 · 收益模型</div>
+      </div>
       <span class="tag tag-web">网页</span>
     </a>
   </div>
@@ -109,17 +124,26 @@
   <div class="card">
     <a class="link" onclick="window.open('file:///Users/apple/Desktop/安叔-产物总览台.html')">
       <span class="link-icon li-green">📊</span>
-      <span class="link-name">产物总览台 ✅ 主用</span>
+      <div class="link-text">
+        <div class="link-title">产物总览台 ✅ 主用</div>
+        <div class="link-desc">10个标签卡 · 长期资产/项目/待办/内容管线</div>
+      </div>
       <span class="tag tag-local">本地</span>
     </a>
     <a class="link" onclick="window.open('file:///Users/apple/Desktop/安叔-今日指挥中心.html')">
       <span class="link-icon li-green">🎯</span>
-      <span class="link-name">今日指挥中心</span>
+      <div class="link-text">
+        <div class="link-title">今日指挥中心</div>
+        <div class="link-desc">深色版 · 今日聚焦/待办/打卡链/工具箱</div>
+      </div>
       <span class="tag tag-local">本地</span>
     </a>
     <a class="link" href="https://vincent5612.github.io/xianyu-learning/dashboard.html" target="_blank">
       <span class="link-icon li-green">📈</span>
-      <span class="link-name">旧版驾驶舱</span>
+      <div class="link-text">
+        <div class="link-title">旧版驾驶舱</div>
+        <div class="link-desc">五维财富 · 项目全景 · 统计报表</div>
+      </div>
       <span class="tag tag-web">网页</span>
     </a>
   </div>
@@ -128,38 +152,36 @@
 <!-- ===== 知识 ===== -->
 <div class="tab-content" id="tab-knowledge">
   <div class="card">
-    <div class="card-header">🧠 Kindle知识卡片</div>
     <a class="link" onclick="window.open('file:///Users/apple/Desktop/知识卡片-下坠螺旋.html')">
       <span class="link-icon li-gold">🔄</span>
-      <span class="link-name">下坠螺旋（警示模型）</span>
+      <div class="link-text">
+        <div class="link-title">下坠螺旋（警示模型）</div>
+        <div class="link-desc">焦虑→乱抓→踩坑→更焦虑 · 破解：回到主场</div>
+      </div>
       <span class="tag tag-local">本地</span>
     </a>
     <a class="link" onclick="window.open('file:///Users/apple/Desktop/知识卡片-写拍盘飞轮.html')">
       <span class="link-icon li-gold">✍</span>
-      <span class="link-name">写拍盘飞轮（姜胡说）</span>
+      <div class="link-text">
+        <div class="link-title">写拍盘飞轮（姜胡说）</div>
+        <div class="link-desc">写是内核 · 拍是杠杆 · 盘是引擎</div>
+      </div>
       <span class="tag tag-local">本地</span>
     </a>
     <a class="link" onclick="window.open('file:///Users/apple/Desktop/知识卡片-将军与监军.html')">
       <span class="link-icon li-gold">⚔️</span>
-      <span class="link-name">将军与监军（团队架构）</span>
+      <div class="link-text">
+        <div class="link-title">将军与监军（团队架构）</div>
+        <div class="link-desc">安叔自创 · 战略层强 · 执行层缺搭档</div>
+      </div>
       <span class="tag tag-local">本地</span>
     </a>
     <a class="link" onclick="window.open('file:///Users/apple/Desktop/知识卡片-执行力不是01.html')">
       <span class="link-icon li-gold">📇</span>
-      <span class="link-name">执行力不是0/1，是3-10</span>
-      <span class="tag tag-local">本地</span>
-    </a>
-  </div>
-  <div class="card">
-    <div class="card-header">📚 知识库文档</div>
-    <a class="link" onclick="window.open('file:///Users/apple/Documents/Obsidian%20Vault/知识卡片/安叔创作逻辑-朋友圈底层思维模型.md')">
-      <span class="link-icon li-gold">🧠</span>
-      <span class="link-name">安叔创作逻辑（5模型+9卡）</span>
-      <span class="tag tag-local">本地</span>
-    </a>
-    <a class="link" onclick="window.open('file:///Users/apple/Documents/Obsidian%20Vault/知识卡片/朋友圈文案全集-2026.6.12.md')">
-      <span class="link-icon li-gold">📝</span>
-      <span class="link-name">朋友圈文案全集（37条）</span>
+      <div class="link-text">
+        <div class="link-title">执行力不是0/1，是3-10</div>
+        <div class="link-desc">大小问题不是判断题 · 从淘汰改反复提醒</div>
+      </div>
       <span class="tag tag-local">本地</span>
     </a>
   </div>
@@ -168,25 +190,36 @@
 <!-- ===== 公众号 ===== -->
 <div class="tab-content" id="tab-articles">
   <div class="card">
-    <div class="card-header">📰 副业实验室 · 伯乐说创业</div>
     <a class="link" onclick="window.open('file:///Users/apple/Documents/Obsidian%20Vault/伯乐说创业/副业实验室-第004篇-副业三问.md')">
       <span class="link-icon li-gray">4</span>
-      <span class="link-name">第004篇 · 副业三问</span>
+      <div class="link-text">
+        <div class="link-title">第004篇 · 副业三问</div>
+        <div class="link-desc">三个问题筛掉80%不值得做的项目 · 已发布</div>
+      </div>
       <span class="tag tag-done">已发</span>
     </a>
     <a class="link" onclick="window.open('file:///Users/apple/Documents/Obsidian%20Vault/伯乐说创业/副业实验室-第005篇-精力分配6-3-1.md')">
       <span class="link-icon li-gray">5</span>
-      <span class="link-name">第005篇 · 精力分配6-3-1</span>
+      <div class="link-text">
+        <div class="link-title">第005篇 · 精力分配6-3-1</div>
+        <div class="link-desc">同时跑四条线的时间账本 · 已发布</div>
+      </div>
       <span class="tag tag-done">已发</span>
     </a>
     <a class="link" onclick="window.open('file:///Users/apple/Documents/Obsidian%20Vault/伯乐说创业/副业实验室-第006篇-听话照做.md')">
       <span class="link-icon li-gray">6</span>
-      <span class="link-name">第006篇 · 听话照做</span>
+      <div class="link-text">
+        <div class="link-title">第006篇 · 听话照做</div>
+        <div class="link-desc">先复制再超越 · 用思考代替执行是最大的坑</div>
+      </div>
       <span class="tag tag-draft">待发</span>
     </a>
     <a class="link" onclick="window.open('file:///Users/apple/Desktop/副业实验室-第007篇-止损线.md')">
       <span class="link-icon li-gray">7</span>
-      <span class="link-name">第007篇 · 止损线（草稿）</span>
+      <div class="link-text">
+        <div class="link-title">第007篇 · 止损线（草稿）</div>
+        <div class="link-desc">比赚钱更重要的能力，是知道什么时候该停</div>
+      </div>
       <span class="tag tag-draft">草稿</span>
     </a>
   </div>
@@ -197,7 +230,10 @@
   <div class="card">
     <a class="link" onclick="window.open('file:///Users/apple/Desktop/口播素材-2026-06-12.md')">
       <span class="link-icon li-purple">🎙️</span>
-      <span class="link-name">口播素材（3条）</span>
+      <div class="link-text">
+        <div class="link-title">口播素材（3条）</div>
+        <div class="link-desc">执行力/京东对比/三块法 · 待拍摄</div>
+      </div>
       <span class="tag tag-local">本地</span>
     </a>
   </div>
