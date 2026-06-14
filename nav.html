@@ -14,11 +14,11 @@
 
   .tab-nav { display: flex; justify-content: center; gap: 6px; overflow-x: auto; padding: 0 12px; }
   .tab-nav::-webkit-scrollbar { display: none; }
-  .tab-btn { flex-shrink: 0; padding: 12px 24px; font-size: 15px; font-weight: 600; color: #6a6052; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.15s; border-radius: 8px 8px 0 0; }
+  .tab-btn { flex-shrink: 0; padding: 12px 20px; font-size: 15px; font-weight: 600; color: #6a6052; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.15s; border-radius: 8px 8px 0 0; }
   .tab-btn.active { color: #d4a574; border-bottom-color: #d4a574; background: rgba(212,165,116,0.06); }
 
-  .main { max-width: 600px; margin: 0 auto; padding: 12px 14px 60px; }
-  .tab-content { display: none; }
+  .main { max-width: 100%; margin: 0 auto; padding: 12px 0 60px; }
+  .tab-content { display: none; padding: 0 12px; }
   .tab-content.active { display: block; }
 
   .card { background: #fff; border-radius: 10px; margin-bottom: 8px; border: 1px solid #ede6dc; overflow: hidden; }
@@ -61,9 +61,14 @@
   .todo-text.done { text-decoration: line-through; color: #b0a898; }
   .todo-action { font-size: 10px; color: #8a8072; }
 
-  @media (max-width: 420px) {
+  @media (max-width: 480px) {
     .header h1 { font-size: 18px; }
-    .tab-btn { font-size: 13px; padding: 10px 14px; }
+    .tab-btn { font-size: 13px; padding: 10px 12px; }
+    .link-title { font-size: 13px; }
+    .link-desc { font-size: 11px; }
+    .link-icon { width: 30px; height: 30px; font-size: 15px; }
+    .todo-btn { font-size: 11px; }
+    .todo-text { font-size: 12px; }
   }
 </style>
 </head>
