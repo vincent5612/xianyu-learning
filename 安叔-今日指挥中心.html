@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>安叔 · 今日指挥中心</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans SC', -apple-system, sans-serif; background: #1a1816; color: #e8e0d5; min-height: 100vh; }
+
+  /* 顶部状态栏 */
+  .status-bar { background: #0d0c0a; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2d2a24; }
+  .status-left { font-size: 11px; color: #6a6052; }
+  .status-right { display: flex; gap: 12px; align-items: center; }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .status-dot.green { background: #5cb85c; }
+  .status-dot.yellow { background: #f0ad4e; }
+  .status-dot.red { background: #e74c3c; }
+  .status-label { font-size: 10px; color: #8a8072; }
+
+  /* 主容器 */
+  .main { max-width: 480px; margin: 0 auto; padding: 16px; }
+
+  /* 顶部问候 */
+  .greeting { margin-bottom: 16px; }
+  .greeting h1 { font-size: 24px; font-weight: 900; color: #f0ebe4; letter-spacing: -0.5px; }
+  .greeting .sub { font-size: 12px; color: #6a6052; margin-top: 2px; }
+  .greeting .focus-line { font-size: 13px; color: #d4a574; margin-top: 8px; font-weight: 500; border-left: 2px solid #d4a574; padding-left: 10px; }
+
+  /* 今日三件事 */
+  .trifecta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 16px; }
+  .tri-card { background: #2d2a24; border-radius: 10px; padding: 12px 8px; text-align: center; border: 1px solid #3c3a37; }
+  .tri-card .icon { font-size: 20px; margin-bottom: 4px; }
+  .tri-card .label { font-size: 10px; color: #6a6052; }
+  .tri-card .status { font-size: 9px; margin-top: 4px; padding: 2px 6px; border-radius: 4px; display: inline-block; }
+  .tri-card .status.done { background: rgba(92,184,92,0.15); color: #5cb85c; }
+  .tri-card .status.pending { background: rgba(240,173,78,0.15); color: #f0ad4e; }
+  .tri-card .status.miss { background: rgba(231,76,60,0.15); color: #e74c3c; }
+
+  /* 现在该做什么 */
+  .now-section { background: linear-gradient(135deg, #2d2a24 0%, #3c3a37 100%); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid #4a4035; }
+  .now-section .label { font-size: 10px; color: #8a8072; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .now-section .action { font-size: 16px; font-weight: 700; color: #f0ebe4; }
+  .now-section .action .highlight { color: #d4a574; }
+  .now-section .detail { font-size: 12px; color: #a09888; margin-top: 6px; line-height: 1.5; }
+  .now-section .timer { font-size: 10px; color: #6a6052; margin-top: 8px; }
+
+  /* 待办卡片 */
+  .section-label { font-size: 11px; color: #6a6052; letter-spacing: 1px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .section-label .count { background: #2d2a24; padding: 0 6px; border-radius: 4px; font-size: 10px; color: #8a8072; }
+  .todo-list { background: #0d0c0a; border-radius: 10px; padding: 8px; margin-bottom: 12px; }
+  .todo-item { display: flex; align-items: center; gap: 10px; padding: 8px 8px; border-bottom: 1px solid #1a1816; cursor: pointer; }
+  .todo-item:last-child { border-bottom: none; }
+  .todo-check { width: 18px; height: 18px; border: 2px solid #3c3a37; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; color: transparent; transition: all 0.2s; }
+  .todo-check.done { background: #5cb85c; border-color: #5cb85c; color: #fff; }
+  .todo-text { font-size: 13px; color: #e8e0d5; flex: 1; }
+  .todo-text.done { text-decoration: line-through; color: #4a4035; }
+  .todo-priority { font-size: 9px; padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+  .todo-priority.p0 { background: rgba(231,76,60,0.2); color: #e74c3c; }
+  .todo-priority.p1 { background: rgba(240,173,78,0.15); color: #f0ad4e; }
+  .todo-priority.p2 { background: rgba(92,184,92,0.1); color: #6a6052; }
+
+  /* 项目状态行 */
+  .project-strip { display: flex; gap: 4px; margin-bottom: 12px; flex-wrap: wrap; }
+  .project-chip { display: flex; align-items: center; gap: 6px; background: #0d0c0a; border-radius: 20px; padding: 6px 12px; font-size: 11px; color: #a09888; border: 1px solid #2d2a24; }
+  .project-chip .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+  /* 洞察/金句滚动 */
+  .insight-bar { background: #0d0c0a; border-left: 2px solid #d4a574; padding: 10px 14px; margin-bottom: 12px; border-radius: 0 8px 8px 0; }
+  .insight-bar p { font-size: 12px; color: #a09888; line-height: 1.5; font-style: italic; }
+  .insight-bar .source { font-size: 10px; color: #6a6052; margin-top: 4px; }
+
+  /* 快捷入口 */
+  .quick-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 12px; }
+  .quick-btn { background: #2d2a24; border: 1px solid #3c3a37; border-radius: 8px; padding: 12px; text-align: center; cursor: pointer; }
+  .quick-btn .emoji { font-size: 16px; }
+  .quick-btn .name { font-size: 11px; color: #a09888; margin-top: 2px; }
+  .quick-btn:hover { background: #3c3a37; }
+
+  /* 连续打卡 */
+  .streak { display: flex; gap: 4px; margin-bottom: 12px; }
+  .streak-day { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; border: 1px solid #2d2a24; background: #0d0c0a; color: #4a4035; }
+  .streak-day.done { background: #2d2a24; border-color: #d4a574; color: #d4a574; }
+  .streak-day.today { border-color: #d4a574; color: #f0ebe4; font-weight: 700; }
+  .streak-label { font-size: 10px; color: #6a6052; margin-left: 8px; display: flex; align-items: center; }
+
+  @media (max-width: 420px) {
+    .trifecta { gap: 4px; }
+    .tri-card { padding: 8px 4px; }
+    .tri-card .icon { font-size: 16px; }
+    .greeting h1 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 状态栏 -->
+<div class="status-bar">
+  <div class="status-left">2026.06.14 周日</div>
+  <div class="status-right">
+    <span><span class="status-dot green"></span> <span class="status-label">写</span></span>
+    <span><span class="status-dot yellow"></span> <span class="status-label">拍</span></span>
+    <span><span class="status-dot green"></span> <span class="status-label">盘</span></span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- 问候 + 今日聚焦 -->
+  <div class="greeting">
+    <h1>早上好，安叔</h1>
+    <div class="sub">写→拍→盘 · 第2天</div>
+    <div class="focus-line">今天聚焦：<strong>把执行力3-10这个洞见发出去</strong>——要么一条朋友圈，要么一条口播</div>
+  </div>
+
+  <!-- 三环状态 -->
+  <div class="trifecta">
+    <div class="tri-card">
+      <div class="icon">✍</div>
+      <div class="label">写</div>
+      <div class="status done">✅ 日报</div>
+    </div>
+    <div class="tri-card">
+      <div class="icon">🎥</div>
+      <div class="label">拍</div>
+      <div class="status pending">⏳ 待拍</div>
+    </div>
+    <div class="tri-card">
+      <div class="icon">🔄</div>
+      <div class="label">盘</div>
+      <div class="status done">✅ 已复盘</div>
+    </div>
+  </div>
+
+  <!-- 现在该做什么 -->
+  <div class="now-section">
+    <div class="label">▶ 现在该做什么</div>
+    <div class="action">发一条朋友圈 → <span class="highlight">京东新规让利</span></div>
+    <div class="detail">
+      重点突出：首月免费用 + 学员赚钱我才赚 + 三档阶梯分成<br>
+      你已经有了文案库，选一条改一下就能发
+    </div>
+    <div class="timer">预计耗时：5分钟 · 优先级：P0</div>
+  </div>
+
+  <!-- 今日洞察 -->
+  <div class="insight-bar">
+    <p>"执行力不是做不做的判断题，是做到什么程度的大小题"</p>
+    <div class="source">— 你昨天三块法练习的发现 · 已经存进知识卡片了</div>
+  </div>
+
+  <!-- 今日待办 -->
+  <div class="section-label">📋 今天要做的<span class="count">4项</span></div>
+  <div class="todo-list">
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-check">✓</div>
+      <div class="todo-text done">完成京东新规讲解（工作群）</div>
+      <span class="todo-priority p0">今天</span>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-check"></div>
+      <div class="todo-text">发朋友圈 · 京东新规让利 + 学员赚钱逻辑</div>
+      <span class="todo-priority p0">今天</span>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-check"></div>
+      <div class="todo-text">拍一条口播 · 执行力3-10 / 或京东对比 / 或三块法体验</div>
+      <span class="todo-priority p1">本周</span>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-check"></div>
+      <div class="todo-text">闲鱼合同 · 修改后发汤总确认</div>
+      <span class="todo-priority p1">本周</span>
+    </div>
+  </div>
+
+  <!-- 项目状态 -->
+  <div class="section-label">📌 项目状态</div>
+  <div class="project-strip">
+    <span class="project-chip"><span class="dot" style="background:#5cb85c;"></span>京东招商 · 9人</span>
+    <span class="project-chip"><span class="dot" style="background:#5cb85c;"></span>公众号 · 3篇</span>
+    <span class="project-chip"><span class="dot" style="background:#f0ad4e;"></span>口播 · 待拍摄</span>
+    <span class="project-chip"><span class="dot" style="background:#f0ad4e;"></span>闲鱼合同 · 待签</span>
+    <span class="project-chip"><span class="dot" style="background:#6a6052;"></span>RPO · 暂停</span>
+  </div>
+
+  <!-- 连续打卡 -->
+  <div class="section-label">🔥 写拍盘 · 连续打卡</div>
+  <div class="streak">
+    <div class="streak-day done">9</div>
+    <div class="streak-day done">10</div>
+    <div class="streak-day done">11</div>
+    <div class="streak-day done">12</div>
+    <div class="streak-day today">13</div>
+    <div class="streak-day">14</div>
+    <div class="streak-day">15</div>
+    <span class="streak-label">连续 5 天复盘</span>
+  </div>
+
+  <!-- 知识/工具入口 -->
+  <div class="section-label">🧰 工具箱</div>
+  <div class="quick-grid">
+    <div class="quick-btn" onclick="window.open('https://vincent5612.github.io/xianyu-learning/dashboard.html','_blank')">
+      <div class="emoji">📊</div>
+      <div class="name">旧版驾驶舱</div>
+    </div>
+    <div class="quick-btn" onclick="alert('知识卡片库 · 21张\n执行力3-10 / 写拍盘飞轮 / 将军与监军\n乘法思维 / 内容即筛选 / 长期vs清零\n门禁四问 / 三块法 / 灵感炼金炉')">
+      <div class="emoji">🧠</div>
+      <div class="name">知识卡片</div>
+    </div>
+    <div class="quick-btn" onclick="alert('口播素材待拍\n① 执行力3-10（昨天三块法发现）\n② 京东 vs 其他平台对比\n③ 三块法体验分享')">
+      <div class="emoji">🎥</div>
+      <div class="name">口播素材</div>
+    </div>
+    <div class="quick-btn" onclick="alert('三块法：说"块一"开始\n灵感炼金炉：说"帮我炼一下XXX"\n知识卡片：说"帮我铸卡"')">
+      <div class="emoji">⚡</div>
+      <div class="name">呼叫Hermes</div>
+    </div>
+  </div>
+
+  <!-- 底部状态 -->
+  <div style="text-align:center; padding: 20px 0 40px; font-size: 10px; color: #4a4035;">
+    自动更新 · 每天打开，知道今天该干什么
+  </div>
+
+</div>
+
+<script>
+function toggleTodo(el) {
+  const check = el.querySelector('.todo-check');
+  const text = el.querySelector('.todo-text');
+  check.classList.toggle('done');
+  check.textContent = check.classList.contains('done') ? '✓' : '';
+  text.classList.toggle('done');
+}
+</script>
+</body>
+</html>
