@@ -259,7 +259,7 @@ function submitExam(){
 async function submitRank(result){
   // 1. 读取云端现有数据
   try{
-    let resp=await fetch('https://jsonblob.com/api/jsonBlob/019eb04d-18e0-7fdf-936b-619ae2b7cd57?t='+Date.now());
+    let resp=await fetch('https://jsonblob.com/api/jsonBlob/019ef75b-eb15-7146-b042-3c768e7c4849?t='+Date.now());
     let data=await resp.json();
     let list=data.results||[];
     // 去重：已有同名学生保留最高分
@@ -271,12 +271,19 @@ async function submitRank(result){
     }
     list.sort((a,b)=>b.pct-a.pct);
     // 2. 写回云端
-    await fetch('https://jsonblob.com/api/jsonBlob/019eb04d-18e0-7fdf-936b-619ae2b7cd57',{
+    await fetch('https://jsonblob.com/api/jsonBlob/019ef75b-eb15-7146-b042-3c768e7c4849',{
       method:'PUT',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({results:list})
     });
   }catch(e){
+    // 尝试重建blob
+    try{
+      fetch('https://jsonblob.com/api/jsonBlob',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({results:[result]})}).then(r=>{
+        let id=r.headers.get('X-Jsonblob-Id');
+        if(id) console.log('新blob创建成功:',id);
+      });
+    }catch(e2){}
     console.log('云端同步失败');
   }
 }
@@ -284,7 +291,7 @@ async function submitRank(result){
 async function loadRank(){
   document.getElementById('rankList').innerHTML='<p style="color:#94a3b8;text-align:center">加载中...</p>';
   try{
-    let resp=await fetch('https://jsonblob.com/api/jsonBlob/019eb04d-18e0-7fdf-936b-619ae2b7cd57?t='+Date.now());
+    let resp=await fetch('https://jsonblob.com/api/jsonBlob/019ef75b-eb15-7146-b042-3c768e7c4849?t='+Date.now());
     let data=await resp.json();
     let list=data.results||[];
     renderRankList(list);
