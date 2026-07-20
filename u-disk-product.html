@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>荣盈AI智算钥匙</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#fff;font-family:'Inter','Noto Sans SC',sans-serif;overflow:hidden;user-select:none}
+.deck{width:100vw;height:100vh;position:relative;overflow:hidden}
+
+/* Slide system */
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:80px 100px;opacity:0;pointer-events:none;transition:opacity .35s,transform .35s;transform:translateX(30px)}
+.slide.on{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+
+/* Colors */
+:root{--accent:#0070f3;--accent2:#7928ca;--text1:#0b0d12;--text2:#4a5270;--text3:#8b93a8;--bgsoft:#fafbfc;--border:rgba(20,30,50,.1)}
+.bg-dark{background:linear-gradient(135deg,#1e2761,#283a6e)}
+
+/* Typography */
+h1{font-size:54px;font-weight:800;line-height:1.05;margin-bottom:14px;letter-spacing:-.03em}
+h1 .g{background:linear-gradient(135deg,#0070f3,#7928ca);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+h2{font-size:36px;font-weight:700;line-height:1.12;margin-bottom:10px;letter-spacing:-.02em}
+h2 .g{background:linear-gradient(135deg,#0070f3,#7928ca);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+h3{font-size:18px;font-weight:600;margin-bottom:6px}
+.kt{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.ld{font-size:17px;color:var(--text2);max-width:600px;line-height:1.55;margin-bottom:20px}
+.dim{color:var(--text3);font-size:13px}
+
+/* Cards */
+.card{border:1px solid var(--border);border-radius:12px;padding:20px 22px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.card .ic{font-size:24px;margin-bottom:6px}
+.card h4{font-size:15px;color:var(--text1);margin-bottom:4px}
+.card p{font-size:12px;color:var(--text2);line-height:1.6}
+
+.grid{display:grid;gap:16px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.roles{gap:12px;margin-top:8px}
+.role{text-align:center;padding:14px 10px;background:#fafbfc;border:1px solid var(--border);border-radius:10px}
+.role .ri{font-size:26px;margin-bottom:4px}
+.role .rn{font-size:14px;font-weight:600;color:var(--text1)}
+.role .rs{font-size:10px;color:var(--text3);margin-top:4px;line-height:1.5}
+
+.flow{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px;flex-wrap:wrap}
+.fs{text-align:center;width:140px;padding:12px 8px;background:#fafbfc;border:1px solid var(--border);border-radius:10px}
+.fs .fn{font-size:9px;font-weight:700;color:var(--accent);letter-spacing:.08em}
+.fs .fi{font-size:20px;margin:4px 0}
+.fs .ft{font-size:13px;font-weight:600;color:var(--text1)}
+.fs .fd{font-size:9px;color:var(--text3);margin-top:2px}
+.fa{color:var(--accent);font-size:14px;opacity:.4}
+
+.spec{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fafbfc;border:1px solid var(--border);border-radius:8px}
+.spec .pi{font-size:16px}
+.spec .pt{font-size:12px;color:var(--text2)}
+.spec .pt b{color:var(--text1)}
+
+/* Navigation bar */
+.navbar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:20px;padding:6px 14px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.navbar .dot{width:8px;height:8px;border-radius:50%;background:#d0d5dd;cursor:pointer;transition:all .2s}
+.navbar .dot.on{background:var(--accent);width:10px;height:10px}
+.navbar .navbtn{background:none;border:none;font-size:14px;cursor:pointer;color:var(--text2);padding:2px 6px;border-radius:4px}
+.navbar .navbtn:hover{background:#f0f0f0}
+.navbar .num{font-size:11px;color:var(--text3);margin-left:2px}
+
+/* Click zones */
+.zone{position:fixed;top:0;z-index:40;width:30%;height:100%;cursor:pointer}
+.zone-l{left:0}
+.zone-r{right:0}
+.zone:hover::after{content:'';position:absolute;top:50%;transform:translateY(-50%);font-size:32px;color:rgba(0,112,243,.1)}
+.zone-l:hover{background:linear-gradient(to right,rgba(0,112,243,.03),transparent)}
+.zone-r:hover{background:linear-gradient(to left,rgba(0,112,243,.03),transparent)}
+
+/* Progress */
+.pbar{position:fixed;top:0;left:0;right:0;height:3px;z-index:60}
+.pbar span{display:block;height:100%;background:linear-gradient(90deg,#0070f3,#7928ca);transition:width .3s}
+
+/* Dark slide overrides */
+.dark h1,.dark h2{color:#fff}
+.dark .ld{color:#cadcfc}
+.dark .kt{color:#94a3b8}
+.dark .card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+.dark .card h4{color:#fff}
+.dark .card p{color:#94a3b8}
+.dark .role{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+.dark .role .rn{color:#fff}
+.dark .fs{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+.dark .fs .ft{color:#fff}
+.dark .spec{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+.dark .spec .pt{color:#94a3b8}
+.dark .spec .pt b{color:#fff}
+
+@media(max-width:768px){
+.slide{padding:24px 16px}
+h1{font-size:28px}h2{font-size:20px}.ld{font-size:14px}
+.g2,.g3{grid-template-columns:1fr}.flow{flex-direction:column}.fa{transform:rotate(90deg)}
+}
+</style>
+</head>
+<body>
+
+<div class="deck">
+<div class="pbar"><span id="pbar"></span></div>
+
+<!-- Slide 1: Cover (dark) -->
+<div class="slide on bg-dark dark" style="justify-content:center;align-items:center;text-align:center">
+<div style="max-width:600px">
+<div class="kt" style="margin-bottom:10px">荣盈互动 · 2026</div>
+<h1 style="font-size:52px">荣盈AI<br><span class="g">智算钥匙</span></h1>
+<p class="ld" style="margin:12px auto">不是又一个AI客户端<br>是第一个让你觉得「好玩」的AI伙伴</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px">
+<span style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:11px;color:#cadcfc">🎮 游戏化交互</span>
+<span style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:11px;color:#cadcfc">🔌 即插即用</span>
+<span style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:11px;color:#cadcfc">🧠 多模型中枢</span>
+<span style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:11px;color:#cadcfc">🎯 身份适配</span>
+</div>
+</div>
+</div>
+
+<!-- Slide 2: 产品定位 -->
+<div class="slide" style="background:#fafbfc">
+<div class="kt">产品定位</div>
+<h2>游戏化<span class="g">AI伙伴</span></h2>
+<p class="ld">以互动引导降低门槛，以游戏机制提升留存——核心差异化</p>
+<div class="grid g2" style="margin-top:4px">
+<div class="card"><div class="ic">🎮</div><h4>游戏化交互</h4><p>身份选择仪式→新手村引导→等级成长，每一步都有反馈和成就感</p></div>
+<div class="card"><div class="ic">🎯</div><h4>身份动态引擎</h4><p>6类客群身份选择，系统自动匹配最适合的技能组合和话术风格</p></div>
+<div class="card"><div class="ic">🔌</div><h4>即插即用</h4><p>实体U盘预装核心系统，插入自动弹出AI界面，开箱即用</p></div>
+<div class="card"><div class="ic">🧠</div><h4>多模型中枢</h4><p>聚合DeepSeek/通义/GPT/Claude等主流模型，按任务智能路由</p></div>
+</div>
+</div>
+
+<!-- Slide 3: 为什么选我们 -->
+<div class="slide bg-dark dark">
+<div class="kt">客户价值</div>
+<h2>为什么选择<span class="g">荣盈AI智算钥匙</span></h2>
+<p class="ld">不是买一个工具，是给你的工作方式升个级</p>
+<div class="grid g2" style="gap:14px;margin-top:8px">
+<div class="card" style="display:flex;align-items:flex-start;gap:14px;padding:18px 20px">
+<div style="font-size:24px;flex-shrink:0;margin-top:2px">⏱️</div>
+<div><h4 style="color:#fff;font-size:15px;margin-bottom:3px">省时间——不用学，插上就会</h4><p style="color:#94a3b8;font-size:12px">不需要配置环境、不用学提示词。u盘一插，AI自动弹出。新手村引导5步上手，30分钟就能用起来。</p></div>
+</div>
+<div class="card" style="display:flex;align-items:flex-start;gap:14px;padding:18px 20px">
+<div style="font-size:24px;flex-shrink:0;margin-top:2px">🧠</div>
+<div><h4 style="color:#fff;font-size:15px;margin-bottom:3px">降门槛——小白也能用AI做实事</h4><p style="color:#94a3b8;font-size:12px">6种身份自动匹配技能。你是自媒体、宝妈还是电商运营？选好身份，系统帮你配好最合适的AI能力。</p></div>
+</div>
+<div class="card" style="display:flex;align-items:flex-start;gap:14px;padding:18px 20px">
+<div style="font-size:24px;flex-shrink:0;margin-top:2px">💰</div>
+<div><h4 style="color:#fff;font-size:15px;margin-bottom:3px">省钱——一个U盘，全家桶</h4><p style="color:#94a3b8;font-size:12px">聚合DeepSeek/通义/GPT/Claude等多模型，按任务自动匹配最优模型。不用每个AI都单独付费。</p></div>
+</div>
+<div class="card" style="display:flex;align-items:flex-start;gap:14px;padding:18px 20px">
+<div style="font-size:24px;flex-shrink:0;margin-top:2px">🎮</div>
+<div><h4 style="color:#fff;font-size:15px;margin-bottom:3px">好玩——不是工具，是AI伙伴</h4><p style="color:#94a3b8;font-size:12px">游戏化交互设计，有等级、有积分、有成就感。用AI不再是枯燥的工作，而是一场冒险。</p></div>
+</div>
+<div class="card" style="display:flex;align-items:flex-start;gap:14px;padding:18px 20px">
+<div style="font-size:24px;flex-shrink:0;margin-top:2px">🔒</div>
+<div><h4 style="color:#fff;font-size:15px;margin-bottom:3px">安全——硬件级加密，数据你掌控</h4><p style="color:#94a3b8;font-size:12px">U盘硬件绑定+License认证，对话数据本地处理为主。不是云端黑盒，你的数据你做主。</p></div>
+</div>
+<div class="card" style="display:flex;align-items:flex-start;gap:14px;padding:18px 20px">
+<div style="font-size:24px;flex-shrink:0;margin-top:2px">🔄</div>
+<div><h4 style="color:#fff;font-size:15px;margin-bottom:3px">持续进化——越用越聪明，越用越值钱</h4><p style="color:#94a3b8;font-size:12px">积分体系+成长系统，使用越多等级越高。知识库接入（后期），你的专属AI越用越懂你。</p></div>
+</div>
+</div>
+</div>
+
+<!-- Slide 4: 6种身份 -->
+<div class="slide">
+<div class="kt">6种身份 · 6套方案</div>
+<h2>选好身份，<span class="g">AI自动匹配</span></h2>
+<p class="ld">每类客群都有专属技能组合</p>
+<div class="grid g3 roles">
+<div class="role"><div class="ri">🧑‍💻</div><div class="rn">自媒体IP</div><div class="rs">选题·竞品·内容·发布</div></div>
+<div class="role"><div class="ri">👔</div><div class="rn">职场达人</div><div class="rs">日报·PPT·数据·桌面</div></div>
+<div class="role"><div class="ri">👩</div><div class="rn">宝妈宝爸</div><div class="rs">绘本·菜谱·教育·错题</div></div>
+<div class="role"><div class="ri">🎒</div><div class="rn">个人小白</div><div class="rs">问答·辅导·整理·引导</div></div>
+<div class="role"><div class="ri">🛒</div><div class="rn">电商运营</div><div class="rs">选品·调研·文案·数据</div></div>
+<div class="role"><div class="ri">🤖</div><div class="rn">全能助手</div><div class="rs">问答·文档·检索·规划</div></div>
+</div>
+</div>
+
+<!-- Slide 4: 新手村 (dark) -->
+<div class="slide bg-dark dark">
+<div class="kt">新手村 · 5步通关</div>
+<h2>有引导的<span class="g">冒险旅程</span></h2>
+<p class="ld">不是冷冰冰的工具，是游戏化的探索体验</p>
+<div class="flow" style="margin-top:12px">
+<div class="fs"><div class="fn">STEP 1</div><div class="fi">🎭</div><div class="ft">身份确认</div><div class="fd">设称呼、选性格</div></div>
+<div class="fa">▶</div>
+<div class="fs"><div class="fn">STEP 2</div><div class="fi">🗺️</div><div class="ft">能力认知</div><div class="fd">了解能做什么</div></div>
+<div class="fa">▶</div>
+<div class="fs"><div class="fn">STEP 3</div><div class="fi">⚡</div><div class="ft">首次实操</div><div class="fd">完成首个任务</div></div>
+<div class="fa">▶</div>
+<div class="fs"><div class="fn">STEP 4</div><div class="fi">🔓</div><div class="ft">进阶解锁</div><div class="fd">高阶能力</div></div>
+<div class="fa">▶</div>
+<div class="fs"><div class="fn">STEP 5</div><div class="fi">🌍</div><div class="ft">生态预告</div><div class="fd">更多能力</div></div>
+</div>
+</div>
+
+<!-- Slide 5: RY积分 -->
+<div class="slide" style="background:#fafbfc">
+<div class="kt">RY积分体系</div>
+<h2>使用即积累，<span class="g">成长看得见</span></h2>
+<p class="ld">三层架构：财务闭环 + 游戏激励 + 成长联动</p>
+<div class="grid g3" style="margin-top:4px">
+<div class="card" style="text-align:center;border-top:3px solid #0070f3;padding:24px 16px">
+<div style="font-size:28px;margin-bottom:6px">🪙</div><h4>财务层</h4><p>充值·消耗·流水记录</p>
+<span style="display:inline-block;margin-top:6px;background:#e8f0ff;padding:2px 10px;border-radius:6px;font-size:10px;color:#0070f3;font-weight:600">P0 必做</span>
+</div>
+<div class="card" style="text-align:center;border-top:3px solid #0cce6b;padding:24px 16px">
+<div style="font-size:28px;margin-bottom:6px">🎮</div><h4>游戏层</h4><p>行为获取积分·日常使用</p>
+<span style="display:inline-block;margin-top:6px;background:#e8f0ff;padding:2px 10px;border-radius:6px;font-size:10px;color:#0cce6b;font-weight:600">P0 基础框架</span>
+</div>
+<div class="card" style="text-align:center;border-top:3px solid #7928ca;padding:24px 16px">
+<div style="font-size:28px;margin-bottom:6px">📈</div><h4>成长联动</h4><p>积分→等级→称号变化</p>
+<span style="display:inline-block;margin-top:6px;background:#f3e8ff;padding:2px 10px;border-radius:6px;font-size:10px;color:#7928ca;font-weight:600">P0 至少1次</span>
+</div>
+</div>
+<p class="dim" style="text-align:center;margin-top:12px">RY积分 · 荣银缩写 · 不触碰虚拟货币红线</p>
+</div>
+
+<!-- Slide 6: 产品规格 -->
+<div class="slide">
+<div class="kt">产品规格</div>
+<h2>硬件+云端，<span class="g">双重保障</span></h2>
+<div class="grid g2" style="gap:8px;margin-top:12px">
+<div class="spec"><div class="pi">💻</div><div class="pt"><b>交付形态</b> — 实体U盘+桌面客户端+License授权</div></div>
+<div class="spec"><div class="pi">🖥️</div><div class="pt"><b>支持平台</b> — Windows（首期）/ macOS（后续）</div></div>
+<div class="spec"><div class="pi">🤖</div><div class="pt"><b>内置角色</b> — 6-8个预训练AI角色，出厂即带</div></div>
+<div class="spec"><div class="pi">🌐</div><div class="pt"><b>模型能力</b> — DeepSeek/通义/GPT/Claude/Gemini</div></div>
+<div class="spec"><div class="pi">🔐</div><div class="pt"><b>安全认证</b> — License硬件绑定+设备激活码</div></div>
+<div class="spec"><div class="pi">☁️</div><div class="pt"><b>云端算力</b> — 首年赠送，按月/按量续费</div></div>
+<div class="spec"><div class="pi">📊</div><div class="pt"><b>C端面板</b> — 使用概览+等级进度可视化</div></div>
+<div class="spec"><div class="pi">🔗</div><div class="pt"><b>接口预留</b> — 双接口（本地+云端）+知识库扩展位</div></div>
+</div>
+</div>
+
+<!-- Slide 7: 定价 (dark) - 客户版 -->
+<div class="slide bg-dark dark" style="justify-content:center;align-items:center;text-align:center">
+<div>
+<div class="kt" style="margin-bottom:8px">产品方案</div>
+<h2>让AI成为你的<span class="g">日常伙伴</span></h2>
+<p class="ld" style="margin:10px auto">硬件+云端双重保障 · 年费订阅制<br>首年赠送全套基础算力</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:20px">
+<div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px 20px;width:150px">
+<div style="font-size:11px;color:#94a3b8;font-weight:600;letter-spacing:.08em">基础版</div>
+<div style="color:#fff;font-size:14px;margin:6px 0">个人使用</div>
+<div style="font-size:10px;color:#64748b">含硬件+基础算力</div>
+</div>
+<div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px 20px;width:150px">
+<div style="font-size:11px;color:#0070f3;font-weight:600;letter-spacing:.08em">标准版</div>
+<div style="color:#fff;font-size:14px;margin:6px 0">创业者/IP</div>
+<div style="font-size:10px;color:#64748b">全部角色+更多算力</div>
+</div>
+<div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px 20px;width:150px">
+<div style="font-size:11px;color:#7928ca;font-weight:600;letter-spacing:.08em">专业版</div>
+<div style="color:#fff;font-size:14px;margin:6px 0">团队/企业</div>
+<div style="font-size:10px;color:#64748b">知识库+优先支持</div>
+</div>
+</div>
+<p class="dim" style="margin-top:20px">企业定制请联系荣盈互动</p>
+</div>
+</div>
+
+<!-- Slide 8: 结尾 -->
+<div class="slide" style="justify-content:center;align-items:center;text-align:center">
+<div>
+<div style="font-size:40px;margin-bottom:10px">⚡</div>
+<h2>让AI成为你的<span class="g">日常伙伴</span></h2>
+<p class="ld" style="margin:10px auto">插上U盘，AI能力即刻就位</p>
+<div style="width:50px;height:2px;background:linear-gradient(90deg,#0070f3,#7928ca);margin:16px auto"></div>
+<p class="dim" style="margin-top:10px">荣盈互动 · RongYing AI</p>
+</div>
+</div>
+
+<!-- Click zones -->
+<div class="zone zone-l" id="zoneL"></div>
+<div class="zone zone-r" id="zoneR"></div>
+
+<!-- Bottom navbar -->
+<div class="navbar" id="navbar">
+<button class="navbtn" id="btnPrev">◀</button>
+<span class="dot on" data-i="0"></span><span class="dot" data-i="1"></span><span class="dot" data-i="2"></span>
+<span class="dot" data-i="3"></span><span class="dot" data-i="4"></span><span class="dot" data-i="5"></span>
+<span class="dot" data-i="6"></span><span class="dot" data-i="7"></span><span class="dot" data-i="8"></span>
+<button class="navbtn" id="btnNext">▶</button>
+<span class="num" id="pnum">1/9</span>
+</div>
+</div>
+
+<script>
+var slides = document.querySelectorAll('.slide');
+var total = slides.length;
+var idx = 0;
+var pbar = document.getElementById('pbar');
+var pnum = document.getElementById('pnum');
+var dots = document.querySelectorAll('.dot');
+
+function go(n) {
+  if (n < 0 || n >= total) return;
+  slides.forEach(function(s, i) { s.classList.toggle('on', i === n); });
+  idx = n;
+  pbar.style.width = ((n + 1) / total * 100) + '%';
+  pnum.textContent = (n + 1) + '/' + total;
+  dots.forEach(function(d, i) { d.classList.toggle('on', i === n); });
+}
+
+// Click zones
+document.getElementById('zoneL').addEventListener('click', function() { go(idx - 1); });
+document.getElementById('zoneR').addEventListener('click', function() { go(idx + 1); });
+document.getElementById('btnPrev').addEventListener('click', function() { go(idx - 1); });
+document.getElementById('btnNext').addEventListener('click', function() { go(idx + 1); });
+
+// Dot clicks
+dots.forEach(function(d) {
+  d.addEventListener('click', function() { go(parseInt(this.getAttribute('data-i'))); });
+});
+
+// Keyboard
+document.addEventListener('keydown', function(e) {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(idx + 1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(idx - 1); }
+  else if (e.key === 'Home') { go(0); }
+  else if (e.key === 'End') { go(total - 1); }
+  else if (e.key === 'f' || e.key === 'F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+
+// Touch
+(function() {
+  var sx = 0, sy = 0, st = 0;
+  document.querySelector('.deck').addEventListener('touchstart', function(e) {
+    if (e.touches.length !== 1) return;
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY; st = Date.now();
+  }, {passive: true});
+  document.querySelector('.deck').addEventListener('touchend', function(e) {
+    if (e.changedTouches.length !== 1) return;
+    var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy, dt = Date.now() - st;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2 && dt < 400) {
+      if (dx < 0) go(idx + 1); else go(idx - 1);
+    }
+  }, {passive: true});
+})();
+
+go(0);
+</script>
+</body>
+</html>
