@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>创业赋能引擎 · 副业路径诊断</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f3f0;color:#1a1a1a;min-height:100vh}
+.container{max-width:420px;margin:0 auto;padding:0 16px 40px}
+
+/* ===== 状态切换 ===== */
+.page{display:none}
+.page.active{display:block}
+
+/* ===== 顶部装饰 ===== */
+.top-bar{background:linear-gradient(135deg,#1a1a1a 0%,#2d2a24 100%);margin:0 -16px;padding:32px 16px 24px;position:relative;overflow:hidden}
+.top-bar::before{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;border-radius:50%;background:rgba(212,165,116,.06)}
+.top-bar::after{content:'';position:absolute;bottom:-30px;left:-30px;width:120px;height:120px;border-radius:50%;background:rgba(212,165,116,.04)}
+.top-bar .inner{position:relative;z-index:1}
+.top-bar .badge{display:inline-block;background:rgba(212,165,116,.15);border:1px solid rgba(212,165,116,.25);color:#d4a574;font-size:11px;padding:3px 10px;border-radius:12px;margin-bottom:8px}
+.top-bar h1{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+.top-bar p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.5}
+
+/* ===== 数据卡片 ===== */
+.stats-row{display:flex;gap:8px;margin:-12px 0 16px;position:relative;z-index:2}
+.stat-card{flex:1;background:#fff;border-radius:10px;padding:12px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.stat-card .num{font-size:18px;font-weight:700;color:#1a1a1a}
+.stat-card .num span{color:#d4a574}
+.stat-card .label{font-size:10px;color:rgba(26,26,26,.4);margin-top:2px}
+
+/* ===== 信任区 ===== */
+.trust-section{background:#fff;border-radius:12px;padding:18px 16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.trust-section .title{font-size:16px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.trust-section .title .accent{color:#d4a574}
+.trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.trust-item{background:#faf8f6;border-radius:8px;padding:12px;text-align:center}
+.trust-item .icon{font-size:22px;margin-bottom:4px}
+.trust-item .t{font-size:12px;font-weight:600;color:#1a1a1a}
+.trust-item .d{font-size:10px;color:rgba(26,26,26,.4);margin-top:2px}
+
+.trust-quote{background:linear-gradient(135deg,#faf8f6,#f5f0eb);border-left:3px solid #d4a574;border-radius:0 8px 8px 0;padding:14px 16px;margin-top:10px}
+.trust-quote p{font-size:12px;color:rgba(26,26,26,.6);line-height:1.6;font-style:italic}
+.trust-quote .author{font-size:11px;color:#d4a574;font-weight:600;margin-top:4px;font-style:normal}
+
+/* ===== 入口区 ===== */
+.entry-section{background:#fff;border-radius:12px;padding:18px 16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.entry-section .title{font-size:16px;font-weight:700;margin-bottom:4px}
+.entry-section .sub{font-size:12px;color:rgba(26,26,26,.4);margin-bottom:14px}
+
+.path-grid{display:flex;gap:10px;margin-bottom:16px}
+.path-card{flex:1;padding:16px 10px;background:#faf8f6;border:1.5px solid #eee;border-radius:10px;text-align:center;cursor:pointer;transition:all .2s}
+.path-card:hover,.path-card.selected{border-color:#d4a574;background:rgba(212,165,116,.06)}
+.path-card .icon{font-size:30px;margin-bottom:8px}
+.path-card .t{font-size:14px;font-weight:600;color:#1a1a1a}
+.path-card .d{font-size:11px;color:rgba(26,26,26,.4);margin-top:2px;line-height:1.4}
+
+.btn{display:block;width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-primary{background:#d4a574;color:#1a1a1a}
+.btn-primary:hover{background:#c8915e}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-outline{background:transparent;border:1.5px solid #ddd;color:#666}
+.btn-outline:hover{border-color:#d4a574;color:#d4a574}
+
+/* ===== 诊断页 ===== */
+.header-bar{background:#fff;padding:16px 0;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.header-bar .back{font-size:20px;cursor:pointer;color:#999;padding:4px}
+.header-bar .back:hover{color:#1a1a1a}
+.header-bar .step-text{font-size:12px;color:rgba(26,26,26,.3);flex:1;text-align:right}
+
+.progress-wrap{background:#eee;height:3px;border-radius:2px;margin-bottom:20px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,#d4a574,#c8915e);border-radius:2px;transition:width .3s}
+
+.question{padding:4px 0}
+.question h2{font-size:19px;font-weight:700;margin-bottom:6px;line-height:1.5;padding:0 4px}
+.question .sub{font-size:13px;color:rgba(26,26,26,.4);margin-bottom:20px;padding:0 4px}
+
+.options{display:flex;flex-direction:column;gap:10px}
+.option{display:flex;align-items:center;gap:14px;padding:18px 16px;background:#fff;border:1.5px solid #eee;border-radius:12px;cursor:pointer;transition:all .2s}
+.option:hover{border-color:rgba(212,165,116,.4)}
+.option.selected{border-color:#d4a574;background:rgba(212,165,116,.06)}
+.option .radio{width:22px;height:22px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.option.selected .radio{border-color:#d4a574}
+.option.selected .radio::after{content:'';width:11px;height:11px;border-radius:50%;background:#d4a574}
+.option .txt{flex:1}
+.option .label{font-size:15px;font-weight:600;color:#1a1a1a}
+.option .sub-label{font-size:12px;color:rgba(26,26,26,.4);margin-top:3px}
+
+.nav-btns{display:flex;gap:10px;margin-top:20px}
+
+/* ===== 结果页 ===== */
+.result-header{text-align:center;padding:24px 0 16px}
+.result-header .emoji{font-size:44px;margin-bottom:10px}
+.result-header h2{font-size:20px;font-weight:700}
+.result-header .tag{display:inline-block;background:rgba(212,165,116,.12);color:#d4a574;font-size:11px;padding:3px 10px;border-radius:10px;margin-top:6px}
+
+.result-box{background:#fff;border-radius:12px;padding:20px 16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.result-box .desc{font-size:13px;color:rgba(26,26,26,.55);line-height:1.6;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid #f0ece8}
+.result-box .list-title{font-size:14px;font-weight:600;margin-bottom:10px}
+.result-box .list-title span{color:#d4a574}
+
+.rec-step{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f5f2ee}
+.rec-step:last-child{border:none}
+.rec-step .num{width:26px;height:26px;border-radius:50%;background:#d4a574;color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rec-step .content{flex:1}
+.rec-step .r-title{font-size:14px;font-weight:600;color:#1a1a1a}
+.rec-step .r-desc{font-size:12px;color:rgba(26,26,26,.45);margin-top:2px;line-height:1.4}
+
+.cta-card{background:linear-gradient(135deg,#1a1a1a,#2d2a24);border-radius:12px;padding:20px;text-align:center;margin-bottom:16px}
+.cta-card p{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:12px}
+.cta-card .wechat-btn{display:inline-block;padding:12px 28px;background:#d4a574;color:#1a1a1a;border-radius:8px;font-size:15px;font-weight:700;text-decoration:none}
+.cta-card .hint{font-size:11px;color:rgba(255,255,255,.25);margin-top:8px}
+
+.retake-btn{display:block;text-align:center;padding:12px;color:#999;font-size:12px;cursor:pointer;text-decoration:none}
+.retake-btn:hover{color:#d4a574}
+
+.footer{text-align:center;font-size:10px;color:rgba(26,26,26,.2);padding:20px 0 30px}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+<!-- ===== 首页 ===== -->
+<div class="page active" id="page-home">
+  <div class="top-bar">
+    <div class="inner" style="text-align:center">
+      <div class="badge">🔥 副业实验室 · 实战版</div>
+      <h1>创业赋能引擎</h1>
+      <p>有想法没路径？有执行力没方向？<br>进来，帮你找到一条能跑通的路。</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="num"><span>15</span>年</div><div class="label">创业实战经验</div></div>
+    <div class="stat-card"><div class="num"><span>30</span>+</div><div class="label">副业学员陪跑</div></div>
+    <div class="stat-card"><div class="num"><span>180</span>%</div><div class="label">学员收益增长率</div></div>
+  </div>
+
+  <div class="trust-section">
+    <div class="title">为什么是<span class="accent">安叔</span>？</div>
+    <div class="trust-grid">
+      <div class="trust-item"><div class="icon">🏢</div><div class="t">15年RPO</div><div class="d">人力资源行业老兵</div></div>
+      <div class="trust-item"><div class="icon">📦</div><div class="t">京东合作服务商</div><div class="d">前三甲服务商合作</div></div>
+      <div class="trust-item"><div class="icon">🤖</div><div class="t">AI工具链</div><div class="d">Hermes+WorkBuddy</div></div>
+      <div class="trust-item"><div class="icon">📖</div><div class="t">内容体系</div><div class="d">副业实验室74篇原创</div></div>
+      <div class="trust-item"><div class="icon">🏗️</div><div class="t">完整方法论</div><div class="d">P/V/F/五维模型</div></div>
+      <div class="trust-item"><div class="icon">🏃</div><div class="t">实战派</div><div class="d">先做再说，不做PPT创业</div></div>
+    </div>
+    <div class="trust-quote">
+      <p>「不是教你赚钱，是带你赚钱。外面教赚钱的课太多了，但大部分人缺的不是学，是做。」</p>
+      <div class="author">—— 安叔，做了15年创业的实战派</div>
+    </div>
+  </div>
+
+  <div class="entry-section">
+    <div class="title">你属于哪一类？</div>
+    <div class="sub">选一个，2分钟给你匹配方案</div>
+    <div class="path-grid">
+      <div class="path-card" onclick="selectPath(this,'A')">
+        <div class="icon">💡</div>
+        <div class="t">我有想法</div>
+        <div class="d">有方向有产品<br>不知道怎么变现</div>
+      </div>
+      <div class="path-card" onclick="selectPath(this,'B')">
+        <div class="icon">🔥</div>
+        <div class="t">我没想法</div>
+        <div class="d">只想找个靠谱项目<br>直接干起来赚钱</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="startDiagnose()" id="startBtn" disabled>开始诊断 →</button>
+    <div style="text-align:center;margin-top:8px;font-size:11px;color:rgba(26,26,26,.3)">请先选择你的类型</div>
+  </div>
+
+  <div class="footer">安叔 · 副业实验室 · 所有项目亲自跑通过</div>
+</div>
+
+<!-- ===== 诊断页 ===== -->
+<div class="page" id="page-diagnose">
+  <div class="header-bar">
+    <span class="back" onclick="goHome()">✕</span>
+    <div style="flex:1"><span id="diagTitle">诊断中</span></div>
+    <span class="step-text" id="stepText">1/3</span>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="question" id="questionArea"></div>
+</div>
+
+<!-- ===== 结果页 ===== -->
+<div class="page" id="page-result">
+  <div class="result-header" id="resultHeader">
+    <div class="emoji" id="rEmoji">🎯</div>
+    <h2 id="rTitle">你的诊断结果</h2>
+    <div class="tag" id="rTag">推荐方案</div>
+  </div>
+  <div id="resultContent"></div>
+  <div class="retake-btn" onclick="goHome()">重新诊断 →</div>
+  <div class="footer">安叔 · 副业实验室 · 加微信 NineHalf95</div>
+</div>
+</div>
+
+<script>
+// === 问卷数据 ===
+const questions = {
+  A: [
+    {q:"你的想法到了什么阶段？",key:"stage",options:[
+      {label:"刚有个念头",sub:"还没开始动手"},  
+      {label:"已经试过一些",sub:"跑过但没跑通"},
+      {label:"有小成果了",sub:"已经有人愿意付费"}
+    ]},
+    {q:"你在这个方向了解多深？",key:"depth",options:[
+      {label:"完全新手",sub:"从零开始学"},
+      {label:"有些了解",sub:"看过别人怎么做"},
+      {label:"老手级别",sub:"做过一段时间"}
+    ]},
+    {q:"每天能投入多少时间？",key:"time",options:[
+      {label:"1小时以内",sub:"碎片时间搞"},
+      {label:"2-3小时",sub:"下班后搞"},
+      {label:"4小时以上",sub:"全职搞"}
+    ]},
+    {q:"你更看重什么？",key:"goal",options:[
+      {label:"快速验证想法",sub:"先看看行不行"},
+      {label:"长期稳定收入",sub:"能做3-5年"},
+      {label:"积累可复用的系统",sub:"做成自动运转"}
+    ]}
+  ],
+  B: [
+    {q:"你之前做过副业吗？",key:"exp",options:[
+      {label:"完全没做过",sub:"第一次尝试"},
+      {label:"试过一两个",sub:"但没跑通"},
+      {label:"做过有成绩",sub:"有成功经验"}
+    ]},
+    {q:"你的启动资金大概多少？",key:"money",options:[
+      {label:"0-1000元",sub:"想低成本试试"},
+      {label:"1000-5000元",sub:"可以投一些"},
+      {label:"5000元以上",sub:"愿意投入"}
+    ]},
+    {q:"每天能投入多少时间？",key:"time",options:[
+      {label:"1小时以内",sub:"碎片时间"},
+      {label:"2-3小时",sub:"下班搞"},
+      {label:"4小时以上",sub:"全职搞"}
+    ]},
+    {q:"你更看重什么？",key:"priority",options:[
+      {label:"快速见到收益",sub:"短期有回报"},
+      {label:"长期积累沉淀",sub:"能做3-5年"},
+      {label:"稳一点不冒险",sub:"确定性优先"}
+    ]}
+  ]
+};
+
+// === 结果数据 ===
+const results = [
+  // --- A路径 ---
+  {match:q=>q.stage==="done"&&q.depth==="expert",emoji:"🏆",title:"你有成果，缺的是系统",tag:"放大期",
+   desc:"已经有成果了！你现在不是找方向，是找放大方法。你的14年经验就是最好的产品。",
+   steps:[
+     {t:"把你的经验标准化",d:"把你做成功的那一套流程写出来，做成SOP。经验不标准化，永远在卖时间。"},
+     {t:"用AI打包成产品",d:"把你的SOP+AI工具链打包成U盘产品/社群/陪跑服务，一份时间卖多次。"},
+     {t:"内容放大案例",d:"你的成功案例是最好的引流素材。公众号/口播/朋友圈三线齐发。"},
+     {t:"找我聊放大方案",d:"我有现成的产品化框架，1小时帮你理清从单点打透到系统化的路径。"}
+   ]},
+  {match:q=>q.stage==="try"&&q.goal==="fast",emoji:"💡",title:"方向对了，缺执行",tag:"优化期",
+   desc:"你试过但没跑通，大概率不是方向问题。缺的是复盘和稳定的执行节奏。",
+   steps:[
+     {t:"复盘卡点",d:"把你试过的每一步写下来，卡在哪？是流量？产品？还是转化？不找到真问题，换10个方向都一样。"},
+     {t:"砍到只剩一个",d:"砍掉所有分散精力的项目。只保留一个你觉得最有希望的，全力打一个月。"},
+     {t:"定执行节奏",d:"每天固定1-2小时，雷打不动。比每天搞3小时但三天打鱼两天晒网强10倍。"},
+     {t:"找我诊断一次",d:"把复盘发我，我帮你找到真正的卡点。一次诊断可能省你3个月弯路。"}
+   ]},
+  {match:q=>q.stage==="idea"&&q.time==="full",emoji:"🚀",title:"有热情有想法，缺验证",tag:"验证期",
+   desc:"想法刚萌芽但有全职时间——这是最难能可贵也是最危险的状态。别急着All in，先验证。",
+   steps:[
+     {t:"做最小产品",d:"别想完美。用1天时间做出一个能用但粗糙的版本（一篇文章/一条视频/一个页面）。"},
+     {t:"找10个目标用户聊",d:"直接问：这个方向你愿意付多少钱？把产品放出去看有没有人买单。"},
+     {t:"算一笔账",d:"获客成本×转化率×客单价×复购率。这四个数字算完，70%的想法会被自己毙掉。"},
+     {t:"有信号再加码",d:"有人买单就是信号。没人买单别硬推，换个方向试。"}
+   ]},
+  {match:q=>true,emoji:"🌱",title:"从最小动作开始",tag:"启动期",
+   desc:"想法刚萌芽。急不是办法，急只会让你更焦虑。从最最最小的一个动作开始。",
+   steps:[
+     {t:"调研20个对标",d:"用一周时间找20个跟你同领域的号。拆他们的选题/标题/开头/结构——这就是你最快的入门方式。"},
+     {t:"抄一个最火的",d:"选一个你觉得你能做到60分的，100%模仿做一遍。不是抄袭，是学习手感。"},
+     {t:"发出去看反馈",d:"不要在乎完美。发出去了有人评论/收藏/问问题，就是信号。没人看就换。"},
+     {t:"3个月无反馈=换",d:"时间止损线。3个月没有正向反馈（有人付费/有人加你/有人问），果断换赛道。"}
+   ]},
+
+  // --- B路径 ---
+  {match:q=>q.exp==="none"&&q.money==="low"&&q.priority==="fast",emoji:"💰",title:"京东店群 · 最适合你",tag:"副业起步",
+   desc:"没经验、启动资金少、想快见钱——京东店群是你目前最匹配的方向。免费培训，跑通了再分润。",
+   steps:[
+     {t:"免费培训，后端分润",d:"你先不交钱，我们提供全套SOP+陪跑。你有利润了再按比例分润，没利润我们不收钱。"},
+     {t:"每天2-3小时",d:"不需要全职。下班后2小时就够了。上架+优化+客服，流程化了之后越做越轻松。"},
+     {t:"有学员25天跑通",d:"李笑笑纯小白起步，听话照做25天做到18000。不是特例，是这套SOP跑通的标准结果。"},
+     {t:"免费领《京东店群SOP》",d:"加微信 NineHalf95，备注「京东」，发你全套SOP指南。"}
+   ]},
+  {match:q=>q.exp==="none"&&q.money==="mid"&&q.priority==="safe",emoji:"🛒",title:"闲鱼电商 · 稳扎稳打",tag:"低门槛起步",
+   desc:"不想冒险、愿意投点小钱、求稳——闲鱼是最低门槛的选择。0保证金就能开干。",
+   steps:[
+     {t:"0成本开店",d:"闲鱼开店不要保证金。注册→实人认证→养号3天→上架，当天就能出单。"},
+     {t:"选品定生死",d:"我们有一套成熟的选品方法。不选大路货，选小众高利润品类。20字公式：精细选品·优质内容·合理价格·高效运营·口碑沉淀。"},
+     {t:"每天固定流程",d:"9点上架→午间维护→晚8点数据复盘。流程化了每天1.5小时搞定。"},
+     {t:"免费领《闲鱼多号管理清单》",d:"加微信 NineHalf95，备注「闲鱼」，发你完整操作清单。"}
+   ]},
+  {match:q=>q.exp==="some"&&q.money==="mid"&&q.priority==="long",emoji:"📈",title:"RPO招聘 · 你的护城河",tag:"长期主义",
+   desc:"你有基础、愿意投入、想做长期——RPO是你14年经验的护城河。别人抢不走的核心能力。",
+   steps:[
+     {t:"14年经验是最硬的底牌",d:"你在RPO做了14年，这个行业没有捷径，时间就是壁垒。现在的问题不是能不能做，是能不能启动。"},
+     {t:"启动需要什么",d:"智联/BOSS平台套餐月费几千起 + 5人交付团队 + 2-3个月冷启动期。启动成本约15万。"},
+     {t:"可以先从渠道做起",d:"如果资金不够，可以先做渠道方（招募学员去京东/闲鱼项目），积累现金流再启动RPO。"},
+     {t:"找我聊RPO重启方案",d:"我做了14年RPO，知道怎么用最小成本重启。加微信聊启动方案。"}
+   ]},
+  {match:q=>q.exp==="good"&&q.money==="high"&&q.priority==="fast",emoji:"🔥",title:"U盘产品 · 把经验变现",tag:"产品化",
+   desc:"你有成功经验有资金——最快的赚钱方式是把你已经做成的事产品化，一份时间卖多次。",
+   steps:[
+     {t:"荣盈AI智算钥匙",d:"把你的经验封装进AI U盘产品。游戏化交互、新手村引导、AI自动诊断——用户插上就能用。"},
+     {t:"年费订阅制",d:"硬件买断+年费订阅。一次开发，持续收益。目前已有完整开发方案。"},
+     {t:"适合有经验的创业者",d:"这个产品适合有行业经验、想把自己的方法论产品化的人。不是给小白做的。"},
+     {t:"加微信聊合作",d:"加微信 NineHalf95，备注「U盘」，发你产品介绍PPT。"}
+   ]},
+  {match:q=>true,emoji:"🎯",title:"副业起步 · 推荐京东店群",tag:"推荐方案",
+   desc:"综合你的情况，京东店群是最低门槛、最快见钱的方向。0元培训，跑通再分润。",
+   steps:[
+     {t:"免费培训+全套SOP",d:"我们提供从0到1的全套操作指南+陪跑服务。你不需要懂电商，照着做就行。"},
+     {t:"后端分润无风险",d:"前期不收培训费，你跑出利润了再按比例分。我们和你利益一致。"},
+     {t:"每天2小时",d:"兼职时间完全够。核心就是把20%的关键动作做好。"},
+     {t:"免费领详细资料",d:"加微信 NineHalf95，备注「京东」，发你完整项目介绍。"}
+   ]}
+];
+
+let currentPath = null;
+let answers = {};
+let step = 0;
+const totalSteps = 4;
+
+function selectPath(el, p){
+  document.querySelectorAll('.path-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  currentPath = p;
+  document.getElementById('startBtn').disabled = false;
+}
+
+function startDiagnose(){
+  if(!currentPath) return;
+  answers = {}; step = 0;
+  document.getElementById('page-home').classList.remove('active');
+  document.getElementById('page-diagnose').classList.add('active');
+  renderStep();
+}
+
+function renderStep(){
+  const qs = questions[currentPath];
+  const q = qs[step];
+  
+  const pct = ((step+1)/totalSteps)*100;
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('stepText').textContent = `${step+1}/${totalSteps}`;
+  document.getElementById('diagTitle').textContent = currentPath==='A'?'我有想法':'我没想法';
+  
+  let opts = q.options.map((o,i)=>{
+    return `<div class="option" onclick="selectOption(this,'${q.key}','${o.label}')">
+      <div class="radio"></div>
+      <div class="txt"><div class="label">${o.label}</div><div class="sub-label">${o.sub}</div></div>
+    </div>`;
+  }).join('');
+  
+  let nav = '';
+  if(step === totalSteps-1){
+    nav = `<button class="btn btn-primary" onclick="submitAnswer()">查看结果 →</button>
+           <button class="btn btn-outline" onclick="prevStep()">← 上一步</button>`;
+  } else {
+    nav = `<button class="btn btn-primary" onclick="nextStep()" id="nextBtn" disabled>下一步 →</button>
+           <button class="btn btn-outline" onclick="prevStep()">← 上一步</button>`;
+  }
+  
+  document.getElementById('questionArea').innerHTML = `
+    <h2>${q.q}</h2>
+    <div class="sub">选一个最接近你的</div>
+    <div class="options">${opts}</div>
+    <div class="nav-btns">${nav}</div>
+  `;
+}
+
+function selectOption(el, key, val){
+  document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[key] = val;
+  const btn = document.getElementById('nextBtn');
+  if(btn) btn.disabled = false;
+}
+
+function nextStep(){
+  if(step < totalSteps-1){step++;renderStep();}
+}
+
+function prevStep(){
+  if(step > 0){step--;renderStep();}
+}
+
+function submitAnswer(){
+  const pathKey = currentPath;
+  const qs = questions[pathKey];
+  // match result
+  let matched = results.find(r=>{
+    // only check results for this path
+    if(pathKey==='A'){
+      return r.match({stage:answers['你的想法到了什么阶段？']||answers['stage'],
+        depth:answers['你在这个方向了解多深？']||answers['depth'],
+        time:answers['每天能投入多少时间？']||answers['time'],
+        goal:answers['你更看重什么？']||answers['goal']});
+    } else {
+      return r.match({exp:answers['你之前做过副业吗？']||answers['exp'],
+        money:answers['你的启动资金大概多少？']||answers['money'],
+        time:answers['每天能投入多少时间？']||answers['time'],
+        priority:answers['你更看重什么？']||answers['priority']});
+    }
+  });
+  
+  // map answers to simpler keys
+  function getAnswer(qText){
+    const q = qs.find(q=>q.q===qText);
+    if(!q) return null;
+    const selectedLabel = answers[q.key];
+    if(!selectedLabel) return null;
+    const opt = q.options.find(o=>o.label===selectedLabel);
+    return opt ? opt.label : null;
+  }
+  
+  // direct key matching
+  let matchKey = {};
+  if(pathKey==='A'){
+    matchKey = {stage:getAnswer('你的想法到了什么阶段？'), depth:getAnswer('你在这个方向了解多深？'), time:getAnswer('每天能投入多少时间？'), goal:getAnswer('你更看重什么？')};
+  } else {
+    matchKey = {exp:getAnswer('你之前做过副业吗？'), money:getAnswer('你的启动资金大概多少？'), time:getAnswer('每天能投入多少时间？'), priority:getAnswer('你更看重什么？')};
+  }
+  
+  // Find match
+  let result = null;
+  for(const r of results){
+    if(r.match(matchKey)){
+      result = r;
+      break;
+    }
+  }
+  if(!result) result = results[pathKey==='A'?3:8]; // fallback
+  
+  document.getElementById('rEmoji').textContent = result.emoji;
+  document.getElementById('rTitle').textContent = result.title;
+  document.getElementById('rTag').textContent = result.tag;
+  
+  let steps = result.steps.map((s,i)=>{
+    return `<div class="rec-step"><div class="num">${i+1}</div>
+      <div class="content"><div class="r-title">${s.t}</div><div class="r-desc">${s.d}</div></div></div>`;
+  }).join('');
+  
+  document.getElementById('resultContent').innerHTML = `
+    <div class="result-box">
+      <div class="desc">${result.desc}</div>
+      <div class="list-title">你的<span>执行方案</span></div>
+      ${steps}
+    </div>
+    <div class="cta-card">
+      <p>想了解详细的落地步骤和启动方案？</p>
+      <a class="wechat-btn" href="https://weixin.qq.com" target="_blank">📩 加安叔微信聊</a>
+      <div class="hint">微信号：NineHalf95 · 备注「创业诊断」</div>
+    </div>
+  `;
+  
+  document.getElementById('page-diagnose').classList.remove('active');
+  document.getElementById('page-result').classList.add('active');
+}
+
+function goHome(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-home').classList.add('active');
+  currentPath = null;
+  document.querySelectorAll('.path-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('startBtn').disabled = true;
+}
+</script>
+</body>
+</html>
