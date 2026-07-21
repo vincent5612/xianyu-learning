@@ -115,6 +115,23 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f3f0;c
 .retake-btn:hover{color:#d4a574}
 
 .footer{text-align:center;font-size:10px;color:rgba(26,26,26,.2);padding:20px 0 30px}
+
+/* ===== 微信弹窗 ===== */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.65);z-index:999;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal-box{background:#fff;border-radius:16px;padding:28px 24px 22px;width:300px;text-align:center;position:relative;animation:modalIn .25s ease}
+@keyframes modalIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-box .close{position:absolute;top:12px;right:14px;font-size:18px;color:#999;cursor:pointer;line-height:1;padding:4px}
+.modal-box .close:hover{color:#333}
+.modal-box h3{font-size:16px;font-weight:700;margin-bottom:2px}
+.modal-box .mid{font-size:12px;color:rgba(26,26,26,.4);margin-bottom:14px}
+.modal-box .qr-wrap{width:200px;height:200px;margin:0 auto 12px;border-radius:10px;overflow:hidden;border:1px solid #eee}
+.modal-box .qr-wrap img{width:100%;height:100%;display:block}
+.modal-box .wechat-id{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+.modal-box .wechat-id span{color:#d4a574}
+.modal-box .tip{font-size:11px;color:rgba(26,26,26,.35);line-height:1.5}
+.modal-box .tip-mobile{font-size:11px;color:rgba(26,26,26,.3);margin-top:6px;display:none}
+@media(hover:none)and(pointer:coarse){.modal-box .tip-mobile{display:block}}
 </style>
 </head>
 <body>
@@ -196,7 +213,21 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f3f0;c
   <div class="retake-btn" onclick="goHome()">重新诊断 →</div>
   <div class="footer">安叔 · 副业实验室 · 加微信 NineHalf95</div>
 </div>
+
+<!-- ===== 微信弹窗 ===== -->
+<div class="modal-overlay" id="wechatModal" onclick="if(event.target===this)hideWechat()">
+  <div class="modal-box">
+    <span class="close" onclick="hideWechat()">✕</span>
+    <h3>📩 加安叔微信</h3>
+    <div class="mid">长按识别二维码，备注「创业诊断」</div>
+    <div class="qr-wrap"><img src="wechat-qr.jpg" alt="安叔微信二维码"></div>
+    <div class="wechat-id">微信号：<span>NineHalf95</span></div>
+    <div class="tip">👆 长按图片保存到手机 → 打开微信扫一扫</div>
+    <div class="tip-mobile">📱 长按二维码 → 选择「识别图中二维码」</div>
+  </div>
 </div>
+
+<div class="footer">安叔 · 副业实验室 · 加微信 NineHalf95</div>
 
 <script>
 // === 问卷数据 ===
@@ -459,8 +490,8 @@ function submitAnswer(){
     </div>
     <div class="cta-card">
       <p>想了解详细的落地步骤和启动方案？</p>
-      <a class="wechat-btn" href="https://weixin.qq.com" target="_blank">📩 加安叔微信聊</a>
-      <div class="hint">微信号：NineHalf95 · 备注「创业诊断」</div>
+      <a class="wechat-btn" href="javascript:void(0)" onclick="showWechat()">📩 加安叔微信聊</a>
+      <div class="hint">点击查看二维码 · 长按添加</div>
     </div>
   `;
   
@@ -475,6 +506,9 @@ function goHome(){
   document.querySelectorAll('.path-card').forEach(c=>c.classList.remove('selected'));
   document.getElementById('startBtn').disabled = true;
 }
+
+function showWechat(){document.getElementById('wechatModal').classList.add('active')}
+function hideWechat(){document.getElementById('wechatModal').classList.remove('active')}
 </script>
 </body>
 </html>
