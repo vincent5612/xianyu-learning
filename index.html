@@ -2,795 +2,727 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>闲鱼运营学习手册 · 5天从0到1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>创业赋能引擎 · AI副业诊断</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, "PingFang SC", "SF Pro Display", "Noto Sans SC", "Microsoft YaHei", sans-serif;
-    background: #f8f6f0;
-    color: #1d1d1f;
-    line-height: 1.7;
-    min-height: 100vh;
-  }
-  .hero {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    color: #fff;
-    padding: 52px 20px 42px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 20% 50%, rgba(255,228,17,0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(255,228,17,0.05) 0%, transparent 60%);
-  }
-  .hero h1 { font-size: 2em; font-weight: 700; margin-bottom: 6px; background: linear-gradient(135deg, #fff 60%, #ffe411); -webkit-background-clip: text; -webkit-text-fill-color: transparent; position: relative; }
-  .hero .sub { opacity: 0.7; font-size: 0.9em; margin-bottom: 18px; position: relative; }
-  .hero .formula {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(255,228,17,0.1);
-    backdrop-filter: blur(8px);
-    border-radius: 40px;
-    padding: 10px 22px;
-    font-size: 0.95em;
-    letter-spacing: 1px;
-    border: 1px solid rgba(255,228,17,0.15);
-    position: relative;
-  }
-  .hero .formula span { color: #ffe411; font-weight: 600; }
-  .hero .formula .arr { color: rgba(255,255,255,0.3); }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#0d0d0d;color:#e0e0e0;min-height:100vh}
+.container{max-width:420px;margin:0 auto;padding:0 16px 40px}
+.page{display:none}
+.page.active{display:block}
 
-  /* ── TOP NAV ── */
-  .top-nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid #e8e4dc;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding: 0 12px;
-    scrollbar-width: none;
-    display: flex; align-items: center;
-  }
-  .top-nav::-webkit-scrollbar { display: none; }
-  .top-nav .inner { display: flex; gap: 1px; margin: 0 auto; }
-  .top-nav a {
-    display: inline-block; padding: 9px 12px; font-size: 0.8em;
-    text-decoration: none; border-bottom: 2px solid transparent;
-    transition: all 0.2s; flex-shrink: 0;
-  }
-  .top-nav a:hover { opacity: 0.8; }
-  .top-nav a.active { font-weight: 700; border-bottom-width: 3px; }
+/* ===== 顶部装饰 ===== */
+.top-bar{background:linear-gradient(135deg,#1a1a1a 0%,#2d2a24 100%);margin:0 -16px;padding:32px 16px 24px;position:relative;overflow:hidden}
+.top-bar::before{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;border-radius:50%;background:rgba(212,165,116,.06)}
+.top-bar::after{content:'';position:absolute;bottom:-30px;left:-30px;width:120px;height:120px;border-radius:50%;background:rgba(212,165,116,.04)}
+.top-bar .inner{position:relative;z-index:1}
+.top-bar .badge{display:inline-block;background:rgba(212,165,116,.15);border:1px solid rgba(212,165,116,.25);color:#d4a574;font-size:11px;padding:3px 10px;border-radius:12px;margin-bottom:8px}
+.top-bar h1{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+.top-bar p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.5}
 
-  /* 标签卡颜色 - 柔和版 */
-  .top-nav .tab-review { color: #4a6fa5; }
-  .top-nav .tab-review.active { color: #1a3a6a; border-bottom-color: #1a3a6a; }
+/* ===== 数据卡片 ===== */
+.stats-row{display:flex;gap:8px;margin:-12px 0 16px;position:relative;z-index:2}
+.stat-card{flex:1;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:12px 8px;text-align:center}
+.stat-card .num{font-size:18px;font-weight:700;color:#f0e6d3}
+.stat-card .num span{color:#d4a574}
+.stat-card .label{font-size:10px;color:rgba(255,255,255,.35);margin-top:2px}
 
-  .top-nav .tab-d1 { color: #e06b6b; }
-  .top-nav .tab-d1.active { color: #c0392b; border-bottom-color: #c0392b; }
+/* ===== 信任区 ===== */
+.trust-section{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:18px 16px;margin-bottom:12px}
+.trust-section .title{font-size:16px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;color:#f0e6d3}
+.trust-section .title .accent{color:#d4a574}
+.trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.trust-item{background:#222;border:1px solid #2a2a2a;border-radius:8px;padding:12px;text-align:center}
+.trust-item .icon{font-size:22px;margin-bottom:4px}
+.trust-item .t{font-size:12px;font-weight:600;color:#e0e0e0}
+.trust-item .d{font-size:10px;color:rgba(255,255,255,.35);margin-top:2px}
+.trust-quote{background:linear-gradient(135deg,#1e1e1e,#222);border-left:3px solid #d4a574;border-radius:0 8px 8px 0;padding:14px 16px;margin-top:10px}
+.trust-quote p{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;font-style:italic}
+.trust-quote .author{font-size:11px;color:#d4a574;font-weight:600;margin-top:4px;font-style:normal}
 
-  .top-nav .tab-d2 { color: #d4a84b; }
-  .top-nav .tab-d2.active { color: #b8860b; border-bottom-color: #b8860b; }
+/* ===== 弹药库精选 ===== */
+.ammo-section{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:16px;margin-bottom:12px}
+.ammo-section-title{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px;color:#f0e6d3}
+.ammo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ammo-item{display:flex;gap:10px;padding:10px;background:#222;border:1px solid #2a2a2a;border-radius:8px;align-items:flex-start}
+.ammo-num{font-size:13px;color:#d4a574;font-weight:700;flex-shrink:0;margin-top:1px}
+.ammo-body{flex:1;min-width:0}
+.ammo-head{font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:2px}
+.ammo-desc{font-size:11px;color:rgba(255,255,255,.45);line-height:1.5}
 
-  .top-nav .tab-d3 { color: #5db85d; }
-  .top-nav .tab-d3.active { color: #2d8a2d; border-bottom-color: #2d8a2d; }
+/* ===== 入口区 ===== */
+.entry-section{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:18px 16px;margin-bottom:12px}
+.entry-section .title{font-size:16px;font-weight:700;margin-bottom:4px;color:#f0e6d3}
+.entry-section .sub{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px}
+.path-grid{display:flex;gap:10px;margin-bottom:16px}
+.path-card{flex:1;padding:16px 10px;background:#222;border:1.5px solid #2a2a2a;border-radius:10px;text-align:center;cursor:pointer;transition:all .2s}
+.path-card:hover,.path-card.selected{border-color:#d4a574;background:rgba(212,165,116,.08)}
+.path-card .icon{font-size:30px;margin-bottom:8px}
+.path-card .t{font-size:14px;font-weight:600;color:#e0e0e0}
+.path-card .d{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;line-height:1.4}
 
-  .top-nav .tab-d4 { color: #9b72cf; }
-  .top-nav .tab-d4.active { color: #7c3aed; border-bottom-color: #7c3aed; }
+.btn{display:block;width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
+.btn-primary{background:#d4a574;color:#1a1a1a}
+.btn-primary:hover{background:#c8915e}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-outline{background:transparent;border:1.5px solid #333;color:#999}
+.btn-outline:hover{border-color:#d4a574;color:#d4a574}
 
-  .top-nav .tab-d5 { color: #4db8c4; }
-  .top-nav .tab-d5.active { color: #0891b2; border-bottom-color: #0891b2; }
+/* ===== 输入页 ===== */
+.input-section{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:20px 16px;margin-bottom:12px}
+.input-section .label{font-size:14px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px;color:#f0e6d3}
+.input-section .label .path-tag{font-size:10px;padding:2px 8px;border-radius:6px;font-weight:500}
+.path-tag-a{background:rgba(59,130,246,.15);color:#60a5fa}
+.path-tag-b{background:rgba(239,68,68,.15);color:#f87171}
+.input-section .hint{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:10px;line-height:1.5}
+.input-section textarea{width:100%;min-height:180px;padding:14px;background:#222;border:1.5px solid #333;border-radius:10px;font-size:14px;font-family:inherit;line-height:1.7;resize:vertical;outline:none;transition:border-color .2s;color:#e0e0e0}
+.input-section textarea:focus{border-color:#d4a574;box-shadow:0 0 0 3px rgba(212,165,116,.1)}
+.input-section textarea::placeholder{color:#555}
+.input-section .char-count{text-align:right;font-size:11px;color:#555;margin-top:4px}
 
-  .top-nav .tab-check { color: #4a6fa5; }
-  .top-nav .tab-check.active { color: #1a3a6a; border-bottom-color: #1a3a6a; }
+/* ===== Loading ===== */
+.loading-wrap{text-align:center;padding:40px 16px}
+.spinner{width:48px;height:48px;border:3px solid #333;border-top-color:#d4a574;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-wrap .text{font-size:14px;color:#ccc;margin-bottom:6px}
+.loading-wrap .sub{font-size:12px;color:#666}
 
-  .top-nav .tab-formula { color: #d4a84b; }
-  .top-nav .tab-formula.active { color: #b8860b; border-bottom-color: #b8860b; }
+/* ===== 结果页 ===== */
+.result-header{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:20px 16px;margin-bottom:12px;text-align:center}
+.result-header h2{font-size:18px;font-weight:700;color:#f0e6d3}
 
-  .top-nav .tab-exam { color: #9b72cf; }
-  .top-nav .tab-exam.active { color: #7c3aed; border-bottom-color: #7c3aed; }
+.result-content{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:20px 16px;margin-bottom:12px}
+.result-content h1{font-size:17px;font-weight:700;margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid #2a2a2a;color:#f0e6d3}
+.result-content h1:first-child{margin-top:0}
+.result-content h2{font-size:15px;font-weight:700;margin:14px 0 6px;color:#e0e0e0}
+.result-content h3{font-size:13px;font-weight:600;margin:10px 0 4px;color:#999}
+.result-content p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:8px}
+.result-content strong{color:#f0e6d3}
+.result-content ul,.result-content ol{padding-left:18px;margin-bottom:8px}
+.result-content li{font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:4px}
+.result-content blockquote{background:#222;border-left:3px solid #d4a574;padding:10px 14px;margin:10px 0;border-radius:0 8px 8px 0;font-size:12px;color:rgba(255,255,255,.45);line-height:1.6}
+.result-content code{background:#222;padding:2px 6px;border-radius:4px;font-size:12px;color:#d4a574}
 
-  .content-wrapper { display: flex; max-width: 1280px; margin: 0 auto; padding: 0 16px; gap: 20px; }
+/* ===== CTA ===== */
+.cta-card{background:linear-gradient(135deg,#1a1a1a,#2d2a24);border-radius:12px;padding:20px;text-align:center;margin-bottom:16px}
+.cta-card p{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:12px}
+.cta-card .wechat-btn{display:inline-block;padding:12px 28px;background:#d4a574;color:#1a1a1a;border-radius:8px;font-size:15px;font-weight:700;text-decoration:none;border:none;cursor:pointer;font-family:inherit}
+.cta-card .hint{font-size:11px;color:rgba(255,255,255,.25);margin-top:8px}
 
-  /* ── SIDEBAR ── */
-  .sidebar {
-    width: 200px; flex-shrink: 0; position: sticky; top: 50px;
-    align-self: flex-start; padding: 16px 0;
-    max-height: calc(100vh - 60px); overflow-y: auto; scrollbar-width: thin;
-  }
-  .sidebar::-webkit-scrollbar { width: 4px; }
-  .sidebar::-webkit-scrollbar-thumb { background: #d4d0c8; border-radius: 4px; }
-  .sidebar a {
-    display: block; padding: 5px 8px 5px 14px; font-size: 0.82em;
-    color: #4b5563; text-decoration: none; border-left: 3px solid transparent;
-    border-radius: 0 6px 6px 0; margin: 1px 0; transition: all 0.15s;
-  }
-  .sidebar a:hover { background: #eeeae4; }
-  .sidebar a.active { font-weight: 600; background: #f0edf5; }
-  .sidebar a.sub { padding-left: 24px; font-size: 0.78em; }
-  .sidebar a.sb-review.active { border-left-color: #0f3460; color: #0f3460; background: #e8edf5; }
-  .sidebar a.sb-d1.active { border-left-color: #dc2626; color: #dc2626; background: #fef2f2; }
-  .sidebar a.sb-d2.active { border-left-color: #ca8a04; color: #854d0e; background: #fefce8; }
-  .sidebar a.sb-d3.active { border-left-color: #16a34a; color: #166534; background: #f0fdf4; }
-  .sidebar a.sb-d4.active { border-left-color: #7c3aed; color: #6b21a8; background: #faf5ff; }
-  .sidebar a.sb-d5.active { border-left-color: #0891b2; color: #155e75; background: #ecfeff; }
-  .sidebar .sec-title {
-    font-size: 0.7em; font-weight: 700;
-    color: #9ca3af; text-transform: uppercase;
-    letter-spacing: 1px; padding: 12px 14px 4px;
-  }
-  .sidebar .sec-title.exam { color: #7c3aed; padding-top: 18px; border-top: 1px solid #e8e4dc; margin-top: 8px; }
+/* ===== 追问区 ===== */
+.chat-section{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;margin-bottom:12px;overflow:hidden}
+.chat-header{padding:14px 16px;font-size:14px;font-weight:600;border-bottom:1px solid #2a2a2a;display:flex;align-items:center;gap:6px;color:#f0e6d3}
+.chat-msgs{max-height:400px;overflow-y:auto;padding:12px 16px}
+.chat-empty{padding:24px 16px;text-align:center;font-size:12px;color:#555;line-height:1.6}
+.chat-msg{display:flex;gap:10px;margin-bottom:12px}
+.chat-msg.user{flex-direction:row-reverse}
+.chat-msg .avatar{width:30px;height:30px;min-width:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.chat-msg.user .avatar{background:#d4a574;color:#1a1a1a}
+.chat-msg.ai .avatar{background:#333;color:#d4a574}
+.chat-msg .bubble{max-width:85%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6;white-space:pre-wrap;word-wrap:break-word}
+.chat-msg.user .bubble{background:#d4a574;color:#1a1a1a;border-bottom-right-radius:4px}
+.chat-msg.ai .bubble{background:#222;color:rgba(255,255,255,.65);border-bottom-left-radius:4px}
+.chat-msg .bubble .loading-dots{display:inline-flex;gap:4px;padding:4px 0}
+.chat-msg .bubble .loading-dots span{width:6px;height:6px;border-radius:50%;background:#555;animation:dotPulse 1.2s ease-in-out infinite}
+.chat-msg .bubble .loading-dots span:nth-child(2){animation-delay:.2s}
+.chat-msg .bubble .loading-dots span:nth-child(3){animation-delay:.4s}
+@keyframes dotPulse{0%,60%,100%{opacity:.3;transform:scale(.8)}30%{opacity:1;transform:scale(1)}}
+.chat-input-wrap{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #2a2a2a}
+.chat-input-wrap input{flex:1;padding:10px 14px;background:#222;border:1.5px solid #333;border-radius:8px;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s;color:#e0e0e0}
+.chat-input-wrap input:focus{border-color:#d4a574}
+.chat-input-wrap input::placeholder{color:#555}
+.chat-input-wrap .send-btn{padding:10px 18px;background:#d4a574;color:#1a1a1a;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s;white-space:nowrap}
+.chat-input-wrap .send-btn:disabled{opacity:.4;cursor:not-allowed}
 
-  .main { flex: 1; min-width: 0; padding: 20px 0 60px; }
-  .day {
-    background: #fff; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    padding: 22px 26px; margin-bottom: 18px;
-  }
-  .day h2 { font-size: 1.15em; color: #0f172a; border-left: 4px solid #0f3460; padding-left: 12px; margin-bottom: 14px; }
-  .day h3 {
-    font-size: 0.95em; color: #1e293b; margin: 20px 0 10px;
-    padding-bottom: 6px; border-bottom: 1px solid #f0ede8;
-  }
-  .day h4 { font-size: 0.85em; color: #475569; margin: 14px 0 8px; font-weight: 600; }
-  .day p { margin-bottom: 8px; font-size: 0.88em; color: #334155; }
-  .day ul, .day ol { margin: 6px 0 14px 20px; font-size: 0.88em; color: #334155; }
-  .day li { margin-bottom: 4px; }
+/* ===== 重新诊断 ===== */
+.restart-btn{display:block;text-align:center;padding:12px;color:#999;font-size:12px;cursor:pointer;text-decoration:none;margin-bottom:16px}
+.restart-btn:hover{color:#d4a574}
 
-  .date-tag {
-    display: inline-block; font-size: 0.75em; color: #64748b;
-    background: #f5f3ee; padding: 2px 10px; border-radius: 12px; margin-bottom: 10px;
-  }
-  .focus-box {
-    background: #fef9e7;
-    border-left: 4px solid #ffe411;
-    border-radius: 0 10px 10px 0;
-    padding: 12px 16px; margin-bottom: 16px; font-size: 0.88em;
-  }
-  .focus-box strong { color: #a16207; }
+/* ===== 微信弹窗 ===== */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:999;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal-box{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:16px;padding:28px 24px 22px;width:300px;text-align:center;position:relative;animation:modalIn .25s ease}
+@keyframes modalIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-box .close{position:absolute;top:12px;right:14px;font-size:18px;color:#666;cursor:pointer;line-height:1;padding:4px}
+.modal-box .close:hover{color:#fff}
+.modal-box h3{font-size:16px;font-weight:700;margin-bottom:2px;color:#f0e6d3}
+.modal-box .mid{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px}
+.modal-box .qr-wrap{width:200px;height:200px;margin:0 auto 12px;border-radius:10px;overflow:hidden;border:1px solid #333}
+.modal-box .qr-wrap img{width:100%;height:100%;display:block}
+.modal-box .wechat-id{font-size:15px;font-weight:700;color:#f0e6d3;margin-bottom:4px}
+.modal-box .wechat-id span{color:#d4a574}
+.modal-box .tip{font-size:11px;color:rgba(255,255,255,.3);line-height:1.5}
+.modal-box .tip-mobile{font-size:11px;color:rgba(255,255,255,.25);margin-top:6px;display:none}
+@media(hover:none)and(pointer:coarse){.modal-box .tip-mobile{display:block}}
 
-  /* 内容区块分隔 */
-  .sec-block {
-    background: #faf9f7;
-    border-radius: 10px;
-    padding: 14px 18px;
-    margin: 14px 0;
-    border: 1px solid #f0ede8;
-  }
-  .sec-block h4:first-child { margin-top: 0; }
-
-  .callout {
-    padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; font-size: 0.85em;
-  }
-  .callout.danger { background: #fef2f2; border-left: 4px solid #dc2626; }
-  .callout.warn { background: #fffbeb; border-left: 4px solid #f59e0b; }
-  .callout.tip { background: #f0fdf4; border-left: 4px solid #22c55e; }
-  .callout.info { background: #eff6ff; border-left: 4px solid #3b82f6; }
-
-  .deadline {
-    background: linear-gradient(135deg, #1a3a2a, #166534);
-    color: #fff; padding: 12px 16px; border-radius: 10px; font-size: 0.85em; margin-top: 18px;
-  }
-
-  table { width: 100%; border-collapse: collapse; font-size: 0.85em; margin: 8px 0 14px; }
-  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #e8e4dc; }
-  th { background: #faf9f7; color: #4b5563; font-weight: 600; font-size: 0.82em; }
-
-  .img-placeholder {
-    background: #faf9f7; border: 2px dashed #d4d0c8; border-radius: 10px;
-    padding: 18px; text-align: center; color: #9ca3af; font-size: 0.85em; margin: 10px 0;
-  }
-  .img-placeholder strong { color: #6b7280; }
-
-  .demo-btn {
-    display: inline-block;
-    background: #ffe411;
-    color: #1a1a2e;
-    padding: 6px 22px;
-    border-radius: 20px;
-    font-size: 0.85em;
-    font-weight: 700;
-    text-decoration: none;
-    font-family: Georgia, 'Times New Roman', serif;
-    cursor: pointer;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
-    transition: box-shadow 0.2s;
-    letter-spacing: 1px;
-  }
-  .demo-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-
-  .footer-note { text-align: center; font-size: 0.78em; color: #9ca3af; padding: 20px 0; }
-  .back-to-top {
-    position: fixed; bottom: 24px; right: 24px;
-    width: 40px; height: 40px; border-radius: 50%; background: #0f3460; color: #fff;
-    border: none; font-size: 1.2em; cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15); opacity: 0; pointer-events: none; transition: opacity 0.3s;
-  }
-  .back-to-top.visible { opacity: 1; pointer-events: auto; }
-
-  @media (max-width: 900px) { .sidebar { display: none; } .top-nav a { font-size: 0.72em; padding: 7px 7px; } .day { padding: 16px; } }
-  @media (max-width: 420px) { .hero h1 { font-size: 1.4em; } .hero .formula { font-size: 0.7em; padding: 6px 12px; } table { font-size: 0.78em; } th, td { padding: 5px 6px; } }
+.footer{text-align:center;font-size:10px;color:rgba(255,255,255,.2);padding:20px 0 30px}
 </style>
 </head>
 <body>
+<div class="container" id="app">
 
-<div class="hero">
-  <h1>闲鱼运营学习手册 · 5天从0到1</h1>
-  <p class="sub">基于 2026年5月 闲鱼无货源电商培训内容整理 · 全品类适用</p>
-  <div class="formula">
-    <span>精细选品</span><span class="arr"> → </span>
-    <span>优质内容</span><span class="arr"> → </span>
-    <span>合理价格</span><span class="arr"> → </span>
-    <span>高效运营</span><span class="arr"> → </span>
-    <span>口碑沉淀</span>
+<!-- ===== 首页 ===== -->
+<div class="page active" id="page-home">
+  <div class="top-bar">
+    <div class="inner" style="text-align:center">
+      <div class="badge">🔥 副业实验室 · AI增强版</div>
+      <h1>创业赋能引擎</h1>
+      <p>把你的情况写下来，AI根据你的实际情况<br>给出个性化诊断和落地路径</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="num"><span>15</span>年</div><div class="label">创业实战经验</div></div>
+    <div class="stat-card"><div class="num"><span>300</span>+</div><div class="label">副业学员陪跑</div></div>
+    <div class="stat-card"><div class="num"><span>180</span>%</div><div class="label">学员收益增长率</div></div>
+  </div>
+
+  <div class="trust-section">
+    <div class="title">为什么是<span class="accent">安叔</span>？</div>
+    <div class="trust-grid">
+      <div class="trust-item"><div class="icon">🏢</div><div class="t">15年RPO</div><div class="d">人力资源行业老兵</div></div>
+      <div class="trust-item"><div class="icon">📦</div><div class="t">京东合作服务商</div><div class="d">前三甲服务商合作</div></div>
+      <div class="trust-item"><div class="icon">🤖</div><div class="t">AI工具链</div><div class="d">Hermes+WorkBuddy</div></div>
+      <div class="trust-item"><div class="icon">📖</div><div class="t">内容体系</div><div class="d">副业实验室74篇原创</div></div>
+      <div class="trust-item"><div class="icon">🏗️</div><div class="t">完整方法论</div><div class="d">P/V/F/五维模型</div></div>
+      <div class="trust-item"><div class="icon">🏃</div><div class="t">实战派</div><div class="d">先做再说，不做PPT创业</div></div>
+    </div>
+    <div class="trust-quote">
+      <p>「不是教你赚钱，是带你赚钱。外面教赚钱的课太多了，但大部分人缺的不是学，是做。」</p>
+      <div class="author">—— 安叔，做了15年创业的实战派</div>
+    </div>
+  </div>
+
+  <!-- ===== 弹药库精选 ===== -->
+  <div class="ammo-section">
+    <div class="ammo-section-title">🧠 安叔的创业弹药库 <span style="font-size:11px;color:#bbb;font-weight:400">实战沉淀的认知干货</span></div>
+    <div class="ammo-grid">
+      <div class="ammo-item">
+        <div class="ammo-num">❶</div>
+        <div class="ammo-body">
+          <div class="ammo-head">别卖项目，卖模式</div>
+          <div class="ammo-desc">项目是一次性买卖，模式是卖铲子的人。项目会死，模式能活。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❷</div>
+        <div class="ammo-body">
+          <div class="ammo-head">前端赚风险，后端赚信任</div>
+          <div class="ammo-desc">聪明人赚后端的钱——客户拿到结果再分成，越做越轻松。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❸</div>
+        <div class="ammo-body">
+          <div class="ammo-head">工作越做越轻才是对的</div>
+          <div class="ammo-desc">规模化的核心是边际成本递减。每多一个客户工作量就加一分，说明交付是手工化。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❹</div>
+        <div class="ammo-body">
+          <div class="ammo-head">收不到钱，不是项目不行</div>
+          <div class="ammo-desc">是找的人不对。兼职粉500交不起，创业粉2000觉得是投资。流量池决定转化天花板。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❺</div>
+        <div class="ammo-body">
+          <div class="ammo-head">好的锁客不是合同</div>
+          <div class="ammo-desc">是你走了就做不了。技术壁垒形成的"离开成本"，比任何合同都管用。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❻</div>
+        <div class="ammo-body">
+          <div class="ammo-head">成本拆开说，没人觉得贵</div>
+          <div class="ammo-desc">2万一次性说=决策代价大。拆成软件费→保证金→每天垫资300，心理阻力降70%。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❼</div>
+        <div class="ammo-body">
+          <div class="ammo-head">先给价值，再谈价格</div>
+          <div class="ammo-desc">免费试用让客户先用上、产生依赖，再谈合作——转化率至少翻倍。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❽</div>
+        <div class="ammo-body">
+          <div class="ammo-head">真正的合作是分工</div>
+          <div class="ammo-desc">各做自己最擅长的事。前端获客+后端交付，双方效率最高。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="entry-section">
+    <div class="title">你属于哪一类？</div>
+    <div class="sub">选一个，然后告诉我你的具体情况</div>
+    <div class="path-grid">
+      <div class="path-card" onclick="selectPath(this,'A')">
+        <div class="icon">💡</div>
+        <div class="t">我有想法</div>
+        <div class="d">有方向有产品<br>不知道怎么变现</div>
+      </div>
+      <div class="path-card" onclick="selectPath(this,'B')">
+        <div class="icon">🔥</div>
+        <div class="t">我没想法</div>
+        <div class="d">只想找个靠谱项目<br>直接干起来赚钱</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="goToInput()" id="startBtn" disabled>开始诊断 →</button>
+    <div style="text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,.25)">请先选择你的类型</div>
+  </div>
+
+  <div class="footer">安叔 · 副业实验室 · 加微信 NineHalf95</div>
+</div>
+
+<!-- ===== 输入页 ===== -->
+<div class="page" id="page-input">
+  <div class="top-bar" style="padding:20px 16px 16px">
+    <div class="inner" style="text-align:center">
+      <div class="badge" id="inputBadge">💡 我有想法</div>
+      <h1>描述你的情况</h1>
+      <p>越详细，诊断越精准</p>
+    </div>
+  </div>
+
+  <div class="input-section">
+    <div class="label">
+      📝 你的情况
+      <span class="path-tag" id="pathTag">路径A</span>
+    </div>
+    <div class="hint" id="inputHint">把你的情况写下来，我帮你分析。比如：你现在在做什么、有什么资源、卡在哪、想达到什么目标。</div>
+    <textarea id="userInput" placeholder="例如：我是一个上班族，每天下班后有两三个小时空闲。之前试过闲鱼卖货，出了几单但没坚持下来。现在想做一个能长期搞的副业，攒点钱。我手头大概有3000块可以投入，比较倾向做电商类的项目..." oninput="updateCharCount();checkInput()"></textarea>
+    <div class="char-count"><span id="charCount">0</span>/1000</div>
+  </div>
+
+  <button class="btn btn-primary" id="submitBtn" onclick="startAnalysis()" disabled>🚀 AI分析诊断</button>
+  <button class="btn btn-outline" onclick="goHome()" style="margin-top:8px">← 重新选择</button>
+</div>
+
+<!-- ===== 分析中 ===== -->
+<div class="page" id="page-loading">
+  <div class="loading-wrap">
+    <div class="spinner"></div>
+    <div class="text">AI正在分析你的情况...</div>
+    <div class="sub">基于安叔15年创业经验 + P/V/F体系</div>
   </div>
 </div>
 
-<div class="top-nav">
-  <div class="inner">
-    <a href="#review" class="active tab-review">📊 复盘重点</a>
-    <a href="#d1" class="tab-d1">Day 1 准备</a>
-    <a href="#d2" class="tab-d2">Day 2 发布</a>
-    <a href="#d3" class="tab-d3">Day 3 冲刺</a>
-    <a href="#d4" class="tab-d4">Day 4 优化</a>
-    <a href="#d5" class="tab-d5">Day 5 复盘</a>
-    <a href="#checklist" class="tab-check">✅ 检查清单</a>
-    <a href="#formula" class="tab-formula">🔑 20字公式</a>
+<!-- ===== 结果页 ===== -->
+<div class="page" id="page-result">
+  <div class="result-header">
+    <div class="emoji" id="rEmoji">🎯</div>
+    <h2 id="rTitle">诊断结果</h2>
+    <div class="tag" id="rTag">AI分析</div>
   </div>
+
+  <div class="result-content" id="resultContent">
+    <!-- AI生成内容渲染到这里 -->
+  </div>
+
+  <div class="cta-card">
+    <p>想和安叔本人聊聊，获取更详细的落地方案？</p>
+    <button class="wechat-btn" onclick="showWechat()">📩 加安叔微信聊</button>
+    <div class="hint">点击查看二维码 · 长按添加 · 备注「创业诊断」</div>
+  </div>
+
+  <!-- 追问区 -->
+  <div class="chat-section">
+    <div class="chat-header">💬 继续追问 <span style="font-size:11px;color:#bbb;font-weight:400">对诊断结果有疑问？接着问</span></div>
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="chat-empty" id="chatEmpty">对上面的诊断结果有什么不明白的，或者想了解更多细节，在这里提问 👇</div>
+    </div>
+    <div class="chat-input-wrap">
+      <input type="text" id="chatInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="send-btn" id="chatSendBtn" onclick="sendChat()">发送</button>
+    </div>
+  </div>
+
+  <div class="restart-btn" onclick="goHome()">🔄 重新诊断</div>
+
+  <div class="footer">安叔 · 副业实验室 · 加微信 NineHalf95</div>
 </div>
 
-<div class="content-wrapper">
-
-<nav class="sidebar">
-  <div class="sec-title">复盘</div>
-  <a href="#review" class="sb-review">📊 复盘重点</a>
-  <div class="sec-title">Day 1</div>
-  <a href="#d1" class="sb-d1">搭地基</a>
-  <a href="#d1-rules" class="sub sb-d1">平台红线</a>
-  <a href="#d1-hw" class="sub sb-d1">硬件隔离</a>
-  <a href="#d1-persona" class="sub sb-d1">账号包装</a>
-  <a href="#d1-browse" class="sub sb-d1">刷对标</a>
-  <a href="#d1-category" class="sub sb-d1">选品逻辑</a>
-  <a href="#d1-draft" class="sub sb-d1">上架SOP</a>
-  <div class="sec-title">Day 2</div>
-  <a href="#d2" class="sb-d2">发布+看数据</a>
-  <a href="#d2-pub" class="sub sb-d2">批量发布</a>
-  <a href="#d2-data" class="sub sb-d2">数据检查</a>
-  <a href="#d2-budan" class="sub sb-d2">安全补单</a>
-  <div class="sec-title">Day 3</div>
-  <a href="#d3" class="sb-d3">破池+冲刺</a>
-  <a href="#d3-pool" class="sub sb-d3">破流量池</a>
-  <a href="#d3-order" class="sub sb-d3">冲刺出单</a>
-  <div class="sec-title">Day 4</div>
-  <a href="#d4" class="sb-d4">运营优化</a>
-  <a href="#d4-weight" class="sub sb-d4">账号权重</a>
-  <a href="#d4-talk" class="sub sb-d4">客服话术</a>
-  <a href="#d4-after" class="sub sb-d4">售后保护</a>
-  <div class="sec-title">Day 5</div>
-  <a href="#d5" class="sb-d5">复盘+定方向</a>
-  <a href="#d5-review" class="sub sb-d5">全面复盘</a>
-  <a href="#d5-decision" class="sub sb-d5">产品迭代</a>
-  <a href="#d5-matrix" class="sub sb-d5">矩阵放大</a>
-  <div class="sec-title">快查</div>
-  <a href="#checklist">✅ 检查清单</a>
-  <a href="#formula">🔑 20字公式</a>
-</nav>
-
-<div class="main">
-
-<!-- ══ 复盘重点 ══ -->
-<div class="day" id="review">
-  <h2>📊 复盘重点</h2>
-  <p style="margin-bottom:14px;">闲鱼运营的 12 条核心检查项。每天实操前花 3 分钟过一遍，哪个没做到优先补哪个。</p>
-  <table>
-    <tr><th style="width:26%;">关键点</th><th>一句话</th><th style="width:36px;">自检</th></tr>
-    <tr><td><b>一机一卡一IP</b></td><td>物理隔离，杜绝WiFi共享，禁分身/双开</td><td style="text-align:center;">☐</td></tr>
-    <tr><td><b>芝麻信用 ≥ 650</b></td><td>授权芝麻分，分数越高搜索排位越前</td><td style="text-align:center;">☐</td></tr>
-    <tr><td><b>点击率 ≥ 8%</b></td><td>首日CTR不过8%直接换主图，不要等</td><td style="text-align:center;">☐</td></tr>
-    <tr><td><b>响应 ≤ 5分钟</b></td><td>超时成交率骤降，平台给快响账号更多流量</td><td style="text-align:center;">☐</td></tr>
-    <tr><td><b>严禁站外导流</b></td><td>不引流微信/QQ/淘宝，不留言留联系方式</td><td style="text-align:center;">☐</td></tr>
-    <tr><td><b>严禁违禁词</b></td><td>不用"全新""100%正品""全网最低"</td><td style="text-align:center;">☐</td></tr>
-    <tr><td><b>补单 ≤ 30%</b></td><td>独立设备+独立网络，模拟真实行为路径</td><td style="text-align:center;">☐</td></tr>
-    <tr><td><b>7天内避免大幅改价</b></td><td>大幅调价打乱标签导致降权</td><td style="text-align:center;">☐</td></tr>
-    <tr><td><b>人设"若即若离"</b></td><td>个人卖家人设天然降低买家防御心</td><td style="text-align:center;">☐</td></tr>
-    <tr><td><b>每日擦亮</b></td><td>早7-9/午12-14/晚19-22流量高峰前操作</td><td style="text-align:center;">☐</td></tr>
-    <tr><td><b>滞销品5-7天清理</b></td><td>零曝光零咨询直接删除（参考72小时标准）</td><td style="text-align:center;">☐</td></tr>
-    <tr><td><b>每日数据全记录</b></td><td>台账记录曝光/CTR/成交，据此决策</td><td style="text-align:center;">☐</td></tr>
-  </table>
+<!-- ===== 微信弹窗 ===== -->
+<div class="modal-overlay" id="wechatModal" onclick="if(event.target===this)hideWechat()">
+  <div class="modal-box">
+    <span class="close" onclick="hideWechat()">✕</span>
+    <h3>📩 加安叔微信</h3>
+    <div class="mid">长按识别二维码，备注「创业诊断」</div>
+    <div class="qr-wrap"><img src="wechat-qr.jpg" alt="安叔微信二维码"></div>
+    <div class="wechat-id">微信号：<span>NineHalf95</span></div>
+    <div class="tip">👆 长按图片保存到手机 → 打开微信扫一扫</div>
+    <div class="tip-mobile">📱 长按二维码 → 选择「识别图中二维码」</div>
+  </div>
+</div>
 </div>
 
-<!-- ══ DAY 1 ══ -->
-<div class="day" id="d1">
-  <h2>Day 1 · 搭地基</h2>
-  <span class="date-tag">不发布，只准备</span>
-
-  <div class="focus-box">
-    <strong>🔥 今天重点</strong>
-    平台红线 → 硬件隔离 → 账号包装 → 刷对标 → 选品逻辑 → 上架SOP准备
-  </div>
-
-  <h3 id="d1-rules" style="color:#dc2626;">🚫 平台红线与违规避坑</h3>
-  <p class="callout danger"><b>触碰红线=降权/限流/封号。</b>开篇第一讲，拍照留存。</p>
-
-  <h4>五大绝对红线 <a href="demo-redline.html" target="_blank" style="display:inline-block;background:#ffe411;color:#1a1a2e;padding:1px 12px;border-radius:12px;font-size:0.78em;font-weight:700;font-family:Georgia,'Times New Roman',serif;margin-left:6px;text-decoration:none;">📺 图文演示</a></h4>
-  <table>
-    <tr><th style="width:36px;">#</th><th>红线</th><th>后果</th></tr>
-    <tr><td style="text-align:center;font-weight:700;">1</td><td>站外导流：引导微信/QQ/淘宝等外部平台交易</td><td>封号</td></tr>
-    <tr><td style="text-align:center;font-weight:700;">2</td><td>留联系方式：标题/描述/图片/私聊留任何联系方式</td><td>限流/下架</td></tr>
-    <tr><td style="text-align:center;font-weight:700;">3</td><td>极限词："全新""100%正品""全网最低""国家级"</td><td>限流/下架</td></tr>
-    <tr><td style="text-align:center;font-weight:700;">4</td><td>恶意改价：频繁修改/大幅调价（7天内避免超10%）</td><td>降权</td></tr>
-    <tr><td style="text-align:center;font-weight:700;">5</td><td>高危售后：拖延发货/无理拒退/态度恶劣致严重纠纷</td><td>降权/封号</td></tr>
-  </table>
-
-  <h4>其他严重违规</h4>
-  <ul>
-    <li>重复铺货：同一商品发布多个链接霸屏</li>
-    <li>禁售商品：高仿、假货、盗版、管制刀具、易燃易爆品</li>
-    <li>同WiFi下多号操作 → 连坐封号</li>
-  </ul>
-
-  <h3 id="d1-hw">① 硬件与网络隔离（底层架构）</h3>
-  <p>决定账号生命周期和权重的核心基础，必须严格执行。</p>
-  <table>
-    <tr><th>要求</th><th>说明</th></tr>
-    <tr><td>一机一卡一IP</td><td>物理隔离的独立手机 + 专属SIM卡，全程4G/5G移动数据</td></tr>
-    <tr><td>严禁分身</td><td>禁止应用分身、双开、虚拟机</td></tr>
-    <tr><td>SIM卡优选</td><td>不同运营商及归属地</td></tr>
-    <tr><td>实名认证</td><td>真实身份（可亲友身份证），完成人脸核验</td></tr>
-    <tr><td>资金隔离</td><td>每个闲鱼号绑定独立实名的支付宝</td></tr>
-  </table>
-
-  <h3 id="d1-persona">② 账号包装（立人设）</h3>
-  <div class="img-placeholder"><strong>📸 [配图：3 种人设截图]</strong><br>体育生 / 球馆老板 / 教练，每个截图+标注要素</div>
-  <div style="text-align:center;margin:0 0 12px;"><a href="#" class="demo-btn">📺 图文演示</a></div>
-  <table>
-    <tr><th>要素</th><th>要求</th></tr>
-    <tr><td>头像/昵称</td><td>高清真人照或品类相关图；昵称含品类核心词（如"数码玩家小李"）</td></tr>
-    <tr><td>简介三段式</td><td>① 我是谁（"90后宝妈"）② 卖什么（主营品类）③ 给承诺（"支持验货"）</td></tr>
-    <tr><td>细节完善</td><td>矩阵号配置不同的收货地址与联系方式，适度"露私"模拟真人</td></tr>
-    <tr><td>动态</td><td>发2-3条日常动态增强真实感</td></tr>
-  </table>
-
-  <h3 id="d1-browse">③ 刷对标（养号）</h3>
-  <div class="img-placeholder"><strong>📸 [配图：刷对标图文步骤 1-2-3-4]</strong><br>上方截图，下方编号步骤</div>
-  <div style="text-align:center;margin:0 0 12px;"><a href="#" class="demo-btn">📺 图文演示</a></div>
-  <ol>
-    <li>搜品类关键词，看竞品排名</li>
-    <li>每天点 10-15 个"我想要"，收藏 5-8 个，浏览详情页 30 秒+</li>
-    <li>咨询 2-3 个竞品，收集话术模板</li>
-    <li><b>每号每天刷 30 分钟+</b>，给账号打标签</li>
-  </ol>
-
-  <h3 id="d1-category">④ 选品逻辑</h3>
-  <table>
-    <tr><th>选品逻辑</th><th>核心问题</th></tr>
-    <tr><td>有出单记录</td><td>同类品近7天有人出单吗？</td></tr>
-    <tr><td>利润 ≥ 30%</td><td>毛利率基准30%，验证1688/拼多多货源</td></tr>
-    <tr><td>有差异空间</td><td>你能做和别人不一样的点吗？</td></tr>
-  </table>
-  <p><b>数据化选品：</b>搜核心词→看下拉推荐词（需求分析）→ 看"相似商品"及"已卖出"记录（供给分析）→ 测利润</p>
-  <table>
-    <tr><th>品类举例</th><th>要点</th><th>利润参考</th></tr>
-    <tr><td>🏸 体育用品</td><td>品牌货+配件，消耗品复购高</td><td>40-60%</td></tr>
-    <tr><td>🍼 母婴用品</td><td>必须品，家长舍得花钱</td><td>50-70%</td></tr>
-    <tr><td>📱 数码配件</td><td>品类多，需求量大</td><td>30-50%</td></tr>
-  </table>
-
-  <h3 id="d1-draft">⑤ 上架SOP准备</h3>
-  <p><b>每个账号准备至少2个商品草稿，Day1只准备不发布。</b></p>
-
-  <div class="sec-block">
-    <h4>标题黄金公式（12字以内）</h4>
-    <p><b>品牌词 + 产品词 + 核心卖点 + 场景 + 人群词</b></p>
-    <p style="font-size:0.82em;color:#6b7280;">示例：「亚狮龙7号耐打训练球 家庭装」<br>技巧：核心词前置，控制在12字以内，关键词精准不堆砌。</p>
-  </div>
-
-  <div class="sec-block">
-    <h4>主图9图黄金排列法</h4>
-    <table>
-      <tr><th>位置</th><th>内容</th><th>作用</th></tr>
-      <tr><td>1-3 视觉层</td><td>封面/全景/侧背</td><td>高清实拍建信任</td></tr>
-      <tr><td>4-6 细节层</td><td>细节/瑕疵/配件</td><td>消除信息差</td></tr>
-      <tr><td>7-9 信任层</td><td>场景/凭证/尺寸</td><td>促进下单</td></tr>
-    </table>
-    <p style="font-size:0.82em;color:#6b7280;">进阶：主图加材质/型号标签（利用OCR增曝光）；发布15-30s短视频（转化率升120%）</p>
-  </div>
-
-  <div class="sec-block">
-    <h4>详情页五段式</h4>
-    <ol>
-      <li><b>标题段</b>：一句话概括核心信息</li>
-      <li><b>人设段</b>：介绍身份和转卖原因，拉近距离</li>
-      <li><b>产品段</b>：明确功能状态，塑造专业形象</li>
-      <li><b>规格段</b>：清晰列出配件清单，消除信息差</li>
-      <li><b>结尾段</b>：说明价格策略与退换政策，引导下单</li>
-    </ol>
-  </div>
-
-  <div class="sec-block">
-    <h4>科学定价法</h4>
-    <ul>
-      <li><b>查同款</b>：参考30天真实成交均价</li>
-      <li><b>评成色</b>：全新95折/99新9折等</li>
-      <li><b>留空间</b>：底价上浮10%-20%预留砍价空间，多用9/8尾数定价</li>
-      <li>若需降价，使用平台"降价急售"功能，利于流量加权</li>
-    </ul>
-  </div>
-
-  <div class="deadline">✅ 死线：红线已记 + 硬件隔离 + 人设包装 + 刷对标 + 选品确认 + 上架SOP准备</div>
-</div>
-
-<!-- ══ DAY 2 ══ -->
-<div class="day" id="d2">
-  <h2>Day 2 · 发布 + 看数据</h2>
-  <span class="date-tag">第一天实操，铺量+测数据</span>
-
-  <div class="focus-box">
-    <strong>🔥 今天重点</strong>
-    最迟10点前上品（每号2-3条）中午11点半看数据，下午4点看数据 分析，判断是否补单
-  </div>
-
-  <h3 id="d2-pub">① 早上批量发布</h3>
-  <p><b>最迟10点前上品，完成批量发布。</b></p>
-  <ul>
-    <li>新号单日发布 <b>3-5 条</b>为宜，严禁重复铺货</li>
-    <li>同品不同账号：<b>换主图</b>（不同角度/背景）+ <b>微调定价</b>（三档差异）+ 改文案关键词</li>
-    <li>标题关键词差异化（一个突出"耐打"，一个突出"飞行稳定"）</li>
-  </ul>
-
-  <h3 id="d2-data">② 数据检查</h3>
-  <div class="img-placeholder"><strong>📸 [配图：闲鱼数据页面截图]</strong><br>圈出「曝光」「点击率」「我想要」位置</div>
-  <div style="text-align:center;margin:0 0 12px;"><a href="#" class="demo-btn">📺 图文演示</a></div>
-
-  <div class="sec-block">
-    <h4>上午 11:30 第一次 <span style="color:#dc2626;">⏰ 设闹钟</span></h4>
-    <table>
-      <tr><th>检查项</th><th>合格线</th><th>不合格→动作</th></tr>
-      <tr><td>是否有曝光</td><td>50+</td><td>优化关键词/标题/账号权重</td></tr>
-      <tr><td>点击率 (CTR)</td><td>≥ 8%</td><td>低于→换主图</td></tr>
-      <tr><td>"我想要"</td><td>≥ 3个</td><td>价格或需求问题</td></tr>
-    </table>
-  </div>
-
-  <div class="sec-block">
-    <h4>下午 4:00 第二次</h4>
-    <table>
-      <tr><th>检查项</th><th>合格线</th><th>不合格→动作</th></tr>
-      <tr><td>曝光增长</td><td>持续增长</td><td>停滞→考虑补单</td></tr>
-      <tr><td>点击率</td><td>≥ 8%</td><td>未达标→明天优化主图</td></tr>
-      <tr><td>收藏/咨询</td><td>收藏≥5，咨询≥1</td><td>优化详情页/话术</td></tr>
-    </table>
-  </div>
-
-  <h3 id="d2-budan">③ 安全补单（如需）</h3>
-  <p class="callout danger"><strong>⚠️ 铁律</strong>补单小号必须独立设备+独立网络。自然成交:补单 ≥ 7:3</p>
-  <div class="img-placeholder"><strong>📸 [配图：补单操作图文步骤]</strong><br>编号 1-2-3-4-5-6 引导</div>
-  <div style="text-align:center;margin:0 0 12px;"><a href="#" class="demo-btn">📺 图文演示</a></div>
-  <ol>
-    <li>小号或互补号搜关键词找到自己商品</li>
-    <li>浏览 2-3 个竞品页面（30 秒+）</li>
-    <li>回到自己商品浏览详情（1 分钟+）</li>
-    <li>点击"我想要"或收藏</li>
-    <li>如需补成交：咨询→议价→下单→正常走完</li>
-    <li>同一个品一天不超过 1 单</li>
-  </ol>
-
-  <div class="deadline">✅ 死线：10点前上品 + 两轮数据看完（11:30/16:00）+ 补单决策 + 数据记录到台账</div>
-</div>
-
-<!-- ══ DAY 3 ══ -->
-<div class="day" id="d3">
-  <h2>Day 3 · 破流量池 + 冲刺出单</h2>
-  <span class="date-tag">胜负手——晋级+首单（目标3天出单）</span>
-
-  <div class="focus-box">
-    <strong>🔥 今天重点</strong>
-    流量池判断 → 破池动作（擦亮/优化/补单） → 数据诊断三步法 → 冲刺首单
-  </div>
-
-  <h3 id="d3-pool">① 流量池与黄金72小时</h3>
-  <p><b>新品首发→初级流量池→24h测试→CTR超8%→晋级二级池。</b>曝光 &lt; 100 直接放弃（72小时标准，8~9成24小时即体现）。</p>
-  <table>
-    <tr><th>曝光量</th><th>判定</th><th>动作</th></tr>
-    <tr><td>&lt; 100</td><td style="color:#dc2626;">❌ 直接放弃</td><td>下架重发或换品</td></tr>
-    <tr><td>200-500</td><td style="color:#f59e0b;">⚠️ 观察</td><td>优化主图/标题</td></tr>
-    <tr><td>≥ 500</td><td style="color:#16a34a;">✅ 正常</td><td>内容可用，继续推进</td></tr>
-    <tr><td>≥ 1000</td><td style="color:#16a34a;">✅ 可用</td><td>投 5.9 元测 ROI，预期 3 倍+</td></tr>
-  </table>
-
-  <div class="sec-block">
-    <h4>晋级强化动作</h4>
-    <ul>
-      <li><b>擦亮黄金时段</b>：早7-9 / 午12-14 / 晚19-22（流量高峰前操作）</li>
-      <li>全天消息秒回（响应速度红线，5分钟内）</li>
-      <li>对未达标链接做优化（卡关键词→卡地域→卡价格）</li>
-      <li>补单 + 推进自然成交</li>
-    </ul>
-  </div>
-
-  <h3 id="d3-order">② 数据诊断三步法 + 冲刺出单</h3>
-
-  <div class="sec-block">
-    <h4>数据诊断</h4>
-    <table>
-      <tr><th>问题</th><th>诊断</th><th>动作</th></tr>
-      <tr><td>曝光低</td><td>关键词/标题/账号权重</td><td>优化标题核心词前置 + 养号提升权重</td></tr>
-      <tr><td>点击低</td><td>主图/价格</td><td>换主图（第一张最关键）</td></tr>
-      <tr><td>转化低</td><td>详情页/话术</td><td>改文案 + 优化快捷回复</td></tr>
-    </table>
-  </div>
-
-  <div class="sec-block">
-    <h4>冲刺出单</h4>
-    <table>
-      <tr><th>环节</th><th>优化动作</th><th>效果</th></tr>
-      <tr><td>点击→浏览</td><td>主图增加吸引力</td><td>提升CTR</td></tr>
-      <tr><td>浏览→咨询</td><td>文案加互动引导</td><td>提升咨询量</td></tr>
-      <tr><td>咨询→成交</td><td>话术优化+快速回复+适当让价</td><td>提升成交率</td></tr>
-      <tr><td>下单后</td><td>及时发货+主动告知物流</td><td>提升好评率</td></tr>
-    </table>
-    <p class="callout warn"><strong>⚡ 今天目标：至少出1单。</strong>自然成交最好，不行安全补1单。</p>
-  </div>
-
-  <div class="sec-block">
-    <h4>滞销品清理</h4>
-    <p>5-7天零曝光零咨询的商品直接删除（参考72小时标准），避免拖累店铺整体权重。</p>
-  </div>
-
-  <div class="deadline">✅ 死线：流量池判断 + 数据诊断优化 + 至少1单 + 滞销品清理</div>
-</div>
-
-<!-- ══ DAY 4 ══ -->
-<div class="day" id="d4">
-  <h2>Day 4 · 运营优化</h2>
-  <span class="date-tag">把一单变成持续出单</span>
-
-  <div class="focus-box">
-    <strong>🔥 今天重点</strong>
-    账号权重 → 客服话术系统化 → 售后保护 → 继续上新品
-  </div>
-
-  <h3 id="d4-weight">① 账号权重</h3>
-  <div class="img-placeholder"><strong>📸 [配图1：显性权重 vs 隐性权重] [配图2：个人卖家 vs 专业卖家]</strong></div>
-  <div style="text-align:center;margin:0 0 12px;"><a href="#" class="demo-btn">📺 图文演示</a></div>
-  <table>
-    <tr><th>权重类型</th><th>包含</th><th>提升方法</th></tr>
-    <tr><td><b>显性权重</b></td><td>芝麻信用分(≥650优先搜索)、实名认证、好评率</td><td>授权芝麻分 + 每单引导好评</td></tr>
-    <tr><td><b>隐性权重</b></td><td>活跃度、回复速度、出单率、账号年龄</td><td>每天登录+秒回+持续出单+养号</td></tr>
-  </table>
-  <table>
-    <tr><th>账号类型</th><th>看什么</th><th>优势</th></tr>
-    <tr><td>👤 个人卖家</td><td>曝光量、点击率、"我想要"数</td><td>买家防御心低，人设占优</td></tr>
-    <tr><td>🏢 专业卖家</td><td>工作台数据面板</td><td>数据可视化，便于运营决策</td></tr>
-  </table>
-
-  <h3 id="d4-talk">② 客服话术系统化</h3>
-  <p><b>话术来源：</b>全国头部前几家（复制风格）+ 本地地域头部（学本地化）</p>
-
-  <div class="sec-block">
-    <h4>议价技巧</h4>
-    <ul>
-      <li><b>小额议价</b>：适当接受，爽快成交</li>
-      <li><b>大额议价</b>：避免直接拒绝，引导关注价值（品质/成色）；用"包邮/送配件"代替直接降价</li>
-    </ul>
-  </div>
-
-  <div class="sec-block">
-    <h4>话术模板</h4>
-    <table>
-      <tr><th>场景</th><th>话术模板</th></tr>
-      <tr><td>首次咨询</td><td>"哈喽~这个球拍上周买的就打了一次，不太适合我"</td></tr>
-      <tr><td>议价</td><td>"小哥哥，真的最低了再低要亏邮费了😭 送你几个球行不？"</td></tr>
-      <tr><td>发货延迟</td><td>"不好意思课多，晚上给你发，发的时候拍视频~"</td></tr>
-      <tr><td>求好评</td><td>"亲如果觉得ok方便给个好评吗？谢谢你呀~"</td></tr>
-    </table>
-  </div>
-
-  <h3 id="d4-after">③ 售后保护与防纠纷</h3>
-
-  <div class="sec-block">
-    <h4>无货源发货闭环</h4>
-    <ol>
-      <li>同步下单：获取买家信息去货源平台代拍</li>
-      <li>核心备注：严禁放价格单/店铺卡片</li>
-      <li>回传单号：复制快递单号至闲鱼点击发货</li>
-      <li>售后导流：退货时指导买家退回给供应商</li>
-    </ol>
-  </div>
-
-  <div class="sec-block">
-    <h4>防纠纷与"到手刀"策略</h4>
-    <ul>
-      <li><b>发货前</b>：录制完整展示视频（含SN码/序列号）；全流程录像打包；箱体加防拆标记</li>
-      <li><b>遇纠纷</b>：拒绝私下协商（须在闲鱼沟通留证）；坚决拒绝不合理要求；申请小法庭/客服介入</li>
-    </ul>
-  </div>
-
-  <div class="sec-block">
-    <h4>售后权重保护</h4>
-    <ul>
-      <li>明确发货时效（如拍下48小时内发货）</li>
-      <li>尽量远离小法庭：友好协商为主，平台介入（无论对错）均损害权重</li>
-      <li>积极处理中差评，真诚沟通引导修改</li>
-    </ul>
-  </div>
-
-  <div class="deadline">✅ 死线：账号权重理解 + 话术库建好 + 售后流程跑通 + 上新</div>
-</div>
-
-<!-- ══ DAY 5 ══ -->
-<div class="day" id="d5">
-  <h2>Day 5 · 复盘 + 定方向</h2>
-  <span class="date-tag">不是结束，是系统化的起点</span>
-
-  <div class="focus-box">
-    <strong>🔥 今天重点</strong>
-    全面复盘 → 产品迭代决策 → 矩阵放大 → 站外引流
-  </div>
-
-  <h3 id="d5-review">① 全面复盘</h3>
-  <table>
-    <tr><th>维度</th><th>要问的问题</th></tr>
-    <tr><td>产品</td><td>哪些品出单了？共同特征？哪些没动？要换品吗？</td></tr>
-    <tr><td>运营</td><td>响应速度达标？补单安全？每日动作坚持了？数据全记录了？</td></tr>
-    <tr><td>账号</td><td>3个号哪个好哪个差？好的可复制？差的出什么问题？</td></tr>
-    <tr><td>利润</td><td>每单实际利润多少？整体利润率？有亏钱卖的品吗？</td></tr>
-  </table>
-
-  <h3 id="d5-decision">② 产品迭代决策</h3>
-  <table>
-    <tr><th>决策</th><th>条件</th></tr>
-    <tr><td>淘汰</td><td>5-7天零曝光零咨询 → 直接删除（参考72小时标准），避免拖累权重</td></tr>
-    <tr><td>优化</td><td>有曝光无点击→换主图；有点击无咨询→改详情/话术</td></tr>
-    <tr><td>加码</td><td>出单稳定+好评率高→加库存+升级主图+加新款</td></tr>
-    <tr><td>上新</td><td>手上还有没发过的品→继续发，矩阵扩展</td></tr>
-  </table>
-
-  <h3 id="d5-matrix">③ 矩阵放大 + 站外引流</h3>
-
-  <div class="sec-block">
-    <h4>矩阵协同四大原则</h4>
-    <table>
-      <tr><th>原则</th><th>说明</th></tr>
-      <tr><td>账号隔离</td><td>严格执行一机一卡一IP</td></tr>
-      <tr><td>品类细分</td><td>每个账号专注一个垂直品类（数码号/母婴号互不冲突）</td></tr>
-      <tr><td>内容同步</td><td>多平台账号与闲鱼号一一对应</td></tr>
-      <tr><td>团队协作</td><td>制定详细SOP，统一数据记录与操作规范</td></tr>
-    </table>
-  </div>
-
-  <div class="sec-block">
-    <h4>小红书种草引流</h4>
-    <table>
-      <tr><th>要素</th><th>要点</th></tr>
-      <tr><td>标题</td><td>数字/结果 + 痛点/场景 + 解决方案</td></tr>
-      <tr><td>首图</td><td>高清无水印、构图美观、生活化场景</td></tr>
-      <tr><td>正文</td><td>场景引入→产品展示→真实测评→价值升华</td></tr>
-      <tr><td>钩子</td><td>评论区置顶搜"专属关键词"、简介巧妙植入</td></tr>
-    </table>
-  </div>
-
-  <div class="sec-block">
-    <h4>动态调价策略</h4>
-    <ul>
-      <li>7天无咨询 → 降价5%-10%，优化主图详情</li>
-      <li>咨询多成交少 → 降价3%-5%或增加高价值赠品</li>
-      <li>发布即售罄 → 判定定价偏低，加价10%-15%利润最大化</li>
-    </ul>
-  </div>
-
-  <div class="deadline">✅ 死线：复盘完成 + 产品决策 + SOP初版 + 下周计划</div>
-</div>
-
-<!-- ══ 检查清单 ══ -->
-<div class="day" id="checklist">
-  <h2>✅ 5天执行检查清单</h2>
-  <p style="text-align:center;font-size:0.85em;color:#9ca3af;margin-bottom:16px;">每天做完一项就点一下 ☐</p>
-
-  <h3>Day 1 · 准备日</h3>
-  <ul class="checklist">
-    <li>☐ 平台红线已记住并拍照（5大红线+其他违规）</li>
-    <li>☐ 硬件隔离到位（一机一卡一IP，独立支付宝）</li>
-    <li>☐ 3个账号人设已确定（≥3种，三段式简介）</li>
-    <li>☐ 刷对标养号完成（每号30分钟+）</li>
-    <li>☐ 选品逻辑确认（出单记录/利润≥30%/差异空间）</li>
-    <li>☐ 上架SOP准备完（标题公式/9图排列/详情五段/定价法）</li>
-  </ul>
-  <div class="img-placeholder"><strong>📸 [此处配图同 Day1]</strong><br>规则红线弹窗 / 人设截图 / 刷对标步骤</div>
-  <div style="text-align:center;margin:0 0 12px;"><a href="#" class="demo-btn">📺 图文演示</a></div>
-
-  <h3>Day 2 · 发布日</h3>
-  <ul class="checklist">
-    <li>☐ 早上最迟10点前上品（每号2-3条）</li>
-    <li>☐ 上午11:30第一次数据检查（曝光/CTR/我想要）</li>
-    <li>☐ 下午4:00第二次数据检查+记录台账</li>
-    <li>☐ 根据数据决定是否补单</li>
-    <li>☐ 完成今日运营基础动作</li>
-  </ul>
-  <div class="img-placeholder"><strong>📸 [此处配图同 Day2]</strong><br>数据页面截图 / 补单操作步骤</div>
-  <div style="text-align:center;margin:0 0 12px;"><a href="#" class="demo-btn">📺 图文演示</a></div>
-
-  <h3>Day 3 · 冲刺日</h3>
-  <ul class="checklist">
-    <li>☐ 判断流量池状态（按曝光标准决定去留）</li>
-    <li>☐ 擦亮黄金时段操作（早7-9/午12-14/晚19-22）</li>
-    <li>☐ 数据诊断三步法优化（曝光/点击/转化）</li>
-    <li>☐ 执行补单（安全操作规范）</li>
-    <li>☐ 至少完成1单（自然成交或安全补单）</li>
-    <li>☐ 滞销品清理（5-7天零数据直接删，参考72小时）</li>
-  </ul>
-
-  <h3>Day 4 · 优化日</h3>
-  <ul class="checklist">
-    <li>☐ 理解账号权重（显性/隐性，个人/专业）</li>
-    <li>☐ 话术库建好（议价技巧+场景模板）</li>
-    <li>☐ 售后保护流程跑通（发货闭环/防纠纷/权重保护）</li>
-    <li>☐ 继续上新链接（每号再加1-2个）</li>
-  </ul>
-  <div class="img-placeholder"><strong>📸 [此处配图同 Day4]</strong><br>账号权重对比图</div>
-  <div style="text-align:center;margin:0 0 12px;"><a href="#" class="demo-btn">📺 图文演示</a></div>
-
-  <h3>Day 5 · 复盘日</h3>
-  <ul class="checklist">
-    <li>☐ 完成所有数据复盘（产品/运营/账号/利润四维度）</li>
-    <li>☐ 产品迭代决策（淘汰/优化/加码/上新）</li>
-    <li>☐ 矩阵放大与站外引流方案确定</li>
-    <li>☐ 建立初步SOP + 下周计划</li>
-    <li>☐ 完成考试（<a href="https://vincent5612.github.io/xianyu-exam/" target="_blank" style="color:#0f3460;">前往考试站 →</a>）</li>
-  </ul>
-</div>
-
-<!-- ══ 20字公式 ══ -->
-<div class="day" id="formula">
-  <h2 style="text-align:center;border-left:none;padding-left:0;">🔑 20字黄金成交公式</h2>
-  <p style="text-align:center;font-size:1.1em;padding:14px 0;letter-spacing:2px;">
-    <b style="color:#0f3460;">精细选品</b>
-    <span style="color:#9ca3af;margin:0 4px;">→</span>
-    <b style="color:#1a4a7a;">优质内容</b>
-    <span style="color:#9ca3af;margin:0 4px;">→</span>
-    <b style="color:#2a5a8a;">合理价格</b>
-    <span style="color:#9ca3af;margin:0 4px;">→</span>
-    <b style="color:#3a6a9a;">高效运营</b>
-    <span style="color:#9ca3af;margin:0 4px;">→</span>
-    <b style="color:#4a7aaa;">口碑沉淀</b>
-  </p>
-  <table>
-    <tr><th>环节</th><th>本质</th><th>关键动作</th></tr>
-    <tr><td>精细选品</td><td>选对赛道</td><td>近7天出单？利润≥30%？1688/拼多多货源验证？</td></tr>
-    <tr><td>优质内容</td><td>决定点击率</td><td>标题12字+9图排列+详情五段+15s短视频</td></tr>
-    <tr><td>合理价格</td><td>引流不亏本</td><td>低于竞品10-15%，底价上浮10-20%留砍价空间</td></tr>
-    <tr><td>高效运营</td><td>维持权重</td><td>秒回+擦亮+补单+话术库+刷对标+数据全记录</td></tr>
-    <tr><td>口碑沉淀</td><td>长期复利</td><td>人设拦截差评+主动要好评+售后保护+回访复购</td></tr>
-  </table>
-</div>
-
-<p class="footer-note">闲鱼运营学习手册 · 基于2026年5月培训内容整理 · 全品类适用</p>
-
-</div><!-- /main -->
-</div><!-- /content-wrapper -->
-
-<button class="back-to-top" id="backToTop">↑</button>
-
+<script src="api-config.js"></script>
+<script src="ammo-knowledge.js"></script>
 <script>
-const navLinks = document.querySelectorAll('.top-nav a, .sidebar a');
-const sections = document.querySelectorAll('.day');
-const backBtn = document.getElementById('backToTop');
-function updateActive() {
-  let cur = '';
-  sections.forEach(s => { if (s.getBoundingClientRect().top <= 160) cur = s.id; });
-  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
-  backBtn.classList.toggle('visible', window.scrollY > 400);
+// === 演示数据（基于安叔P/V/F/五维体系） ===
+const CTA_LINE = '\n\n---\n\n> 📩 还有不清楚的？加安叔微信 **NineHalf95** 免费咨询 · 备注「创业诊断」';
+
+const demoResultA = `# 一句话诊断
+你有**P（方向）**但缺**V（资产沉淀）**——想法有了，但还没把经验变成可复用的系统。
+
+## 所处阶段
+**启动→验证过渡期**。你已经跨过"想"的阶段，到了"做"的阶段，但做的方式还是手工作坊模式。
+
+## 核心卡点（五维分析）
+| 维度 | 状态 |
+|:----|:----:|
+| 🧠 认知财富 | ✅ 你有行业认知，这是最大资产 |
+| 💰 金钱财富 | ⚠️ 可能有启动资金，但缺稳定现金流 |
+| ⏰ 时间财富 | ⚠️ 你的时间还在换钱，不是资产在帮你赚钱 |
+| 👥 人际财富 | ⚠️ 靠熟人转介绍，缺系统化获客 |
+| 🏃 身体财富 | — 取决于你每天能不能固定2小时 |
+
+## 下一步行动（3步）
+1. **把经验产品化（P→V）** — 花一周把你做成功的方法写成SOP。经验不标准化，永远在卖时间。
+2. **单点打透（乘法思维）** — 砍到只剩一个项目。学习力×开店数×执行力=结果，缺一归零。
+3. **内容开始获客（V→$$）** — 今天写100字发出去，比想一个月再发强100倍。内容是筛选不是喇叭。
+
+## 推荐匹配项目
+根据你的情况，最佳匹配：**京东店群**
+- 启动成本：约2万（软件1000+保证金1万+每天垫资300-500）
+- 时间投入：每天2小时
+- 收益模型：后端分润30%，跑通后持续收益
+- 已有案例：学员25天做到18000` + CTA_LINE;
+
+const demoResultB = `# 一句话诊断
+你不是没能力，是还没找到那个**能让你持续积累V（资产）**的方向。你目前在P（浅层问题）里打转。
+
+## 所处阶段
+**验证期**。需要快速试错，在30天内找到正向反馈信号。没有信号就换，不恋战。
+
+## 核心卡点
+1. **选择太多=没有选择** — 这个试试那个看看，三个月过去了P还是P，没有变成V。
+2. **启动成本焦虑** — 总觉得要准备好了才能开始。用五维算一算：时间财富你每天有2小时吗？金钱财富你拿得出5000吗？两个都有就直接开始。
+
+## 下一步行动（3步）
+1. **锁定一个方向** — 不是最赚钱的，是你不反感、能每天干2小时持续3个月的。
+2. **最小成本验证** — 京东店群0学费+5000可退保证金，每天2小时。30天止损线。
+3. **内容筛选客户** — 把你做的过程记录下来发公众号/朋友圈，内容即筛选。
+
+## 推荐匹配项目
+| 项目 | 启动成本 | 每天投入 | 适合谁 |
+|:----|:-------:|:--------|:------|
+| 🥇 京东店群 | 0学费+5000保证金 | 2h | 想认真搞的人 |
+| 🥈 闲鱼电商 | 0元 | 1.5h | 先试试水的人 |
+| 🥉 RPO招聘 | 15万 | 全职 | 有经验有资金的人 |
+
+## 最该避开的坑
+**等准备好了再开始** — 你的问题不是准备不够，是开始不够。用30天×2小时做测试，不行再换。关键是开始，不是完美。` + CTA_LINE;
+
+// === 状态 ===
+let currentPath = null;
+let analysisHistory = []; // 保存对话历史（用于追问）
+let isAnalyzing = false;
+let firstAnalysisDone = false;
+
+// === 首页 ===
+function selectPath(el, p){
+  document.querySelectorAll('.path-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  currentPath = p;
+  document.getElementById('startBtn').disabled = false;
 }
-window.addEventListener('scroll', updateActive);
-window.addEventListener('load', updateActive);
-navLinks.forEach(a => {
-  a.addEventListener('click', e => {
-    const h = a.getAttribute('href'); if (!h || h === '#') return;
-    if (a.target === '_blank' || h.startsWith('http') || !h.startsWith('#')) return;
-    e.preventDefault(); const t = document.querySelector(h); if (t) t.scrollIntoView({ behavior: 'smooth' });
+
+function goToInput(){
+  if(!currentPath) return;
+  // 更新输入页的标签
+  const badge = document.getElementById('inputBadge');
+  const tag = document.getElementById('pathTag');
+  const hint = document.getElementById('inputHint');
+  if(currentPath === 'A'){
+    badge.textContent = '💡 我有想法';
+    tag.textContent = '路径A · 有想法';
+    tag.style.background = 'rgba(59,130,246,.1)';
+    tag.style.color = '#3b82f6';
+    hint.textContent = '把你的情况写下来：你的想法是什么？做到哪一步了？有什么资源？卡在哪？想达到什么目标？';
+  } else {
+    badge.textContent = '🔥 我没想法';
+    tag.textContent = '路径B · 没想法';
+    tag.style.background = 'rgba(239,68,68,.1)';
+    tag.style.color = '#ef4444';
+    hint.textContent = '把你的情况写下来：你现在做什么工作？每天有多少空余时间？手头能投入多少钱？之前做过什么？想什么样的副业？';
+  }
+  document.getElementById('page-home').classList.remove('active');
+  document.getElementById('page-input').classList.add('active');
+  document.getElementById('userInput').focus();
+}
+
+function goHome(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-home').classList.add('active');
+  firstAnalysisDone = false;
+  analysisHistory = [];
+  // 清空追问区
+  document.getElementById('chatMsgs').innerHTML = '<div class="chat-empty" id="chatEmpty">对上面的诊断结果有什么不明白的，或者想了解更多细节，在这里提问 👇</div>';
+  document.getElementById('chatInput').value = '';
+}
+
+// === 输入页 ===
+function updateCharCount(){
+  const len = document.getElementById('userInput').value.length;
+  document.getElementById('charCount').textContent = len;
+  if(len > 950) document.getElementById('charCount').style.color = '#ef4444';
+  else document.getElementById('charCount').style.color = '#bbb';
+}
+
+function checkInput(){
+  const val = document.getElementById('userInput').value.trim();
+  document.getElementById('submitBtn').disabled = val.length < 10;
+}
+
+// === AI分析 ===
+async function startAnalysis(){
+  if(isAnalyzing) return;
+  const desc = document.getElementById('userInput').value.trim();
+  if(desc.length < 10) return;
+
+  isAnalyzing = true;
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('submitBtn').textContent = '⏳ 分析中...';
+
+  document.getElementById('page-input').classList.remove('active');
+  document.getElementById('page-loading').classList.add('active');
+
+  try {
+    // 尝试调DeepSeek API
+    const key = atob(_k);
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(_u + '/chat/completions'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + key
+      },
+      body: JSON.stringify({
+        model: _d,
+        messages: [
+          {role:'system', content:'你是安叔——一个有15年创业实战经验的创业者。不是AI客服，不是鸡汤导师。\n\n你必须参考以下安叔核心知识库来回答，不要自己编造。\n\n' + AMMO_KNOWLEDGE + '\n\n你的核心体系：\n- P/V/F/$$/X框架：P=浅层问题, V=个人资产, F=认知范式, $$=高价值收益, X=外部变量\n- 五维财富：身体/时间/金钱/认知/人际\n- 赚钱三环：产品×流量×转化，缺一归零\n- 项目三问：启动成本多少？每天投多久？多久能看到反馈？\n\n回答要求：\n1. 结论前置，先说判断再展开\n2. 用口语化直接的方式，不用"首先其次最后"\n3. 每条建议必须包含启动成本变量\n4. 末尾固定加一句：📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」\n5. 用Markdown格式，适当用表格/列表\n\n用户选择了【' + (currentPath==='A'?'我有想法':'我没想法') + '】路径。'},
+          {role:'user', content: desc}
+        ],
+        temperature: 0.7,
+        max_tokens: 2000
+      })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error?.message || 'API错误');
+    const reply = data.choices[0].message.content;
+
+    analysisHistory = [
+      { role: 'user', content: desc },
+      { role: 'assistant', content: reply }
+    ];
+    showResult(reply);
+
+  } catch(err) {
+    // API失败，用演示数据
+    console.warn('API调用失败，使用演示数据:', err.message);
+    const demoResult = currentPath === 'A' ? demoResultA : demoResultB;
+    analysisHistory = [
+      { role: 'user', content: desc },
+      { role: 'assistant', content: demoResult }
+    ];
+    showResult(demoResult);
+  }
+
+  isAnalyzing = false;
+  document.getElementById('submitBtn').disabled = false;
+  document.getElementById('submitBtn').textContent = '🚀 AI分析诊断';
+}
+
+function showResult(content){
+  // 渲染AI回复（markdown简单转HTML）
+  const html = renderMarkdown(content);
+  document.getElementById('resultContent').innerHTML = html;
+
+  // 随机选一个表情和title用于头部
+  const emojis = ['🎯','💡','🚀','🔥','⭐','🎲'];
+  const tags = ['AI诊断分析','个性化方案','精准匹配','深度分析'];
+  document.getElementById('rEmoji').textContent = emojis[Math.floor(Math.random()*emojis.length)];
+  document.getElementById('rTitle').textContent = '你的诊断结果';
+  document.getElementById('rTag').textContent = tags[Math.floor(Math.random()*tags.length)];
+
+  // 切到结果页
+  firstAnalysisDone = true;
+  document.getElementById('page-loading').classList.remove('active');
+  document.getElementById('page-result').classList.add('active');
+}
+
+// === 追问 ===
+async function sendChat(){
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if(!msg || !firstAnalysisDone) return;
+
+  input.value = '';
+  addChatMessage('user', msg);
+  const loadingId = addChatLoading();
+  const sendBtn = document.getElementById('chatSendBtn');
+  sendBtn.disabled = true;
+
+  try {
+    const key = atob(_k);
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(_u + '/chat/completions'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + key
+      },
+      body: JSON.stringify({
+        model: _d,
+        messages: [
+          {role:'system', content:'你是安叔——15年创业实战经验。参考以下知识库回答，不要编造。\n\n' + AMMO_KNOWLEDGE + '\n\n回答要求：口语化、直接、给具体建议。末尾固定加：📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」'},
+          ...analysisHistory,
+          {role:'user', content: msg}
+        ],
+        temperature: 0.7,
+        max_tokens: 1500
+      })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error?.message || 'API错误');
+    const reply = data.choices[0].message.content;
+
+    document.getElementById(loadingId)?.remove();
+    addChatMessage('ai', reply);
+    analysisHistory.push({ role: 'user', content: msg });
+    analysisHistory.push({ role: 'assistant', content: reply });
+
+  } catch(err) {
+    document.getElementById(loadingId)?.remove();
+    // 降级回复：根据关键词给不同演示回答
+    const lower = msg.toLowerCase();
+    let fallback = '';
+    if (lower.includes('多少钱') || lower.includes('成本') || lower.includes('投入') || lower.includes('启动')) {
+      fallback = '启动成本这块，京东店群大概2万左右——但不是一次性掏2万。软件费1000、保证金1万、每天垫资300-500，拆开来说心理阻力能降70%。闲鱼更低，0保证金就能开干。\n\n📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」';
+    } else if (lower.includes('多久') || lower.includes('时间') || lower.includes('见效') || lower.includes('出单')) {
+      fallback = '看执行力。有学员听话照做25天做到18000，也有慢点的一个月出头。核心不是时间，是你每天能不能固定2小时雷打不动。比每天搞3小时但三天打鱼两天晒网强10倍。\n\n📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」';
+    } else if (lower.includes('哪个') || lower.includes('推荐') || lower.includes('项目') || lower.includes('方向') || lower.includes('选')) {
+      fallback = '老实说，没想法的人我一般先推京东店群——免费培训、跑通再分润、每天2小时够了。有想法但不知道怎么变现的，先把你做过的事写成SOP，那是你最有价值的资产。\n\n📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」';
+    } else if (lower.includes('难') || lower.includes('怕') || lower.includes('不会') || lower.includes('小白') || lower.includes('零基础')) {
+      fallback = '你的担心我理解。但说句实话——你开始之前想破头都想不明白，做了三天自然知道问题在哪。京东那个学员李笑笑纯小白起步，连电商后台都没见过，25天跑通。不是她厉害，是听话照做。\n\n📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」';
+    } else {
+      fallback = '好问题。这么说吧——你现在的卡点不是不知道怎么做，是想太多了。选一个方向，给自己定30天的时间，每天2小时，30天后看有没有正向反馈。有就加大投入，没有就换。关键是开始，不是完美。\n\n📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」';
+    }
+    addChatMessage('ai', fallback);
+    analysisHistory.push({ role: 'user', content: msg });
+    analysisHistory.push({ role: 'assistant', content: fallback });
+  }
+  sendBtn.disabled = false;
+}
+
+function addChatMessage(role, content){
+  const msgs = document.getElementById('chatMsgs');
+  // 移除空状态
+  const empty = document.getElementById('chatEmpty');
+  if(empty) empty.remove();
+
+  const div = document.createElement('div');
+  div.className = `chat-msg ${role}`;
+  div.innerHTML = `
+    <div class="avatar">${role === 'user' ? '你' : '安'}</div>
+    <div class="bubble">${content}</div>
+  `;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function addChatLoading(){
+  const msgs = document.getElementById('chatMsgs');
+  const id = 'loading-' + Date.now();
+  const div = document.createElement('div');
+  div.className = 'chat-msg ai';
+  div.id = id;
+  div.innerHTML = `
+    <div class="avatar">安</div>
+    <div class="bubble">
+      <div class="loading-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  `;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return id;
+}
+
+// === Markdown渲染（重写版，支持标题/加粗/列表/引用的正确嵌套） ===
+function renderMarkdown(text){
+  if(!text) return '';
+  let html = text;
+
+  // 1. 代码块（先处理，避免内部被其他规则污染）
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre style="background:#222;padding:12px;border-radius:8px;overflow-x:auto;font-size:12px;color:#d4a574;margin:10px 0"><code>$2</code></pre>');
+  html = html.replace(/`([^`]+)`/g, '<code style="background:#222;color:#d4a574;padding:2px 6px;border-radius:4px;font-size:12px">$1</code>');
+
+  // 2. 行首标题 (# ## ###)
+  html = html.replace(/^### (.+)$/gm, '<h3 style="font-size:14px;font-weight:700;margin:14px 0 6px;color:#f0e6d3">$1</h3>');
+  html = html.replace(/^## (.+)$/gm, '<h2 style="font-size:16px;font-weight:700;margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid #2a2a2a;color:#f0e6d3">$1</h2>');
+  html = html.replace(/^# (.+)$/gm, '<h1 style="font-size:18px;font-weight:700;margin:18px 0 10px;color:#f0e6d3">$1</h1>');
+
+  // 3. 加粗
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#f0e6d3">$1</strong>');
+
+  // 4. 引用块
+  html = html.replace(/^> (.+)$/gm, '<blockquote style="background:#222;border-left:3px solid #d4a574;padding:10px 14px;margin:10px 0;border-radius:0 8px 8px 0;color:rgba(255,255,255,.5);line-height:1.6">$1</blockquote>');
+
+  // 5. 有序列表 (1. xxx)
+  // 先把所有列表项标记出来，再合并
+  html = html.replace(/^(\d+)\. (.+)$/gm, '<li style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:3px;padding-left:4px">$2</li>');
+
+  // 6. 无序列表 (- xxx)
+  html = html.replace(/^- (.+)$/gm, '<li style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:3px;padding-left:4px">$1</li>');
+
+  // 7. 合并连续li为ol或ul
+  html = html.replace(/((?:<li[\s\S]*?<\/li>\n?)+)/g, function(match) {
+    // 如果包含有序列表格式，用ol
+    if (/<li/.test(match)) {
+      return '<ol style="padding-left:20px;margin:8px 0">' + match + '</ol>';
+    }
+    return match;
   });
-});
+
+  // 8. 普通段落（空行分隔）
+  let lines = html.split('\n');
+  let result = [];
+  let inList = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+
+    if (!line) {
+      if (inList) { result.push(''); inList = false; }
+      else { result.push(''); }
+      continue;
+    }
+
+    // 跳过纯HTML标签行（标题、列表、引用等已经是完整HTML）
+    if (/^<(h[1-3]|blockquote|pre|ol|ul|li)/.test(line)) {
+      if (line.startsWith('<li')) { inList = true; }
+      else { inList = false; }
+      result.push(line);
+      continue;
+    }
+
+    // 剩余文本包装为段落
+    result.push('<p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:8px">' + line + '</p>');
+    inList = false;
+  }
+
+  return result.join('\n');
+}
+
+// === 微信弹窗 ===
+function showWechat(){document.getElementById('wechatModal').classList.add('active')}
+function hideWechat(){document.getElementById('wechatModal').classList.remove('active')}
 </script>
 </body>
 </html>
