@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>京东店群项目 · 监察看板</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#0f1923;color:#e0e0e0;min-height:100vh;padding:24px}
+.container{max-width:1000px;margin:0 auto}
+
+/* Header */
+.header{background:linear-gradient(135deg,#1a2a3a 0%,#0f1923 100%);border:1px solid #2a3a4a;border-radius:16px;padding:28px 32px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center}
+.header h1{font-size:26px;font-weight:700;color:#f0e6d3}
+.header h1 span{color:#d4a574}
+.header .date{font-size:14px;color:#8a9ba8;background:rgba(212,165,116,0.1);padding:6px 16px;border-radius:20px;border:1px solid rgba(212,165,116,0.25)}
+
+/* Phase Cards */
+.phase{background:#1a2a3a;border:1px solid #2a3a4a;border-radius:16px;padding:24px 28px;margin-bottom:20px}
+.phase-title{font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.phase .badge{font-size:11px;padding:3px 10px;border-radius:10px;font-weight:600}
+.phase .badge.active{background:rgba(212,165,116,0.15);color:#d4a574;border:1px solid rgba(212,165,116,0.25)}
+.phase .badge.pending{background:rgba(255,193,7,0.12);color:#ffc107;border:1px solid rgba(255,193,7,0.2)}
+
+/* Timeline */
+.timeline{position:relative;padding-left:36px}
+.timeline::before{content:'';position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:#2a3a4a}
+
+.node{position:relative;padding:14px 18px;margin-bottom:10px;background:rgba(255,255,255,0.02);border:1px solid #2a3a4a;border-radius:10px;transition:all .2s}
+.node:hover{background:rgba(255,255,255,0.04);border-color:#3a4a5a}
+.node::before{content:'';position:absolute;left:-29px;top:20px;width:12px;height:12px;border-radius:50%;border:2px solid}
+.node.done::before{background:#198754;border-color:#198754}
+.node.active::before{background:#d4a574;border-color:#d4a574;box-shadow:0 0 8px rgba(212,165,116,0.3)}
+.node.pending::before{background:transparent;border-color:#4a5a6a}
+
+.node .meta{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.node .day{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600}
+.node .day.done{background:rgba(25,135,84,0.15);color:#4ade80}
+.node .day.active{background:rgba(212,165,116,0.15);color:#d4a574}
+.node .day.pending{background:rgba(74,90,106,0.15);color:#8a9ba8}
+.node .day.overdue{background:rgba(220,53,69,0.15);color:#f87171}
+
+.node .name{font-size:15px;font-weight:600;color:#f0e6d3}
+.node .desc{font-size:12px;color:#8a9ba8;line-height:1.5;margin-top:4px}
+.node .tags{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.node .tag{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:500}
+
+/* KPI Matrix */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.kpi-card{background:rgba(255,255,255,0.02);border:1px solid #2a3a4a;border-radius:10px;padding:14px 16px}
+.kpi-card h4{font-size:12px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.kpi-card .tasks{font-size:11px;color:#8a9ba8;line-height:1.6}
+.kpi-card .tasks li{padding:3px 0;list-style:none;position:relative;padding-left:14px}
+.kpi-card .tasks li::before{content:'▸';position:absolute;left:0;color:#d4a574}
+
+/* Stats Bar */
+.stats{display:flex;gap:16px;margin-bottom:20px}
+.stat-card{flex:1;background:rgba(255,255,255,0.02);border:1px solid #2a3a4a;border-radius:12px;padding:16px 20px;text-align:center}
+.stat-card .num{font-size:28px;font-weight:700}
+.stat-card .label{font-size:11px;color:#8a9ba8;margin-top:4px}
+.stat-card.gold .num{color:#d4a574}
+.stat-card.green .num{color:#4ade80}
+.stat-card.red .num{color:#f87171}
+.stat-card.blue .num{color:#60a5fa}
+
+/* Day counter */
+.day-counter{display:flex;gap:6px;align-items:center;margin-bottom:16px;padding:12px 16px;background:rgba(212,165,116,0.06);border:1px solid rgba(212,165,116,0.2);border-radius:10px}
+.day-counter .big{font-size:32px;font-weight:800;color:#d4a574}
+.day-counter .text{font-size:13px;color:#8a9ba8;margin-left:8px}
+.day-counter .bar-wrap{flex:1;height:6px;background:#2a3a4a;border-radius:4px;margin:0 16px;overflow:hidden}
+.day-counter .bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#d4a574,#c8915e);transition:width .3s}
+
+@media(max-width:640px){body{padding:12px}.kpi-grid{grid-template-columns:1fr}.header{flex-direction:column;align-items:flex-start;gap:12px}.stats{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <h1>🛒 <span>京东店群</span> · 项目监察看板</h1>
+      <div style="font-size:12px;color:#8a9ba8;margin-top:4px">启动日期：2026-07-23 · 总工期：15天 ┼ 二期并行</div>
+    </div>
+    <div class="date" id="todayDisplay">加载中...</div>
+  </div>
+
+  <!-- Day Counter -->
+  <div class="day-counter" id="dayCounter">
+    <span class="big" id="dayNum">D1</span>
+    <span class="text">/ 15天 · 第一期</span>
+    <div class="bar-wrap"><div class="bar-fill" id="progressBar" style="width:7%"></div></div>
+    <span style="font-size:12px;color:#8a9ba8;white-space:nowrap" id="deadlineText">截止：8/6</span>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card gold"><div class="num" id="totalNodes">12</div><div class="label">总节点数</div></div>
+    <div class="stat-card blue"><div class="num" id="activeNodes">0</div><div class="label">进行中</div></div>
+    <div class="stat-card green"><div class="num" id="doneNodes">0</div><div class="label">已完成</div></div>
+    <div class="stat-card red"><div class="num" id="overdueNodes">0</div><div class="label">逾期提醒</div></div>
+  </div>
+
+  <!-- 第一期 -->
+  <div class="phase">
+    <div class="phase-title">
+      📋 第一期 · 下店运营产生收益
+      <span class="badge active">进行中</span>
+      <span style="font-size:12px;color:#8a9ba8;font-weight:400;margin-left:auto">7/23 → 8/6 · 15天</span>
+    </div>
+    <div class="timeline" id="phase1Timeline"></div>
+  </div>
+
+  <!-- 第二期 -->
+  <div class="phase">
+    <div class="phase-title">
+      📋 第二期 · 扩店 + 招人
+      <span class="badge pending">待启动</span>
+      <span style="font-size:12px;color:#8a9ba8;font-weight:400;margin-left:auto">预计7月底启动</span>
+    </div>
+    <div class="timeline" id="phase2Timeline"></div>
+  </div>
+
+  <!-- KPI五维拆解 -->
+  <div class="phase">
+    <div class="phase-title">🎯 KPI五维 · 任务归属</div>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <h4>📊 业务结果达成 (25%)</h4>
+        <ul class="tasks" id="kpiResult"></ul>
+      </div>
+      <div class="kpi-card">
+        <h4>📋 业务流程合规 (25%)</h4>
+        <ul class="tasks" id="kpiCompliance"></ul>
+      </div>
+      <div class="kpi-card">
+        <h4>🛡️ 风险管控处理 (15%)</h4>
+        <ul class="tasks" id="kpiRisk"></ul>
+      </div>
+      <div class="kpi-card">
+        <h4>🔄 体系优化复盘 (20%)</h4>
+        <ul class="tasks" id="kpiSystem"></ul>
+      </div>
+      <div class="kpi-card">
+        <h4>🤝 协同赋能职业素养 (15%)</h4>
+        <ul class="tasks" id="kpiSynergy"></ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// === 项目数据 ===
+const startDate = new Date(2026, 6, 23); // 7月23日
+
+const phase1 = [
+  {day: 1,  name: '选品',        desc: '确定150家店铺的品类方向，选高消耗品/高复购率品类', tag: '核心', tagColor: '#d4a574', status: 'active'},
+  {day: 3,  name: '洗图',        desc: '采集竞品图片 → AI去重+去水印 → 批量处理150套', tag: '执行', tagColor: '#60a5fa', status: 'pending'},
+  {day: 5,  name: '解析',        desc: '拆解竞品标题/关键词/属性 → 建立自己的上品库', tag: '数据', tagColor: '#a78bfa', status: 'pending'},
+  {day: 7,  name: '上品',        desc: '第一批50家店完成上架（每店10-15个SKU）', tag: '里程碑', tagColor: '#f87171', status: 'pending'},
+  {day: 9,  name: '打标',        desc: '店铺标签/人群标签/关键词标签设定，提升搜索权重', tag: '运营', tagColor: '#34d399', status: 'pending'},
+  {day: 11, name: '投流',        desc: '首批投流测试（300-500/店），看ROI数据调优', tag: '推广', tagColor: '#fbbf24', status: 'pending'},
+  {day: 13, name: '运营优化',     desc: '根据前3天数据优化标题/主图/价格，淘汰低效品', tag: '运营', tagColor: '#34d399', status: 'pending'},
+  {day: 15, name: '产生收益 🎯',  desc: '首批店铺跑通正向收益，复盘SOP，为二期扩店准备', tag: '里程碑', tagColor: '#f87171', status: 'pending'},
+];
+
+const phase2 = [
+  {day: '-', name: '招募新人5名',    desc: '筛选+培训，按5-3-2评估标准（态度5/学习力3/经验2）', tag: '人力', tagColor: '#60a5fa', status: 'pending'},
+  {day: '-', name: '找9人注册45执照', desc: '每个人注册5个执照，完成150家店的资质储备', tag: '行政', tagColor: '#a78bfa', status: 'pending'},
+  {day: '-', name: '开150家店',     desc: '分批次开店，按第一期SOP复制，每批次15-20家', tag: '核心', tagColor: '#d4a574', status: 'pending'},
+  {day: '-', name: '团队运营',      desc: '新人上手+老店维护+数据看板搭建，日均监控', tag: '管理', tagColor: '#fbbf24', status: 'pending'},
+];
+
+// KPI五维拆解
+const kpiData = {
+  result: [
+    '第一期15天完成上架+产生收益',
+    '第二期150家店全部开起来',
+    '单店月收益达标（SOP标准值）'
+  ],
+  compliance: [
+    '每批次开店合规（执照/类目/保证金）',
+    '选品→洗图→上品流程标准化',
+    '投流预算管控（ROI≥1.5）'
+  ],
+  risk: [
+    '关联封控风险（IP隔离/设备隔离）',
+    '竞品投诉/侵权风险（洗图合规）',
+    '店铺保证金资金链（150家≈150万冻结）'
+  ],
+  system: [
+    '7个节点跑通后固化成SOP',
+    '洗图/上品AI工具链标准化',
+    '二期新人培训体系文档化'
+  ],
+  synergy: [
+    '新人招募+培训交付（5-3-2标准）',
+    '与公司AI部门协同（U盘项目联动）',
+    '每周进度同步到总经办'
+  ]
+};
+
+// === 渲染 ===
+function renderTimeline(data, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = data.map(n => `
+    <div class="node ${n.status}">
+      <div class="meta">
+        <span class="day ${n.status}">${n.day === '-' ? '待定' : 'D'+n.day}</span>
+        <span class="name">${n.name}</span>
+      </div>
+      <div class="desc">${n.desc}</div>
+      <div class="tags">
+        <span class="tag" style="background:${n.tagColor}22;color:${n.tagColor}">${n.tag}</span>
+        <span class="tag" style="background:rgba(74,90,106,0.15);color:#8a9ba8">${n.status === 'done' ? '✅ 已完成' : n.status === 'active' ? '🟡 进行中' : '⚪ 待开始'}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderKPI() {
+  const ids = ['kpiResult','kpiCompliance','kpiRisk','kpiSystem','kpiSynergy'];
+  const keys = ['result','compliance','risk','system','synergy'];
+  keys.forEach((k, i) => {
+    document.getElementById(ids[i]).innerHTML = kpiData[k].map(t => `<li>${t}</li>`).join('');
+  });
+}
+
+function updateStats() {
+  const total = phase1.length + phase2.length;
+  const done = [...phase1, ...phase2].filter(n => n.status === 'done').length;
+  const active = [...phase1, ...phase2].filter(n => n.status === 'active').length;
+  document.getElementById('totalNodes').textContent = total;
+  document.getElementById('doneNodes').textContent = done;
+  document.getElementById('activeNodes').textContent = active;
+}
+
+function updateDate() {
+  const now = new Date();
+  const diff = Math.floor((now - startDate) / (1000*60*60*24)) + 1;
+  const d = Math.min(Math.max(diff, 1), 15);
+  document.getElementById('dayNum').textContent = 'D' + d;
+  document.getElementById('progressBar').style.width = (d/15*100) + '%';
+  document.getElementById('todayDisplay').textContent = now.toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric',weekday:'long'});
+}
+
+renderTimeline(phase1, 'phase1Timeline');
+renderTimeline(phase2, 'phase2Timeline');
+renderKPI();
+updateStats();
+updateDate();
+</script>
+</body>
+</html>
