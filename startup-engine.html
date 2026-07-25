@@ -3,13 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>创业赋能引擎 · 副业路径诊断</title>
+<title>创业赋能引擎 · AI副业诊断</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f3f0;color:#1a1a1a;min-height:100vh}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#0d0d0d;color:#e0e0e0;min-height:100vh}
 .container{max-width:420px;margin:0 auto;padding:0 16px 40px}
-
-/* ===== 状态切换 ===== */
 .page{display:none}
 .page.active{display:block}
 
@@ -24,114 +22,140 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f3f0;c
 
 /* ===== 数据卡片 ===== */
 .stats-row{display:flex;gap:8px;margin:-12px 0 16px;position:relative;z-index:2}
-.stat-card{flex:1;background:#fff;border-radius:10px;padding:12px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.stat-card .num{font-size:18px;font-weight:700;color:#1a1a1a}
+.stat-card{flex:1;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:12px 8px;text-align:center}
+.stat-card .num{font-size:18px;font-weight:700;color:#f0e6d3}
 .stat-card .num span{color:#d4a574}
-.stat-card .label{font-size:10px;color:rgba(26,26,26,.4);margin-top:2px}
+.stat-card .label{font-size:10px;color:rgba(255,255,255,.35);margin-top:2px}
 
 /* ===== 信任区 ===== */
-.trust-section{background:#fff;border-radius:12px;padding:18px 16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.trust-section .title{font-size:16px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.trust-section{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:18px 16px;margin-bottom:12px}
+.trust-section .title{font-size:16px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;color:#f0e6d3}
 .trust-section .title .accent{color:#d4a574}
 .trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.trust-item{background:#faf8f6;border-radius:8px;padding:12px;text-align:center}
+.trust-item{background:#222;border:1px solid #2a2a2a;border-radius:8px;padding:12px;text-align:center}
 .trust-item .icon{font-size:22px;margin-bottom:4px}
-.trust-item .t{font-size:12px;font-weight:600;color:#1a1a1a}
-.trust-item .d{font-size:10px;color:rgba(26,26,26,.4);margin-top:2px}
-
-.trust-quote{background:linear-gradient(135deg,#faf8f6,#f5f0eb);border-left:3px solid #d4a574;border-radius:0 8px 8px 0;padding:14px 16px;margin-top:10px}
-.trust-quote p{font-size:12px;color:rgba(26,26,26,.6);line-height:1.6;font-style:italic}
+.trust-item .t{font-size:12px;font-weight:600;color:#e0e0e0}
+.trust-item .d{font-size:10px;color:rgba(255,255,255,.35);margin-top:2px}
+.trust-quote{background:linear-gradient(135deg,#1e1e1e,#222);border-left:3px solid #d4a574;border-radius:0 8px 8px 0;padding:14px 16px;margin-top:10px}
+.trust-quote p{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;font-style:italic}
 .trust-quote .author{font-size:11px;color:#d4a574;font-weight:600;margin-top:4px;font-style:normal}
 
+/* ===== 弹药库精选 ===== */
+.ammo-section{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:16px;margin-bottom:12px}
+.ammo-section-title{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px;color:#f0e6d3}
+.ammo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ammo-item{display:flex;gap:10px;padding:10px;background:#222;border:1px solid #2a2a2a;border-radius:8px;align-items:flex-start}
+.ammo-num{font-size:13px;color:#d4a574;font-weight:700;flex-shrink:0;margin-top:1px}
+.ammo-body{flex:1;min-width:0}
+.ammo-head{font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:2px}
+.ammo-desc{font-size:11px;color:rgba(255,255,255,.45);line-height:1.5}
+
 /* ===== 入口区 ===== */
-.entry-section{background:#fff;border-radius:12px;padding:18px 16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.entry-section .title{font-size:16px;font-weight:700;margin-bottom:4px}
-.entry-section .sub{font-size:12px;color:rgba(26,26,26,.4);margin-bottom:14px}
-
+.entry-section{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:18px 16px;margin-bottom:12px}
+.entry-section .title{font-size:16px;font-weight:700;margin-bottom:4px;color:#f0e6d3}
+.entry-section .sub{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px}
 .path-grid{display:flex;gap:10px;margin-bottom:16px}
-.path-card{flex:1;padding:16px 10px;background:#faf8f6;border:1.5px solid #eee;border-radius:10px;text-align:center;cursor:pointer;transition:all .2s}
-.path-card:hover,.path-card.selected{border-color:#d4a574;background:rgba(212,165,116,.06)}
+.path-card{flex:1;padding:16px 10px;background:#222;border:1.5px solid #2a2a2a;border-radius:10px;text-align:center;cursor:pointer;transition:all .2s}
+.path-card:hover,.path-card.selected{border-color:#d4a574;background:rgba(212,165,116,.08)}
 .path-card .icon{font-size:30px;margin-bottom:8px}
-.path-card .t{font-size:14px;font-weight:600;color:#1a1a1a}
-.path-card .d{font-size:11px;color:rgba(26,26,26,.4);margin-top:2px;line-height:1.4}
+.path-card .t{font-size:14px;font-weight:600;color:#e0e0e0}
+.path-card .d{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;line-height:1.4}
 
-.btn{display:block;width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn{display:block;width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
 .btn-primary{background:#d4a574;color:#1a1a1a}
 .btn-primary:hover{background:#c8915e}
 .btn-primary:disabled{opacity:.4;cursor:not-allowed}
-.btn-outline{background:transparent;border:1.5px solid #ddd;color:#666}
+.btn-outline{background:transparent;border:1.5px solid #333;color:#999}
 .btn-outline:hover{border-color:#d4a574;color:#d4a574}
 
-/* ===== 诊断页 ===== */
-.header-bar{background:#fff;padding:16px 0;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.header-bar .back{font-size:20px;cursor:pointer;color:#999;padding:4px}
-.header-bar .back:hover{color:#1a1a1a}
-.header-bar .step-text{font-size:12px;color:rgba(26,26,26,.3);flex:1;text-align:right}
+/* ===== 输入页 ===== */
+.input-section{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:20px 16px;margin-bottom:12px}
+.input-section .label{font-size:14px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px;color:#f0e6d3}
+.input-section .label .path-tag{font-size:10px;padding:2px 8px;border-radius:6px;font-weight:500}
+.path-tag-a{background:rgba(59,130,246,.15);color:#60a5fa}
+.path-tag-b{background:rgba(239,68,68,.15);color:#f87171}
+.input-section .hint{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:10px;line-height:1.5}
+.input-section textarea{width:100%;min-height:180px;padding:14px;background:#222;border:1.5px solid #333;border-radius:10px;font-size:14px;font-family:inherit;line-height:1.7;resize:vertical;outline:none;transition:border-color .2s;color:#e0e0e0}
+.input-section textarea:focus{border-color:#d4a574;box-shadow:0 0 0 3px rgba(212,165,116,.1)}
+.input-section textarea::placeholder{color:#555}
+.input-section .char-count{text-align:right;font-size:11px;color:#555;margin-top:4px}
 
-.progress-wrap{background:#eee;height:3px;border-radius:2px;margin-bottom:20px;overflow:hidden}
-.progress-bar{height:100%;background:linear-gradient(90deg,#d4a574,#c8915e);border-radius:2px;transition:width .3s}
-
-.question{padding:4px 0}
-.question h2{font-size:19px;font-weight:700;margin-bottom:6px;line-height:1.5;padding:0 4px}
-.question .sub{font-size:13px;color:rgba(26,26,26,.4);margin-bottom:20px;padding:0 4px}
-
-.options{display:flex;flex-direction:column;gap:10px}
-.option{display:flex;align-items:center;gap:14px;padding:18px 16px;background:#fff;border:1.5px solid #eee;border-radius:12px;cursor:pointer;transition:all .2s}
-.option:hover{border-color:rgba(212,165,116,.4)}
-.option.selected{border-color:#d4a574;background:rgba(212,165,116,.06)}
-.option .radio{width:22px;height:22px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.option.selected .radio{border-color:#d4a574}
-.option.selected .radio::after{content:'';width:11px;height:11px;border-radius:50%;background:#d4a574}
-.option .txt{flex:1}
-.option .label{font-size:15px;font-weight:600;color:#1a1a1a}
-.option .sub-label{font-size:12px;color:rgba(26,26,26,.4);margin-top:3px}
-
-.nav-btns{display:flex;gap:10px;margin-top:20px}
+/* ===== Loading ===== */
+.loading-wrap{text-align:center;padding:40px 16px}
+.spinner{width:48px;height:48px;border:3px solid #333;border-top-color:#d4a574;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-wrap .text{font-size:14px;color:#ccc;margin-bottom:6px}
+.loading-wrap .sub{font-size:12px;color:#666}
 
 /* ===== 结果页 ===== */
-.result-header{text-align:center;padding:24px 0 16px}
-.result-header .emoji{font-size:44px;margin-bottom:10px}
-.result-header h2{font-size:20px;font-weight:700}
-.result-header .tag{display:inline-block;background:rgba(212,165,116,.12);color:#d4a574;font-size:11px;padding:3px 10px;border-radius:10px;margin-top:6px}
+.result-header{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:20px 16px;margin-bottom:12px;text-align:center}
+.result-header h2{font-size:18px;font-weight:700;color:#f0e6d3}
 
-.result-box{background:#fff;border-radius:12px;padding:20px 16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.result-box .desc{font-size:13px;color:rgba(26,26,26,.55);line-height:1.6;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid #f0ece8}
-.result-box .list-title{font-size:14px;font-weight:600;margin-bottom:10px}
-.result-box .list-title span{color:#d4a574}
+.result-content{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:20px 16px;margin-bottom:12px}
+.result-content h1{font-size:17px;font-weight:700;margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid #2a2a2a;color:#f0e6d3}
+.result-content h1:first-child{margin-top:0}
+.result-content h2{font-size:15px;font-weight:700;margin:14px 0 6px;color:#e0e0e0}
+.result-content h3{font-size:13px;font-weight:600;margin:10px 0 4px;color:#999}
+.result-content p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:8px}
+.result-content strong{color:#f0e6d3}
+.result-content ul,.result-content ol{padding-left:18px;margin-bottom:8px}
+.result-content li{font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:4px}
+.result-content blockquote{background:#222;border-left:3px solid #d4a574;padding:10px 14px;margin:10px 0;border-radius:0 8px 8px 0;font-size:12px;color:rgba(255,255,255,.45);line-height:1.6}
+.result-content code{background:#222;padding:2px 6px;border-radius:4px;font-size:12px;color:#d4a574}
 
-.rec-step{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f5f2ee}
-.rec-step:last-child{border:none}
-.rec-step .num{width:26px;height:26px;border-radius:50%;background:#d4a574;color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.rec-step .content{flex:1}
-.rec-step .r-title{font-size:14px;font-weight:600;color:#1a1a1a}
-.rec-step .r-desc{font-size:12px;color:rgba(26,26,26,.45);margin-top:2px;line-height:1.4}
-
+/* ===== CTA ===== */
 .cta-card{background:linear-gradient(135deg,#1a1a1a,#2d2a24);border-radius:12px;padding:20px;text-align:center;margin-bottom:16px}
 .cta-card p{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:12px}
-.cta-card .wechat-btn{display:inline-block;padding:12px 28px;background:#d4a574;color:#1a1a1a;border-radius:8px;font-size:15px;font-weight:700;text-decoration:none}
+.cta-card .wechat-btn{display:inline-block;padding:12px 28px;background:#d4a574;color:#1a1a1a;border-radius:8px;font-size:15px;font-weight:700;text-decoration:none;border:none;cursor:pointer;font-family:inherit}
 .cta-card .hint{font-size:11px;color:rgba(255,255,255,.25);margin-top:8px}
 
-.retake-btn{display:block;text-align:center;padding:12px;color:#999;font-size:12px;cursor:pointer;text-decoration:none}
-.retake-btn:hover{color:#d4a574}
+/* ===== 追问区 ===== */
+.chat-section{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;margin-bottom:12px;overflow:hidden}
+.chat-header{padding:14px 16px;font-size:14px;font-weight:600;border-bottom:1px solid #2a2a2a;display:flex;align-items:center;gap:6px;color:#f0e6d3}
+.chat-msgs{max-height:400px;overflow-y:auto;padding:12px 16px}
+.chat-empty{padding:24px 16px;text-align:center;font-size:12px;color:#555;line-height:1.6}
+.chat-msg{display:flex;gap:10px;margin-bottom:12px}
+.chat-msg.user{flex-direction:row-reverse}
+.chat-msg .avatar{width:30px;height:30px;min-width:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.chat-msg.user .avatar{background:#d4a574;color:#1a1a1a}
+.chat-msg.ai .avatar{background:#333;color:#d4a574}
+.chat-msg .bubble{max-width:85%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6;white-space:pre-wrap;word-wrap:break-word}
+.chat-msg.user .bubble{background:#d4a574;color:#1a1a1a;border-bottom-right-radius:4px}
+.chat-msg.ai .bubble{background:#222;color:rgba(255,255,255,.65);border-bottom-left-radius:4px}
+.chat-msg .bubble .loading-dots{display:inline-flex;gap:4px;padding:4px 0}
+.chat-msg .bubble .loading-dots span{width:6px;height:6px;border-radius:50%;background:#555;animation:dotPulse 1.2s ease-in-out infinite}
+.chat-msg .bubble .loading-dots span:nth-child(2){animation-delay:.2s}
+.chat-msg .bubble .loading-dots span:nth-child(3){animation-delay:.4s}
+@keyframes dotPulse{0%,60%,100%{opacity:.3;transform:scale(.8)}30%{opacity:1;transform:scale(1)}}
+.chat-input-wrap{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #2a2a2a}
+.chat-input-wrap input{flex:1;padding:10px 14px;background:#222;border:1.5px solid #333;border-radius:8px;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s;color:#e0e0e0}
+.chat-input-wrap input:focus{border-color:#d4a574}
+.chat-input-wrap input::placeholder{color:#555}
+.chat-input-wrap .send-btn{padding:10px 18px;background:#d4a574;color:#1a1a1a;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s;white-space:nowrap}
+.chat-input-wrap .send-btn:disabled{opacity:.4;cursor:not-allowed}
 
-.footer{text-align:center;font-size:10px;color:rgba(26,26,26,.2);padding:20px 0 30px}
+/* ===== 重新诊断 ===== */
+.restart-btn{display:block;text-align:center;padding:12px;color:#999;font-size:12px;cursor:pointer;text-decoration:none;margin-bottom:16px}
+.restart-btn:hover{color:#d4a574}
 
 /* ===== 微信弹窗 ===== */
-.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.65);z-index:999;align-items:center;justify-content:center}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:999;align-items:center;justify-content:center}
 .modal-overlay.active{display:flex}
-.modal-box{background:#fff;border-radius:16px;padding:28px 24px 22px;width:300px;text-align:center;position:relative;animation:modalIn .25s ease}
+.modal-box{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:16px;padding:28px 24px 22px;width:300px;text-align:center;position:relative;animation:modalIn .25s ease}
 @keyframes modalIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
-.modal-box .close{position:absolute;top:12px;right:14px;font-size:18px;color:#999;cursor:pointer;line-height:1;padding:4px}
-.modal-box .close:hover{color:#333}
-.modal-box h3{font-size:16px;font-weight:700;margin-bottom:2px}
-.modal-box .mid{font-size:12px;color:rgba(26,26,26,.4);margin-bottom:14px}
-.modal-box .qr-wrap{width:200px;height:200px;margin:0 auto 12px;border-radius:10px;overflow:hidden;border:1px solid #eee}
+.modal-box .close{position:absolute;top:12px;right:14px;font-size:18px;color:#666;cursor:pointer;line-height:1;padding:4px}
+.modal-box .close:hover{color:#fff}
+.modal-box h3{font-size:16px;font-weight:700;margin-bottom:2px;color:#f0e6d3}
+.modal-box .mid{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px}
+.modal-box .qr-wrap{width:200px;height:200px;margin:0 auto 12px;border-radius:10px;overflow:hidden;border:1px solid #333}
 .modal-box .qr-wrap img{width:100%;height:100%;display:block}
-.modal-box .wechat-id{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+.modal-box .wechat-id{font-size:15px;font-weight:700;color:#f0e6d3;margin-bottom:4px}
 .modal-box .wechat-id span{color:#d4a574}
-.modal-box .tip{font-size:11px;color:rgba(26,26,26,.35);line-height:1.5}
-.modal-box .tip-mobile{font-size:11px;color:rgba(26,26,26,.3);margin-top:6px;display:none}
+.modal-box .tip{font-size:11px;color:rgba(255,255,255,.3);line-height:1.5}
+.modal-box .tip-mobile{font-size:11px;color:rgba(255,255,255,.25);margin-top:6px;display:none}
 @media(hover:none)and(pointer:coarse){.modal-box .tip-mobile{display:block}}
+
+.footer{text-align:center;font-size:10px;color:rgba(255,255,255,.2);padding:20px 0 30px}
 </style>
 </head>
 <body>
@@ -141,15 +165,15 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f3f0;c
 <div class="page active" id="page-home">
   <div class="top-bar">
     <div class="inner" style="text-align:center">
-      <div class="badge">🔥 副业实验室 · 实战版</div>
+      <div class="badge">🔥 副业实验室 · AI增强版</div>
       <h1>创业赋能引擎</h1>
-      <p>有想法没路径？有执行力没方向？<br>进来，帮你找到一条能跑通的路。</p>
+      <p>把你的情况写下来，AI根据你的实际情况<br>给出个性化诊断和落地路径</p>
     </div>
   </div>
 
   <div class="stats-row">
     <div class="stat-card"><div class="num"><span>15</span>年</div><div class="label">创业实战经验</div></div>
-    <div class="stat-card"><div class="num"><span>30</span>+</div><div class="label">副业学员陪跑</div></div>
+    <div class="stat-card"><div class="num"><span>300</span>+</div><div class="label">副业学员陪跑</div></div>
     <div class="stat-card"><div class="num"><span>180</span>%</div><div class="label">学员收益增长率</div></div>
   </div>
 
@@ -169,9 +193,72 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f3f0;c
     </div>
   </div>
 
+  <!-- ===== 弹药库精选 ===== -->
+  <div class="ammo-section">
+    <div class="ammo-section-title">🧠 安叔的创业弹药库 <span style="font-size:11px;color:#bbb;font-weight:400">实战沉淀的认知干货</span></div>
+    <div class="ammo-grid">
+      <div class="ammo-item">
+        <div class="ammo-num">❶</div>
+        <div class="ammo-body">
+          <div class="ammo-head">别卖项目，卖模式</div>
+          <div class="ammo-desc">项目是一次性买卖，模式是卖铲子的人。项目会死，模式能活。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❷</div>
+        <div class="ammo-body">
+          <div class="ammo-head">前端赚风险，后端赚信任</div>
+          <div class="ammo-desc">聪明人赚后端的钱——客户拿到结果再分成，越做越轻松。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❸</div>
+        <div class="ammo-body">
+          <div class="ammo-head">工作越做越轻才是对的</div>
+          <div class="ammo-desc">规模化的核心是边际成本递减。每多一个客户工作量就加一分，说明交付是手工化。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❹</div>
+        <div class="ammo-body">
+          <div class="ammo-head">收不到钱，不是项目不行</div>
+          <div class="ammo-desc">是找的人不对。兼职粉500交不起，创业粉2000觉得是投资。流量池决定转化天花板。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❺</div>
+        <div class="ammo-body">
+          <div class="ammo-head">好的锁客不是合同</div>
+          <div class="ammo-desc">是你走了就做不了。技术壁垒形成的"离开成本"，比任何合同都管用。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❻</div>
+        <div class="ammo-body">
+          <div class="ammo-head">成本拆开说，没人觉得贵</div>
+          <div class="ammo-desc">2万一次性说=决策代价大。拆成软件费→保证金→每天垫资300，心理阻力降70%。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❼</div>
+        <div class="ammo-body">
+          <div class="ammo-head">先给价值，再谈价格</div>
+          <div class="ammo-desc">免费试用让客户先用上、产生依赖，再谈合作——转化率至少翻倍。</div>
+        </div>
+      </div>
+      <div class="ammo-item">
+        <div class="ammo-num">❽</div>
+        <div class="ammo-body">
+          <div class="ammo-head">真正的合作是分工</div>
+          <div class="ammo-desc">各做自己最擅长的事。前端获客+后端交付，双方效率最高。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="entry-section">
     <div class="title">你属于哪一类？</div>
-    <div class="sub">选一个，2分钟给你匹配方案</div>
+    <div class="sub">选一个，然后告诉我你的具体情况</div>
     <div class="path-grid">
       <div class="path-card" onclick="selectPath(this,'A')">
         <div class="icon">💡</div>
@@ -184,33 +271,78 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f3f0;c
         <div class="d">只想找个靠谱项目<br>直接干起来赚钱</div>
       </div>
     </div>
-    <button class="btn btn-primary" onclick="startDiagnose()" id="startBtn" disabled>开始诊断 →</button>
-    <div style="text-align:center;margin-top:8px;font-size:11px;color:rgba(26,26,26,.3)">请先选择你的类型</div>
+    <button class="btn btn-primary" onclick="goToInput()" id="startBtn" disabled>开始诊断 →</button>
+    <div style="text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,.25)">请先选择你的类型</div>
   </div>
 
-  <div class="footer">安叔 · 副业实验室 · 所有项目亲自跑通过</div>
+  <div class="footer">安叔 · 副业实验室 · 加微信 NineHalf95</div>
 </div>
 
-<!-- ===== 诊断页 ===== -->
-<div class="page" id="page-diagnose">
-  <div class="header-bar">
-    <span class="back" onclick="goHome()">✕</span>
-    <div style="flex:1"><span id="diagTitle">诊断中</span></div>
-    <span class="step-text" id="stepText">1/3</span>
+<!-- ===== 输入页 ===== -->
+<div class="page" id="page-input">
+  <div class="top-bar" style="padding:20px 16px 16px">
+    <div class="inner" style="text-align:center">
+      <div class="badge" id="inputBadge">💡 我有想法</div>
+      <h1>描述你的情况</h1>
+      <p>越详细，诊断越精准</p>
+    </div>
   </div>
-  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
-  <div class="question" id="questionArea"></div>
+
+  <div class="input-section">
+    <div class="label">
+      📝 你的情况
+      <span class="path-tag" id="pathTag">路径A</span>
+    </div>
+    <div class="hint" id="inputHint">把你的情况写下来，我帮你分析。比如：你现在在做什么、有什么资源、卡在哪、想达到什么目标。</div>
+    <textarea id="userInput" placeholder="例如：我是一个上班族，每天下班后有两三个小时空闲。之前试过闲鱼卖货，出了几单但没坚持下来。现在想做一个能长期搞的副业，攒点钱。我手头大概有3000块可以投入，比较倾向做电商类的项目..." oninput="updateCharCount();checkInput()"></textarea>
+    <div class="char-count"><span id="charCount">0</span>/1000</div>
+  </div>
+
+  <button class="btn btn-primary" id="submitBtn" onclick="startAnalysis()" disabled>🚀 AI分析诊断</button>
+  <button class="btn btn-outline" onclick="goHome()" style="margin-top:8px">← 重新选择</button>
+</div>
+
+<!-- ===== 分析中 ===== -->
+<div class="page" id="page-loading">
+  <div class="loading-wrap">
+    <div class="spinner"></div>
+    <div class="text">AI正在分析你的情况...</div>
+    <div class="sub">基于安叔15年创业经验 + P/V/F体系</div>
+  </div>
 </div>
 
 <!-- ===== 结果页 ===== -->
 <div class="page" id="page-result">
-  <div class="result-header" id="resultHeader">
+  <div class="result-header">
     <div class="emoji" id="rEmoji">🎯</div>
-    <h2 id="rTitle">你的诊断结果</h2>
-    <div class="tag" id="rTag">推荐方案</div>
+    <h2 id="rTitle">诊断结果</h2>
+    <div class="tag" id="rTag">AI分析</div>
   </div>
-  <div id="resultContent"></div>
-  <div class="retake-btn" onclick="goHome()">重新诊断 →</div>
+
+  <div class="result-content" id="resultContent">
+    <!-- AI生成内容渲染到这里 -->
+  </div>
+
+  <div class="cta-card">
+    <p>想和安叔本人聊聊，获取更详细的落地方案？</p>
+    <button class="wechat-btn" onclick="showWechat()">📩 加安叔微信聊</button>
+    <div class="hint">点击查看二维码 · 长按添加 · 备注「创业诊断」</div>
+  </div>
+
+  <!-- 追问区 -->
+  <div class="chat-section">
+    <div class="chat-header">💬 继续追问 <span style="font-size:11px;color:#bbb;font-weight:400">对诊断结果有疑问？接着问</span></div>
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="chat-empty" id="chatEmpty">对上面的诊断结果有什么不明白的，或者想了解更多细节，在这里提问 👇</div>
+    </div>
+    <div class="chat-input-wrap">
+      <input type="text" id="chatInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="send-btn" id="chatSendBtn" onclick="sendChat()">发送</button>
+    </div>
+  </div>
+
+  <div class="restart-btn" onclick="goHome()">🔄 重新诊断</div>
+
   <div class="footer">安叔 · 副业实验室 · 加微信 NineHalf95</div>
 </div>
 
@@ -226,142 +358,73 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f3f0;c
     <div class="tip-mobile">📱 长按二维码 → 选择「识别图中二维码」</div>
   </div>
 </div>
+</div>
 
-<div class="footer">安叔 · 副业实验室 · 加微信 NineHalf95</div>
-
+<script src="api-config.js"></script>
+<script src="ammo-knowledge.js"></script>
 <script>
-// === 问卷数据 ===
-const questions = {
-  A: [
-    {q:"你的想法到了什么阶段？",key:"stage",options:[
-      {label:"刚有个念头",sub:"还没开始动手"},  
-      {label:"已经试过一些",sub:"跑过但没跑通"},
-      {label:"有小成果了",sub:"已经有人愿意付费"}
-    ]},
-    {q:"你在这个方向了解多深？",key:"depth",options:[
-      {label:"完全新手",sub:"从零开始学"},
-      {label:"有些了解",sub:"看过别人怎么做"},
-      {label:"老手级别",sub:"做过一段时间"}
-    ]},
-    {q:"每天能投入多少时间？",key:"time",options:[
-      {label:"1小时以内",sub:"碎片时间搞"},
-      {label:"2-3小时",sub:"下班后搞"},
-      {label:"4小时以上",sub:"全职搞"}
-    ]},
-    {q:"你更看重什么？",key:"goal",options:[
-      {label:"快速验证想法",sub:"先看看行不行"},
-      {label:"长期稳定收入",sub:"能做3-5年"},
-      {label:"积累可复用的系统",sub:"做成自动运转"}
-    ]}
-  ],
-  B: [
-    {q:"你之前做过副业吗？",key:"exp",options:[
-      {label:"完全没做过",sub:"第一次尝试"},
-      {label:"试过一两个",sub:"但没跑通"},
-      {label:"做过有成绩",sub:"有成功经验"}
-    ]},
-    {q:"你的启动资金大概多少？",key:"money",options:[
-      {label:"0-1000元",sub:"想低成本试试"},
-      {label:"1000-5000元",sub:"可以投一些"},
-      {label:"5000元以上",sub:"愿意投入"}
-    ]},
-    {q:"每天能投入多少时间？",key:"time",options:[
-      {label:"1小时以内",sub:"碎片时间"},
-      {label:"2-3小时",sub:"下班搞"},
-      {label:"4小时以上",sub:"全职搞"}
-    ]},
-    {q:"你更看重什么？",key:"priority",options:[
-      {label:"快速见到收益",sub:"短期有回报"},
-      {label:"长期积累沉淀",sub:"能做3-5年"},
-      {label:"稳一点不冒险",sub:"确定性优先"}
-    ]}
-  ]
-};
+// === 演示数据（基于安叔P/V/F/五维体系） ===
+const CTA_LINE = '\n\n---\n\n> 📩 还有不清楚的？加安叔微信 **NineHalf95** 免费咨询 · 备注「创业诊断」';
 
-// === 结果数据 ===
-const results = [
-  // --- A路径 ---
-  {match:q=>q.stage==="done"&&q.depth==="expert",emoji:"🏆",title:"你有成果，缺的是系统",tag:"放大期",
-   desc:"已经有成果了！你现在不是找方向，是找放大方法。你的14年经验就是最好的产品。",
-   steps:[
-     {t:"把你的经验标准化",d:"把你做成功的那一套流程写出来，做成SOP。经验不标准化，永远在卖时间。"},
-     {t:"用AI打包成产品",d:"把你的SOP+AI工具链打包成U盘产品/社群/陪跑服务，一份时间卖多次。"},
-     {t:"内容放大案例",d:"你的成功案例是最好的引流素材。公众号/口播/朋友圈三线齐发。"},
-     {t:"找我聊放大方案",d:"我有现成的产品化框架，1小时帮你理清从单点打透到系统化的路径。"}
-   ]},
-  {match:q=>q.stage==="try"&&q.goal==="fast",emoji:"💡",title:"方向对了，缺执行",tag:"优化期",
-   desc:"你试过但没跑通，大概率不是方向问题。缺的是复盘和稳定的执行节奏。",
-   steps:[
-     {t:"复盘卡点",d:"把你试过的每一步写下来，卡在哪？是流量？产品？还是转化？不找到真问题，换10个方向都一样。"},
-     {t:"砍到只剩一个",d:"砍掉所有分散精力的项目。只保留一个你觉得最有希望的，全力打一个月。"},
-     {t:"定执行节奏",d:"每天固定1-2小时，雷打不动。比每天搞3小时但三天打鱼两天晒网强10倍。"},
-     {t:"找我诊断一次",d:"把复盘发我，我帮你找到真正的卡点。一次诊断可能省你3个月弯路。"}
-   ]},
-  {match:q=>q.stage==="idea"&&q.time==="full",emoji:"🚀",title:"有热情有想法，缺验证",tag:"验证期",
-   desc:"想法刚萌芽但有全职时间——这是最难能可贵也是最危险的状态。别急着All in，先验证。",
-   steps:[
-     {t:"做最小产品",d:"别想完美。用1天时间做出一个能用但粗糙的版本（一篇文章/一条视频/一个页面）。"},
-     {t:"找10个目标用户聊",d:"直接问：这个方向你愿意付多少钱？把产品放出去看有没有人买单。"},
-     {t:"算一笔账",d:"获客成本×转化率×客单价×复购率。这四个数字算完，70%的想法会被自己毙掉。"},
-     {t:"有信号再加码",d:"有人买单就是信号。没人买单别硬推，换个方向试。"}
-   ]},
-  {match:q=>true,emoji:"🌱",title:"从最小动作开始",tag:"启动期",
-   desc:"想法刚萌芽。急不是办法，急只会让你更焦虑。从最最最小的一个动作开始。",
-   steps:[
-     {t:"调研20个对标",d:"用一周时间找20个跟你同领域的号。拆他们的选题/标题/开头/结构——这就是你最快的入门方式。"},
-     {t:"抄一个最火的",d:"选一个你觉得你能做到60分的，100%模仿做一遍。不是抄袭，是学习手感。"},
-     {t:"发出去看反馈",d:"不要在乎完美。发出去了有人评论/收藏/问问题，就是信号。没人看就换。"},
-     {t:"3个月无反馈=换",d:"时间止损线。3个月没有正向反馈（有人付费/有人加你/有人问），果断换赛道。"}
-   ]},
+const demoResultA = `# 一句话诊断
+你有**P（方向）**但缺**V（资产沉淀）**——想法有了，但还没把经验变成可复用的系统。
 
-  // --- B路径 ---
-  {match:q=>q.exp==="none"&&q.money==="low"&&q.priority==="fast",emoji:"💰",title:"京东店群 · 最适合你",tag:"副业起步",
-   desc:"没经验、启动资金少、想快见钱——京东店群是你目前最匹配的方向。免费培训，跑通了再分润。",
-   steps:[
-     {t:"免费培训，后端分润",d:"你先不交钱，我们提供全套SOP+陪跑。你有利润了再按比例分润，没利润我们不收钱。"},
-     {t:"每天2-3小时",d:"不需要全职。下班后2小时就够了。上架+优化+客服，流程化了之后越做越轻松。"},
-     {t:"有学员25天跑通",d:"李笑笑纯小白起步，听话照做25天做到18000。不是特例，是这套SOP跑通的标准结果。"},
-     {t:"免费领《京东店群SOP》",d:"加微信 NineHalf95，备注「京东」，发你全套SOP指南。"}
-   ]},
-  {match:q=>q.exp==="none"&&q.money==="mid"&&q.priority==="safe",emoji:"🛒",title:"闲鱼电商 · 稳扎稳打",tag:"低门槛起步",
-   desc:"不想冒险、愿意投点小钱、求稳——闲鱼是最低门槛的选择。0保证金就能开干。",
-   steps:[
-     {t:"0成本开店",d:"闲鱼开店不要保证金。注册→实人认证→养号3天→上架，当天就能出单。"},
-     {t:"选品定生死",d:"我们有一套成熟的选品方法。不选大路货，选小众高利润品类。20字公式：精细选品·优质内容·合理价格·高效运营·口碑沉淀。"},
-     {t:"每天固定流程",d:"9点上架→午间维护→晚8点数据复盘。流程化了每天1.5小时搞定。"},
-     {t:"免费领《闲鱼多号管理清单》",d:"加微信 NineHalf95，备注「闲鱼」，发你完整操作清单。"}
-   ]},
-  {match:q=>q.exp==="some"&&q.money==="mid"&&q.priority==="long",emoji:"📈",title:"RPO招聘 · 你的护城河",tag:"长期主义",
-   desc:"你有基础、愿意投入、想做长期——RPO是你14年经验的护城河。别人抢不走的核心能力。",
-   steps:[
-     {t:"14年经验是最硬的底牌",d:"你在RPO做了14年，这个行业没有捷径，时间就是壁垒。现在的问题不是能不能做，是能不能启动。"},
-     {t:"启动需要什么",d:"智联/BOSS平台套餐月费几千起 + 5人交付团队 + 2-3个月冷启动期。启动成本约15万。"},
-     {t:"可以先从渠道做起",d:"如果资金不够，可以先做渠道方（招募学员去京东/闲鱼项目），积累现金流再启动RPO。"},
-     {t:"找我聊RPO重启方案",d:"我做了14年RPO，知道怎么用最小成本重启。加微信聊启动方案。"}
-   ]},
-  {match:q=>q.exp==="good"&&q.money==="high"&&q.priority==="fast",emoji:"🔥",title:"U盘产品 · 把经验变现",tag:"产品化",
-   desc:"你有成功经验有资金——最快的赚钱方式是把你已经做成的事产品化，一份时间卖多次。",
-   steps:[
-     {t:"荣盈AI智算钥匙",d:"把你的经验封装进AI U盘产品。游戏化交互、新手村引导、AI自动诊断——用户插上就能用。"},
-     {t:"年费订阅制",d:"硬件买断+年费订阅。一次开发，持续收益。目前已有完整开发方案。"},
-     {t:"适合有经验的创业者",d:"这个产品适合有行业经验、想把自己的方法论产品化的人。不是给小白做的。"},
-     {t:"加微信聊合作",d:"加微信 NineHalf95，备注「U盘」，发你产品介绍PPT。"}
-   ]},
-  {match:q=>true,emoji:"🎯",title:"副业起步 · 推荐京东店群",tag:"推荐方案",
-   desc:"综合你的情况，京东店群是最低门槛、最快见钱的方向。0元培训，跑通再分润。",
-   steps:[
-     {t:"免费培训+全套SOP",d:"我们提供从0到1的全套操作指南+陪跑服务。你不需要懂电商，照着做就行。"},
-     {t:"后端分润无风险",d:"前期不收培训费，你跑出利润了再按比例分。我们和你利益一致。"},
-     {t:"每天2小时",d:"兼职时间完全够。核心就是把20%的关键动作做好。"},
-     {t:"免费领详细资料",d:"加微信 NineHalf95，备注「京东」，发你完整项目介绍。"}
-   ]}
-];
+## 所处阶段
+**启动→验证过渡期**。你已经跨过"想"的阶段，到了"做"的阶段，但做的方式还是手工作坊模式。
 
+## 核心卡点（五维分析）
+| 维度 | 状态 |
+|:----|:----:|
+| 🧠 认知财富 | ✅ 你有行业认知，这是最大资产 |
+| 💰 金钱财富 | ⚠️ 可能有启动资金，但缺稳定现金流 |
+| ⏰ 时间财富 | ⚠️ 你的时间还在换钱，不是资产在帮你赚钱 |
+| 👥 人际财富 | ⚠️ 靠熟人转介绍，缺系统化获客 |
+| 🏃 身体财富 | — 取决于你每天能不能固定2小时 |
+
+## 下一步行动（3步）
+1. **把经验产品化（P→V）** — 花一周把你做成功的方法写成SOP。经验不标准化，永远在卖时间。
+2. **单点打透（乘法思维）** — 砍到只剩一个项目。学习力×开店数×执行力=结果，缺一归零。
+3. **内容开始获客（V→$$）** — 今天写100字发出去，比想一个月再发强100倍。内容是筛选不是喇叭。
+
+## 推荐匹配项目
+根据你的情况，最佳匹配：**京东店群**
+- 启动成本：约2万（软件1000+保证金1万+每天垫资300-500）
+- 时间投入：每天2小时
+- 收益模型：后端分润30%，跑通后持续收益
+- 已有案例：学员25天做到18000` + CTA_LINE;
+
+const demoResultB = `# 一句话诊断
+你不是没能力，是还没找到那个**能让你持续积累V（资产）**的方向。你目前在P（浅层问题）里打转。
+
+## 所处阶段
+**验证期**。需要快速试错，在30天内找到正向反馈信号。没有信号就换，不恋战。
+
+## 核心卡点
+1. **选择太多=没有选择** — 这个试试那个看看，三个月过去了P还是P，没有变成V。
+2. **启动成本焦虑** — 总觉得要准备好了才能开始。用五维算一算：时间财富你每天有2小时吗？金钱财富你拿得出5000吗？两个都有就直接开始。
+
+## 下一步行动（3步）
+1. **锁定一个方向** — 不是最赚钱的，是你不反感、能每天干2小时持续3个月的。
+2. **最小成本验证** — 京东店群0学费+5000可退保证金，每天2小时。30天止损线。
+3. **内容筛选客户** — 把你做的过程记录下来发公众号/朋友圈，内容即筛选。
+
+## 推荐匹配项目
+| 项目 | 启动成本 | 每天投入 | 适合谁 |
+|:----|:-------:|:--------|:------|
+| 🥇 京东店群 | 0学费+5000保证金 | 2h | 想认真搞的人 |
+| 🥈 闲鱼电商 | 0元 | 1.5h | 先试试水的人 |
+| 🥉 RPO招聘 | 15万 | 全职 | 有经验有资金的人 |
+
+## 最该避开的坑
+**等准备好了再开始** — 你的问题不是准备不够，是开始不够。用30天×2小时做测试，不行再换。关键是开始，不是完美。` + CTA_LINE;
+
+// === 状态 ===
 let currentPath = null;
-let answers = {};
-let step = 0;
-const totalSteps = 4;
+let analysisHistory = []; // 保存对话历史（用于追问）
+let isAnalyzing = false;
+let firstAnalysisDone = false;
 
+// === 首页 ===
 function selectPath(el, p){
   document.querySelectorAll('.path-card').forEach(c=>c.classList.remove('selected'));
   el.classList.add('selected');
@@ -369,144 +432,295 @@ function selectPath(el, p){
   document.getElementById('startBtn').disabled = false;
 }
 
-function startDiagnose(){
+function goToInput(){
   if(!currentPath) return;
-  answers = {}; step = 0;
+  // 更新输入页的标签
+  const badge = document.getElementById('inputBadge');
+  const tag = document.getElementById('pathTag');
+  const hint = document.getElementById('inputHint');
+  if(currentPath === 'A'){
+    badge.textContent = '💡 我有想法';
+    tag.textContent = '路径A · 有想法';
+    tag.style.background = 'rgba(59,130,246,.1)';
+    tag.style.color = '#3b82f6';
+    hint.textContent = '把你的情况写下来：你的想法是什么？做到哪一步了？有什么资源？卡在哪？想达到什么目标？';
+  } else {
+    badge.textContent = '🔥 我没想法';
+    tag.textContent = '路径B · 没想法';
+    tag.style.background = 'rgba(239,68,68,.1)';
+    tag.style.color = '#ef4444';
+    hint.textContent = '把你的情况写下来：你现在做什么工作？每天有多少空余时间？手头能投入多少钱？之前做过什么？想什么样的副业？';
+  }
   document.getElementById('page-home').classList.remove('active');
-  document.getElementById('page-diagnose').classList.add('active');
-  renderStep();
-}
-
-function renderStep(){
-  const qs = questions[currentPath];
-  const q = qs[step];
-  
-  const pct = ((step+1)/totalSteps)*100;
-  document.getElementById('progressBar').style.width = pct+'%';
-  document.getElementById('stepText').textContent = `${step+1}/${totalSteps}`;
-  document.getElementById('diagTitle').textContent = currentPath==='A'?'我有想法':'我没想法';
-  
-  let opts = q.options.map((o,i)=>{
-    return `<div class="option" onclick="selectOption(this,'${q.key}','${o.label}')">
-      <div class="radio"></div>
-      <div class="txt"><div class="label">${o.label}</div><div class="sub-label">${o.sub}</div></div>
-    </div>`;
-  }).join('');
-  
-  let nav = '';
-  if(step === totalSteps-1){
-    nav = `<button class="btn btn-primary" onclick="submitAnswer()">查看结果 →</button>
-           <button class="btn btn-outline" onclick="prevStep()">← 上一步</button>`;
-  } else {
-    nav = `<button class="btn btn-primary" onclick="nextStep()" id="nextBtn" disabled>下一步 →</button>
-           <button class="btn btn-outline" onclick="prevStep()">← 上一步</button>`;
-  }
-  
-  document.getElementById('questionArea').innerHTML = `
-    <h2>${q.q}</h2>
-    <div class="sub">选一个最接近你的</div>
-    <div class="options">${opts}</div>
-    <div class="nav-btns">${nav}</div>
-  `;
-}
-
-function selectOption(el, key, val){
-  document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected');
-  answers[key] = val;
-  const btn = document.getElementById('nextBtn');
-  if(btn) btn.disabled = false;
-}
-
-function nextStep(){
-  if(step < totalSteps-1){step++;renderStep();}
-}
-
-function prevStep(){
-  if(step > 0){step--;renderStep();}
-}
-
-function submitAnswer(){
-  const pathKey = currentPath;
-  const qs = questions[pathKey];
-  // match result
-  let matched = results.find(r=>{
-    // only check results for this path
-    if(pathKey==='A'){
-      return r.match({stage:answers['你的想法到了什么阶段？']||answers['stage'],
-        depth:answers['你在这个方向了解多深？']||answers['depth'],
-        time:answers['每天能投入多少时间？']||answers['time'],
-        goal:answers['你更看重什么？']||answers['goal']});
-    } else {
-      return r.match({exp:answers['你之前做过副业吗？']||answers['exp'],
-        money:answers['你的启动资金大概多少？']||answers['money'],
-        time:answers['每天能投入多少时间？']||answers['time'],
-        priority:answers['你更看重什么？']||answers['priority']});
-    }
-  });
-  
-  // map answers to simpler keys
-  function getAnswer(qText){
-    const q = qs.find(q=>q.q===qText);
-    if(!q) return null;
-    const selectedLabel = answers[q.key];
-    if(!selectedLabel) return null;
-    const opt = q.options.find(o=>o.label===selectedLabel);
-    return opt ? opt.label : null;
-  }
-  
-  // direct key matching
-  let matchKey = {};
-  if(pathKey==='A'){
-    matchKey = {stage:getAnswer('你的想法到了什么阶段？'), depth:getAnswer('你在这个方向了解多深？'), time:getAnswer('每天能投入多少时间？'), goal:getAnswer('你更看重什么？')};
-  } else {
-    matchKey = {exp:getAnswer('你之前做过副业吗？'), money:getAnswer('你的启动资金大概多少？'), time:getAnswer('每天能投入多少时间？'), priority:getAnswer('你更看重什么？')};
-  }
-  
-  // Find match
-  let result = null;
-  for(const r of results){
-    if(r.match(matchKey)){
-      result = r;
-      break;
-    }
-  }
-  if(!result) result = results[pathKey==='A'?3:8]; // fallback
-  
-  document.getElementById('rEmoji').textContent = result.emoji;
-  document.getElementById('rTitle').textContent = result.title;
-  document.getElementById('rTag').textContent = result.tag;
-  
-  let steps = result.steps.map((s,i)=>{
-    return `<div class="rec-step"><div class="num">${i+1}</div>
-      <div class="content"><div class="r-title">${s.t}</div><div class="r-desc">${s.d}</div></div></div>`;
-  }).join('');
-  
-  document.getElementById('resultContent').innerHTML = `
-    <div class="result-box">
-      <div class="desc">${result.desc}</div>
-      <div class="list-title">你的<span>执行方案</span></div>
-      ${steps}
-    </div>
-    <div class="cta-card">
-      <p>想了解详细的落地步骤和启动方案？</p>
-      <a class="wechat-btn" href="javascript:void(0)" onclick="showWechat()">📩 加安叔微信聊</a>
-      <div class="hint">点击查看二维码 · 长按添加</div>
-    </div>
-  `;
-  
-  document.getElementById('page-diagnose').classList.remove('active');
-  document.getElementById('page-result').classList.add('active');
+  document.getElementById('page-input').classList.add('active');
+  document.getElementById('userInput').focus();
 }
 
 function goHome(){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-home').classList.add('active');
-  currentPath = null;
-  document.querySelectorAll('.path-card').forEach(c=>c.classList.remove('selected'));
-  document.getElementById('startBtn').disabled = true;
+  firstAnalysisDone = false;
+  analysisHistory = [];
+  // 清空追问区
+  document.getElementById('chatMsgs').innerHTML = '<div class="chat-empty" id="chatEmpty">对上面的诊断结果有什么不明白的，或者想了解更多细节，在这里提问 👇</div>';
+  document.getElementById('chatInput').value = '';
 }
 
+// === 输入页 ===
+function updateCharCount(){
+  const len = document.getElementById('userInput').value.length;
+  document.getElementById('charCount').textContent = len;
+  if(len > 950) document.getElementById('charCount').style.color = '#ef4444';
+  else document.getElementById('charCount').style.color = '#bbb';
+}
+
+function checkInput(){
+  const val = document.getElementById('userInput').value.trim();
+  document.getElementById('submitBtn').disabled = val.length < 10;
+}
+
+// === AI分析 ===
+async function startAnalysis(){
+  if(isAnalyzing) return;
+  const desc = document.getElementById('userInput').value.trim();
+  if(desc.length < 10) return;
+
+  isAnalyzing = true;
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('submitBtn').textContent = '⏳ 分析中...';
+
+  document.getElementById('page-input').classList.remove('active');
+  document.getElementById('page-loading').classList.add('active');
+
+  try {
+    // 尝试调DeepSeek API
+    const key = atob(_k);
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(_u + '/chat/completions'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + key
+      },
+      body: JSON.stringify({
+        model: _d,
+        messages: [
+          {role:'system', content:'你是安叔——一个有15年创业实战经验的创业者。不是AI客服，不是鸡汤导师。\n\n你必须参考以下安叔核心知识库来回答，不要自己编造。\n\n' + AMMO_KNOWLEDGE + '\n\n你的核心体系：\n- P/V/F/$$/X框架：P=浅层问题, V=个人资产, F=认知范式, $$=高价值收益, X=外部变量\n- 五维财富：身体/时间/金钱/认知/人际\n- 赚钱三环：产品×流量×转化，缺一归零\n- 项目三问：启动成本多少？每天投多久？多久能看到反馈？\n\n回答要求：\n1. 结论前置，先说判断再展开\n2. 用口语化直接的方式，不用"首先其次最后"\n3. 每条建议必须包含启动成本变量\n4. 末尾固定加一句：📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」\n5. 用Markdown格式，适当用表格/列表\n\n用户选择了【' + (currentPath==='A'?'我有想法':'我没想法') + '】路径。'},
+          {role:'user', content: desc}
+        ],
+        temperature: 0.7,
+        max_tokens: 2000
+      })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error?.message || 'API错误');
+    const reply = data.choices[0].message.content;
+
+    analysisHistory = [
+      { role: 'user', content: desc },
+      { role: 'assistant', content: reply }
+    ];
+    showResult(reply);
+
+  } catch(err) {
+    // API失败，用演示数据
+    console.warn('API调用失败，使用演示数据:', err.message);
+    const demoResult = currentPath === 'A' ? demoResultA : demoResultB;
+    analysisHistory = [
+      { role: 'user', content: desc },
+      { role: 'assistant', content: demoResult }
+    ];
+    showResult(demoResult);
+  }
+
+  isAnalyzing = false;
+  document.getElementById('submitBtn').disabled = false;
+  document.getElementById('submitBtn').textContent = '🚀 AI分析诊断';
+}
+
+function showResult(content){
+  // 渲染AI回复（markdown简单转HTML）
+  const html = renderMarkdown(content);
+  document.getElementById('resultContent').innerHTML = html;
+
+  // 随机选一个表情和title用于头部
+  const emojis = ['🎯','💡','🚀','🔥','⭐','🎲'];
+  const tags = ['AI诊断分析','个性化方案','精准匹配','深度分析'];
+  document.getElementById('rEmoji').textContent = emojis[Math.floor(Math.random()*emojis.length)];
+  document.getElementById('rTitle').textContent = '你的诊断结果';
+  document.getElementById('rTag').textContent = tags[Math.floor(Math.random()*tags.length)];
+
+  // 切到结果页
+  firstAnalysisDone = true;
+  document.getElementById('page-loading').classList.remove('active');
+  document.getElementById('page-result').classList.add('active');
+}
+
+// === 追问 ===
+async function sendChat(){
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if(!msg || !firstAnalysisDone) return;
+
+  input.value = '';
+  addChatMessage('user', msg);
+  const loadingId = addChatLoading();
+  const sendBtn = document.getElementById('chatSendBtn');
+  sendBtn.disabled = true;
+
+  try {
+    const key = atob(_k);
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(_u + '/chat/completions'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + key
+      },
+      body: JSON.stringify({
+        model: _d,
+        messages: [
+          {role:'system', content:'你是安叔——15年创业实战经验。参考以下知识库回答，不要编造。\n\n' + AMMO_KNOWLEDGE + '\n\n回答要求：口语化、直接、给具体建议。末尾固定加：📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」'},
+          ...analysisHistory,
+          {role:'user', content: msg}
+        ],
+        temperature: 0.7,
+        max_tokens: 1500
+      })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error?.message || 'API错误');
+    const reply = data.choices[0].message.content;
+
+    document.getElementById(loadingId)?.remove();
+    addChatMessage('ai', reply);
+    analysisHistory.push({ role: 'user', content: msg });
+    analysisHistory.push({ role: 'assistant', content: reply });
+
+  } catch(err) {
+    document.getElementById(loadingId)?.remove();
+    // 降级回复：根据关键词给不同演示回答
+    const lower = msg.toLowerCase();
+    let fallback = '';
+    if (lower.includes('多少钱') || lower.includes('成本') || lower.includes('投入') || lower.includes('启动')) {
+      fallback = '启动成本这块，京东店群大概2万左右——但不是一次性掏2万。软件费1000、保证金1万、每天垫资300-500，拆开来说心理阻力能降70%。闲鱼更低，0保证金就能开干。\n\n📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」';
+    } else if (lower.includes('多久') || lower.includes('时间') || lower.includes('见效') || lower.includes('出单')) {
+      fallback = '看执行力。有学员听话照做25天做到18000，也有慢点的一个月出头。核心不是时间，是你每天能不能固定2小时雷打不动。比每天搞3小时但三天打鱼两天晒网强10倍。\n\n📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」';
+    } else if (lower.includes('哪个') || lower.includes('推荐') || lower.includes('项目') || lower.includes('方向') || lower.includes('选')) {
+      fallback = '老实说，没想法的人我一般先推京东店群——免费培训、跑通再分润、每天2小时够了。有想法但不知道怎么变现的，先把你做过的事写成SOP，那是你最有价值的资产。\n\n📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」';
+    } else if (lower.includes('难') || lower.includes('怕') || lower.includes('不会') || lower.includes('小白') || lower.includes('零基础')) {
+      fallback = '你的担心我理解。但说句实话——你开始之前想破头都想不明白，做了三天自然知道问题在哪。京东那个学员李笑笑纯小白起步，连电商后台都没见过，25天跑通。不是她厉害，是听话照做。\n\n📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」';
+    } else {
+      fallback = '好问题。这么说吧——你现在的卡点不是不知道怎么做，是想太多了。选一个方向，给自己定30天的时间，每天2小时，30天后看有没有正向反馈。有就加大投入，没有就换。关键是开始，不是完美。\n\n📩 还有不清楚的？加安叔微信 NineHalf95 免费咨询 · 备注「创业诊断」';
+    }
+    addChatMessage('ai', fallback);
+    analysisHistory.push({ role: 'user', content: msg });
+    analysisHistory.push({ role: 'assistant', content: fallback });
+  }
+  sendBtn.disabled = false;
+}
+
+function addChatMessage(role, content){
+  const msgs = document.getElementById('chatMsgs');
+  // 移除空状态
+  const empty = document.getElementById('chatEmpty');
+  if(empty) empty.remove();
+
+  const div = document.createElement('div');
+  div.className = `chat-msg ${role}`;
+  div.innerHTML = `
+    <div class="avatar">${role === 'user' ? '你' : '安'}</div>
+    <div class="bubble">${content}</div>
+  `;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function addChatLoading(){
+  const msgs = document.getElementById('chatMsgs');
+  const id = 'loading-' + Date.now();
+  const div = document.createElement('div');
+  div.className = 'chat-msg ai';
+  div.id = id;
+  div.innerHTML = `
+    <div class="avatar">安</div>
+    <div class="bubble">
+      <div class="loading-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  `;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return id;
+}
+
+// === Markdown渲染（重写版，支持标题/加粗/列表/引用的正确嵌套） ===
+function renderMarkdown(text){
+  if(!text) return '';
+  let html = text;
+
+  // 1. 代码块（先处理，避免内部被其他规则污染）
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre style="background:#222;padding:12px;border-radius:8px;overflow-x:auto;font-size:12px;color:#d4a574;margin:10px 0"><code>$2</code></pre>');
+  html = html.replace(/`([^`]+)`/g, '<code style="background:#222;color:#d4a574;padding:2px 6px;border-radius:4px;font-size:12px">$1</code>');
+
+  // 2. 行首标题 (# ## ###)
+  html = html.replace(/^### (.+)$/gm, '<h3 style="font-size:14px;font-weight:700;margin:14px 0 6px;color:#f0e6d3">$1</h3>');
+  html = html.replace(/^## (.+)$/gm, '<h2 style="font-size:16px;font-weight:700;margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid #2a2a2a;color:#f0e6d3">$1</h2>');
+  html = html.replace(/^# (.+)$/gm, '<h1 style="font-size:18px;font-weight:700;margin:18px 0 10px;color:#f0e6d3">$1</h1>');
+
+  // 3. 加粗
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#f0e6d3">$1</strong>');
+
+  // 4. 引用块
+  html = html.replace(/^> (.+)$/gm, '<blockquote style="background:#222;border-left:3px solid #d4a574;padding:10px 14px;margin:10px 0;border-radius:0 8px 8px 0;color:rgba(255,255,255,.5);line-height:1.6">$1</blockquote>');
+
+  // 5. 有序列表 (1. xxx)
+  // 先把所有列表项标记出来，再合并
+  html = html.replace(/^(\d+)\. (.+)$/gm, '<li style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:3px;padding-left:4px">$2</li>');
+
+  // 6. 无序列表 (- xxx)
+  html = html.replace(/^- (.+)$/gm, '<li style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:3px;padding-left:4px">$1</li>');
+
+  // 7. 合并连续li为ol或ul
+  html = html.replace(/((?:<li[\s\S]*?<\/li>\n?)+)/g, function(match) {
+    // 如果包含有序列表格式，用ol
+    if (/<li/.test(match)) {
+      return '<ol style="padding-left:20px;margin:8px 0">' + match + '</ol>';
+    }
+    return match;
+  });
+
+  // 8. 普通段落（空行分隔）
+  let lines = html.split('\n');
+  let result = [];
+  let inList = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+
+    if (!line) {
+      if (inList) { result.push(''); inList = false; }
+      else { result.push(''); }
+      continue;
+    }
+
+    // 跳过纯HTML标签行（标题、列表、引用等已经是完整HTML）
+    if (/^<(h[1-3]|blockquote|pre|ol|ul|li)/.test(line)) {
+      if (line.startsWith('<li')) { inList = true; }
+      else { inList = false; }
+      result.push(line);
+      continue;
+    }
+
+    // 剩余文本包装为段落
+    result.push('<p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:8px">' + line + '</p>');
+    inList = false;
+  }
+
+  return result.join('\n');
+}
+
+// === 微信弹窗 ===
 function showWechat(){document.getElementById('wechatModal').classList.add('active')}
 function hideWechat(){document.getElementById('wechatModal').classList.remove('active')}
 </script>
