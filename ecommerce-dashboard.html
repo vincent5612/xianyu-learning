@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>荣盈电商运营看板</title>
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --bg: #f5f5f7;
+    --card-bg: #ffffff;
+    --card-border: #e5e7eb;
+    --accent: #FFA500;
+    --accent2: #D48A00;
+    --accent-dim: rgba(255,165,0,0.08);
+    --text: #1f2937;
+    --text-dim: #6b7280;
+    --text-muted: #9ca3af;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px 32px 48px;
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #f0f0f0; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+
+  .container { max-width: 1440px; margin: 0 auto; }
+
+  /* ── header ── */
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 28px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .header-left { display: flex; align-items: baseline; gap: 18px; }
+  .logo { font-size: 24px; font-weight: 700; letter-spacing: 2px; color: var(--accent2); }
+  .logo small { font-size: 14px; font-weight: 400; color: var(--text-dim); letter-spacing: 0; margin-left: 8px; }
+  .update-badge {
+    font-size: 11px; color: var(--text-dim); background: var(--card-bg);
+    border: 1px solid var(--card-border); padding: 4px 12px; border-radius: 20px;
+    white-space: nowrap;
+  }
+  .update-badge::before { content: "● "; color: #22c55e; font-size: 10px; }
+
+  /* ── search bar ── */
+  .search-section { margin-bottom: 20px; }
+  .search-bar {
+    display: flex; gap: 12px; align-items: center;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 10px; padding: 4px 4px 4px 20px;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .search-bar:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255,165,0,0.1);
+  }
+  .search-icon { font-size: 16px; color: var(--text-muted); flex-shrink: 0; }
+  .search-bar input {
+    flex: 1; border: none; outline: none; background: transparent;
+    font-size: 14px; color: var(--text); padding: 12px 0;
+    font-family: inherit;
+  }
+  .search-bar input::placeholder { color: var(--text-muted); }
+  .search-bar button {
+    background: var(--accent); color: #fff; border: none;
+    padding: 10px 24px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    cursor: pointer; letter-spacing: 1px; white-space: nowrap;
+    transition: opacity .2s;
+  }
+  .search-bar button:hover { opacity: .85; }
+  .search-hints {
+    display: flex; gap: 8px; margin-top: 8px; padding-left: 4px;
+    font-size: 11px; color: var(--text-muted);
+  }
+  .search-hints span {
+    background: #f3f4f6; padding: 3px 10px; border-radius: 12px;
+    cursor: pointer; transition: background .15s, color .15s;
+  }
+  .search-hints span:hover { background: var(--accent-dim); color: var(--accent2); }
+
+  /* ── search comparison result table ── */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .compare-table th {
+    text-align: left; padding: 10px 14px; font-weight: 600;
+    color: var(--text-dim); font-size: 11px; letter-spacing: 1px;
+    border-bottom: 1px solid var(--card-border); background: #f9fafb;
+  }
+  .compare-table td {
+    padding: 10px 14px; border-bottom: 1px solid #f0f0f2;
+    color: var(--text);
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: var(--accent-dim); }
+  .compare-table .price { font-weight: 600; color: var(--accent2); }
+  .compare-table .low-price { color: #16a34a; font-weight: 600; }
+  .compare-table .platform-badge {
+    font-size: 10px; padding: 2px 10px; border-radius: 4px;
+    font-weight: 500; display: inline-block;
+  }
+  .badge-xianyu { background: #fff3e0; color: #e67e00; }
+  .badge-taobao { background: #fef2f2; color: #dc2626; }
+  .badge-pdd { background: #fdf4ff; color: #a21caf; }
+  .badge-jd { background: #dbeafe; color: #2563eb; }
+  .badge-douyin { background: #f0fdf4; color: #16a34a; }
+  .badge-1688 { background: #f5f3ff; color: #6d28d9; }
+
+  .compare-summary {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin-bottom: 16px;
+  }
+  .compare-summary-card {
+    background: #f9fafb; border-radius: 8px; padding: 12px 16px;
+    text-align: center;
+  }
+  .compare-summary-card .num { font-size: 24px; font-weight: 700; color: var(--accent2); }
+  .compare-summary-card .lbl { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+  .compare-summary-card:nth-child(2) .num { color: #16a34a; }
+  .compare-summary-card:nth-child(3) .num { color: var(--accent); }
+
+  .analysis-section { margin-top: 16px; }
+  .analysis-section h4 {
+    font-size: 12px; font-weight: 600; color: var(--text-dim);
+    letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .analysis-tag {
+    display: inline-block; font-size: 11px; padding: 4px 12px;
+    border-radius: 6px; margin: 2px 4px 2px 0;
+    background: #f3f4f6; color: var(--text-dim);
+  }
+  .analysis-tag.green { background: #dcfce7; color: #16a34a; }
+  .analysis-tag.red { background: #fee2e2; color: #dc2626; }
+  .analysis-tag.orange { background: #fff3e0; color: #e67e00; }
+
+  /* ── top stats bar ── */
+  .stats-bar {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    margin-bottom: 32px;
+  }
+  .stat-card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 10px; padding: 18px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .stat-card:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(255,165,0,0.08); }
+  .stat-label { font-size: 13px; color: var(--text-dim); letter-spacing: 1px; }
+  .stat-value {
+    font-size: 32px; font-weight: 700; color: var(--accent2);
+    letter-spacing: 2px; font-variant-numeric: tabular-nums;
+  }
+  .stat-card:nth-child(2) .stat-value { color: var(--accent); }
+  .stat-card:nth-child(3) .stat-value { color: #16a34a; }
+
+  /* ── grid ── */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 24px; }
+
+  /* ── card ── */
+  .card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 10px; padding: 20px; position: relative;
+    transition: border-color .25s, box-shadow .25s;
+    display: flex; flex-direction: column;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(255,165,0,0.06);
+  }
+
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px; padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f2;
+  }
+  .card-title {
+    font-size: 14px; font-weight: 600; color: var(--text);
+    letter-spacing: 1.5px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title .icon { font-size: 16px; }
+  .card-updated {
+    font-size: 11px; color: var(--text-muted);
+    background: #f9fafb; padding: 2px 10px;
+    border-radius: 10px; white-space: nowrap;
+  }
+
+  .card-body { flex: 1; }
+  .placeholder-list { list-style: none; }
+  .placeholder-list li {
+    padding: 8px 12px; margin-bottom: 4px;
+    border-radius: 6px; font-size: 12px; color: var(--text-dim);
+    background: #f9fafb;
+    display: flex; align-items: center; gap: 10px;
+    transition: background .15s;
+  }
+  .placeholder-list li:hover { background: var(--accent-dim); }
+  .placeholder-list li .tag {
+    font-size: 10px; padding: 1px 8px; border-radius: 4px;
+    letter-spacing: .5px; flex-shrink: 0; font-weight: 500;
+  }
+  .tag-hot { background: #fff3e0; color: #e67e00; }
+  .tag-new { background: #dcfce7; color: #16a34a; }
+  .tag-up { background: #dbeafe; color: #2563eb; }
+  .tag-warn { background: #fee2e2; color: #dc2626; }
+  .tag-rank { background: #fef3c7; color: #b8860b; }
+
+  .list-more {
+    text-align: center; margin-top: 8px;
+    font-size: 11px; color: var(--text-muted); letter-spacing: .5px;
+    cursor: pointer; transition: color .2s;
+  }
+  .list-more:hover { color: var(--accent); }
+
+  .compact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .compact-grid li:nth-child(n+5) { display: none; }
+  .placeholder-list.compact-grid li { padding: 6px 10px; font-size: 11px; }
+
+  /* ── big bottom entry ── */
+  .feasibility-section { margin-top: 18px; }
+  .feasibility-banner {
+    background: linear-gradient(135deg, #fffaf0, #fffdf7);
+    border: 1px solid #fde6b3;
+    border-radius: 10px; padding: 20px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: border-color .25s, box-shadow .25s;
+  }
+  .feasibility-banner:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(255,165,0,0.08);
+  }
+  .feasibility-left { display: flex; align-items: center; gap: 20px; }
+  .feasibility-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: #fff3e0; border: 1px solid #fde6b3;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .feasibility-title { font-size: 16px; font-weight: 600; color: var(--accent2); letter-spacing: 1px; }
+  .feasibility-desc { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+  .feasibility-steps {
+    display: flex; gap: 20px; align-items: center;
+  }
+  .step {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--text-dim);
+  }
+  .step-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #fff3e0; border: 1px solid #fde6b3;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: var(--accent); flex-shrink: 0;
+  }
+  .step-arrow { color: var(--text-muted); font-size: 14px; }
+  .feasibility-btn {
+    background: var(--accent); color: #fff; border: none;
+    padding: 10px 28px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    cursor: pointer; letter-spacing: 1px;
+    transition: opacity .2s, transform .15s;
+    white-space: nowrap;
+  }
+  .feasibility-btn:hover { opacity: .9; transform: translateY(-1px); }
+
+  /* ── footer ── */
+  .footer {
+    margin-top: 28px; padding-top: 16px;
+    border-top: 1px solid var(--card-border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; color: var(--text-muted);
+  }
+  .footer-links { display: flex; gap: 16px; }
+  .footer-links span { cursor: pointer; transition: color .2s; }
+  .footer-links span:hover { color: var(--text-dim); }
+
+  /* ══════ MODAL ══════ */
+  .modal-overlay {
+    display: none; position: fixed; z-index: 1000;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.35); backdrop-filter: blur(2px);
+    justify-content: center; align-items: center;
+  }
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--card-bg); border-radius: 12px;
+    width: 90%; max-width: 640px; max-height: 80vh;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.12);
+    display: flex; flex-direction: column;
+    animation: modalIn .2s ease;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 24px 16px; border-bottom: 1px solid var(--card-border);
+  }
+  .modal-title {
+    font-size: 16px; font-weight: 600; color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .modal-title .icon { font-size: 18px; }
+  .modal-close {
+    width: 28px; height: 28px; border-radius: 6px; border: none;
+    background: #f3f4f6; cursor: pointer; font-size: 16px;
+    color: var(--text-dim); display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+  }
+  .modal-close:hover { background: #e5e7eb; }
+
+  .modal-body {
+    padding: 16px 24px 20px; overflow-y: auto; flex: 1;
+  }
+  .modal-list { list-style: none; }
+  .modal-list li {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; margin-bottom: 6px;
+    background: #f9fafb; border-radius: 8px;
+    font-size: 13px; color: var(--text);
+    transition: background .15s;
+  }
+  .modal-list li:hover { background: var(--accent-dim); }
+  .modal-list li .tag {
+    font-size: 10px; padding: 2px 10px; border-radius: 4px;
+    letter-spacing: .5px; flex-shrink: 0; font-weight: 500;
+  }
+  .modal-list li .data {
+    font-size: 11px; color: var(--text-dim); margin-left: auto; flex-shrink: 0;
+  }
+
+  .modal-footer {
+    padding: 12px 24px 16px; border-top: 1px solid var(--card-border);
+    text-align: right;
+  }
+  .modal-footer button {
+    background: var(--accent); color: #fff; border: none;
+    padding: 8px 20px; border-radius: 6px; font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: opacity .15s;
+  }
+  .modal-footer button:hover { opacity: .85; }
+
+  /* ── responsive ── */
+  @media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 700px) {
+    body { padding: 16px 16px 32px; }
+    .grid { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: 1fr; gap: 10px; }
+    .header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .feasibility-banner { flex-direction: column; gap: 16px; align-items: stretch; text-align: center; }
+    .feasibility-left { justify-content: center; }
+    .feasibility-steps { flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .feasibility-btn { width: 100%; }
+    .footer { flex-direction: column; gap: 8px; }
+    .modal { width: 95%; max-height: 85vh; }
+    .modal-list li { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ════ HEADER ════ -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo">荣盈<small>电商运营看板</small></div>
+    </div>
+    <div class="update-badge">数据实时更新 · 今日已刷新</div>
+  </div>
+
+  <!-- ════ SEARCH BAR ════ -->
+  <div class="search-section">
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="productSearch" placeholder="输入产品/类目，做全网对比分析... 例如：电动车配件、红薯、空气炸锅" autocomplete="off">
+      <button id="searchBtn">全网分析</button>
+    </div>
+    <div class="search-hints">
+      <span>电动车配件</span>
+      <span>红薯 · 零食</span>
+      <span>空气炸锅配件</span>
+      <span>宠物用品</span>
+      <span>夏季冰袖</span>
+    </div>
+  </div>
+
+  <!-- ════ STATS BAR ════ -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <span class="stat-label">📊 今日有效情报</span>
+      <span class="stat-value">128</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">🔍 待分析品数</span>
+      <span class="stat-value">43</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">✅ 已确认可做品</span>
+      <span class="stat-value">17</span>
+    </div>
+  </div>
+
+  <!-- ════ 6-CARD GRID ════ -->
+  <div class="grid">
+
+    <!-- 1 ── 闲鱼好品识别 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title"><span class="icon">🏪</span>闲鱼好品识别</span>
+        <span class="card-updated">🕐 10分钟前</span>
+      </div>
+      <div class="card-body">
+        <ul class="placeholder-list">
+          <li><span class="tag tag-hot">热卖</span> 数码配件 · 手机支架磁吸款  ↑23%</li>
+          <li><span class="tag tag-up">增长</span> 桌面收纳盒  周环比 +45%</li>
+          <li><span class="tag tag-new">新品</span> 便携标签打印机  上架2h 出38单</li>
+          <li><span class="tag tag-up">增长</span> 宠物喂食器  浏览量涨62%</li>
+          <li><span class="tag tag-new">新品</span> 复古蓝牙音箱  上架4h 咨询量97</li>
+        </ul>
+        <div class="list-more" data-modal="闲鱼好品识别" data-icon="🏪">··· 查看全部 12 条 ···</div>
+      </div>
+    </div>
+
+    <!-- 2 ── 全网爆品监控 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title"><span class="icon">🔥</span>全网爆品监控</span>
+        <span class="card-updated">🕐 5分钟前</span>
+      </div>
+      <div class="card-body">
+        <ul class="placeholder-list">
+          <li><span class="tag tag-rank">抖音</span> 懒人抹布 72h销12.6w单</li>
+          <li><span class="tag tag-rank">淘宝</span> 冰丝凉席三件套 月销8.3w</li>
+          <li><span class="tag tag-rank">拼多多</span> 多功能收纳架 9.9万+人拼</li>
+          <li><span class="tag tag-rank">京东</span> 空气循环扇 日销2300+</li>
+        </ul>
+        <div class="list-more" data-modal="全网爆品监控" data-icon="🔥">··· 查看更多 ···</div>
+      </div>
+    </div>
+
+    <!-- 3 ── 京东大类目销量激增 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title"><span class="icon">📈</span>京东 · 类目销量激增</span>
+        <span class="card-updated">🕐 15分钟前</span>
+      </div>
+      <div class="card-body">
+        <ul class="placeholder-list">
+          <li><span class="tag tag-up">+217%</span> 厨房小电 · 空气炸锅配件</li>
+          <li><span class="tag tag-up">+185%</span> 宠物生活 · 智能饮水机</li>
+          <li><span class="tag tag-up">+142%</span> 家清 · 地板清洁片</li>
+          <li><span class="tag tag-up">+98%</span> 运动户外 · 徒步登山杖</li>
+          <li><span class="tag tag-up">+76%</span> 汽车用品 · 车载香薰</li>
+        </ul>
+        <div class="list-more" data-modal="京东·类目销量激增" data-icon="📈">··· 查看全部 8 个爆增类目 ···</div>
+      </div>
+    </div>
+
+    <!-- 4 ── 抖音爆品选品 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title"><span class="icon">🎬</span>抖音爆品选品</span>
+        <span class="card-updated">🕐 8分钟前</span>
+      </div>
+      <div class="card-body">
+        <ul class="placeholder-list">
+          <li><span class="tag tag-rank">🔥1</span> 家用切菜器  直播GMV 43w</li>
+          <li><span class="tag tag-rank">🔥2</span> 磁吸数据线  达人带货 28w</li>
+          <li><span class="tag tag-rank">🔥3</span> 除螨喷雾  带货视频 310w播放</li>
+          <li><span class="tag tag-rank">🔥4</span> 迷你挂烫机  转化率 8.2%</li>
+          <li><span class="tag tag-rank">🔥5</span> 厨房湿巾  直播间在线峰值 2600</li>
+        </ul>
+        <div class="list-more" data-modal="抖音爆品选品" data-icon="🎬">··· 查看完整榜单 ···</div>
+      </div>
+    </div>
+
+    <!-- 5 ── 全网竞品监控 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title"><span class="icon">👁️</span>全网竞品监控</span>
+        <span class="card-updated">🕐 12分钟前</span>
+      </div>
+      <div class="card-body">
+        <ul class="placeholder-list compact-grid">
+          <li><span class="tag tag-warn">拼多多</span> 某商家 厨房置物架 ¥12.9</li>
+          <li><span class="tag tag-warn">淘宝</span> 某店 桌面收纳 ¥19.9起</li>
+          <li><span class="tag tag-warn">抖音</span> 某达人 同款抹布 ¥9.9</li>
+          <li><span class="tag tag-warn">京东</span> 自营 收纳架 ¥29.9</li>
+          <li><span class="tag tag-warn">拼多多</span> 某商家 宠物碗 ¥8.8</li>
+          <li><span class="tag tag-warn">淘宝</span> 某店 除螨包 ¥14.9</li>
+        </ul>
+        <div class="list-more" data-modal="全网竞品监控" data-icon="👁️">··· 查看全部 18 个竞品动态 ···</div>
+      </div>
+    </div>
+
+    <!-- 6 ── 货源可行性分析 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title"><span class="icon">🔗</span>货源可行性分析</span>
+        <span class="card-updated">🕐 20分钟前</span>
+      </div>
+      <div class="card-body">
+        <ul class="placeholder-list">
+          <li><span class="tag tag-new">1688</span> 懒人抹布 厂家报价 ¥2.3/卷  利润测算中</li>
+          <li><span class="tag tag-new">义乌</span> 收纳架 源头价 ¥3.8  已出利润报告</li>
+          <li><span class="tag tag-new">PDD</span> 切菜器 代发价 ¥6.5  利润率 41%</li>
+          <li><span class="tag tag-new">跨境</span> 宠物饮水机 拿货 ¥22  建议售价 ¥59</li>
+        </ul>
+        <div class="list-more" data-modal="货源可行性分析" data-icon="🔗">··· 共 6 条待分析 ···</div>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+
+  <!-- ════ FEASIBILITY ENTRY ════ -->
+  <div class="feasibility-section">
+    <div class="feasibility-banner">
+      <div class="feasibility-left">
+        <div class="feasibility-icon">⚡</div>
+        <div>
+          <div class="feasibility-title">货源可行性分析</div>
+          <div class="feasibility-desc">发现爆品 → 一键分析货源 → 自动测算利润 → 判断能否做</div>
+        </div>
+      </div>
+      <div class="feasibility-steps">
+        <div class="step"><span class="step-num">1</span>发现爆品</div>
+        <span class="step-arrow">→</span>
+        <div class="step"><span class="step-num">2</span>货源匹配</div>
+        <span class="step-arrow">→</span>
+        <div class="step"><span class="step-num">3</span>利润测算</div>
+        <span class="step-arrow">→</span>
+        <div class="step"><span class="step-num">4</span>可做决策</div>
+      </div>
+      <button class="feasibility-btn" id="analysisBtn">开始分析 →</button>
+    </div>
+  </div>
+
+  <!-- ════ FOOTER ════ -->
+  <div class="footer">
+    <span>荣盈电商运营看板 v1.0 · 数据来源：各平台公开数据聚合</span>
+    <div class="footer-links">
+      <span onclick="location.reload()">刷新数据</span>
+      <span>设置</span>
+      <span>反馈</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ MODAL ══════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title"><span class="icon" id="modalIcon"></span><span id="modalTitle"></span></div>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button id="modalAction">关闭</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Product search & cross-platform comparison ──
+function searchProduct(query) {
+  if (!query.trim()) return;
+
+  const q = query.trim();
+  iconEl.textContent = '🔍';
+  titleEl.textContent = `「${q}」全网对比分析`;
+
+  // Generate platform data based on search
+  const platforms = [
+    { name: '闲鱼', badge: 'badge-xianyu', data: genXianyuData(q) },
+    { name: '淘宝', badge: 'badge-taobao', data: genTaobaoData(q) },
+    { name: '拼多多', badge: 'badge-pdd', data: genPddData(q) },
+    { name: '京东', badge: 'badge-jd', data: genJdData(q) },
+    { name: '抖音', badge: 'badge-douyin', data: genDouyinData(q) },
+    { name: '1688', badge: 'badge-1688', data: gen1688Data(q) },
+  ];
+
+  const summary = calcSummary(platforms);
+  const analysis = genAnalysis(q, summary);
+
+  bodyEl.innerHTML = `
+    <div class="compare-summary">
+      <div class="compare-summary-card">
+        <div class="num">${summary.totalProducts}</div>
+        <div class="lbl">全网在售 SKU</div>
+      </div>
+      <div class="compare-summary-card">
+        <div class="num">¥${summary.lowestPrice}</div>
+        <div class="lbl">最低到手价</div>
+      </div>
+      <div class="compare-summary-card">
+        <div class="num">${summary.avgProfit}%</div>
+        <div class="lbl">预估毛利率</div>
+      </div>
+    </div>
+
+    <table class="compare-table">
+      <tr>
+        <th>平台</th>
+        <th>低价区间</th>
+        <th>热销款</th>
+        <th>月销参考</th>
+        <th>竞争度</th>
+      </tr>
+      ${platforms.map(p => `
+        <tr>
+          <td><span class="platform-badge ${p.badge}">${p.name}</span></td>
+          <td class="price">${p.data.priceRange}</td>
+          <td>${p.data.hotItem}</td>
+          <td>${p.data.salesRef}</td>
+          <td>${p.data.competition}</td>
+        </tr>
+      `).join('')}
+    </table>
+
+    <div class="analysis-section">
+      <h4>💡 货源·利润·可做性分析</h4>
+      <div>
+        ${analysis.tags.map(t => `<span class="analysis-tag ${t.cls}">${t.text}</span>`).join('')}
+      </div>
+      <div style="margin-top:12px;font-size:13px;color:var(--text-dim);line-height:1.8;background:#f9fafb;padding:14px;border-radius:8px;">
+        ${analysis.conclusion}
+      </div>
+    </div>
+  `;
+
+  overlay.classList.add('active');
+}
+
+// ── Mock data generators (real version will call tavily_search) ──
+function genXianyuData(q) {
+  const items = {
+    '电动车配件': { price: '¥15-85', hot: '电动车挡风被', sales: '日曝光 2300+', comp: '🟡 中等' },
+    '红薯': { price: '¥8-25', hot: '红薯干 500g', sales: '月销 600+', comp: '🟢 较低' },
+    '空气炸锅配件': { price: '¥12-68', hot: '空气炸锅垫纸', sales: '日曝光 1800+', comp: '🟢 较低' },
+    '宠物用品': { price: '¥10-120', hot: '宠物自动喂食器', sales: '月销 900+', comp: '🟡 中等' },
+    '夏季冰袖': { price: '¥5-20', hot: '冰丝防晒冰袖', sales: '日曝光 3500+', comp: '🔴 较高' },
+  }[q] || { price: '¥10-60', hot: `${q} 闲鱼热门`, sales: '查询中', comp: '🟡 中等' };
+  return { priceRange: items.price, hotItem: items.hot, salesRef: items.sales, competition: items.comp };
+}
+function genTaobaoData(q) {
+  const items = {
+    '电动车配件': { price: '¥28-199', hot: '电动车锂电池', sales: '月销 3000+', comp: '🔴 较高' },
+    '红薯': { price: '¥12-40', hot: '六鳌蜜薯 5斤装', sales: '月销 2.1w+', comp: '🔴 较高' },
+    '空气炸锅配件': { price: '¥18-129', hot: '空气炸锅专用配件套装', sales: '月销 1.5w+', comp: '🟡 中等' },
+    '宠物用品': { price: '¥20-299', hot: '智能宠物饮水机', sales: '月销 8000+', comp: '🔴 较高' },
+    '夏季冰袖': { price: '¥9-35', hot: '防紫外线冰袖 UPF50+', sales: '月销 5.6w+', comp: '🔴 较高' },
+  }[q] || { price: '¥20-150', hot: `${q} 淘宝精选`, sales: '月销 2000+', comp: '🟡 中等' };
+  return { priceRange: items.price, hotItem: items.hot, salesRef: items.sales, competition: items.comp };
+}
+function genPddData(q) {
+  const items = {
+    '电动车配件': { price: '¥9-68', hot: '电动车手机支架', sales: '10万+人拼', comp: '🔴 较高' },
+    '红薯': { price: '¥6-20', hot: '新鲜红薯 5斤', sales: '10万+人拼', comp: '🟡 中等' },
+    '空气炸锅配件': { price: '¥6-35', hot: '空气炸锅硅油纸', sales: '10万+人拼', comp: '🟢 较低' },
+    '宠物用品': { price: '¥8-89', hot: '宠物除毛滚筒', sales: '5万+人拼', comp: '🟡 中等' },
+    '夏季冰袖': { price: '¥3-12', hot: '冰袖 防晒 男女', sales: '10万+人拼', comp: '🔴 较高' },
+  }[q] || { price: '¥5-40', hot: `${q} 拼多多热卖`, sales: '5万+人拼', comp: '🟡 中等' };
+  return { priceRange: items.price, hotItem: items.hot, salesRef: items.sales, competition: items.comp };
+}
+function genJdData(q) {
+  const items = {
+    '电动车配件': { price: '¥35-399', hot: '电动车头盔 3C认证', sales: '月销 5000+', comp: '🟡 中等' },
+    '红薯': { price: '¥15-50', hot: '山东烟薯25号', sales: '月销 8000+', comp: '🟡 中等' },
+    '空气炸锅配件': { price: '¥22-169', hot: '空气炸锅 品牌原装配件', sales: '月销 6000+', comp: '🟢 较低' },
+    '宠物用品': { price: '¥28-459', hot: '宠物智能喂食器 大牌', sales: '月销 3000+', comp: '🟡 中等' },
+    '夏季冰袖': { price: '¥15-49', hot: '冰袖 户外防晒', sales: '月销 1.2w+', comp: '🟡 中等' },
+  }[q] || { price: '¥25-200', hot: `${q} 京东自营`, sales: '月销 2000+', comp: '🟡 中等' };
+  return { priceRange: items.price, hotItem: items.hot, salesRef: items.sales, competition: items.comp };
+}
+function genDouyinData(q) {
+  const items = {
+    '电动车配件': { price: '¥19-99', hot: '电动车遮阳伞', sales: '带货GMV 23w', comp: '🟢 较低' },
+    '红薯': { price: '¥9-30', hot: '烤红薯 空气炸锅版', sales: '达人探店 46w', comp: '🟡 中等' },
+    '空气炸锅配件': { price: '¥12-55', hot: '空气炸锅四件套', sales: '达人带货 38w', comp: '🟢 较低' },
+    '宠物用品': { price: '¥15-129', hot: '宠物零食 冻干鸡胸肉', sales: '达人矩阵 52w', comp: '🟡 中等' },
+    '夏季冰袖': { price: '¥6-19', hot: '冰袖 男女通用', sales: '72h销 8.9w单', comp: '🟡 中等' },
+  }[q] || { price: '¥10-60', hot: `${q} 抖音热推`, sales: '查询中', comp: '🟡 中等' };
+  return { priceRange: items.price, hotItem: items.hot, salesRef: items.sales, competition: items.comp };
+}
+function gen1688Data(q) {
+  const items = {
+    '电动车配件': { price: '¥5-38', hot: '电动车配件 一件代发', sales: '供货商 200+', comp: '🟢 进货价低' },
+    '红薯': { price: '¥2-8', hot: '红薯 产地直供', sales: '供货商 150+', comp: '🟢 源头价' },
+    '空气炸锅配件': { price: '¥2-15', hot: '空气炸锅配件 工厂价', sales: '供货商 300+', comp: '🟢 利润空间大' },
+    '宠物用品': { price: '¥5-40', hot: '宠物用品 批发', sales: '供货商 500+', comp: '🟢 多货源' },
+    '夏季冰袖': { price: '¥1-5', hot: '冰袖 工厂直销', sales: '供货商 180+', comp: '🟢 极低价' },
+  }[q] || { price: '¥2-20', hot: `${q} 批发价`, sales: '查询中', comp: '🟢 需验证' };
+  return { priceRange: items.price, hotItem: items.hot, salesRef: items.sales, competition: items.comp };
+}
+
+function calcSummary(platforms) {
+  return {
+    totalProducts: Math.floor(Math.random() * 50 + 30),
+    lowestPrice: platforms[5].data.priceRange.replace('¥', '').split('-')[0],
+    avgProfit: Math.floor(Math.random() * 30 + 25),
+  };
+}
+
+function genAnalysis(q, summary) {
+  const analyses = {
+    '电动车配件': {
+      tags: [
+        { cls: 'green', text: '✅ 1688拿货价低至¥5' },
+        { cls: 'orange', text: '⚠️ 京东/淘宝竞争偏大' },
+        { cls: 'green', text: '✅ 闲鱼/抖音有空间' },
+      ],
+      conclusion: `【结论】电动车配件品类在闲鱼和抖音有明确机会。1688拿货价¥5-38，闲鱼售价¥15-85，毛利空间50-70%。建议从「电动车手机支架」「挡风被」这类轻小件切入，避开锂电池等高客单高竞争品类。抖音测试成本低，可先发带货视频测品。`
+    },
+    '红薯': {
+      tags: [
+        { cls: 'green', text: '✅ 1688产地直供¥2/斤' },
+        { cls: 'red', text: '❌ 淘宝/抖音竞争激烈' },
+        { cls: 'orange', text: '⚠️ 生鲜品控是关键' },
+      ],
+      conclusion: `【结论】红薯作为生鲜品类，平台竞争激烈且品控要求高。淘宝月销2万+，拼多多10万+人拼，新商家切入难度大。如果要做，建议走「红薯干/红薯零食」加工品方向，避开生鲜的物流损耗，且利润更高。`
+    },
+    '空气炸锅配件': {
+      tags: [
+        { cls: 'green', text: '✅ 全网低竞争高需求' },
+        { cls: 'green', text: '✅ 1688拿货¥2起' },
+        { cls: 'green', text: '✅ 京东自营也缺货' },
+      ],
+      conclusion: `【结论】空气炸锅配件是目前最好的蓝海品类之一。京东自营竟然也缺货，说明需求>供给。1688拿货¥2-15，闲鱼卖¥12-68，毛利60%+。建议先铺闲鱼（竞争最低），等跑通再上京东。硅油纸/垫纸是消耗品，复购率极高。`
+    },
+    '宠物用品': {
+      tags: [
+        { cls: 'green', text: '✅ 市场规模持续增长' },
+        { cls: 'orange', text: '⚠️ 各平台竞争度中等' },
+        { cls: 'green', text: '✅ 1688货源丰富' },
+      ],
+      conclusion: `【结论】宠物用品市场规模大但各平台已有一批稳定卖家。机会在细分品类：宠物喂食器/饮水机竞争大，但宠物除毛滚筒、宠物湿巾这类小件还有空间。建议从「配件/消耗品」切入而非大件。抖音宠物内容天然好做。`
+    },
+    '夏季冰袖': {
+      tags: [
+        { cls: 'red', text: '❌ 拼多多¥3在卖' },
+        { cls: 'red', text: '❌ 淘宝月销5.6w' },
+        { cls: 'orange', text: '⚠️ 季节性强' },
+      ],
+      conclusion: `【结论】冰袖是典型的红海品类。拼多多¥3-12，淘宝¥9-35，1688拿货¥1-5，理论上利润存在但需要靠量取胜。如果是闲鱼单干，不值得做；如果是京东店群/抖音直播跑量，可以测。注意季节性——只有5-8月有量。`
+    },
+  };
+
+  return analyses[q] || {
+    tags: [
+      { cls: 'green', text: '✅ 搜索到公开数据' },
+      { cls: 'orange', text: '⚠️ 数据基于公开信息' },
+    ],
+    conclusion: `【结论】对「${q}」的初步全网扫描完成。建议先看1688拿货价能否做到平台售价的30%以下，如果是则利润空间可观。具体细分类目和竞品分析需要更精确的关键词。你可以在搜索框中输入更具体的产品名，我重新分析。`
+  };
+}
+const modalData = {
+  '闲鱼好品识别': {
+    items: [
+      { tag: 'tag-hot',  label: '热卖', text: '数码配件 · 手机支架磁吸款', data: '↑23%' },
+      { tag: 'tag-up',   label: '增长', text: '桌面收纳盒', data: '周环比 +45%' },
+      { tag: 'tag-new',  label: '新品', text: '便携标签打印机', data: '上架2h 出38单' },
+      { tag: 'tag-up',   label: '增长', text: '宠物喂食器', data: '浏览量涨62%' },
+      { tag: 'tag-new',  label: '新品', text: '复古蓝牙音箱', data: '上架4h 咨询量97' },
+      { tag: 'tag-hot',  label: '热卖', text: '无线充电宝 10000mAh', data: '日销120+' },
+      { tag: 'tag-up',   label: '增长', text: '夏季冰袖 · 防晒款', data: '周环比 +88%' },
+      { tag: 'tag-new',  label: '新品', text: '迷你投影仪 家用款', data: '上架1天 收藏230' },
+      { tag: 'tag-hot',  label: '热卖', text: '手机壳 · 透明磨砂款', data: '月销800+' },
+      { tag: 'tag-up',   label: '增长', text: '桌面风扇 静音款', data: '浏览量涨42%' },
+      { tag: 'tag-new',  label: '新品', text: '电动牙刷 替换刷头', data: '上架3h 出15单' },
+      { tag: 'tag-hot',  label: '热卖', text: '数据线三合一 编织款', data: '日评50+' },
+    ]
+  },
+  '全网爆品监控': {
+    items: [
+      { tag: 'tag-rank', label: '抖音', text: '懒人抹布', data: '72h销12.6w单' },
+      { tag: 'tag-rank', label: '淘宝', text: '冰丝凉席三件套', data: '月销8.3w' },
+      { tag: 'tag-rank', label: '拼多多', text: '多功能收纳架', data: '9.9万+人拼' },
+      { tag: 'tag-rank', label: '京东', text: '空气循环扇', data: '日销2300+' },
+      { tag: 'tag-rank', label: '抖音', text: '厨房湿巾 大包', data: '72h销8.9w单' },
+      { tag: 'tag-rank', label: '淘宝', text: '防晒冰袖', data: '月销6.7w' },
+      { tag: 'tag-rank', label: '拼多多', text: '手机支架 桌面款', data: '5.5万+人拼' },
+      { tag: 'tag-rank', label: '京东', text: '除螨包 家用', data: '日销1800+' },
+    ]
+  },
+  '京东·类目销量激增': {
+    items: [
+      { tag: 'tag-up', label: '+217%', text: '厨房小电 · 空气炸锅配件', data: '周销量2.3w' },
+      { tag: 'tag-up', label: '+185%', text: '宠物生活 · 智能饮水机', data: '周销量1.8w' },
+      { tag: 'tag-up', label: '+142%', text: '家清 · 地板清洁片', data: '周销量4.1w' },
+      { tag: 'tag-up', label: '+98%',  text: '运动户外 · 徒步登山杖', data: '周销量0.9w' },
+      { tag: 'tag-up', label: '+76%',  text: '汽车用品 · 车载香薰', data: '周销量1.2w' },
+      { tag: 'tag-up', label: '+63%',  text: '数码 · 平板支架', data: '周销量2.7w' },
+      { tag: 'tag-up', label: '+55%',  text: '母婴 · 婴儿湿巾', data: '周销量5.3w' },
+      { tag: 'tag-up', label: '+48%',  text: '家具 · 电脑桌升降款', data: '周销量0.6w' },
+    ]
+  },
+  '抖音爆品选品': {
+    items: [
+      { tag: 'tag-rank', label: '🔥1', text: '家用切菜器', data: '直播GMV 43w' },
+      { tag: 'tag-rank', label: '🔥2', text: '磁吸数据线', data: '达人带货 28w' },
+      { tag: 'tag-rank', label: '🔥3', text: '除螨喷雾', data: '带货视频 310w播放' },
+      { tag: 'tag-rank', label: '🔥4', text: '迷你挂烫机', data: '转化率 8.2%' },
+      { tag: 'tag-rank', label: '🔥5', text: '厨房湿巾', data: '直播间在线峰值2600' },
+      { tag: 'tag-rank', label: '🔥6', text: '手机气囊支架', data: '72hGMV 19w' },
+      { tag: 'tag-rank', label: '🔥7', text: '冰丝凉席', data: '达人矩阵 52w' },
+      { tag: 'tag-rank', label: '🔥8', text: '便携风扇', data: '转化率 6.7%' },
+    ]
+  },
+  '全网竞品监控': {
+    items: [
+      { tag: 'tag-warn', label: '拼多多', text: '某商家 厨房置物架', data: '¥12.9' },
+      { tag: 'tag-warn', label: '淘宝', text: '某店 桌面收纳', data: '¥19.9起' },
+      { tag: 'tag-warn', label: '抖音', text: '某达人 同款抹布', data: '¥9.9' },
+      { tag: 'tag-warn', label: '京东', text: '自营 收纳架', data: '¥29.9' },
+      { tag: 'tag-warn', label: '拼多多', text: '某商家 宠物碗', data: '¥8.8' },
+      { tag: 'tag-warn', label: '淘宝', text: '某店 除螨包', data: '¥14.9' },
+      { tag: 'tag-warn', label: '抖音', text: '某达人 挂烫机', data: '¥39.9' },
+      { tag: 'tag-warn', label: '京东', text: '第三方 收纳盒', data: '¥16.9' },
+      { tag: 'tag-warn', label: '拼多多', text: '某商家 冰袖', data: '¥5.9' },
+      { tag: 'tag-warn', label: '淘宝', text: '某店 切菜器', data: '¥24.9' },
+      { tag: 'tag-warn', label: '抖音', text: '某达人 数据线', data: '¥12.9' },
+      { tag: 'tag-warn', label: '拼多多', text: '某商家 风扇', data: '¥7.9' },
+      { tag: 'tag-warn', label: '淘宝', text: '某店 宠物饮水机', data: '¥49.9' },
+      { tag: 'tag-warn', label: '京东', text: '自营 凉席三件套', data: '¥89.9' },
+      { tag: 'tag-warn', label: '拼多多', text: '某商家 抹布', data: '¥3.9' },
+      { tag: 'tag-warn', label: '淘宝', text: '某店 香薰', data: '¥9.9' },
+      { tag: 'tag-warn', label: '抖音', text: '某达人 登山杖', data: '¥19.9' },
+      { tag: 'tag-warn', label: '京东', text: '第三方 防蚊贴', data: '¥6.9' },
+    ]
+  },
+  '货源可行性分析': {
+    items: [
+      { tag: 'tag-new', label: '1688', text: '懒人抹布 厂家报价', data: '¥2.3/卷  利润测算中' },
+      { tag: 'tag-new', label: '义乌', text: '收纳架 源头价', data: '¥3.8  已出利润报告' },
+      { tag: 'tag-new', label: 'PDD', text: '切菜器 代发价', data: '¥6.5  利润率 41%' },
+      { tag: 'tag-new', label: '跨境', text: '宠物饮水机 拿货', data: '¥22  建议售价 ¥59' },
+      { tag: 'tag-new', label: '1688', text: '冰丝凉席 厂家直供', data: '¥12/套  利润测算中' },
+      { tag: 'tag-new', label: '义乌', text: '除螨包 批发价', data: '¥1.2/包  利润报告待出' },
+    ]
+  }
+};
+
+// ── DOM refs ──
+const overlay = document.getElementById('modalOverlay');
+const titleEl = document.getElementById('modalTitle');
+const iconEl = document.getElementById('modalIcon');
+const bodyEl = document.getElementById('modalBody');
+const closeBtn = document.getElementById('modalClose');
+const actionBtn = document.getElementById('modalAction');
+
+// ── Open modal ──
+function openModal(name) {
+  const data = modalData[name];
+  if (!data) return;
+
+  const trigger = document.querySelector(`[data-modal="${name}"]`);
+  const icon = trigger ? trigger.dataset.icon : '📌';
+
+  iconEl.textContent = icon;
+  titleEl.textContent = name;
+
+  bodyEl.innerHTML = '<ul class="modal-list">' +
+    data.items.map(item =>
+      `<li><span class="tag ${item.tag}">${item.label}</span> ${item.text} <span class="data">${item.data}</span></li>`
+    ).join('') +
+    '</ul>';
+
+  overlay.classList.add('active');
+}
+
+// ── Close modal ──
+function closeModal() {
+  overlay.classList.remove('active');
+}
+
+// ── Event: 查看更多 click ──
+document.querySelectorAll('.list-more').forEach(el => {
+  el.addEventListener('click', () => openModal(el.dataset.modal));
+});
+
+// ── Event: close button ──
+closeBtn.addEventListener('click', closeModal);
+actionBtn.addEventListener('click', closeModal);
+
+// ── Event: click overlay to close ──
+overlay.addEventListener('click', (e) => {
+  if (e.target === overlay) closeModal();
+});
+
+// ── Event: ESC key ──
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ── Event: 搜索 button ──
+document.getElementById('searchBtn').addEventListener('click', () => {
+  searchProduct(document.getElementById('productSearch').value);
+});
+document.getElementById('productSearch').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') searchProduct(e.target.value);
+});
+document.querySelectorAll('.search-hints span').forEach(el => {
+  el.addEventListener('click', () => {
+    document.getElementById('productSearch').value = el.textContent;
+    searchProduct(el.textContent);
+  });
+});
+
+// ── Event: 开始分析 button ──
+document.getElementById('analysisBtn').addEventListener('click', () => {
+  iconEl.textContent = '⚡';
+  titleEl.textContent = '货源可行性分析';
+  bodyEl.innerHTML = `
+    <div style="text-align:center;padding:24px 0;">
+      <div style="font-size:36px;margin-bottom:16px;">🔬</div>
+      <div style="font-size:15px;font-weight:600;margin-bottom:8px;color:var(--text);">正在扫描全网爆品 → 匹配货源...</div>
+      <div style="font-size:12px;color:var(--text-dim);">当前待分析品数：6 条 | 预计 30 秒完成</div>
+      <div style="margin-top:20px;height:4px;background:#f0f0f0;border-radius:2px;overflow:hidden;">
+        <div style="width:60%;height:100%;background:var(--accent);border-radius:2px;animation:progress 2s ease infinite;"></div>
+      </div>
+    </div>
+    <style>
+      @keyframes progress {
+        0% { width: 10%; }
+        50% { width: 70%; }
+        100% { width: 95%; }
+      }
+    </style>
+    <ul class="modal-list">
+      <li><span class="tag tag-new">✅ 完成</span> 懒人抹布 · 匹配1688厂家3家 <span class="data">¥2.3/卷</span></li>
+      <li><span class="tag tag-new">✅ 完成</span> 收纳架 · 义乌源头价确认 <span class="data">¥3.8</span></li>
+      <li><span class="tag tag-up">⏳ 进行中</span> 切菜器 · 利润测算 <span class="data">预计利润率 38-45%</span></li>
+      <li><span class="tag tag-up">⏳ 进行中</span> 宠物饮水机 · 跨境货源比价 <span class="data">3家报价中</span></li>
+    </ul>
+  `;
+  overlay.classList.add('active');
+});
+</script>
+
+</body>
+</html>
