@@ -538,7 +538,7 @@
         <span class="step-arrow">→</span>
         <div class="step"><span class="step-num">4</span>可做决策</div>
       </div>
-      <button class="feasibility-btn" id="analysisBtn">开始分析 →</button>
+      <button class="feasibility-btn" id="analysisBtn">🔍 一键搜索全网热品 →</button>
     </div>
   </div>
 
@@ -1127,34 +1127,16 @@ document.querySelectorAll('.search-hints span').forEach(el => {
   });
 });
 
-// ── Event: 开始分析 button ──
+// ── Event: 一键搜索全网热品 button ──
 document.getElementById('analysisBtn').addEventListener('click', () => {
-  iconEl.textContent = '⚡';
-  titleEl.textContent = '货源可行性分析';
-  bodyEl.innerHTML = `
-    <div style="text-align:center;padding:24px 0;">
-      <div style="font-size:36px;margin-bottom:16px;">🔬</div>
-      <div style="font-size:15px;font-weight:600;margin-bottom:8px;color:var(--text);">正在扫描全网爆品 → 匹配货源...</div>
-      <div style="font-size:12px;color:var(--text-dim);">当前待分析品数：6 条 | 预计 30 秒完成</div>
-      <div style="margin-top:20px;height:4px;background:#f0f0f0;border-radius:2px;overflow:hidden;">
-        <div style="width:60%;height:100%;background:var(--accent);border-radius:2px;animation:progress 2s ease infinite;"></div>
-      </div>
-    </div>
-    <style>
-      @keyframes progress {
-        0% { width: 10%; }
-        50% { width: 70%; }
-        100% { width: 95%; }
-      }
-    </style>
-    <ul class="modal-list">
-      <li><span class="tag tag-new">✅ 完成</span> 懒人抹布 · 匹配1688厂家3家 <span class="data">¥2.3/卷</span></li>
-      <li><span class="tag tag-new">✅ 完成</span> 收纳架 · 义乌源头价确认 <span class="data">¥3.8</span></li>
-      <li><span class="tag tag-up">⏳ 进行中</span> 切菜器 · 利润测算 <span class="data">预计利润率 38-45%</span></li>
-      <li><span class="tag tag-up">⏳ 进行中</span> 宠物饮水机 · 跨境货源比价 <span class="data">3家报价中</span></li>
-    </ul>
-  `;
-  overlay.classList.add('active');
+  // Grab the first product from the 货源 card if available, or search generic
+  const firstProduct = document.querySelector('#tab-rongying .placeholder-list li') 
+    ? document.querySelector('#tab-rongying .placeholder-list li').textContent.trim().replace(/^.*?\\s+/, '')
+    : '近期全网爆品';
+  
+  const searchBox = document.getElementById('productSearch');
+  if (searchBox) searchBox.value = firstProduct || '近期全网爆品';
+  searchProduct(firstProduct || '近期全网爆品');
 });
 </script>
 
