@@ -569,411 +569,112 @@
 </div>
 
 <script>
-// ── Product search & cross-platform comparison ──
-function searchProduct(query) {
+// ── 荣盈搜索API地址 ──
+const SEARCH_API = 'http://localhost:8765';
+
+// ── Product search & cross-platform comparison (真实搜索) ──
+async function searchProduct(query) {
   if (!query.trim()) return;
 
   const q = query.trim();
   iconEl.textContent = '🔍';
   titleEl.textContent = `「${q}」全网对比分析`;
-
-  // Generate platform data based on search
-  const platforms = [
-    { name: '闲鱼', badge: 'badge-xianyu', data: genXianyuData(q) },
-    { name: '淘宝', badge: 'badge-taobao', data: genTaobaoData(q) },
-    { name: '拼多多', badge: 'badge-pdd', data: genPddData(q) },
-    { name: '京东', badge: 'badge-jd', data: genJdData(q) },
-    { name: '抖音', badge: 'badge-douyin', data: genDouyinData(q) },
-    { name: '1688', badge: 'badge-1688', data: gen1688Data(q) },
-  ];
-
-  const summary = calcSummary(platforms);
-  const analysis = genAnalysis(q, summary);
-
-  bodyEl.innerHTML = `
-    <div class="compare-summary">
-      <div class="compare-summary-card">
-        <div class="num">${summary.totalProducts}</div>
-        <div class="lbl">全网在售 SKU</div>
-      </div>
-      <div class="compare-summary-card">
-        <div class="num">¥${summary.lowestPrice}</div>
-        <div class="lbl">最低到手价</div>
-      </div>
-      <div class="compare-summary-card">
-        <div class="num">${summary.avgProfit}%</div>
-        <div class="lbl">预估毛利率</div>
-      </div>
-    </div>
-
-    <table class="compare-table">
-      <tr>
-        <th>平台</th>
-        <th>低价区间</th>
-        <th>热销款</th>
-        <th>月销参考</th>
-        <th>竞争度</th>
-      </tr>
-      ${platforms.map(p => `
+  
+  // Show loading state
+  bodyEl.innerHTML = `<div style="text-align:center;padding:40px 0;font-size:14px;color:var(--text-dim);">
+    <div style="font-size:32px;margin-bottom:12px;">⏳</div>
+    正在搜索全平台数据<br><span style="font-size:12px;">约需20-40秒，搜索6个平台...</span>
+  </div>`;
+  overlay.classList.add('active');
+  
+  try {
+    const resp = await fetch(`${SEARCH_API}/search?q=${encodeURIComponent(q)}`);
+    if (!resp.ok) throw new Error(`API ${resp.status}`);
+    const data = await resp.json();
+    
+    const total = data.total || 0;
+    const content = data.platforms || [];
+    
+    // Find lowest price from results
+    let lowestPrice = '?';
+    let highestPrice = '?';
+    let totalItems = 0;
+    content.forEach(p => { totalItems += p.count; });
+    
+    // Build comparison table
+    let tableRows = '';
+    content.forEach(p => {
+      const firstItem = p.items && p.items[0];
+      const priceInfo = firstItem ? (firstItem.snippet.match(/[¥￥]?(\d+\.?\d*)/) ? `¥${firstItem.snippet.match(/[¥￥]?(\d+\.?\d*)/)[1]}` : '价格待查') : '暂无数据';
+      tableRows += `
         <tr>
-          <td><span class="platform-badge ${p.badge}">${p.name}</span></td>
-          <td class="price">${p.data.priceRange}</td>
-          <td>${p.data.hotItem}</td>
-          <td>${p.data.salesRef}</td>
-          <td>${p.data.competition}</td>
+          <td><span class="platform-badge ${p.badge}">${p.platform}</span></td>
+          <td class="price">${priceInfo}</td>
+          <td>${p.items && p.items[0] ? p.items[0].title.slice(0,30) : '暂无数据'}</td>
+          <td>${p.count > 0 ? `搜到${p.count}条` : '无结果'}</td>
+          <td>${p.count > 3 ? '🔴 较多' : p.count > 0 ? '🟡 中等' : '🟢 较少'}</td>
+        </tr>`;
+    });
+    
+    let platformDetail = '';
+    content.forEach(p => {
+      if (p.items && p.items.length > 0) {
+        platformDetail += `<div style="margin-top:6px;font-size:12px;color:var(--text-dim);"><b>${p.platform}:</b> `;
+        p.items.forEach(i => {
+          platformDetail += `<div style="padding:2px 0 2px 12px;border-left:2px solid #e5e7eb;margin:2px 0 2px 4px;">${i.title.slice(0,40)} <span style="color:var(--text-muted);font-size:10px;">${i.snippet.slice(0,30)}...</span></div>`;
+        });
+        platformDetail += `</div>`;
+      }
+    });
+    
+    titleEl.textContent = `「${q}」全网对比分析 · ${total}条`;
+    
+    bodyEl.innerHTML = `
+      <div class="compare-summary">
+        <div class="compare-summary-card">
+          <div class="num">${totalItems}</div>
+          <div class="lbl">全网搜到信息</div>
+        </div>
+        <div class="compare-summary-card">
+          <div class="num">${total > 0 ? '✅' : '⏳'}</div>
+          <div class="lbl">数据来源</div>
+        </div>
+        <div class="compare-summary-card">
+          <div class="num">${content.filter(p => p.count > 0).length}/6</div>
+          <div class="lbl">有数据的平台</div>
+        </div>
+      </div>
+
+      <table class="compare-table">
+        <tr>
+          <th>平台</th><th>价格参考</th><th>热销款</th><th>信息量</th><th>竞争度</th>
         </tr>
-      `).join('')}
-    </table>
+        ${tableRows}
+      </table>
 
-    <div class="analysis-section">
-      <h4>💡 货源·利润·可做性分析</h4>
-      <div>
-        ${analysis.tags.map(t => `<span class="analysis-tag ${t.cls}">${t.text}</span>`).join('')}
+      <div class="analysis-section">
+        <h4>📋 各平台详情</h4>
+        ${platformDetail || '<div style="color:var(--text-muted);font-size:12px;">暂无详细数据</div>'}
+        <div style="margin-top:12px;font-size:11px;color:var(--text-muted);background:#f9fafb;padding:10px 14px;border-radius:8px;">
+          ⚡ 数据来源：Tavily实时搜索 | 搜索耗时约20-40秒
+        </div>
       </div>
-      <div style="margin-top:12px;font-size:13px;color:var(--text-dim);line-height:1.8;background:#f9fafb;padding:14px;border-radius:8px;">
-        ${analysis.conclusion}
-      </div>
-    </div>
-  `;
-
-  overlay.classList.add('active');
-}
-
-// ── Mock data generators (real version will call tavily_search) ──
-function genXianyuData(q) {
-  const items = {
-    '电动车配件': { price: '¥15-85', hot: '电动车挡风被', sales: '日曝光 2300+', comp: '🟡 中等' },
-    '红薯': { price: '¥8-25', hot: '红薯干 500g', sales: '月销 600+', comp: '🟢 较低' },
-    '空气炸锅配件': { price: '¥12-68', hot: '空气炸锅垫纸', sales: '日曝光 1800+', comp: '🟢 较低' },
-    '宠物用品': { price: '¥10-120', hot: '宠物自动喂食器', sales: '月销 900+', comp: '🟡 中等' },
-    '夏季冰袖': { price: '¥5-20', hot: '冰丝防晒冰袖', sales: '日曝光 3500+', comp: '🔴 较高' },
-  }[q] || { price: '¥10-60', hot: `${q} 闲鱼热门`, sales: '查询中', comp: '🟡 中等' };
-  return { priceRange: items.price, hotItem: items.hot, salesRef: items.sales, competition: items.comp };
-}
-function genTaobaoData(q) {
-  const items = {
-    '电动车配件': { price: '¥28-199', hot: '电动车锂电池', sales: '月销 3000+', comp: '🔴 较高' },
-    '红薯': { price: '¥12-40', hot: '六鳌蜜薯 5斤装', sales: '月销 2.1w+', comp: '🔴 较高' },
-    '空气炸锅配件': { price: '¥18-129', hot: '空气炸锅专用配件套装', sales: '月销 1.5w+', comp: '🟡 中等' },
-    '宠物用品': { price: '¥20-299', hot: '智能宠物饮水机', sales: '月销 8000+', comp: '🔴 较高' },
-    '夏季冰袖': { price: '¥9-35', hot: '防紫外线冰袖 UPF50+', sales: '月销 5.6w+', comp: '🔴 较高' },
-  }[q] || { price: '¥20-150', hot: `${q} 淘宝精选`, sales: '月销 2000+', comp: '🟡 中等' };
-  return { priceRange: items.price, hotItem: items.hot, salesRef: items.sales, competition: items.comp };
-}
-function genPddData(q) {
-  const items = {
-    '电动车配件': { price: '¥9-68', hot: '电动车手机支架', sales: '10万+人拼', comp: '🔴 较高' },
-    '红薯': { price: '¥6-20', hot: '新鲜红薯 5斤', sales: '10万+人拼', comp: '🟡 中等' },
-    '空气炸锅配件': { price: '¥6-35', hot: '空气炸锅硅油纸', sales: '10万+人拼', comp: '🟢 较低' },
-    '宠物用品': { price: '¥8-89', hot: '宠物除毛滚筒', sales: '5万+人拼', comp: '🟡 中等' },
-    '夏季冰袖': { price: '¥3-12', hot: '冰袖 防晒 男女', sales: '10万+人拼', comp: '🔴 较高' },
-  }[q] || { price: '¥5-40', hot: `${q} 拼多多热卖`, sales: '5万+人拼', comp: '🟡 中等' };
-  return { priceRange: items.price, hotItem: items.hot, salesRef: items.sales, competition: items.comp };
-}
-function genJdData(q) {
-  const items = {
-    '电动车配件': { price: '¥35-399', hot: '电动车头盔 3C认证', sales: '月销 5000+', comp: '🟡 中等' },
-    '红薯': { price: '¥15-50', hot: '山东烟薯25号', sales: '月销 8000+', comp: '🟡 中等' },
-    '空气炸锅配件': { price: '¥22-169', hot: '空气炸锅 品牌原装配件', sales: '月销 6000+', comp: '🟢 较低' },
-    '宠物用品': { price: '¥28-459', hot: '宠物智能喂食器 大牌', sales: '月销 3000+', comp: '🟡 中等' },
-    '夏季冰袖': { price: '¥15-49', hot: '冰袖 户外防晒', sales: '月销 1.2w+', comp: '🟡 中等' },
-  }[q] || { price: '¥25-200', hot: `${q} 京东自营`, sales: '月销 2000+', comp: '🟡 中等' };
-  return { priceRange: items.price, hotItem: items.hot, salesRef: items.sales, competition: items.comp };
-}
-function genDouyinData(q) {
-  const items = {
-    '电动车配件': { price: '¥19-99', hot: '电动车遮阳伞', sales: '带货GMV 23w', comp: '🟢 较低' },
-    '红薯': { price: '¥9-30', hot: '烤红薯 空气炸锅版', sales: '达人探店 46w', comp: '🟡 中等' },
-    '空气炸锅配件': { price: '¥12-55', hot: '空气炸锅四件套', sales: '达人带货 38w', comp: '🟢 较低' },
-    '宠物用品': { price: '¥15-129', hot: '宠物零食 冻干鸡胸肉', sales: '达人矩阵 52w', comp: '🟡 中等' },
-    '夏季冰袖': { price: '¥6-19', hot: '冰袖 男女通用', sales: '72h销 8.9w单', comp: '🟡 中等' },
-  }[q] || { price: '¥10-60', hot: `${q} 抖音热推`, sales: '查询中', comp: '🟡 中等' };
-  return { priceRange: items.price, hotItem: items.hot, salesRef: items.sales, competition: items.comp };
-}
-function gen1688Data(q) {
-  const items = {
-    '电动车配件': { price: '¥5-38', hot: '电动车配件 一件代发', sales: '供货商 200+', comp: '🟢 进货价低' },
-    '红薯': { price: '¥2-8', hot: '红薯 产地直供', sales: '供货商 150+', comp: '🟢 源头价' },
-    '空气炸锅配件': { price: '¥2-15', hot: '空气炸锅配件 工厂价', sales: '供货商 300+', comp: '🟢 利润空间大' },
-    '宠物用品': { price: '¥5-40', hot: '宠物用品 批发', sales: '供货商 500+', comp: '🟢 多货源' },
-    '夏季冰袖': { price: '¥1-5', hot: '冰袖 工厂直销', sales: '供货商 180+', comp: '🟢 极低价' },
-  }[q] || { price: '¥2-20', hot: `${q} 批发价`, sales: '查询中', comp: '🟢 需验证' };
-  return { priceRange: items.price, hotItem: items.hot, salesRef: items.sales, competition: items.comp };
-}
-
-function calcSummary(platforms) {
-  return {
-    totalProducts: Math.floor(Math.random() * 50 + 30),
-    lowestPrice: platforms[5].data.priceRange.replace('¥', '').split('-')[0],
-    avgProfit: Math.floor(Math.random() * 30 + 25),
-  };
-}
-
-function genAnalysis(q, summary) {
-  const analyses = {
-    '电动车配件': {
-      tags: [
-        { cls: 'green', text: '✅ 1688拿货价低至¥5' },
-        { cls: 'orange', text: '⚠️ 京东/淘宝竞争偏大' },
-        { cls: 'green', text: '✅ 闲鱼/抖音有空间' },
-      ],
-      conclusion: `【结论】电动车配件品类在闲鱼和抖音有明确机会。1688拿货价¥5-38，闲鱼售价¥15-85，毛利空间50-70%。建议从「电动车手机支架」「挡风被」这类轻小件切入，避开锂电池等高客单高竞争品类。抖音测试成本低，可先发带货视频测品。`
-    },
-    '红薯': {
-      tags: [
-        { cls: 'green', text: '✅ 1688产地直供¥2/斤' },
-        { cls: 'red', text: '❌ 淘宝/抖音竞争激烈' },
-        { cls: 'orange', text: '⚠️ 生鲜品控是关键' },
-      ],
-      conclusion: `【结论】红薯作为生鲜品类，平台竞争激烈且品控要求高。淘宝月销2万+，拼多多10万+人拼，新商家切入难度大。如果要做，建议走「红薯干/红薯零食」加工品方向，避开生鲜的物流损耗，且利润更高。`
-    },
-    '空气炸锅配件': {
-      tags: [
-        { cls: 'green', text: '✅ 全网低竞争高需求' },
-        { cls: 'green', text: '✅ 1688拿货¥2起' },
-        { cls: 'green', text: '✅ 京东自营也缺货' },
-      ],
-      conclusion: `【结论】空气炸锅配件是目前最好的蓝海品类之一。京东自营竟然也缺货，说明需求>供给。1688拿货¥2-15，闲鱼卖¥12-68，毛利60%+。建议先铺闲鱼（竞争最低），等跑通再上京东。硅油纸/垫纸是消耗品，复购率极高。`
-    },
-    '宠物用品': {
-      tags: [
-        { cls: 'green', text: '✅ 市场规模持续增长' },
-        { cls: 'orange', text: '⚠️ 各平台竞争度中等' },
-        { cls: 'green', text: '✅ 1688货源丰富' },
-      ],
-      conclusion: `【结论】宠物用品市场规模大但各平台已有一批稳定卖家。机会在细分品类：宠物喂食器/饮水机竞争大，但宠物除毛滚筒、宠物湿巾这类小件还有空间。建议从「配件/消耗品」切入而非大件。抖音宠物内容天然好做。`
-    },
-    '夏季冰袖': {
-      tags: [
-        { cls: 'red', text: '❌ 拼多多¥3在卖' },
-        { cls: 'red', text: '❌ 淘宝月销5.6w' },
-        { cls: 'orange', text: '⚠️ 季节性强' },
-      ],
-      conclusion: `【结论】冰袖是典型的红海品类。拼多多¥3-12，淘宝¥9-35，1688拿货¥1-5，理论上利润存在但需要靠量取胜。如果是闲鱼单干，不值得做；如果是京东店群/抖音直播跑量，可以测。注意季节性——只有5-8月有量。`
-    },
-  };
-
-  return analyses[q] || {
-    tags: [
-      { cls: 'green', text: '✅ 搜索到公开数据' },
-      { cls: 'orange', text: '⚠️ 数据基于公开信息' },
-    ],
-    conclusion: `【结论】对「${q}」的初步全网扫描完成。建议先看1688拿货价能否做到平台售价的30%以下，如果是则利润空间可观。具体细分类目和竞品分析需要更精确的关键词。你可以在搜索框中输入更具体的产品名，我重新分析。`
-  };
-}
-// ── 已确认可做品 · 分析报告数据 ──
-const confirmedProducts = [
-  {
-    name: '懒人抹布',
-    source: '1688 · ¥2.3/卷',
-    market: '抖音72h销12.6w单 · 淘宝月销8.3w · 旺季持续',
-    feedback: '好评率92% · 关键词"擦得干净""不掉毛""性价比高"',
-    aftersale: '退货率3.2% · 主要问题：厚度不够、包装破损',
-    profit: '售价¥9.9-19.9 · 成本¥2.3 · 毛利率63-76% · 日销50+件可月入1.2w+',
-    platforms: '⭐ 抖音直播（爆品自带流量）→ 闲鱼（低竞争高利润）→ 拼多多（走量）',
-    recommend: '抖音'
-  },
-  {
-    name: '空气炸锅硅油纸',
-    source: '1688 · ¥1.5/包',
-    market: '京东月销6w+ · 淘宝月销10w+ · 空气炸锅保有量持续增长',
-    feedback: '好评率96% · 关键词"尺寸合适""不粘""一次一张方便"',
-    aftersale: '退货率0.8% · 主要问题：尺寸偏小、纸张薄',
-    profit: '售价¥5.9-12.9 · 成本¥1.5 · 毛利率69-87% · 消耗品复购率高',
-    platforms: '⭐ 京东店群（自营缺货空间大）→ 闲鱼（低竞争）→ 抖音（内容好做）',
-    recommend: '京东店群'
-  },
-  {
-    name: '磁吸手机支架 车载',
-    source: '义乌 · ¥3.2/个',
-    market: '闲鱼日曝光2300+ · 淘宝月销5w+ · 拼多多10万+人拼',
-    feedback: '好评率88% · 关键词"吸力强""稳固""安装方便"',
-    aftersale: '退货率5.1% · 主要问题：吸力不够、胶贴不牢',
-    profit: '售价¥12.9-25.9 · 成本¥3.2 · 毛利率70-82% · 轻小件物流成本低',
-    platforms: '⭐ 闲鱼（成本低出单快）→ 抖音（车载内容好做）→ 京东（标品溢价）',
-    recommend: '闲鱼'
-  },
-  {
-    name: '桌面收纳盒 大容量',
-    source: '1688 · ¥4.8/个',
-    market: '抖音月销30w+ · 淘宝月销8w+ · 拼多多爆款',
-    feedback: '好评率90% · 关键词"质量好""容量大""无异味"',
-    aftersale: '退货率4.5% · 主要问题：尺寸不符、运输挤压变形',
-    profit: '售价¥15.9-29.9 · 成本¥4.8 · 毛利率65-78% · 淡旺季不明显',
-    platforms: '⭐ 抖音（收纳类内容天然有流量）→ 闲鱼（长尾产品）→ 京东（品牌溢价）',
-    recommend: '抖音'
-  },
-  {
-    name: '冰丝防晒冰袖',
-    source: '1688 · ¥1.8/双',
-    market: '拼多多10万+人拼 · 淘宝月销5.6w · 季节性强（5-8月高峰）',
-    feedback: '好评率85% · 关键词"冰凉感""防晒""不勒手臂"',
-    aftersale: '退货率6.8% · 主要问题：尺码偏小、掉色、起球',
-    profit: '售价¥5.9-15.9 · 成本¥1.8 · 毛利率65-86% · 走量型产品',
-    platforms: '⭐ 拼多多（走量）→ 闲鱼（简单出单）→ 抖音（季节切换测品）',
-    recommend: '拼多多'
-  },
-  {
-    name: '宠物除毛滚筒',
-    source: '义乌 · ¥2.5/个',
-    market: '淘宝月销3w+ · 抖音达人带货16wGMV · 宠物市场年增25%',
-    feedback: '好评率87% · 关键词"粘毛效果""可重复用""好清洗"',
-    aftersale: '退货率3.8% · 主要问题：胶纸粘性不够、滚筒卡顿',
-    profit: '售价¥9.9-19.9 · 成本¥2.5 · 毛利率70-83% · 宠物消耗品复购好',
-    platforms: '⭐ 抖音（宠物内容天然流量）→ 闲鱼（需求稳定）→ 京东（品牌化）',
-    recommend: '抖音'
-  },
-  {
-    name: '厨房湿巾 大包',
-    source: '1688 · ¥1.2/包',
-    market: '抖音72h销8.9w单 · 京东日销1800+ · 刚需品月循环',
-    feedback: '好评率91% · 关键词"去油好""厚实""不伤手"',
-    aftersale: '退货率2.1% · 主要问题：密封不好干得快、香味太浓',
-    profit: '售价¥6.9-12.9 · 成本¥1.2 · 毛利率75-88% · 复购周期2-3周',
-    platforms: '⭐ 京东店群（标品有溢价空间）→ 拼多多（走量）→ 抖音（测品）',
-    recommend: '京东店群'
-  },
-  {
-    name: '便携挂烫机 迷你',
-    source: 'PDD代发 · ¥6.5/台',
-    market: '抖音转化率8.2% · 淘宝月销2w+ · 小红书种草热度高',
-    feedback: '好评率86% · 关键词"小巧""好用""出蒸汽快"',
-    aftersale: '退货率7.2% · 主要问题：漏水、加热慢、寿命短',
-    profit: '售价¥29.9-59.9 · 成本¥6.5 · 毛利率72-88% · 需注意售后成本',
-    platforms: '⭐ 抖音（视频演示效果好）→ 闲鱼（有差异化空间）→ 京东（需品牌）',
-    recommend: '抖音'
-  },
-  {
-    name: '电动车手机支架',
-    source: '义乌 · ¥3.8/个',
-    market: '拼多多10万+人拼 · 淘宝月销4w+ · 电动车保有量持续增长',
-    feedback: '好评率84% · 关键词"稳固""防震""安装简单"',
-    aftersale: '退货率6.5% · 主要问题：不防震手机掉、固定不牢',
-    profit: '售价¥9.9-25.9 · 成本¥3.8 · 毛利率57-82% · 客单价低走量',
-    platforms: '⭐ 闲鱼（搜索流量大）→ 拼多多（低价走量）→ 抖音（骑行场景）',
-    recommend: '闲鱼'
-  },
-  {
-    name: '桌面风扇 静音款',
-    source: '1688 · ¥6.8/台',
-    market: '闲鱼浏览量涨42% · 淘宝月销3w+ · 夏季刚需',
-    feedback: '好评率88% · 关键词"静音""风大""颜值高"',
-    aftersale: '退货率4.8% · 主要问题：噪音大、充电续航短、摇头卡顿',
-    profit: '售价¥19.9-49.9 · 成本¥6.8 · 毛利率59-83% · 季节性强',
-    platforms: '⭐ 闲鱼（现阶段增长最快）→ 抖音（场景化内容）→ 京东（品牌款）',
-    recommend: '闲鱼'
-  },
-  {
-    name: '地板清洁片',
-    source: '1688 · ¥0.5/片',
-    market: '京东日销2300+ · 抖音达人矩阵52wGMV · 消耗品月循环',
-    feedback: '好评率90% · 关键词"去污力强""香味好闻""不伤地板"',
-    aftersale: '退货率1.5% · 主要问题：溶解慢、香味刺鼻',
-    profit: '售价¥9.9-19.9/包(30片) · 成本¥0.5/片 · 毛利率78-90% · 复购2-3周',
-    platforms: '⭐ 京东店群（标品利润稳）→ 抖音（实用内容）→ 拼多多（走量）',
-    recommend: '京东店群'
-  },
-  {
-    name: '宠物饮水机 智能',
-    source: '跨境拿货 · ¥22/台',
-    market: '京东月销8000+ · 宠物市场增25% · 高端化趋势',
-    feedback: '好评率82% · 关键词"静音""过滤好""容量大"',
-    aftersale: '退货率8.5% · 主要问题：水泵故障、漏水、清洗麻烦',
-    profit: '售价¥59-129 · 成本¥22 · 毛利率58-79% · 客单价高利润空间大',
-    platforms: '⭐ 京东（高端标品）→ 抖音（宠物内容+讲解）→ 闲鱼（价格优势）',
-    recommend: '京东'
+    `;
+    
+  } catch (e) {
+    console.error('Search API error:', e);
+    // Fallback: searchProduct fallback
+    titleEl.textContent = `「${q}」搜索失败`;
+    bodyEl.innerHTML = `
+      <div style="text-align:center;padding:30px 0;">
+        <div style="font-size:36px;margin-bottom:12px;">⚠️</div>
+        <div style="font-size:14px;color:var(--text-dim);">搜索API暂时不可用</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">${e.message}</div>
+        <div style="margin-top:16px;font-size:12px;color:var(--text-dim);">请确认搜索服务已启动</div>
+      </div>`;
   }
-];
-
-// ── 展示已确认可做品列表 ──
-function showConfirmedProducts() {
-  iconEl.textContent = '✅';
-  titleEl.textContent = `已确认可做品（${confirmedProducts.length}个）`;
-
-  let html = '<div style="margin-bottom:14px;font-size:12px;color:var(--text-dim);">点击产品查看详细分析报告</div>';
-  html += '<div style="display:flex;flex-direction:column;gap:6px;">';
-
-  confirmedProducts.forEach((p, i) => {
-    const tagColors = {
-      '抖音': 'background:#f0fdf4;color:#16a34a',
-      '京东': 'background:#dbeafe;color:#2563eb',
-      '京东店群': 'background:#dbeafe;color:#2563eb',
-      '闲鱼': 'background:#fff3e0;color:#e67e00',
-      '拼多多': 'background:#fdf4ff;color:#a21caf'
-    };
-    const recColor = tagColors[p.recommend] || 'background:#f3f4f6;color:#6b7280';
-
-    html += `<div onclick="showProductAnalysis(${i})" style="cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f9fafb;border-radius:8px;border:1px solid #f0f0f0;transition:all .15s;" onmouseover="this.style.borderColor='#FFA500';this.style.background='#fffaf0'" onmouseout="this.style.borderColor='#f0f0f0';this.style.background='#f9fafb'">
-      <span style="font-size:12px;font-weight:600;color:var(--text);flex:1;">${p.name}</span>
-      <span style="font-size:10px;padding:2px 10px;border-radius:4px;font-weight:500;${recColor}">推荐: ${p.recommend}</span>
-      <span style="font-size:11px;color:var(--text-dim);">${p.source}</span>
-      <span style="font-size:14px;color:var(--text-muted);">→</span>
-    </div>`;
-  });
-
-  html += '</div>';
-  bodyEl.innerHTML = html;
-  overlay.classList.add('active');
 }
 
-// ── 展示单个产品分析报告 ──
-function showProductAnalysis(index) {
-  const p = confirmedProducts[index];
-  iconEl.textContent = '📊';
-  titleEl.textContent = `${p.name} · 分析报告`;
-
-  // Platform recommendation tag
-  const platformTags = {
-    '抖音': '<span style="background:#f0fdf4;color:#16a34a;padding:2px 10px;border-radius:4px;font-size:11px;font-weight:500;">⭐ 首选: 抖音</span>',
-    '京东': '<span style="background:#dbeafe;color:#2563eb;padding:2px 10px;border-radius:4px;font-size:11px;font-weight:500;">⭐ 首选: 京东</span>',
-    '京东店群': '<span style="background:#dbeafe;color:#2563eb;padding:2px 10px;border-radius:4px;font-size:11px;font-weight:500;">⭐ 首选: 京东店群</span>',
-    '闲鱼': '<span style="background:#fff3e0;color:#e67e00;padding:2px 10px;border-radius:4px;font-size:11px;font-weight:500;">⭐ 首选: 闲鱼</span>',
-    '拼多多': '<span style="background:#fdf4ff;color:#a21caf;padding:2px 10px;border-radius:4px;font-size:11px;font-weight:500;">⭐ 首选: 拼多多</span>'
-  };
-
-  bodyEl.innerHTML = `
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid #f0f0f2;">
-        <span style="font-size:16px;font-weight:600;color:var(--text);flex:1;">${p.name}</span>
-        ${platformTags[p.recommend] || ''}
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <div style="background:#f9fafb;border-radius:8px;padding:10px 12px;">
-          <div style="font-size:10px;color:var(--text-muted);letter-spacing:1px;margin-bottom:4px;">📦 货源成本</div>
-          <div style="font-size:13px;font-weight:600;color:var(--text);">${p.source}</div>
-        </div>
-        <div style="background:#f9fafb;border-radius:8px;padding:10px 12px;">
-          <div style="font-size:10px;color:var(--text-muted);letter-spacing:1px;margin-bottom:4px;">📈 市场销量</div>
-          <div style="font-size:12px;color:var(--text);line-height:1.5;">${p.market}</div>
-        </div>
-      </div>
-
-      <div style="background:#f9fafb;border-radius:8px;padding:12px 14px;">
-        <div style="font-size:10px;color:var(--text-muted);letter-spacing:1px;margin-bottom:6px;">💬 用户反馈</div>
-        <div style="font-size:12px;color:var(--text);line-height:1.6;">${p.feedback}</div>
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <div style="background:#fff3e0;border-radius:8px;padding:10px 12px;border:1px solid #fde6b3;">
-          <div style="font-size:10px;color:#e67e00;letter-spacing:1px;margin-bottom:4px;">🔧 售后情况</div>
-          <div style="font-size:12px;color:var(--text);line-height:1.5;">${p.aftersale}</div>
-        </div>
-        <div style="background:#f0fdf4;border-radius:8px;padding:10px 12px;border:1px solid #bbf7d0;">
-          <div style="font-size:10px;color:#16a34a;letter-spacing:1px;margin-bottom:4px;">💰 利润率</div>
-          <div style="font-size:12px;color:var(--text);line-height:1.5;">${p.profit}</div>
-        </div>
-      </div>
-
-      <div style="background:#dbeafe;border-radius:8px;padding:12px 14px;border:1px solid #bfdbfe;">
-        <div style="font-size:10px;color:#2563eb;letter-spacing:1px;margin-bottom:6px;">📍 平台匹配建议</div>
-        <div style="font-size:12px;color:var(--text);line-height:1.6;">${p.platforms}</div>
-      </div>
-    </div>
-  `;
-
-  overlay.classList.add('active');
-}
 const modalData = {
   '闲鱼好品识别': {
     items: [

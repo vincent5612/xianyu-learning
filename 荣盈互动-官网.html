@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>荣盈互动 · RongYing Interactive · AI+ 互联网</title>
+<style>
+  :root {
+    --primary: #1a2a4a;
+    --primary-light: #2a4a7a;
+    --accent: #d4a030;
+    --accent-light: #f0d080;
+    --bg: #ffffff;
+    --bg-alt: #f8f7f5;
+    --text: #1f2937;
+    --text-dim: #6b7280;
+    --text-light: #9ca3af;
+    --border: #e5e7eb;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family: -apple-system,'PingFang SC','Noto Sans SC','Helvetica Neue',sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6;
+  }
+  .container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+  /* ── Nav ── */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);padding:0 24px;
+  }
+  .nav-inner{
+    max-width:1200px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;height:64px;
+  }
+  .logo{font-size:20px;font-weight:800;color:var(--primary);letter-spacing:1px}
+  .logo span{color:var(--accent)}
+  .logo small{font-size:11px;font-weight:400;color:var(--text-dim);letter-spacing:2px;margin-left:8px}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{text-decoration:none;font-size:13px;font-weight:500;color:var(--text-dim);transition:color .2s}
+  .nav-links a:hover{color:var(--accent)}
+  .nav-links .lang-btn{
+    padding:4px 12px;border-radius:6px;border:1px solid var(--border);
+    font-size:11px;cursor:pointer;background:var(--bg);color:var(--text-dim);transition:all .15s;
+  }
+  .nav-links .lang-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* ── Hero ── */
+  .hero{
+    padding:140px 0 80px;background:linear-gradient(135deg,#f8f7f5 0%,#ffffff 50%,#f0ece4 100%);
+    text-align:center;position:relative;overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;top:-200px;right:-200px;
+    width:500px;height:500px;border-radius:50%;
+    background:radial-gradient(circle,rgba(212,160,48,0.06),transparent 70%);
+  }
+  .hero h1{font-size:48px;font-weight:900;color:var(--primary);margin-bottom:16px;letter-spacing:-1px}
+  .hero h1 span{color:var(--accent)}
+  .hero .sub{font-size:18px;color:var(--text-dim);max-width:600px;margin:0 auto 12px;line-height:1.7}
+  .hero .tagline{font-size:13px;color:var(--text-light);letter-spacing:4px;margin-bottom:24px}
+  .hero .culture{
+    display:flex;gap:40px;justify-content:center;margin-top:40px;flex-wrap:wrap;
+  }
+  .culture-item{text-align:center}
+  .culture-item .char{font-size:28px;font-weight:800;color:var(--primary)}
+  .culture-item .char span{color:var(--accent)}
+  .culture-item .desc{font-size:11px;color:var(--text-dim);margin-top:4px;letter-spacing:2px}
+
+  .btn-group{display:flex;gap:16px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+  .btn{
+    padding:12px 32px;border-radius:8px;font-size:14px;font-weight:600;
+    text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary{background:var(--accent);color:#fff;border:2px solid var(--accent)}
+  .btn-primary:hover{background:#c49020;border-color:#c49020;transform:translateY(-1px)}
+  .btn-outline{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+  .btn-outline:hover{background:var(--primary);color:#fff}
+
+  /* ── Section ── */
+  section{padding:80px 0}
+  section.alt{background:var(--bg-alt)}
+  .section-title{text-align:center;margin-bottom:48px}
+  .section-title h2{font-size:32px;font-weight:800;color:var(--primary);margin-bottom:8px}
+  .section-title h2 span{color:var(--accent)}
+  .section-title p{font-size:14px;color:var(--text-dim);max-width:500px;margin:0 auto}
+
+  /* ── Values ── */
+  .values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .value-card{
+    background:var(--bg);border:1px solid var(--border);border-radius:12px;
+    padding:28px 20px;text-align:center;transition:all .25s;
+  }
+  .value-card:hover{border-color:var(--accent);box-shadow:0 4px 20px rgba(212,160,48,0.08);transform:translateY(-2px)}
+  .value-card .icon{font-size:32px;margin-bottom:12px}
+  .value-card h3{font-size:20px;font-weight:700;color:var(--primary);margin-bottom:4px}
+  .value-card h3 small{font-size:12px;font-weight:300;color:var(--text-dim);letter-spacing:1px;display:block;margin-top:2px}
+  .value-card p{font-size:13px;color:var(--text-dim);line-height:1.7}
+
+  /* ── Business ── */
+  .biz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .biz-card{
+    background:var(--bg);border:1px solid var(--border);border-radius:12px;
+    padding:32px 24px;transition:all .25s;position:relative;overflow:hidden;
+  }
+  .biz-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-light));
+  }
+  .biz-card:hover{border-color:var(--accent);box-shadow:0 8px 30px rgba(212,160,48,0.06);transform:translateY(-3px)}
+  .biz-card .icon{font-size:36px;margin-bottom:12px;display:block}
+  .biz-card h3{font-size:18px;font-weight:700;color:var(--primary);margin-bottom:8px}
+  .biz-card .tag{
+    display:inline-block;font-size:10px;padding:2px 10px;border-radius:4px;
+    background:rgba(212,160,48,0.1);color:var(--accent);font-weight:600;letter-spacing:1px;margin-bottom:8px;
+  }
+  .biz-card p{font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:12px}
+  .biz-card ul{list-style:none;padding:0}
+  .biz-card ul li{font-size:12px;color:var(--text-dim);padding:4px 0;padding-left:16px;position:relative}
+  .biz-card ul li::before{content:'→';position:absolute;left:0;color:var(--accent)}
+
+  /* ── Numbers ── */
+  .numbers{background:var(--primary);padding:60px 0}
+  .numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+  .num-item .num{font-size:40px;font-weight:900;color:var(--accent);letter-spacing:2px}
+  .num-item .label{font-size:13px;color:rgba(255,255,255,0.6);margin-top:4px;letter-spacing:1px}
+
+  /* ── Footer ── */
+  .footer{background:var(--primary);padding:48px 0 32px;border-top:1px solid rgba(255,255,255,0.06)}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:32px}
+  .footer h4{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:12px;letter-spacing:2px}
+  .footer p,.footer a{font-size:12px;color:rgba(255,255,255,0.5);line-height:2;text-decoration:none;display:block;transition:color .2s}
+  .footer a:hover{color:var(--accent-light)}
+  .footer .copyright{
+    text-align:center;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);
+    font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:1px;
+  }
+
+  /* ── Responsive ── */
+  @media(max-width:768px){
+    .hero h1{font-size:32px}
+    .hero .culture{gap:20px}
+    .culture-item .char{font-size:24px}
+    .values-grid{grid-template-columns:repeat(2,1fr)}
+    .biz-grid{grid-template-columns:1fr}
+    .numbers-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
+    .nav-links{display:none}
+  }
+  @media(max-width:480px){
+    .values-grid{grid-template-columns:1fr}
+    .numbers-grid{grid-template-columns:1fr}
+    .btn-group{flex-direction:column;align-items:center}
+    .hero{padding:120px 0 40px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ Nav ═══ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo">荣盈<span>互动</span><small>RONGYING</small></div>
+    <div class="nav-links">
+      <a href="#about">关于</a>
+      <a href="#values">文化</a>
+      <a href="#business">业务</a>
+      <a href="#contact">联系</a>
+      <span class="lang-btn">🌏 EN / 中文</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ Hero ═══ -->
+<section class="hero">
+  <div class="container">
+    <div class="tagline">AI+ INTERNET COMPANY</div>
+    <h1>用AI重新定义<span>商业效率</span></h1>
+    <p class="sub">荣盈互动是一家人工智能驱动的互联网公司。<br>我们通过AI技术赋能电商运营与人才服务，帮助企业降本增效。</p>
+    <div class="btn-group">
+      <a href="#business" class="btn btn-primary">了解业务 →</a>
+      <a href="#contact" class="btn btn-outline">联系我们</a>
+    </div>
+    <div class="culture">
+      <div class="culture-item"><div class="char">荣<span>兴</span></div><div class="desc">RONG · THRIVE</div></div>
+      <div class="culture-item"><div class="char">盈<span>实</span></div><div class="desc">YING · SOLID</div></div>
+      <div class="culture-item"><div class="char">深<span>耕</span></div><div class="desc">DEEP · CULTIVATE</div></div>
+      <div class="culture-item"><div class="char">共<span>进</span></div><div class="desc">TOGETHER · PROGRESS</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Numbers ═══ -->
+<section class="numbers">
+  <div class="container">
+    <div class="numbers-grid">
+      <div class="num-item"><div class="num">100+</div><div class="label">合作企业</div></div>
+      <div class="num-item"><div class="num">1000+</div><div class="label">AI赋能项目</div></div>
+      <div class="num-item"><div class="num">96%</div><div class="label">客户满意度</div></div>
+      <div class="num-item"><div class="num">6</div><div class="label">城市覆盖</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ About ═══ -->
+<section id="about">
+  <div class="container">
+    <div class="section-title">
+      <h2>关于 <span>荣盈</span></h2>
+      <p>AI+互联网公司，聚焦电商与人才的智能化升级</p>
+    </div>
+    <div style="max-width:720px;margin:0 auto;font-size:14px;color:var(--text-dim);line-height:2;">
+      <p>荣盈互动（RongYing Interactive）是一家以AI技术为核心驱动力的互联网公司。我们深耕电商运营与人力资源两大领域，通过自主研发的AI工具与系统化解决方案，帮助企业实现从传统模式向智能化、数字化的转型。</p>
+      <p style="margin-top:16px;">公司总部位于深圳，业务覆盖全国。我们坚持「荣兴·盈实·深耕·共进」的核心价值观，以技术创新为基础，以客户价值为导向，致力于成为领先的AI+产业互联网公司。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Values ═══ -->
+<section id="values" class="alt">
+  <div class="container">
+    <div class="section-title">
+      <h2>核心 <span>文化</span></h2>
+      <p>荣兴 盈实 深耕 共进 — 我们的价值观</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="icon">🔥</div>
+        <h3>荣兴 <small>RONG · THRIVE</small></h3>
+        <p>以繁荣兴盛为愿景。追求企业、客户、员工的共同成长，做有生命力的组织。</p>
+      </div>
+      <div class="value-card">
+        <div class="icon">📦</div>
+        <h3>盈实 <small>YING · SOLID</small></h3>
+        <p>以扎实稳健为根基。不追逐风口泡沫，做有实际价值、有真实利润的业务。</p>
+      </div>
+      <div class="value-card">
+        <div class="icon">🌱</div>
+        <h3>深耕 <small>DEEP · CULTIVATE</small></h3>
+        <p>以深度耕耘为方法。在AI电商和AI人才领域持续积累，做时间的朋友。</p>
+      </div>
+      <div class="value-card">
+        <div class="icon">🤝</div>
+        <h3>共进 <small>TOGETHER · PROGRESS</small></h3>
+        <p>以协同共进为信念。与客户、伙伴、员工携手向前，共享增长成果。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Business ═══ -->
+<section id="business">
+  <div class="container">
+    <div class="section-title">
+      <h2>业务 <span>版图</span></h2>
+      <p>三大业务线，AI赋能全链路</p>
+    </div>
+    <div class="biz-grid">
+      <div class="biz-card">
+        <span class="icon">🛒</span>
+        <span class="tag">AI+电商</span>
+        <h3>AI电商运营</h3>
+        <p>基于AI技术的全平台电商运营服务，涵盖选品分析、店铺运营、数据洞察。</p>
+        <ul>
+          <li>AI选品 · 全网爆品分析</li>
+          <li>多平台店铺运营（京东/闲鱼/抖音）</li>
+          <li>数据驱动 · 实时竞争监控</li>
+          <li>智能客服 · 自动化营销</li>
+        </ul>
+      </div>
+      <div class="biz-card">
+        <span class="icon">👥</span>
+        <span class="tag">AI+人才</span>
+        <h3>AI人才服务</h3>
+        <p>AI驱动的RPO招聘解决方案，为企业提供高效、精准的人才匹配服务。</p>
+        <ul>
+          <li>AI简历解析 · 智能匹配</li>
+          <li>批量招聘 · 快速到岗</li>
+          <li>人才库建设 · 长期运维</li>
+          <li>招聘流程数字化管理</li>
+        </ul>
+      </div>
+      <div class="biz-card">
+        <span class="icon">🔬</span>
+        <span class="tag">AI+产品</span>
+        <h3>AI产品研发</h3>
+        <p>自主研发AI工具与产品，将前沿技术转化为可落地的商业解决方案。</p>
+        <ul>
+          <li>AI智算钥匙 · 本地化部署</li>
+          <li>电商数据分析引擎</li>
+          <li>智能客服机器人</li>
+          <li>企业AI知识库系统</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Contact ═══ -->
+<section id="contact" class="alt">
+  <div class="container">
+    <div class="section-title">
+      <h2>联系 <span>我们</span></h2>
+      <p>携手荣盈，共赢AI未来</p>
+    </div>
+    <div style="max-width:600px;margin:0 auto;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:32px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+          <div style="font-size:11px;color:var(--text-light);letter-spacing:1px;margin-bottom:4px;">📞 电话</div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);">+86 755-8888-8888</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text-light);letter-spacing:1px;margin-bottom:4px;">📧 邮箱</div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);">contact@rongying.ai</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text-light);letter-spacing:1px;margin-bottom:4px;">📍 深圳总部</div>
+          <div style="font-size:13px;color:var(--text);">深圳市南山区科技园</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text-light);letter-spacing:1px;margin-bottom:4px;">🌐 官网</div>
+          <div style="font-size:13px;font-weight:600;color:var(--accent);">www.rongying.ai</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Footer ═══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>荣盈互动</h4>
+        <p style="line-height:1.8;">AI驱动的互联网公司<br>让商业更智能，让增长更简单</p>
+      </div>
+      <div>
+        <h4>业务</h4>
+        <a href="#business">AI电商运营</a>
+        <a href="#business">AI人才服务</a>
+        <a href="#business">AI产品研发</a>
+      </div>
+      <div>
+        <h4>文化</h4>
+        <a href="#values">荣兴 · Thrive</a>
+        <a href="#values">盈实 · Solid</a>
+        <a href="#values">深耕 · Cultivate</a>
+        <a href="#values">共进 · Progress</a>
+      </div>
+      <div>
+        <h4>联系</h4>
+        <a href="mailto:contact@rongying.ai">contact@rongying.ai</a>
+        <a>深圳 · 南山科技园</a>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2026 荣盈互动 RongYing Interactive. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
