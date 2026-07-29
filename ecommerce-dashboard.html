@@ -1128,15 +1128,15 @@ document.querySelectorAll('.search-hints span').forEach(el => {
 });
 
 // ── Event: 一键搜索全网热品 button ──
+let hotProductIndex = 0;
+const hotProducts = ['空气炸锅配件', '电动车配件', '宠物用品', '夏季冰袖', '红薯'];
 document.getElementById('analysisBtn').addEventListener('click', () => {
-  // Grab the first product from the 货源 card if available, or search generic
-  const firstProduct = document.querySelector('#tab-rongying .placeholder-list li') 
-    ? document.querySelector('#tab-rongying .placeholder-list li').textContent.trim().replace(/^.*?\\s+/, '')
-    : '近期全网爆品';
+  const q = hotProducts[hotProductIndex % hotProducts.length];
+  hotProductIndex++;
   
   const searchBox = document.getElementById('productSearch');
-  if (searchBox) searchBox.value = firstProduct || '近期全网爆品';
-  searchProduct(firstProduct || '近期全网爆品');
+  if (searchBox) searchBox.value = q;
+  searchProduct(q);
 });
 </script>
 
