@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>荣盈互动 — AI驱动的商业生态运营商</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #fff;
+    color: #1a1a2e;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #3b82f6;
+    --accent: #f59e0b;
+    --accent-light: #fbbf24;
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-300: #cbd5e1;
+    --gray-400: #94a3b8;
+    --gray-500: #64748b;
+    --gray-600: #475569;
+    --gray-700: #334155;
+    --gray-800: #1e293b;
+    --gray-900: #0f172a;
+    --gradient: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+    --shadow-lg: 0 10px 40px rgba(0,0,0,.1);
+    --radius: 16px;
+  }
+
+  /* Nav */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 40px; height: 68px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo svg { flex-shrink: 0; }
+  .nav-logo span { font-size: 20px; font-weight: 700; color: var(--gray-900); }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--gray-600); transition: color .2s; }
+  .nav-links a:hover { color: var(--primary); }
+  .btn-primary {
+    padding: 8px 20px; border-radius: 8px; border: none;
+    background: var(--gradient); font-size: 14px; font-weight: 500; color: #fff;
+    cursor: pointer; transition: all .2s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(37,99,235,.3); }
+  .btn-primary-lg {
+    padding: 14px 36px; border-radius: 12px; border: none;
+    background: var(--gradient); font-size: 16px; font-weight: 600; color: #fff;
+    cursor: pointer; transition: all .3s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary-lg:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37,99,235,.35); }
+  .btn-white-lg {
+    padding: 14px 36px; border-radius: 12px; border: none;
+    background: #fff; font-size: 16px; font-weight: 600; color: var(--primary);
+    cursor: pointer; transition: all .3s; text-decoration: none;
+  }
+  .btn-white-lg:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,.1); }
+
+  /* Hero */
+  .hero {
+    padding: 140px 40px 80px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1e3a5f 100%);
+    color: #fff;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(37,99,235,.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
+    background: rgba(37,99,235,.2); color: var(--primary-light); margin-bottom: 20px;
+    border: 1px solid rgba(37,99,235,.3);
+  }
+  .hero h1 { font-size: 48px; font-weight: 900; line-height: 1.2; margin-bottom: 20px; letter-spacing: -1px; }
+  .hero h1 span { background: linear-gradient(135deg, var(--primary-light), var(--accent-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: 18px; line-height: 1.8; color: var(--gray-300); margin-bottom: 32px; max-width: 520px; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-stats { display: flex; gap: 48px; margin-top: 60px; }
+  .hero-stat h3 { font-size: 32px; font-weight: 700; color: #fff; }
+  .hero-stat p { font-size: 14px; color: var(--gray-400); margin-bottom: 0; }
+  .hero-visual {
+    background: rgba(255,255,255,.05); border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,.1);
+    padding: 40px; position: relative;
+  }
+  .hero-visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .hero-card {
+    background: rgba(255,255,255,.08); border-radius: 12px; padding: 20px;
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  .hero-card-icon { font-size: 28px; margin-bottom: 8px; }
+  .hero-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #fff; }
+  .hero-card p { font-size: 12px; color: var(--gray-400); margin-bottom: 0; }
+  .hero-card-full { grid-column: 1/-1; }
+
+  /* Section */
+  section { padding: 80px 40px; }
+  .section-max { max-width: 1200px; margin: 0 auto; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 16px; font-size: 13px; font-weight: 500;
+    background: var(--gray-100); color: var(--gray-600); margin-bottom: 12px;
+  }
+  .section-title { font-size: 36px; font-weight: 800; color: var(--gray-900); margin-bottom: 16px; letter-spacing: -.5px; }
+  .section-desc { font-size: 16px; color: var(--gray-500); max-width: 600px; margin-bottom: 48px; line-height: 1.7; }
+  .model-section { background: var(--gray-50); }
+  .wc { text-align: center; margin-bottom: 48px; }
+  .wc .section-tag { margin: 0 auto 12px; }
+  .wc .section-desc { margin: 0 auto; }
+
+  /* Grid Cards */
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  
+  .card-flat {
+    background: #fff; border-radius: var(--radius); padding: 32px 24px;
+    border: 1px solid var(--gray-200); transition: all .3s;
+  }
+  .card-flat:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+  .card-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+  .card-flat h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--gray-900); }
+  .card-flat p { font-size: 14px; color: var(--gray-500); line-height: 1.7; }
+
+  /* AI+电商链图 */
+  .chain-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .chain-card {
+    border-radius: 12px; padding: 20px; text-align: center;
+    background: #fff; border: 1px solid var(--gray-200);
+  }
+  .chain-step { font-size: 11px; color: var(--primary); font-weight: 600; letter-spacing: 1px; margin-bottom: 8px; }
+  .chain-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .chain-card p { font-size: 12px; color: var(--gray-400); line-height: 1.5; }
+
+  /* 产品矩阵表格 */
+  .prod-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--gray-200); }
+  .prod-table th { padding: 14px 20px; font-size: 13px; font-weight: 700; text-align: left; background: var(--gray-50); color: var(--gray-600); text-transform: uppercase; letter-spacing: 1px; }
+  .prod-table td { padding: 14px 20px; font-size: 14px; border-top: 1px solid var(--gray-200); }
+  .prod-table td:first-child { font-weight: 700; color: var(--gray-800); white-space: nowrap; }
+  .prod-table td:nth-child(2) { color: var(--gray-500); }
+  .prod-table td:nth-child(3) { color: var(--primary); font-weight: 500; }
+  .prod-table tr:last-child td { border-bottom: none; }
+
+  /* 服务表格 */
+  .svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .svc-card {
+    border-radius: var(--radius); padding: 24px;
+    border: 1px solid var(--gray-200); background: #fff; transition: all .2s;
+  }
+  .svc-card:hover { border-color: var(--primary); }
+  .svc-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .svc-card p { font-size: 13px; color: var(--gray-500); margin-bottom: 8px; line-height: 1.6; }
+  .svc-tag { font-size: 11px; padding: 2px 10px; border-radius: 4px; background: var(--gray-100); color: var(--gray-600); }
+
+  .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 32px; }
+  .process-step { text-align: center; }
+  .process-step-num {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--gradient); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 700; margin: 0 auto 16px;
+  }
+  .process-step h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .process-step p { font-size: 14px; color: var(--gray-500); line-height: 1.6; max-width: 200px; margin: 0 auto; }
+
+  .stats-bar {
+    background: var(--gradient); padding: 60px 40px; color: #fff;
+  }
+  .stats-bar-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+  .stat-item h3 { font-size: 40px; font-weight: 800; margin-bottom: 6px; }
+  .stat-item p { font-size: 15px; opacity: .8; }
+
+  .cta-final {
+    padding: 100px 40px; text-align: center;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #fff;
+  }
+  .cta-final h2 { font-size: 36px; font-weight: 800; margin-bottom: 16px; }
+  .cta-final p { font-size: 16px; color: var(--gray-300); margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .cta-final .btn-primary-lg { background: linear-gradient(135deg, var(--accent), #d97706); }
+  .cta-final .btn-primary-lg:hover { box-shadow: 0 8px 25px rgba(245,158,11,.35); }
+
+  .footer {
+    padding: 40px; border-top: 1px solid var(--gray-200); background: #fff;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 13px; color: var(--gray-400); text-decoration: none; }
+  .footer-links a:hover { color: var(--gray-600); }
+  .footer p { font-size: 13px; color: var(--gray-400); }
+
+  /* Culture banner */
+  .culture-banner {
+    background: linear-gradient(135deg, #1e293b, #334155); border-radius: var(--radius);
+    padding: 40px; color: #fff; text-align: center; margin-top: 32px;
+  }
+  .culture-banner .tagline { font-size: 28px; font-weight: 800; letter-spacing: 4px; }
+  .culture-banner .sub { font-size: 14px; color: var(--gray-300); margin-top: 12px; display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+  .culture-banner .sub span { display: inline-flex; align-items: center; gap: 6px; }
+
+  /* 合作版本卡 */
+  .ver-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .ver-card {
+    border-radius: var(--radius); padding: 32px 24px;
+    border: 1px solid var(--gray-200); text-align: center; transition: all .3s; background: #fff;
+  }
+  .ver-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .ver-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .ver-card .price { font-size: 14px; color: var(--primary); font-weight: 600; margin-bottom: 12px; }
+  .ver-card p { font-size: 13px; color: var(--gray-500); line-height: 1.7; }
+
+  @media (max-width: 768px) {
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero h1 { font-size: 32px; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; }
+    .hero-stat h3 { font-size: 24px; }
+    .grid-4, .grid-3 { grid-template-columns: 1fr 1fr; }
+    .chain-grid { grid-template-columns: 1fr 1fr; }
+    .svc-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .ver-grid { grid-template-columns: 1fr; }
+    .stats-bar-inner { grid-template-columns: 1fr 1fr; gap: 30px; }
+    section { padding: 60px 20px; }
+    .section-title { font-size: 28px; }
+    .culture-banner .tagline { font-size: 22px; }
+    .culture-banner .sub { flex-direction: column; gap: 8px; }
+  }
+  @media (max-width: 480px) {
+    .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .chain-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="#">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <rect width="36" height="36" rx="10" fill="url(#lg)"/>
+      <path d="M10 18l6 6 10-12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <defs><linearGradient id="lg" x1="0" y1="0" x2="36" y2="36"><stop stop-color="#2563eb"/><stop offset="1" stop-color="#1e40af"/></linearGradient></defs>
+    </svg>
+    <span>荣盈互动</span>
+  </a>
+  <div class="nav-links">
+    <a href="#about">关于</a>
+    <a href="#business">核心业务</a>
+    <a href="#ai-chain">AI+电商</a>
+    <a href="#products">产品</a>
+    <a href="#service">服务</a>
+  </div>
+  <a href="#consult" class="btn-primary">咨询合作</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge">🤖 AI 驱动的商业生态运营商</div>
+      <h1>让电商增长<br><span>可量化 · 可复制 · 可放大</span></h1>
+      <p>荣盈互动围绕零售端、供应链端、服务商端到生态链平台的全链路，提供从店铺运营、直播增长到AI智能体工具部署的一体化能力。不做一次性交付，沉淀为可复用的组织资产。</p>
+      <div class="hero-actions">
+        <a href="#consult" class="btn-primary-lg">咨询合作 →</a>
+        <a href="#business" class="btn-white-lg">了解业务</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><h3>150+</h3><p>京东店铺</p></div>
+        <div class="hero-stat"><h3>3</h3><p>电商平台矩阵</p></div>
+        <div class="hero-stat"><h3>6000+</h3><p>日单峰值</p></div>
+        <div class="hero-stat"><h3>5</h3><p>业务板块</p></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-grid">
+        <div class="hero-card"><div class="hero-card-icon">🛒</div><h4>电商运营</h4><p>闲鱼 / 京东 / 拼多多 · 多平台店群</p></div>
+        <div class="hero-card"><div class="hero-card-icon">📡</div><h4>直播增长</h4><p>带货+娱乐双线 · 从0到稳定出单</p></div>
+        <div class="hero-card"><div class="hero-card-icon">🦞</div><h4>AI智能体</h4><p>龙虾U盘 · 即插即用的数字员工</p></div>
+        <div class="hero-card"><div class="hero-card-icon">🎓</div><h4>AIJC认证</h4><p>AI时代人才能力凭证体系</p></div>
+        <div class="hero-card hero-card-full">
+          <div class="hero-card-icon">📊</div>
+          <h4>数据中枢</h4>
+          <p>多平台数据聚合分析，每个决策有数据依据</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 关于 -->
+<section id="about">
+  <div class="section-max">
+    <div class="wc">
+      <div class="section-tag">🏢 关于荣盈</div>
+      <h2 class="section-title">AI 驱动的商业生态运营商</h2>
+      <p class="section-desc">围绕零售端、供应链端、服务商端到生态链平台的全链路，提供从店铺运营、直播增长到AI智能体工具部署的一体化能力。我们不做一次性交付，而是沉淀标准化SOP，用AI工作台把作战经验变成可分发、可复用的组织资产。</p>
+    </div>
+    <div class="culture-banner">
+      <div class="tagline">荣兴 · 盈实 · 深耕 · 共进</div>
+      <div class="sub">
+        <span>🏆 荣兴 — 以荣誉为根基</span>
+        <span>💎 盈实 — 追求扎实增长</span>
+        <span>🌱 深耕 — 做长期主义者</span>
+        <span>🤝 共进 — 一群人走更远</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 核心业务 -->
+<section class="model-section" id="business">
+  <div class="section-max">
+    <div class="wc">
+      <div class="section-tag">🎯 核心业务</div>
+      <h2 class="section-title">电商运营 + AI赋能 + 认证体系</h2>
+      <p class="section-desc">五条业务线协同驱动，覆盖从选品到决策的全链路</p>
+    </div>
+    <div class="grid-4">
+      <div class="card-flat">
+        <span class="card-icon">🛒</span>
+        <h3>电商运营</h3>
+        <p>闲鱼精细化选品+AI值守、京东店群招商代运营、拼多多规模化店群。数据驱动选品，标准化上架流程，AI客服值守，复盘优化闭环。</p>
+      </div>
+      <div class="card-flat">
+        <span class="card-icon">📡</span>
+        <h3>直播增长</h3>
+        <p>带货直播从0陪跑——脚本、场景、投流、复盘全链路。娱乐直播主播孵化与运营，长期稳定输出。</p>
+      </div>
+      <div class="card-flat">
+        <span class="card-icon">🎓</span>
+        <h3>AIJC认证</h3>
+        <p>面向电商与AI岗位的能力认证体系。让团队能力可认证、可复用、可交接。支撑L4储备主管晋升通道，个人能力沉淀为组织能力。</p>
+      </div>
+      <div class="card-flat">
+        <span class="card-icon">🦞</span>
+        <h3>AI智能体</h3>
+        <p>龙虾智能体U盘——即插即用的数字员工。把组织经验封装成可分发、可复制的工具，覆盖客服、运营、内容多场景。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI+电商链 -->
+<section id="ai-chain">
+  <div class="section-max">
+    <div class="wc">
+      <div class="section-tag">⚡ AI + 电商产业链</div>
+      <h2 class="section-title">AI 不是噱头，是贯穿全链路的底层能力</h2>
+      <p class="section-desc">从选品到客服，从内容到组织——AI在荣盈的每一个环节真实在岗</p>
+    </div>
+    <div class="chain-grid">
+      <div class="chain-card"><div class="chain-step">01 选品</div><h4>🔍 数据驱动</h4><p>多平台数据聚合选品模型，挖掘需求与蓝海</p></div>
+      <div class="chain-card"><div class="chain-step">02 上架/运营</div><h4>📦 SOP+自动巡检</h4><p>标准化上架流程，店群运营工作台智能监控</p></div>
+      <div class="chain-card"><div class="chain-step">03 客服</div><h4>💬 7×24 智能应答</h4><p>CowAgent客服机器人，知识库驱动自动回复</p></div>
+      <div class="chain-card"><div class="chain-step">04 内容</div><h4>🎬 AI生成流水线</h4><p>脚本/图文/短视频，一鱼多吃的内容生产线</p></div>
+      <div class="chain-card"><div class="chain-step">05 直播</div><h4>📡 技术支撑</h4><p>直播间技术优化，带货/娱播陪跑体系</p></div>
+      <div class="chain-card"><div class="chain-step">06 组织</div><h4>🧠 经验数字化</h4><p>龙虾智能体U盘，把人脑经验变可分发工具</p></div>
+      <div class="chain-card"><div class="chain-step">07 决策</div><h4>📊 数据复盘</h4><p>全链路数据中枢，每个决策有数据依据</p></div>
+      <div class="chain-card" style="background:var(--gray-50);border-color:var(--primary);">
+        <div class="chain-step" style="color:var(--primary-dark);">⚡ AI在岗</div>
+        <h4>人做到吐的标准→机器能跑的流程</h4>
+        <p>我们把团队的作战经验，翻译成AI能执行的自动化流程</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 产品矩阵 -->
+<section class="model-section" id="products">
+  <div class="section-max">
+    <div class="wc">
+      <div class="section-tag">📦 产品矩阵</div>
+      <h2 class="section-title">从工作台到智能体，一站式商业操作系统</h2>
+    </div>
+    <table class="prod-table">
+      <thead><tr><th>产品</th><th>一句话描述</th><th>对外定位</th></tr></thead>
+      <tbody>
+        <tr><td>🖥️ 商业生态工作台</td><td>把电商、直播、认证、智能体装进一个工作台</td><td>AI驱动的一站式商业操作系统</td></tr>
+        <tr><td>🦞 龙虾智能体U盘</td><td>即插即用的AI数字员工</td><td>把组织经验封装成可分发工具</td></tr>
+        <tr><td>🎓 AIJC认证体系</td><td>AI时代的人才能力凭证</td><td>让团队能力可认证、可复用</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 服务体系 -->
+<section id="service">
+  <div class="section-max">
+    <div class="wc">
+      <div class="section-tag">🤝 服务体系</div>
+      <h2 class="section-title">从代运营到生态共建，灵活选择</h2>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card">
+        <h4>🛒 代运营 / 店群运营</h4>
+        <p>闲鱼 / 京东 / 拼多多多平台店铺托管与规模化运营</p>
+        <span class="svc-tag">有货/有预算的商家</span>
+      </div>
+      <div class="svc-card">
+        <h4>🚀 陪跑孵化</h4>
+        <p>标准化SOP + 人工陪跑，从0到稳定出单</p>
+        <span class="svc-tag">新手 / 新业务线</span>
+      </div>
+      <div class="svc-card">
+        <h4>🤖 AI工具部署</h4>
+        <p>客服机器人、智能体U盘、工作台接入</p>
+        <span class="svc-tag">想用AI提效的团队</span>
+      </div>
+      <div class="svc-card">
+        <h4>🎓 认证与培训</h4>
+        <p>AIJC认证 + 岗位培训 + 主管晋升体系</p>
+        <span class="svc-tag">需要建人才梯队的商家</span>
+      </div>
+      <div class="svc-card" style="grid-column:1/-1;">
+        <h4>🤝 招商 / 生态合作</h4>
+        <p>店群招商、服务商收编、生态共建</p>
+        <span class="svc-tag">服务商 / 供应链 / 合伙人</span>
+      </div>
+    </div>
+
+    <div class="wc" style="margin-top:60px;">
+      <h2 class="section-title" style="font-size:28px;">合作流程</h2>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="process-step-num">1</div>
+        <h4>诊断对接</h4>
+        <p>明确业务阶段与目标，匹配合作版本</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">2</div>
+        <h4>入驻工作台</h4>
+        <p>进入商业生态工作台，体验核心流程</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">3</div>
+        <h4>陪跑落地</h4>
+        <p>SOP + 人工陪跑，从0到稳定出单</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">4</div>
+        <h4>规模放大</h4>
+        <p>数据复盘优化，复制成功模型向规模化扩张</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 数据 -->
+<section class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item"><h3>150+</h3><p>京东店铺</p></div>
+    <div class="stat-item"><h3>3</h3><p>电商平台矩阵</p></div>
+    <div class="stat-item"><h3>6000+</h3><p>日单峰值</p></div>
+    <div class="stat-item"><h3>5</h3><p>业务板块</p></div>
+  </div>
+</section>
+
+<!-- 合作版本 -->
+<section class="model-section">
+  <div class="section-max">
+    <div class="wc">
+      <div class="section-tag">🔗 合作模式</div>
+      <h2 class="section-title">三档方案，按需选择</h2>
+    </div>
+    <div class="ver-grid">
+      <div class="ver-card">
+        <h3>🔍 体验版</h3>
+        <div class="price">诊断入驻</div>
+        <p>进入商业生态工作台，体验核心流程与数据看板，了解荣盈的运营体系和AI工具链。</p>
+      </div>
+      <div class="ver-card" style="border-color:var(--primary);">
+        <h3>🚀 陪跑版</h3>
+        <div class="price" style="color:var(--primary);">项目制陪跑</div>
+        <p>标准化SOP + 人工陪跑，从0到稳定出单。覆盖电商运营、直播增长、AI工具部署。</p>
+      </div>
+      <div class="ver-card">
+        <h3>🌐 生态版</h3>
+        <div class="price">深度共建</div>
+        <p>店群招商、服务商收编、生态位共建。适合服务商、供应链、合伙人级别的深度合作。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-final" id="consult">
+  <h2>让AI为你的电商增长提效</h2>
+  <p>从电商运营到AI赋能，荣盈互动的每一套方案都经过真实业务验证。联系我们，获取定制化方案。</p>
+  <a href="#" class="btn-primary-lg">立即咨询 →</a>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p>© 2026 荣盈互动 · 武汉荣盈互动科技有限公司</p>
+    <div class="footer-links">
+      <a href="#">用户协议</a>
+      <a href="#">隐私政策</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
