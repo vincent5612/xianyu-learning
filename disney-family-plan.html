@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>迪士尼家庭出行决策方案｜香港 vs 上海｜一家四口</title>
+<style>
+  :root{
+    --primary:#1a73e8; --primary-dark:#0d47a1; --accent:#ff6d00;
+    --bg:#f5f7fa; --card:#ffffff; --text:#1f2937; --muted:#6b7280;
+    --border:#e5e7eb; --good:#059669; --bad:#dc2626; --warn:#d97706;
+    --gold:#f59e0b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding-bottom:60px;}
+  .hero{background:linear-gradient(135deg,#0d47a1 0%,#1a73e8 55%,#7c4dff 100%);color:#fff;padding:36px 20px 30px;text-align:center;}
+  .hero h1{font-size:26px;font-weight:800;letter-spacing:1px;}
+  .hero .sub{font-size:14px;opacity:.9;margin-top:8px;}
+  .hero .date{display:inline-block;margin-top:14px;background:rgba(255,255,255,.15);border-radius:20px;padding:4px 14px;font-size:12px;}
+  .container{max-width:860px;margin:0 auto;padding:0 16px;}
+  .verdict{margin-top:-20px;background:var(--card);border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,.08);padding:22px 20px;position:relative;z-index:2;border-left:6px solid var(--accent);}
+  .verdict h2{font-size:18px;color:var(--primary-dark);margin-bottom:10px;}
+  .verdict .big{font-size:15px;font-weight:700;margin-bottom:6px;}
+  .verdict .reason{font-size:13px;color:var(--muted);}
+  .section{background:var(--card);border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-top:20px;padding:22px 20px;}
+  .section h2{font-size:18px;color:var(--primary-dark);margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px;}
+  .section h2 .no{background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;}
+  th{background:#f0f4fb;color:var(--primary-dark);font-weight:700;padding:10px 8px;text-align:left;border-bottom:2px solid var(--border);}
+  td{padding:10px 8px;border-bottom:1px solid #f0f0f0;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  .tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;margin-right:4px;}
+  .tag.hk{background:#e3f2fd;color:#0d47a1;}
+  .tag.sh{background:#fce4ec;color:#880e4f;}
+  .tag.good{background:#d1fae5;color:#065f46;}
+  .tag.bad{background:#fee2e2;color:#991b1b;}
+  .tag.warn{background:#fef3c7;color:#92400e;}
+  .tag.hot{background:#fde68a;color:#78350f;}
+  .price{color:var(--accent);font-weight:700;white-space:nowrap;}
+  .green{color:var(--good);font-weight:700;}
+  .red{color:var(--bad);font-weight:700;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:12px;}
+  .card{background:#fafbfc;border:1px solid var(--border);border-radius:12px;padding:14px;}
+  .card h3{font-size:14px;margin-bottom:8px;color:var(--primary-dark);}
+  .card .num{font-size:24px;font-weight:800;color:var(--accent);}
+  .card .num small{font-size:12px;color:var(--muted);font-weight:400;}
+  .card ul{padding-left:18px;font-size:12.5px;color:var(--muted);}
+  .card li{margin:4px 0;}
+  .timeline{list-style:none;padding:0;}
+  .timeline li{position:relative;padding:0 0 16px 26px;font-size:13.5px;}
+  .timeline li::before{content:"";position:absolute;left:6px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--primary);}
+  .timeline li::after{content:"";position:absolute;left:10px;top:18px;bottom:-2px;width:2px;background:var(--border);}
+  .timeline li:last-child::after{display:none;}
+  .timeline .t{font-weight:700;color:var(--primary-dark);margin-right:8px;}
+  .timeline .tip{font-size:12px;color:var(--muted);}
+  .tipbox{background:#fff8e1;border-left:4px solid var(--warn);border-radius:8px;padding:12px 14px;font-size:13px;margin-top:12px;}
+  .winbox{background:#ecfdf5;border-left:4px solid var(--good);border-radius:8px;padding:12px 14px;font-size:13px;margin-top:12px;}
+  .warnbox{background:#fef2f2;border-left:4px solid var(--bad);border-radius:8px;padding:12px 14px;font-size:13px;margin-top:12px;}
+  .vs{display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:var(--accent);padding:6px 0;}
+  .footnote{font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.7;}
+  .bar{height:12px;border-radius:6px;background:#f0f0f0;margin:4px 0 2px;overflow:hidden;}
+  .bar i{display:block;height:100%;border-radius:6px;}
+  .bar-label{font-size:11px;color:var(--muted);}
+  .decision{background:linear-gradient(135deg,#065f46,#059669);color:#fff;border-radius:14px;padding:22px;margin-top:20px;}
+  .decision h2{color:#fff;border-bottom-color:rgba(255,255,255,.25);}
+  .decision ol{padding-left:20px;font-size:14px;}
+  .decision li{margin:8px 0;}
+  .decision .step{font-weight:800;}
+  @media(max-width:640px){
+    .grid2,.grid3{grid-template-columns:1fr;}
+    .hero h1{font-size:21px;}
+    table{font-size:12px;}
+  }
+  @media print{.section{box-shadow:none;border:1px solid #ddd;}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🎢 迪士尼家庭出行决策方案</h1>
+  <div class="sub">香港迪士尼 vs 上海迪士尼 · 一家四口（安叔+太太+恺珵+墨宝）</div>
+  <div class="date">📅 方案基准日：2026年8月5日（周三·墨宝生日）· 数据截至2026年8月</div>
+</div>
+
+<div class="container">
+
+  <!-- 结论 -->
+  <div class="verdict">
+    <h2>⚡ 一句话结论</h2>
+    <div class="big">周三（8/5）请假1天 → 去 <span class="tag hk">香港迪士尼</span>，买1日票+提早入园证，当天往返。</div>
+    <div class="reason">理由：①墨宝生日当天入园，仪式感拉满（生日徽章+角色唱生日歌）②周三是香港迪士尼全年最空的一天，票价也是最低档③深圳当天往返，总花费约¥3,700，是上海方案的1/3④不用挤周末，孩子玩得尽兴大人不累。</div>
+  </div>
+
+  <!-- 1. 三方案总费用 -->
+  <div class="section">
+    <h2><span class="no">1</span>三套方案总账对比（一家四口估算）</h2>
+    <table>
+      <tr><th style="width:22%">对比项</th><th>方案A：周三请假·香港1日游</th><th>方案B：周末·香港1日游</th><th>方案C：周末/请假·上海3天2晚</th></tr>
+      <tr><td>门票</td><td class="price">≈¥2,150</td><td class="price">≈¥2,450 <span class="tag warn">贵¥300</span></td><td class="price">≈¥3,190（2日票）</td></tr>
+      <tr><td>交通</td><td class="price">≈¥800（高铁+港铁往返）</td><td class="price">≈¥800</td><td class="price">≈¥4,000（机票往返×4）</td></tr>
+      <tr><td>住宿</td><td class="green">¥0（当天往返）</td><td class="green">¥0</td><td class="price">≈¥1,600（2晚）</td></tr>
+      <tr><td>餐饮+杂费</td><td class="price">≈¥700</td><td class="price">≈¥750</td><td class="price">≈¥2,100（3天）</td></tr>
+      <tr><td><b>合计</b></td><td class="price">≈<b>¥3,700</b></td><td class="price">≈¥4,300</td><td class="price">≈<b>¥10,900</b></td></tr>
+      <tr><td>请假天数</td><td>1天（周三）</td><td>0天</td><td>至少2天（或占用周末+请假）</td></tr>
+      <tr><td>游玩强度</td><td class="green">轻松·排队短</td><td class="warn">排队多·较累</td><td class="warn">园区3倍大·日均2万步</td></tr>
+      <tr><td>综合评价</td><td class="green">⭐⭐⭐⭐⭐ 首选</td><td>⭐⭐⭐⭐ 次选</td><td>⭐⭐⭐ 以后再去</td></tr>
+    </table>
+    <div class="winbox">💰 <b>省钱关键</b>：方案A比方案C省约 <b>¥7,200</b>（省下一台iPad+一部手机）。方案A比方案B省约¥600，但真正赚到的是<b>排队时间</b>——周三热门项目排15-40分钟，周末可能要排60-120分钟，等于白赚半天游玩时间。</div>
+  </div>
+
+  <!-- 2. 香港vs上海 园区对比 -->
+  <div class="section">
+    <h2><span class="no">2</span>园区区别与差距（香港 vs 上海）</h2>
+    <table>
+      <tr><th style="width:24%">维度</th><th>香港迪士尼 <span class="tag hk">HKDL</span></th><th>上海迪士尼 <span class="tag sh">SHDL</span></th></tr>
+      <tr><td>占地面积</td><td>约126公顷（全球最小，紧凑精致）</td><td>约390公顷（全球单园最大，≈香港3倍）</td></tr>
+      <tr><td>开幕时间</td><td>2005年（21年老牌，2025年20周年）</td><td>2016年（10年）</td></tr>
+      <tr><td>主题园区</td><td>8大：美国小镇大街/探险世界/幻想世界/明日世界/反斗奇兵/灰熊山谷/迷离庄园/魔雪奇缘世界</td><td>8大：米奇大街/奇想花园/梦幻世界/宝藏湾/探险岛/明日世界/玩具总动员/疯狂动物城</td></tr>
+      <tr><td>独有王牌</td><td>🌟<b>全球首个魔雪奇缘世界</b>（艾莎城堡/魔雪奇幻之旅）· 迷离庄园 · 灰熊山谷 · 漫威主题（铁甲奇侠/蚁侠）</td><td>🌟<b>全球唯一疯狂动物城</b>（热力追踪）· 创极速光轮（TRON）· 全球最高奇幻童话城堡</td></tr>
+      <tr><td>标志城堡</td><td>奇妙梦想城堡（13位公主主题）</td><td>奇幻童话城堡（全球最高最大，带船道）</td></tr>
+      <tr><td>游乐设施</td><td>约30+项</td><td>约40+项</td></tr>
+      <tr><td>排队体验</td><td class="green">热门15-45分钟，非热门几乎不用排</td><td class="bad">热门常排60-120分钟，平日也挤</td></tr>
+      <tr><td>步行负担</td><td class="green">小，推车遛娃轻松，一天走1万步内</td><td class="bad">大，一天2.5万步是常态</td></tr>
+      <tr><td>适合人群</td><td><b>亲子家庭/幼儿/第一次去</b></td><td>追求大场面/科技感的游客/深度玩家</td></tr>
+      <tr><td>语言/沟通</td><td>粤语/普通话/英语均可，繁简中文</td><td>普通话为主</td></tr>
+      <tr><td>客流量</td><td>年约770万人次，平日相对温和</td><td>年超1100万人次，本地客基数庞大</td></tr>
+      <tr><td>快速通行</td><td>尊享卡DPA：3项HK$187 / 8项HK$406</td><td>尊享卡：3项¥395 / 6项¥799 / 8项¥1099</td></tr>
+    </table>
+    <div class="tipbox">🎯 <b>对本家庭的判断</b>：恺珵13岁、墨宝10岁，正是玩迪士尼的黄金年龄。香港园区小=少走冤枉路、排队短=多玩项目，两个孩子能玩得更多更开心；上海的大场面适合再大一点或者专门跑一趟。对深圳人来说，香港的<b>便捷性无可替代</b>。</div>
+  </div>
+
+  <!-- 3. 门票价格明细 -->
+  <div class="section">
+    <h2><span class="no">3</span>门票价格明细（2026年·官网/平台价）</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3><span class="tag hk">香港迪士尼</span> 分级票价（港币）</h3>
+        <table>
+          <tr><th>级别</th><th>成人(12-64)</th><th>小童(3-11)</th><th>适合日</th></tr>
+          <tr><td>第1级</td><td>HK$669</td><td>HK$499</td><td class="green">平日(周二-四)</td></tr>
+          <tr><td>第2级</td><td>HK$759</td><td>HK$569</td><td>周一/周五-日</td></tr>
+          <tr><td>第3级</td><td>HK$849</td><td>HK$639</td><td>高峰日</td></tr>
+          <tr><td>第4级</td><td>HK$939</td><td>HK$705</td><td>大节日</td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--muted);margin-top:6px;">Klook/Kkday比官网便宜约9折：1级成人HK$610、小童HK$455。</p>
+      </div>
+      <div class="card">
+        <h3><span class="tag sh">上海迪士尼</span> 六级票价（人民币）</h3>
+        <table>
+          <tr><th>档位</th><th>成人(12-59)</th><th>儿童(3-11)</th></tr>
+          <tr><td>常规日(最低)</td><td>¥475</td><td>¥356(75折)</td></tr>
+          <tr><td>特别常规</td><td>¥539/¥599</td><td>≈¥404-449</td></tr>
+          <tr><td>高峰日</td><td>¥659/¥719</td><td>≈¥494-539</td></tr>
+          <tr><td>特别高峰</td><td>¥799</td><td>≈¥599</td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--muted);margin-top:6px;">儿童/老人/残障约75折；婴幼儿免票。2日票成人¥854起。</p>
+      </div>
+    </div>
+    <div class="tipbox">🎫 <b>一家四口门票实算（恺珵13岁按成人，墨宝10岁按儿童）</b><br>
+    香港1日票（Klook 1级）：成人HK$610×3 + 小童HK$455 = <b>HK$2,285 ≈ ¥2,150</b><br>
+    香港连玩2日票（官网1日+HK$100）：成人HK$769×3 + 小童HK$599 = <b>HK$2,906 ≈ ¥2,730</b>（第二天只多花约¥600，适合想玩两天）<br>
+    上海2日票：成人¥854×3 + 儿童¥640 = <b>¥3,202</b></div>
+  </div>
+
+  <!-- 4. 周三vs周末 -->
+  <div class="section">
+    <h2><span class="no">4</span>关键决策：周三请假 vs 周末去？（香港迪士尼）</h2>
+    <table>
+      <tr><th style="width:22%">维度</th><th>周三（8/5·墨宝生日）</th><th>周末（8/8周六）</th><th>结论</th></tr>
+      <tr><td>门票档位</td><td class="green">第1级（最便宜）</td><td class="bad">第2级（贵一档）</td><td>省HK$88/成人</td></tr>
+      <tr><td>4人门票差</td><td class="price">≈¥2,150</td><td class="price">≈¥2,450</td><td class="red">周末贵≈¥300</td></tr>
+      <tr><td>人流量</td><td class="green">全年最空！周三=一周最闲</td><td class="bad">周六=一周最挤</td><td>差距巨大</td></tr>
+      <tr><td>热门排队</td><td class="green">15-40分钟</td><td class="bad">60-120分钟</td><td>周三多玩3-5个项目</td></tr>
+      <tr><td>生日体验</td><td class="green">🎂生日当天！入园领生日徽章、角色唱生日歌、餐厅生日礼遇</td><td>普通日</td><td>仪式感完胜</td></tr>
+      <tr><td>请假成本</td><td>请假1天（你自己上班1天）</td><td>0</td><td>你的请假成本≈¥500-1000？</td></tr>
+      <tr><td>孩子期待值</td><td class="green">"生日=迪士尼"记一辈子</td><td>普通周末</td><td>情绪价值</td></tr>
+      <tr><td>体力</td><td class="green">人少不排队，轻松</td><td class="bad">排队耗体力，容易累哭</td><td>周三更轻松</td></tr>
+    </table>
+    <div class="winbox">✅ <b>算账结论：必须周三去。</b>周末多花的¥300门票+排队时间+差体验，vs 周三只多一个"请假1天"。你请假一天的损失如果是1-2千以内，这笔账怎么算都是周三赢——而且墨宝10岁生日当天去迪士尼，这个记忆比省下任何钱都值。</div>
+    <div class="tipbox">📊 <b>人流数据佐证</b>：香港迪士尼官方人潮预测（Magic Tips/Disney Tourist Blog）：<b>Wednesday is the least busy day</b>（周三是全周最空），周六最忙，周五周日次之。暑假8月整体偏热，但周中仍是洼地。香港园区本来排队就比上海短（多数设施60分钟内），周三去基本畅通。</div>
+  </div>
+
+  <!-- 5. 门票有效期 -->
+  <div class="section">
+    <h2><span class="no">5</span>迪士尼门票有效期规则（回答你的问题）</h2>
+    <table>
+      <tr><th style="width:20%">票种</th><th>有效期</th><th>说明</th></tr>
+      <tr><td><span class="tag hk">香港1日票</span></td><td>购票后3个月内有效</td><td>需提前在官网/App预约入园日期；可免费改期（补淡旺季差价）</td></tr>
+      <tr><td><span class="tag hk">香港连玩2日票</span></td><td>连续2天入园</td><td>1日票价+HK$100升级，第二次入园需在首次次日</td></tr>
+      <tr><td><span class="tag hk">香港2日票(Klook)</span></td><td>7天内任选2天入园</td><td>更灵活，中间可去市区；不限级别日子</td></tr>
+      <tr><td><span class="tag hk">香港3岁以下</span></td><td>免费</td><td>—</td></tr>
+      <tr><td><span class="tag sh">上海1日/2日票</span></td><td>指定日期使用</td><td>需实名制+预约；提前30天滚动放出价格日历，越早买越划算</td></tr>
+      <tr><td><span class="tag sh">上海婴幼儿</span></td><td>3岁以下或1米以下免票</td><td>—</td></tr>
+    </table>
+    <div class="tipbox">⚠️ <b>买票注意</b>：香港票务必<b>先买票→再预约入园日期</b>，热门日期可能约满。1级票只能约1级的日子（8/5周三正好是1级，完美匹配）。平台票（Klook/Kkday）比官网便宜，但改期政策略严，定好日期再买。</div>
+  </div>
+
+  <!-- 6. 行程安排 -->
+  <div class="section">
+    <h2><span class="no">6</span>推荐行程：周三（8/5）香港迪士尼1日游 · 详细时刻表</h2>
+    <ul class="timeline">
+      <li><span class="t">07:00</span>深圳出发（推荐福田站高铁，14分钟到西九龙）<span class="tip">· 提前买高铁票，旺季要抢</span></li>
+      <li><span class="t">07:30</span>西九龙站一地两检过关<span class="tip">· 记得港澳通行证+有效签注（提前确认）</span></li>
+      <li><span class="t">08:10</span>柯士甸站→南昌→欣澳→迪士尼专线（约35分钟）<span class="tip">· 米奇主题列车，孩子上车就兴奋</span></li>
+      <li><span class="t">09:15</span>抵达乐园门口，凭<b>提早入园证</b>提前1小时入园<span class="tip">· 直冲魔雪奇缘世界：魔雪奇幻之旅+雪岭滑雪橇，不用排队</span></li>
+      <li><span class="t">10:30</span>正式开园，逆时针路线：灰熊山极速矿车→迷离大宅→小小世界<span class="tip">· 周三排队15-40分钟，轻松</span></li>
+      <li><span class="t">12:00</span>午餐（阿德尔港畔餐厅/皇室宴会厅，推荐提前买餐券）<span class="tip">· 给墨宝点生日甜品，餐厅会送祝福</span></li>
+      <li><span class="t">13:00</span>迪士尼好友巡游派对（花车巡游）<span class="tip">· 城堡广场占位看第一场</span></li>
+      <li><span class="t">14:30</span>幻想世界+表演：米奇幻想曲（3D）、狮子王庆典/魔法书房选看<span class="tip">· 室内吹冷气，躲午后暴晒</span></li>
+      <li><span class="t">16:00</span>明日世界：星战极速穿梭、铁甲奇侠飞行之旅（漫威迷恺珵主场）<span class="tip">· 恺珵13岁可以玩刺激的</span></li>
+      <li><span class="t">17:15</span>巡游第二场/达菲与好友拍照<span class="tip">· 墨宝可以买生日徽章+抱玩偶</span></li>
+      <li><span class="t">18:30</span>晚餐+美国小鎮大街逛商店<span class="tip">· 伴手礼最后买，商店关得晚</span></li>
+      <li><span class="t">20:00</span>🌟迪士尼星梦光影之旅（城堡烟花灯光秀，约20分钟）<span class="tip">· 提前40分钟占城堡正面位置</span></li>
+      <li><span class="t">20:40</span>出园返深：直通巴士（约90-120分钟）或高铁（注意末班）<span class="tip">· 看完烟花坐巴士回深圳湾/皇岗，或赶21:00后高铁</span></li>
+      <li><span class="t">22:00-23:00</span>回到深圳的家<span class="tip">· 娃上车秒睡，完美的一天</span></li>
+    </ul>
+    <div class="tipbox">💡 <b>买票清单（出发前）：</b>①香港迪士尼1日票×4（Klook，1级）②提早入园证×4（可提前1小时入园，强烈建议）③三合一餐券×4（午餐+晚餐+小吃，比现场单点省）④港澳通行证+有效签注（全家）⑤八达通/支付宝香港乘车码。</div>
+  </div>
+
+  <!-- 7. 上海方案（备选） -->
+  <div class="section">
+    <h2><span class="no">7</span>上海迪士尼方案（本次不推荐，留着以后去）</h2>
+    <div class="grid3">
+      <div class="card"><h3>📅 最佳时段</h3><ul><li>避开暑假/国庆/春节</li><li>10月-11月天气最舒服</li><li>提前40天买机票最便宜</li></ul></div>
+      <div class="card"><h3>💸 预算</h3><div class="num">≈¥1.1万<small>/一家四口</small></div><ul><li>机票往返¥4,000</li><li>2日门票¥3,200</li><li>2晚住宿¥1,600+</li></ul></div>
+      <div class="card"><h3>⏱ 时间</h3><div class="num">3天2晚<small>至少</small></div><ul><li>园区太大必须2天</li><li>请假至少2天</li><li>日均2.5万步</li></ul></div>
+    </div>
+    <div class="tipbox">📌 <b>如果以后去上海：</b>住迪士尼酒店（可提前1小时入园）或玩具总动员酒店；买2日票+早享卡（¥149-199提前1小时入园）；必玩：疯狂动物城热力追踪、创极速光轮、翱翔·飞越地平线、加勒比海盗沉落宝藏之战；下载上海迪士尼App实时看排队。</div>
+  </div>
+
+  <!-- 8. 决策执行 -->
+  <div class="decision">
+    <h2>🎯 最终决策 + 行动清单</h2>
+    <ol>
+      <li><span class="step">决定：8月5日（周三）</span>请假1天，全家去香港迪士尼——墨宝生日当天出发</li>
+      <li><span class="step">立即确认：</span>全家港澳通行证+签注是否有效（没有的今天就去办，签注约5-7个工作日）</li>
+      <li><span class="step">今天/明天：</span>在Klook/Kkday买好1日票×4（1级）+提早入园证×4+餐券×4，预约8/5入园</li>
+      <li><span class="step">提前3天：</span>买福田→西九龙高铁票（往返），买直通巴士返程票备用</li>
+      <li><span class="step">出发前：</span>下载香港迪士尼App绑定门票，查烟花时间；带水壶+防晒+防蚊；给孩子换上迪士尼主题衣服</li>
+      <li><span class="step">生日彩蛋：</span>入园后去客服中心/商店领"生日徽章"，工作人员和角色看到会专门给墨宝送祝福</li>
+    </ol>
+  </div>
+
+  <div class="footnote">
+    ⚠️ <b>数据说明：</b>价格基于2026年8月公开信息（香港迪士尼官网/Klook/Kkday/Trip.com/上海迪士尼官网/北京日报），港币汇率按1≈¥0.94估算，实际以购票时为准。门票价格随日期浮动，8/5为周三第1级最优惠档。园区开放时间（香港10:30-20:30，上海8:30-21:30）以官方当日公告为准。恺珵/墨宝按13岁/10岁估算票价（香港12岁及以上=成人票，上海12-59岁=成人票），请按证件实际年龄购票。<br>
+    生成：Hermes Agent · 2026-08-02 · 供安叔家庭决策参考
+  </div>
+
+</div>
+</body>
+</html>
