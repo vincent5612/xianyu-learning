@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>荣盈互动科技 · 展板排版稿</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+    display:flex; justify-content:center; align-items:center;
+    min-height:100vh; background:#e8ecf2; padding:40px 20px;
+  }
+  /* 展板画布 16:9 */
+  .board {
+    width:1200px; min-height:675px; background: linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#1e3a5f 100%);
+    border-radius:18px; padding:52px 64px; position:relative; overflow:hidden;
+    box-shadow:0 24px 60px rgba(15,23,42,.35); color:#fff;
+  }
+  /* 装饰光斑 */
+  .board::before {
+    content:""; position:absolute; top:-120px; right:-120px; width:420px; height:420px;
+    background:radial-gradient(circle, rgba(37,99,235,.22) 0%, transparent 70%); border-radius:50%;
+  }
+  .board::after {
+    content:""; position:absolute; bottom:-160px; left:-100px; width:380px; height:380px;
+    background:radial-gradient(circle, rgba(251,191,36,.10) 0%, transparent 70%); border-radius:50%;
+  }
+
+  /* ===== 头部 ===== */
+  .head { display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2; }
+  .brand { display:flex; align-items:center; gap:16px; }
+  .logo {
+    width:56px; height:56px; border-radius:14px; flex-shrink:0;
+    background:linear-gradient(135deg,#2563eb 0%,#1e40af 100%);
+    display:flex; justify-content:center; align-items:center; font-size:26px; font-weight:800; color:#fff;
+    box-shadow:0 8px 20px rgba(37,99,235,.4);
+  }
+  .brand-name { font-size:30px; font-weight:800; letter-spacing:2px; }
+  .brand-name small { display:block; font-size:13px; font-weight:400; color:#94a3b8; letter-spacing:1px; margin-top:2px;}
+  .slogan-chip {
+    background:rgba(37,99,235,.16); border:1px solid rgba(37,99,235,.5); color:#93c5fd;
+    padding:8px 18px; border-radius:100px; font-size:14px; letter-spacing:1px;
+  }
+
+  /* ===== 定位语 ===== */
+  .hero { margin-top:40px; position:relative; z-index:2; }
+  .hero .tag { color:#fbbf24; font-size:14px; letter-spacing:4px; font-weight:600; }
+  .hero h1 { font-size:44px; font-weight:800; margin-top:12px; line-height:1.25; letter-spacing:1px;}
+  .hero h1 em { font-style:normal; color:#60a5fa; }
+  .hero p { margin-top:14px; color:#cbd5e1; font-size:16px; letter-spacing:.5px; max-width:820px; line-height:1.8;}
+
+  /* ===== 四大板块 ===== */
+  .blocks { margin-top:44px; display:grid; grid-template-columns:repeat(4,1fr); gap:20px; position:relative; z-index:2;}
+  .block {
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10);
+    border-radius:16px; padding:24px 20px; transition:.25s;
+  }
+  .block:hover { background:rgba(37,99,235,.18); border-color:rgba(96,165,250,.5); transform:translateY(-4px);}
+  .block .icon { width:44px; height:44px; border-radius:12px; display:flex; justify-content:center; align-items:center; font-size:22px; background:rgba(37,99,235,.25);}
+  .block .num { color:#fbbf24; font-size:12px; letter-spacing:2px; margin-top:16px; font-weight:600;}
+  .block h3 { font-size:19px; font-weight:700; margin-top:4px; }
+  .block p { font-size:13px; color:#94a3b8; margin-top:8px; line-height:1.6; }
+
+  /* ===== 底部 ===== */
+  .footer { margin-top:38px; padding-top:20px; border-top:1px solid rgba(255,255,255,.12); position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; }
+  .footer .four { color:#fbbf24; font-size:14px; letter-spacing:1px; font-weight:600;}
+  .footer .domains { color:#94a3b8; font-size:12.5px; letter-spacing:.5px; text-align:right; line-height:1.9;}
+
+  @media (max-width:900px){
+    .board { width:100%; padding:32px 24px; min-height:auto;}
+    .hero h1 { font-size:30px;}
+    .blocks { grid-template-columns:repeat(2,1fr);}
+    .footer { flex-direction:column; gap:12px; align-items:flex-start;}
+    .footer .domains { text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<div class="board">
+  <!-- 头部 -->
+  <div class="head">
+    <div class="brand">
+      <div class="logo">荣</div>
+      <div class="brand-name">荣盈互动科技
+        <small>RONGYING INTERACTIVE TECHNOLOGY</small>
+      </div>
+    </div>
+    <div class="slogan-chip">🌐 全域电商数字化服务</div>
+  </div>
+
+  <!-- 定位语 -->
+  <div class="hero">
+    <div class="tag">商 业 赋 能 · 产 业 升 级 · 人 才 培 育 · 社 会 责 任</div>
+    <h1>AI驱动的<em>商业生态运营商</em></h1>
+    <p>以AI技术创新为核心，深耕全域电商数字化服务，赋能医疗、物流、大宗贸易等行业，拓展新媒体招商产业版图，深化政企项目合作，共建人工智能技能人才孵化生态。</p>
+  </div>
+
+  <!-- 四大板块 -->
+  <div class="blocks">
+    <div class="block">
+      <div class="icon">🚀</div>
+      <div class="num">01 · 商业赋能</div>
+      <h3>AI驱动全域电商增长</h3>
+      <p>以AI工具链重构电商运营效率，驱动全域增长</p>
+    </div>
+    <div class="block">
+      <div class="icon">🏭</div>
+      <div class="num">02 · 产业升级</div>
+      <h3>传统产业数字化转型</h3>
+      <p>深耕医疗、物流、大宗贸易等行业数字化服务</p>
+    </div>
+    <div class="block">
+      <div class="icon">🎓</div>
+      <div class="num">03 · 人才培育</div>
+      <h3>AI技能人才孵化平台</h3>
+      <p>落地人工智能训练师官方认证培训业务</p>
+    </div>
+    <div class="block">
+      <div class="icon">🤝</div>
+      <div class="num">04 · 社会责任</div>
+      <h3>残障群体就业赋能</h3>
+      <p>完善残疾人就业孵化体系，践行企业社会责任</p>
+    </div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="footer">
+    <div class="four">四维协同发展 · 全力打造AI电商综合服务与技能人才孵化生态</div>
+    <div class="domains">政企项目合作 · 新媒体招商产业版图<br>人工智能训练师认证培训 · 残疾人就业孵化</div>
+  </div>
+</div>
+
+</body>
+</html>
