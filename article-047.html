@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第047篇 · 经验重新定价（深色科技风预览）</title>
+<style>
+  body { margin:0; background:#1a1a1a; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif; }
+  .phone { max-width:414px; margin:24px auto; background:#fff; box-shadow:0 4px 30px rgba(0,0,0,.4); }
+  .toolbar { position:fixed; top:0; left:0; right:0; z-index:999; background:#0a0a0a; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 10px rgba(0,0,0,.4); }
+  .toolbar .title { color:#FF7D29; font-size:14px; font-weight:600; }
+  .toolbar .btn { background:#FF7D29; color:#0a0a0a; border:none; border-radius:8px; padding:10px 20px; font-size:14px; font-weight:700; cursor:pointer; }
+  .toolbar .btn:hover { background:#ff9347; }
+  .toolbar .btn.copied { background:#5a8f5f; color:#fff; }
+  .tip { position:fixed; bottom:0; left:0; right:0; z-index:998; background:#0a0a0a; color:#A0A0A0; font-size:13px; padding:8px 20px; text-align:center; }
+  .preview-wrap { max-width:414px; margin:64px auto 44px; background:#fff; }
+  .inner { padding:0; }
+  .shell-tag { background:#f2f2f2; color:#888; font-size:12px; text-align:center; padding:8px; }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="title">🔶 第047篇 · 经验重新定价（深色科技风）</span>
+  <button class="btn" id="copyBtn" onclick="copyContent()">📋 复制到公众号</button>
+</div>
+
+<div class="preview-wrap">
+  <div class="inner" id="articleContent"></div>
+  <div class="shell-tag">▲ 以上为公众号文章内容预览（手机宽度）</div>
+</div>
+
+<div class="tip">💡 点「复制到公众号」→ 打开公众号编辑器 → Ctrl/Cmd+V 粘贴（样式保留）</div>
+
+<script>
+const BODY_HTML = `
+<section style="max-width:677px;margin:0 auto;padding:28px 20px;background:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;line-height:2;color:#333333;font-size:16px;">
+
+<!-- ===== 顶部系列标签 ===== -->
+<section style="text-align:center;margin-bottom:20px;">
+  <p style="margin:0;font-size:13px;color:#999999;letter-spacing:3px;">安叔的副业实验室 · 第 047 篇</p>
+</section>
+
+<!-- ===== 标题区 ===== -->
+<section style="padding:10px 4px 14px;text-align:center;">
+  <p style="margin:0 0 10px;font-size:23px;font-weight:800;line-height:1.5;color:#0a0a0a;">AI时代，我反而没那么焦虑了<br><span style="color:#FF7D29;">四十多岁的经验，正在被重新定价</span></p>
+  <p style="margin:0;font-size:14px;color:#888888;">副业 / 创业 / 年龄焦虑 / AI</p>
+  <p style="margin:8px 0 0;font-size:14px;color:#FF7D29;font-weight:700;">—— 安叔</p>
+</section>
+
+<!-- ===== 开头引入 ===== -->
+<section style="margin:14px 0 22px;padding:16px 18px;background:#f7f7f7;border-radius:8px;border-left:4px solid #FF7D29;">
+  <p style="margin:0 0 10px;font-size:15px;color:#444;">前两天有个读者问我：<span leaf="">安叔，我都四十多了，学AI还来得及吗</span>？现在年轻人一个比一个快，我们这些老家伙是不是要被淘汰了？</p>
+  <p style="margin:0 0 10px;font-size:15px;color:#444;">我说：<span leaf="">你问反了</span>。</p>
+  <p style="margin:0;font-size:15px;color:#444;">被淘汰的从来不是年龄，是不值钱的年龄。</p>
+</section>
+
+<!-- ===== 金句1：黑底橙字 ===== -->
+<section style="margin:22px 0;padding:20px 22px;background:#0a0a0a;border-radius:10px;text-align:center;">
+  <p style="margin:0 0 8px;font-size:18px;font-weight:800;color:#ffffff;">被淘汰的从来不是年龄</p>
+  <p style="margin:0 0 8px;font-size:18px;font-weight:800;color:#FF7D29;">是不值钱的年龄</p>
+  <p style="margin:0;font-size:15px;color:#A0A0A0;">你问的从来不是来不来得及，是值不值钱</p>
+</section>
+
+<!-- ===== 第一章 ===== -->
+<section style="margin:30px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#FF7D29;background:rgba(255,125,41,0.12);padding:4px 10px;border-radius:6px;">01</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">过去几十年，我们拼命奖励「快」</p>
+  </section>
+
+  <p style="margin:0 0 14px;">年轻时我最信一句话：<span leaf="">趁年轻，多折腾</span>。那时候快就是一切——反应快、学得快、拼得起，一天顶别人三天，你就是人才。</p>
+  <p style="margin:0 0 14px;">所以我一直觉得，过了三十五还不往上走，就完了。<span leaf="">这是这个社会教给我们的焦虑</span>。</p>
+  <p style="margin:0 0 14px;">但这两年AI起来以后，我观察到一个变化：过去特别值钱的「快」，正在迅速变便宜。</p>
+  <p style="margin:0 0 14px;">写代码，AI比你快；搜资料，AI比你快；做分析，AI比你快。它还不拿工资、不睡觉、不喊累。</p>
+  <p style="margin:0 0 6px;">当「快」变成人人都有、甚至机器都有的东西，<span leaf="">「快」本身就不值钱了</span>。</p>
+
+  <section style="margin:16px 0;padding:14px 18px;background:#121212;border-radius:8px;text-align:center;">
+    <p style="margin:0;font-size:16px;font-weight:700;color:#f5f5f5;">当「快」变成人人都有的东西<br><span leaf="" style="color:#FF7D29;">「快」本身就不值钱了</span></p>
+  </section>
+</section>
+
+<!-- ===== 第二章 ===== -->
+<section style="margin:34px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#61AFEF;background:rgba(97,175,239,0.12);padding:4px 10px;border-radius:6px;">02</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">真正开始变贵的东西，叫判断力</p>
+  </section>
+
+  <p style="margin:0 0 14px;"><span leaf="">判断力</span>开始值钱。</p>
+  <p style="margin:0 0 14px;">对方向的嗅觉、对人性的理解、对风险的预判——这些没有标准答案的本事，是拿时间和真金白银踩坑踩出来的。</p>
+  <p style="margin:0 0 14px;">一个真正做了十几年生意的人，他见得更多，很多事往往更早就能看出门道。一个做了十年生意的人和刚毕业的年轻人同时看到一个项目，谁先看出这是坑？多半是<span leaf="">亏过的那个人</span>——第二次闻到同样的味道，他躲得比谁都快。</p>
+  <p style="margin:0 0 6px;">年轻人再聪明，也压缩不了时间的厚度。</p>
+
+  <section style="margin:16px 0;padding:14px 18px;background:#0a0a0a;border-radius:8px;text-align:center;">
+    <p style="margin:0;font-size:16px;font-weight:800;color:#ffffff;">年轻人再聪明<br><span leaf="" style="color:#FF7D29;">也压缩不了时间的厚度</span></p>
+  </section>
+</section>
+
+<!-- ===== 第三章 ===== -->
+<section style="margin:34px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#FF7D29;background:rgba(255,125,41,0.12);padding:4px 10px;border-radius:6px;">03</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">我自己的体会</p>
+  </section>
+
+  <p style="margin:0 0 14px;">我做了14年电商和招聘，说几个我现在才看明白的判断。</p>
+  <p style="margin:0 0 14px;">2024年我踩过不少坑，有个道理是亏出来的：<span leaf="" style="font-weight:700;color:#FF7D29;">止损线</span>。该退就退，别和烂项目谈感情。这个判断，二十多岁的我做不出来——那时候总觉得坚持就是胜利。</p>
+  <p style="margin:0 0 14px;">还有一个是成本倒算。我看项目不看价格，看代价。价格是明账，时间成本、试错成本、机会成本是暗账。这几个账，没有十几年生意做底子，你根本算不明白。</p>
+  <p style="margin:0 0 14px;">还有选项目。年轻人选项目看风口，我选项目看两样：<span leaf="">启动成本多高、亏了扛不扛得住</span>。风口人人看得到，扛不扛得住，只有踩过坑的人算得出来。</p>
+  <p style="margin:0 0 14px;">现在AI来了，它把我这些判断进一步放大：我知道该问什么，它去找答案；我知道该看什么，它去做分析；方向定好了，它推着我往前跑。</p>
+  <p style="margin:0 0 6px;">以前我焦虑：我还能不能学得过年轻人？</p>
+
+  <section style="margin:16px 0;padding:16px 18px;background:#121212;border-radius:8px;text-align:center;">
+    <p style="margin:0;font-size:16px;font-weight:800;color:#ffffff;">现在我想明白了：<br><span leaf="" style="color:#FF7D29;">AI时代，拉开差距的不是谁跑得快，是看得准</span></p>
+  </section>
+</section>
+
+<!-- ===== 第四章 ===== -->
+<section style="margin:34px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#61AFEF;background:rgba(97,175,239,0.12);padding:4px 10px;border-radius:6px;">04</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">四五十岁，不是落后，是开始被定价</p>
+  </section>
+
+  <p style="margin:0 0 14px;">Y Combinator的总裁Gary Tan提过一个判断：下一代独角兽创始人，会出现越来越多四五十岁、有品位、有判断力的人。因为有了AI Agent，一个人背后随时可以站着几十个几百个数字员工替他干活。</p>
+  <p style="margin:0 0 14px;">我越来越觉得，这一轮AI，<span leaf="">四五十岁的管理者真的赶上了一波红利</span>。</p>
+  <p style="margin:0 0 14px;">但我要泼一盆冷水：这个红利不是自动到账的。</p>
+  <p style="margin:0 0 14px;">经验值钱，是有前提的——你得真的见过周期、踩过坑、做过复盘。你要是干二十年都只是把一件事重复了二十遍，那你的经验只是岁数，不是资产。</p>
+  <p style="margin:0 0 6px;">所以我一直逼自己干一件事：把经验变成体系。踩过的坑写成方法论，做过的判断沉淀成弹药，让AI帮我把这些整理成可复制、可传递的东西。</p>
+
+  <section style="margin:16px 0;padding:16px 18px;background:#0a0a0a;border-radius:10px;text-align:center;">
+    <p style="margin:0;font-size:17px;font-weight:800;color:#ffffff;">AI淘汰的不是中年人<br><span leaf="" style="color:#FF7D29;">是没复盘过的中年人</span></p>
+  </section>
+</section>
+
+<!-- ===== 总结 ===== -->
+<section style="margin:28px 0;padding:18px 20px;border-top:3px solid #FF7D29;border-bottom:1px solid #eeeeee;text-align:center;">
+  <p style="margin:0;font-size:16px;font-weight:700;color:#0a0a0a;line-height:2;">四五十岁不是开始落后的年纪<br>是经验开始被重新定价的年纪</p>
+</section>
+
+<!-- ===== 结尾 ===== -->
+<section style="margin:24px 0 10px;padding:0 4px;">
+  <p style="margin:0 0 12px;font-size:15px;color:#555;">如果你也在纠结「我这个年龄还能不能跟上AI」，或者想看看我怎么把十几年的经验变成体系，后面我会逐一深聊。</p>
+  <p style="margin:0 0 12px;font-size:15px;color:#333;"><span leaf="" style="font-weight:700;">我是安叔</span>，做了14年电商和招聘，现在带学员做京东店群招商、闲鱼电商和公众号运营。</p>
+  <p style="margin:0 0 6px;font-size:15px;color:#333;">关注我，看真实的人怎么用技术搞钱。</p>
+
+  <section style="margin:16px 0;padding:18px;background:#0a0a0a;border-radius:10px;text-align:center;">
+    <p style="margin:0 0 8px;font-size:17px;font-weight:800;color:#FF7D29;">📩 加我微信，发你《经验资产清单》</p>
+    <p style="margin:0 0 6px;font-size:14px;color:#A0A0A0;">用三个问题，帮你盘一盘自己这些年到底攒下了什么值钱的东西</p>
+    <p style="margin:0;font-size:14px;color:#ffffff;">加微信备注「经验」，我发你</p>
+  </section>
+
+  <p style="margin:16px 0 0;font-size:13px;color:#999999;text-align:center;">觉得有用点个赞 · 怕漏的赏个星标，下次不迷路</p>
+</section>
+
+</section>
+`;
+
+document.getElementById('articleContent').innerHTML = BODY_HTML;
+
+async function copyContent() {
+  const btn = document.getElementById('copyBtn');
+  try {
+    const blob = new Blob([BODY_HTML], { type: 'text/html' });
+    const data = [new ClipboardItem({ 'text/html': blob })];
+    await navigator.clipboard.write(data);
+    btn.textContent = '✅ 已复制，去公众号粘贴！';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 复制到公众号'; btn.classList.remove('copied'); }, 3000);
+  } catch (err) {
+    const div = document.createElement('div');
+    div.innerHTML = BODY_HTML;
+    div.style.cssText = 'position:fixed;left:-9999px;top:0;';
+    document.body.appendChild(div);
+    const range = document.createRange();
+    range.selectNodeContents(div);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.execCommand('copy');
+    document.body.removeChild(div);
+    btn.textContent = '✅ 已复制（降级模式）';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 复制到公众号'; btn.classList.remove('copied'); }, 3000);
+  }
+}
+</script>
+
+</body>
+</html>
