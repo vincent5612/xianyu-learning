@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第049篇 · 我给自己招了6个AI员工（一人公司实验）</title>
+<style>
+  body { margin:0; background:#1a1a1a; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif; }
+  .phone { max-width:414px; margin:24px auto; background:#fff; box-shadow:0 4px 30px rgba(0,0,0,.4); }
+  .toolbar { position:fixed; top:0; left:0; right:0; z-index:999; background:#0a0a0a; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 10px rgba(0,0,0,.4); }
+  .toolbar .title { color:#FF7D29; font-size:14px; font-weight:600; }
+  .toolbar .btn { background:#FF7D29; color:#0a0a0a; border:none; border-radius:8px; padding:10px 20px; font-size:14px; font-weight:700; cursor:pointer; }
+  .toolbar .btn:hover { background:#ff9347; }
+  .toolbar .btn.copied { background:#5a8f5f; color:#fff; }
+  .tip { position:fixed; bottom:0; left:0; right:0; z-index:998; background:#0a0a0a; color:#A0A0A0; font-size:13px; padding:8px 20px; text-align:center; }
+  .preview-wrap { max-width:414px; margin:64px auto 44px; background:#fff; }
+  .inner { padding:0; }
+  .shell-tag { background:#f2f2f2; color:#888; font-size:12px; text-align:center; padding:8px; }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="title">🔶 第049篇 · AI员工组织（一人公司实验）</span>
+  <button class="btn" id="copyBtn" onclick="copyContent()">📋 复制到公众号</button>
+</div>
+
+<div class="preview-wrap">
+  <div class="inner" id="articleContent"></div>
+  <div class="shell-tag">▲ 以上为公众号文章内容预览（手机宽度）</div>
+</div>
+
+<div class="tip">💡 点「复制到公众号」→ 打开公众号编辑器 → Ctrl/Cmd+V 粘贴（样式保留）</div>
+
+<script>
+const BODY_HTML = `
+<section style="max-width:677px;margin:0 auto;padding:28px 20px;background:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;line-height:2;color:#333333;font-size:16px;">
+
+<!-- ===== 顶部系列标签 ===== -->
+<section style="text-align:center;margin-bottom:20px;">
+  <p style="margin:0;font-size:13px;color:#999999;letter-spacing:3px;">安叔的副业实验室 · 一人公司实验</p>
+</section>
+
+<!-- ===== 标题区 ===== -->
+<section style="padding:10px 4px 14px;text-align:center;">
+  <p style="margin:0 0 10px;font-size:23px;font-weight:800;line-height:1.5;color:#0a0a0a;">我给自己招了6个AI员工<br><span style="color:#FF7D29;">现在每天只干一件事</span></p>
+  <p style="margin:0;font-size:14px;color:#888888;">AI / 副业 / 一人公司 / 效率</p>
+  <p style="margin:8px 0 0;font-size:14px;color:#FF7D29;font-weight:700;">—— 安叔</p>
+</section>
+
+<!-- ===== 开头引入 ===== -->
+<section style="margin:14px 0 22px;padding:16px 18px;background:#f7f7f7;border-radius:8px;border-left:4px solid #FF7D29;">
+  <p style="margin:0 0 10px;font-size:15px;color:#444;">上周，我把公司拆给了<span style="color:#FF7D29;font-weight:700;">6个AI员工</span>。</p>
+  <p style="margin:0 0 10px;font-size:15px;color:#444;">一周过去，我每天只干一件事：<span style="font-weight:700;color:#0a0a0a;">定方向</span>。剩下的，都是它们干的。</p>
+  <p style="margin:0;font-size:15px;color:#444;">有人问：你就不怕它们干砸了？<span style="font-weight:700;color:#0a0a0a;">怕。但比干砸更可怕的是——过去所有事都我自己扛。</span></p>
+</section>
+
+<!-- ===== 第一章 ===== -->
+<section style="margin:30px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#FF7D29;background:rgba(255,125,41,0.12);padding:4px 10px;border-radius:6px;">01</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">我数了数，正好6个AI员工</p>
+  </section>
+
+  <p style="margin:0 0 14px;">先给你看看我手头的AI员工名单：</p>
+  <section style="margin:0 0 12px;padding:14px 16px;background:#f7f7f7;border-radius:8px;border-left:3px solid #61AFEF;">
+    <p style="margin:0 0 6px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">1 小盈</span>——管招商线索</p>
+    <p style="margin:0 0 6px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">2 R聘</span>——管招聘前端</p>
+    <p style="margin:0 0 6px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">3 内勤</span>——管杂事和提醒</p>
+    <p style="margin:0 0 6px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">4 内容线</span>——管公众号，就是正在写这篇文章的这位</p>
+    <p style="margin:0 0 6px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">5 商机洞察</span>——管行业情报</p>
+    <p style="margin:0;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">6 成长教练</span>——管新人带教</p>
+  </section>
+  <p style="margin:0 0 6px;">每个AI有自己的岗位、自己的职责，每天还得交工作日志。<span style="font-weight:700;color:#0a0a0a;">它们不是我的工具，是我团队的成员。</span></p>
+</section>
+
+<!-- ===== 第二章 ===== -->
+<section style="margin:30px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#FF7D29;background:rgba(255,125,41,0.12);padding:4px 10px;border-radius:6px;">02</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">差别不在AI，在我怎么派活</p>
+  </section>
+
+  <p style="margin:0 0 14px;">以前我给AI派活，是"帮我写个方案""帮我查个资料"，一堆零散指令，像在指挥临时工。现在我只把目标说清楚，剩下交给它们。</p>
+  <p style="margin:0 0 14px;">拿内容线举个例子。一周七天，它的节奏是死的：周日弹药入库，周一公众号，周二口播，周三小红书，周五客户跟进。不是我每天现想今天写什么，<b>是流程早就定好了，它照着跑，我只在关键节点点头。</b></p>
+  <p style="margin:0 0 14px;">AI写出来的东西，判断还是我做。它负责快，我负责对不对。稿子出来，我扫一眼，不对的地方打回去重写，对了就发。一来一回，比我自己从零写快三倍不止。</p>
+  <p style="margin:0 0 6px;">敢把活交出去，靠三样东西兜底：<span style="font-weight:700;color:#0a0a0a;">岗位职责说明书、工作日志、每晚汇报。</span>出了问题，翻日志就知道是哪一步错的，不用猜。管AI和管人，底层是同一件事：<span style="font-weight:700;color:#0a0a0a;">职责清楚、过程留痕、结果汇报。</span></p>
+</section>
+
+<!-- ===== 金句 ===== -->
+<section style="margin:26px 0;padding:22px 20px;background:#0a0a0a;border-radius:10px;text-align:center;">
+  <p style="margin:0;font-size:18px;font-weight:800;color:#FF7D29;">差别不在AI，在我怎么派活。</p>
+</section>
+
+<!-- ===== 第三章 ===== -->
+<section style="margin:30px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#FF7D29;background:rgba(255,125,41,0.12);padding:4px 10px;border-radius:6px;">03</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">从执行者到分配者，就四步</p>
+  </section>
+
+  <section style="margin:0 0 12px;padding:14px 16px;background:#f7f7f7;border-radius:8px;border-left:3px solid #FF7D29;">
+    <p style="margin:0 0 8px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">① 定目标。</span>说清楚这周要什么，不用管怎么做。目标越具体，AI拆得越准。"涨粉"不算目标，"本周发两篇公众号、一篇小红书"才算。</p>
+    <p style="margin:0 0 8px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">② 拆解。</span>把目标拆成能分给不同AI的活。</p>
+    <p style="margin:0 0 8px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">③ 分派。</span>每个AI领自己的岗位职责。</p>
+    <p style="margin:0;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">④ 汇报。</span>每晚一份简报，你只处理例外。汇报里没有异常，你就当没看见；有异常，才是你出手的时候。</p>
+  </section>
+
+  <p style="margin:0 0 14px;">听起来简单，做起来有个坎：<b>你得先知道每个环节怎么干，才拆得动。</b>我前面几年每个流程都自己跑过，知道哪个环节重复、哪个环节能自动化，才敢拆给AI。没跑过的人，拆出来的全是空架子。</p>
+  <p style="margin:0 0 6px;">所以别急着买一堆AI工具。<span style="font-weight:700;color:#0a0a0a;">先挑一件你最烦的重复活，把它交给一个AI，跑顺了，再添下一个。</span></p>
+</section>
+
+<!-- ===== 第四章 ===== -->
+<section style="margin:30px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#FF7D29;background:rgba(255,125,41,0.12);padding:4px 10px;border-radius:6px;">04</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">还有一件事你得提前知道</p>
+  </section>
+
+  <p style="margin:0 0 14px;">AI也会一本正经地胡说八道。它写出来的东西，逻辑通顺，数据可能是编的。所以我的原则是：<span style="font-weight:700;color:#0a0a0a;">它能干的，全给它；它说了算的，一样都不给。</span>方向、判断、拍板，永远自己来。</p>
+  <p style="margin:0 0 6px;">有人问我，是不是要把所有事都交给AI。我说不是。越是核心的判断，越要自己来。<span style="font-weight:700;color:#0a0a0a;">AI是我的手和脚，不是我的脑子。</span></p>
+</section>
+
+<!-- ===== 金句 ===== -->
+<section style="margin:30px 0;padding:22px 20px;background:#0a0a0a;border-radius:10px;text-align:center;">
+  <p style="margin:0;font-size:18px;font-weight:800;color:#FF7D29;">一个人也能当老板。<br>前提是：你把干活的事交给AI，把判断的事留给自己。</p>
+</section>
+
+<!-- ===== CTA ===== -->
+<section style="margin:24px 0 0;padding:24px 20px;background:#0a0a0a;border-radius:12px;text-align:center;">
+  <p style="margin:0 0 10px;font-size:19px;font-weight:800;color:#FF7D29;">关注「安叔的副业实验室」</p>
+  <p style="margin:0 0 16px;font-size:15px;color:#cccccc;">后台回复「AI员工」<br>领《分配活的方法清单》</p>
+  <p style="margin:0;font-size:14px;color:#A0A0A0;">从执行者到分配者，你也可以。</p>
+</section>
+
+<!-- ===== 来源标注 ===== -->
+<section style="margin:22px 0 0;padding-top:14px;border-top:1px solid #eeeeee;">
+  <p style="margin:0;font-size:12px;color:#999999;">本文为个人实操复盘，AI使用效果因人而异，请理性评估。</p>
+</section>
+
+</section>
+`;
+
+document.getElementById('articleContent').innerHTML = BODY_HTML;
+
+function copyContent() {
+  const blob = new Blob([BODY_HTML], {type:'text/html'});
+  navigator.clipboard.write([new ClipboardItem({'text/html': blob})]).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ 已复制';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 复制到公众号'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>
