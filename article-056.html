@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第056篇 · AI工具不值钱，会用的人值钱</title>
+<style>
+  body { margin:0; background:#1a1a1a; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif; }
+  .toolbar { position:fixed; top:0; left:0; right:0; z-index:999; background:#0a0a0a; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 10px rgba(0,0,0,.4); }
+  .toolbar .title { color:#FF7D29; font-size:14px; font-weight:600; }
+  .toolbar .btn { background:#FF7D29; color:#0a0a0a; border:none; border-radius:8px; padding:10px 20px; font-size:14px; font-weight:700; cursor:pointer; }
+  .toolbar .btn:hover { background:#ff9347; }
+  .toolbar .btn.copied { background:#5a8f5f; color:#fff; }
+  .tip { position:fixed; bottom:0; left:0; right:0; z-index:998; background:#0a0a0a; color:#A0A0A0; font-size:13px; padding:8px 20px; text-align:center; }
+  .preview-wrap { max-width:414px; margin:64px auto 44px; background:#fff; }
+  .inner { padding:0; }
+  .shell-tag { background:#f2f2f2; color:#888; font-size:12px; text-align:center; padding:8px; }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="title">🔶 第056篇 · AI工具不值钱，会用的人值钱</span>
+  <button class="btn" id="copyBtn" onclick="copyContent()">📋 复制到公众号</button>
+</div>
+
+<div class="preview-wrap">
+  <div class="inner" id="articleContent"></div>
+  <div class="shell-tag">▲ 以上为公众号文章内容预览（手机宽度）</div>
+</div>
+
+<div class="tip">💡 点「复制到公众号」→ 打开公众号编辑器 → Ctrl/Cmd+V 粘贴（样式保留）</div>
+
+<script>
+const BODY_HTML = `
+<section style="max-width:677px;margin:0 auto;padding:28px 20px;background:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;line-height:2;color:#333333;font-size:16px;">
+
+<!-- ===== 顶部系列标签 ===== -->
+<section style="text-align:center;margin-bottom:20px;">
+  <p style="margin:0;font-size:13px;color:#999999;letter-spacing:3px;">安叔的副业实验室 · 第 056 篇</p>
+</section>
+
+<!-- ===== 标题区 ===== -->
+<section style="padding:10px 4px 14px;text-align:center;">
+  <p style="margin:0 0 10px;font-size:23px;font-weight:800;line-height:1.5;color:#0a0a0a;">AI工具不值钱<br><span style="color:#FF7D29;">会用的人值钱</span></p>
+  <p style="margin:0;font-size:14px;color:#888888;">AI / 副业 / 工具 / 变现</p>
+  <p style="margin:8px 0 0;font-size:14px;color:#FF7D29;font-weight:700;">—— 安叔</p>
+</section>
+
+<!-- ===== 开头引入 ===== -->
+<section style="margin:14px 0 22px;padding:16px 18px;background:#f7f7f7;border-radius:8px;border-left:4px solid #FF7D29;">
+  <p style="margin:0 0 10px;font-size:15px;color:#444;">上周刷到一个视频，讲义乌一个实体店老板。</p>
+  <p style="margin:0 0 10px;font-size:15px;color:#444;">他做网店，但店铺商品半年没更新，主图还是几年前的，流量一天比一天差。不是不想改，是缺人手、缺精力。</p>
+  <p style="margin:0;font-size:15px;color:#444;">博主用AI直连淘宝、1688，抓热销品素材，重新生成主图和文案——<span style="font-weight:700;color:#0a0a0a;">销量和核心指数都翻倍了</span>。</p>
+</section>
+
+<!-- ===== 第一章 ===== -->
+<section style="margin:30px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#FF7D29;background:rgba(255,125,41,0.12);padding:4px 10px;border-radius:6px;">01</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">AI工具，现在真的不值钱</p>
+  </section>
+
+  <p style="margin:0 0 14px;">视频评论区一堆人喊：AI真牛，我也要买这个工具！</p>
+  <p style="margin:0 0 14px;">我看完只想说一句：<span style="font-weight:700;color:#0a0a0a;">翻倍的不是AI，是那个知道"网店该怎么做"的人。</span></p>
+  <p style="margin:0 0 14px;">我说句得罪人的话：2026年，AI工具已经泛滥到不稀缺了。免费的AI一大堆，付费的也不贵。想用AI写文案、做图、做视频，网上教程一大把，工具层面几乎没有门槛。</p>
+  <p style="margin:0 0 6px;">如果工具就是答案，那人人装个AI都该发财了。事实呢？大部分人装完用两次，吃灰。<span style="font-weight:700;color:#0a0a0a;">工具人人都有，赚钱的永远是少数。说明值钱的根本不是工具。</span></p>
+</section>
+
+<!-- ===== 金句 ===== -->
+<section style="margin:26px 0;padding:22px 20px;background:#0a0a0a;border-radius:10px;text-align:center;">
+  <p style="margin:0;font-size:18px;font-weight:800;color:#FF7D29;">懂业务的人用AI，叫杠杆；<br>不懂业务的人用AI，叫玩具。</p>
+</section>
+
+<!-- ===== 第二章 ===== -->
+<section style="margin:30px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#FF7D29;background:rgba(255,125,41,0.12);padding:4px 10px;border-radius:6px;">02</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">那值钱的是什么？三样东西</p>
+  </section>
+
+  <p style="margin:0 0 14px;">我在义乌这个案例里看到的，是这三样：</p>
+  <section style="margin:0 0 12px;padding:14px 16px;background:#f7f7f7;border-radius:8px;border-left:3px solid #61AFEF;">
+    <p style="margin:0 0 8px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">第一，懂业务逻辑。</span>博主知道网店为什么没流量——主图不行、商品没更新、没有视觉吸引力。他先诊断出问题，才想到用AI解决。不懂电商的人，看半天也只会说"这店挺冷清"。</p>
+    <p style="margin:0 0 8px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">第二，会落地。</span>不是AI自己会去抓素材、做图，是有人告诉它"抓什么、怎么拆、生成什么样的"。AI是执行，人是设计。设计错了，AI跑得越快错得越远。</p>
+    <p style="margin:0;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">第三，会判断。</span>AI生成的主图，哪张能用、哪个方向对，最终还得人拍板。AI给你十个方案，选哪个、改哪里，这就是判断力，工具给不了。</p>
+  </section>
+</section>
+
+<!-- ===== 第三章 ===== -->
+<section style="margin:30px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#FF7D29;background:rgba(255,125,41,0.12);padding:4px 10px;border-radius:6px;">03</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">为什么你买了那么多课，还是没赚到钱</p>
+  </section>
+
+  <p style="margin:0 0 14px;">不是课骗你，是你把顺序搞反了。</p>
+  <p style="margin:0 0 14px;">大部分人想的是：先学会AI工具 → 再用它赚钱。但真正赚钱的人路径是反的：<span style="font-weight:700;color:#0a0a0a;">先有一个具体的生意问题 → 再找AI解决它。</span></p>
+  <p style="margin:0 0 14px;">义乌那个老板，问题清清楚楚——店铺没流量。AI只是拿来解决这个问题的工具。你不是先有"赚钱需求"，而是先有"业务问题"。</p>
+  <p style="margin:0 0 6px;">我做了14年招聘，见过太多人：工具囤了一堆，课买了几千块，问他"你想用它解决什么问题"，答不上来。<span style="font-weight:700;color:#0a0a0a;">没有真问题，工具就是摆设。</span></p>
+</section>
+
+<!-- ===== 第四章 ===== -->
+<section style="margin:30px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#FF7D29;background:rgba(255,125,41,0.12);padding:4px 10px;border-radius:6px;">04</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">普通人怎么练"会用AI"</p>
+  </section>
+
+  <section style="margin:0 0 12px;padding:14px 16px;background:#f7f7f7;border-radius:8px;border-left:3px solid #FF7D29;">
+    <p style="margin:0 0 8px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">① 挑一件你手上最烦的重复活</span>（写文案、做图、回消息都行）。</p>
+    <p style="margin:0 0 8px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">② 想清楚这件事的标准是什么</span>——好的长什么样。</p>
+    <p style="margin:0 0 8px;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">③ 用AI做第一版</span>，你改到能用。</p>
+    <p style="margin:0;font-size:15px;color:#444;"><span style="font-weight:700;color:#0a0a0a;">④ 跑通一个，再复制到下一个。</span></p>
+  </section>
+
+  <p style="margin:0 0 6px;">我学员里做得快的，都是这么干的：先挑一件真活，用AI跑通，再谈放大。<span style="font-weight:700;color:#0a0a0a;">先有活，才有AI的事。</span></p>
+</section>
+
+<!-- ===== 第五章（招商核心） ===== -->
+<section style="margin:30px 0 0;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <p style="margin:0 10px 0 0;font-size:14px;font-weight:800;color:#FF7D29;background:rgba(255,125,41,0.12);padding:4px 10px;border-radius:6px;">05</p>
+    <p style="margin:0;font-size:20px;font-weight:800;color:#0a0a0a;">我们能帮你什么</p>
+  </section>
+
+  <section style="margin:0 0 12px;padding:16px 18px;background:#f7f7f7;border-radius:8px;border-left:3px solid #FF7D29;">
+    <p style="margin:0 0 8px;font-size:15px;color:#444;">一句话说清楚我们的立场：<span style="font-weight:700;color:#0a0a0a;">我们不卖AI工具，我们带你把AI用在真生意上。</span></p>
+    <p style="margin:0;font-size:15px;color:#444;">京东店群、闲鱼电商、公众号运营——每条线都不是"给你个工具"，是教你懂这门生意的逻辑，再用AI把重复的活自动化。你赚到钱，我们才分钱。0学费，跑通了再谈。</p>
+  </section>
+</section>
+
+<!-- ===== 金句 ===== -->
+<section style="margin:30px 0;padding:22px 20px;background:#0a0a0a;border-radius:10px;text-align:center;">
+  <p style="margin:0;font-size:18px;font-weight:800;color:#FF7D29;">工具谁都有，<br>会用它的人，才是那个值钱的。</p>
+</section>
+
+<!-- ===== CTA ===== -->
+<section style="margin:24px 0 0;padding:24px 20px;background:#0a0a0a;border-radius:12px;text-align:center;">
+  <p style="margin:0 0 10px;font-size:19px;font-weight:800;color:#FF7D29;">关注「安叔的副业实验室」</p>
+  <p style="margin:0 0 16px;font-size:15px;color:#cccccc;">后台回复「AI」<br>领《AI落地自查清单》</p>
+  <p style="margin:0;font-size:14px;color:#A0A0A0;">你手上的活，哪件最该交给AI？</p>
+</section>
+
+<!-- ===== 来源标注 ===== -->
+<section style="margin:22px 0 0;padding-top:14px;border-top:1px solid #eeeeee;">
+  <p style="margin:0;font-size:12px;color:#999999;">本文为个人实操复盘，AI使用效果因人而异，请理性评估。</p>
+</section>
+
+</section>
+`;
+
+document.getElementById('articleContent').innerHTML = BODY_HTML;
+
+function copyContent() {
+  const blob = new Blob([BODY_HTML], {type:'text/html'});
+  navigator.clipboard.write([new ClipboardItem({'text/html': blob})]).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ 已复制';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 复制到公众号'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>
