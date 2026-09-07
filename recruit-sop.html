@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>招聘部门标准化SOP · 荣盈互动</title>
+<style>
+  :root {
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --primary: #1e6fff;
+    --primary-light: #e8f0ff;
+    --green: #10b981;
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --purple: #7c3aed;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--text);
+    line-height: 1.7;
+    padding: 32px 16px;
+  }
+  .container { max-width: 860px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #1e6fff 0%, #2563eb 100%);
+    border-radius: 16px;
+    padding: 32px;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+  .header h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .header .sub { opacity: 0.9; font-size: 14px; }
+  .header .badges { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .header .badge {
+    background: rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .card h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h2 .icon { font-size: 20px; }
+  .card h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 8px 0;
+  }
+  th {
+    background: linear-gradient(180deg, #f1f5f9, #e2e8f0);
+    color: #334155;
+    font-weight: 700;
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 2px solid #cbd5e1;
+    font-size: 12px;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: top;
+  }
+  tr:hover td { background: #f8fafc; }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .tag-red { background: #fee2e2; color: #dc2626; }
+  .tag-yellow { background: #fef3c7; color: #d97706; }
+  .tag-green { background: #d1fae5; color: #059669; }
+  .tag-blue { background: #dbeafe; color: #2563eb; }
+  .tag-purple { background: #ede9fe; color: #7c3aed; }
+  .tag-gray { background: #f1f5f9; color: #64748b; }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 12px 0;
+  }
+  .kpi-item {
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .kpi-item .num { font-size: 24px; font-weight: 800; }
+  .kpi-item .label { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+  .kpi-red { background: #fef2f2; border: 1px solid #fecaca; }
+  .kpi-red .num { color: #dc2626; }
+  .kpi-yellow { background: #fffbeb; border: 1px solid #fde68a; }
+  .kpi-yellow .num { color: #d97706; }
+  .kpi-green { background: #ecfdf5; border: 1px solid #a7f3d0; }
+  .kpi-green .num { color: #059669; }
+  .callout {
+    border-left: 4px solid var(--primary);
+    background: var(--primary-light);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    margin: 12px 0;
+  }
+  .callout.warn { border-left-color: var(--orange); background: #fffbeb; }
+  .callout.danger { border-left-color: var(--red); background: #fef2f2; }
+  .quote {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #334155;
+    margin: 8px 0;
+  }
+  .quote .q-label { font-weight: 700; color: var(--primary); font-size: 12px; display: block; margin-bottom: 4px; }
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item { position: relative; margin-bottom: 14px; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+  .timeline-item .t-time { font-weight: 700; font-size: 13px; color: var(--primary); }
+  .timeline-item .t-action { font-weight: 600; font-size: 14px; }
+  .timeline-item .t-detail { font-size: 13px; color: var(--muted); }
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin: 12px 0;
+  }
+  .flow-step {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .flow-arrow { color: var(--muted); font-size: 14px; }
+  .cheat {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 12px;
+    padding: 24px;
+    color: #e2e8f0;
+  }
+  .cheat h3 { color: #fff; font-size: 16px; margin-bottom: 12px; }
+  .cheat .cheat-row { display: flex; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+  .cheat .cheat-time { color: #38bdf8; font-weight: 700; min-width: 90px; }
+  .cheat .cheat-text { color: #cbd5e1; }
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    padding: 16px;
+  }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .header h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 头部 -->
+  <div class="header">
+    <h1>招聘部门标准化SOP</h1>
+    <div class="sub">荣盈互动 · V1.0（2026-08-22）· 试运行一周后按数据迭代V1.1</div>
+    <div class="badges">
+      <span class="badge">🎯 目标：到面20人/天</span>
+      <span class="badge">👥 团队：2全职+2兼职+新增5名</span>
+      <span class="badge">📱 换人不换号</span>
+      <span class="badge">📊 每日三报</span>
+    </div>
+  </div>
+
+  <!-- 一、每日KPI -->
+  <div class="card">
+    <h2><span class="icon">🎯</span> 一、每日KPI（三层次）</h2>
+    <div class="kpi-grid">
+      <div class="kpi-item kpi-red">
+        <div class="num">10人</div>
+        <div class="label">🔴 打底 · 不达标复盘</div>
+      </div>
+      <div class="kpi-item kpi-yellow">
+        <div class="num">15人</div>
+        <div class="label">🟡 基础 · 正常水平</div>
+      </div>
+      <div class="kpi-item kpi-green">
+        <div class="num">20人</div>
+        <div class="label">🟢 达标 · 当日目标</div>
+      </div>
+    </div>
+    <div class="callout">
+      <b>漏斗参考（RPO标准）：</b>招呼100 → 回复30-40 → 邀约15-25 → 到面10-20<br>
+      <b>盯3个转化率：</b>招呼回复率 ≥35% · 邀约到面率 ≥60% · 到面入职率 ≥30%
+    </div>
+  </div>
+
+  <!-- 二、时间轴 -->
+  <div class="card">
+    <h2><span class="icon">⏰</span> 二、每日时间轴</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="t-time">09:00</div>
+        <div class="t-action">发后台数据截图 + 同步BOSS工作动态</div>
+        <div class="t-detail">前日数据+当日目标发群内 · BOSS动态每天至少1条（账号活跃度）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">09:00-11:00</div>
+        <div class="t-action">第一轮招呼（100个，11点前完成≥60%）</div>
+        <div class="t-detail">黄金时段，批量打招呼，10-15分钟完成</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">11:00</div>
+        <div class="t-action">第一轮复打招呼</div>
+        <div class="t-detail">对未回复候选人复打</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">14:00-16:00</div>
+        <div class="t-action">第二轮循环招呼 + 复打</div>
+        <div class="t-detail">新一批候选人 + 邀约确认次日到面名单</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">16:00</div>
+        <div class="t-action">批量面试（汤总负责转化）</div>
+        <div class="t-detail">基础岗位凑够人数统一面试，固定时段集中转化</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">18:00后</div>
+        <div class="t-action">第三轮循环/复打（可选）</div>
+        <div class="t-detail">晚高峰上班族活跃期</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">下班前</div>
+        <div class="t-action">数据复盘</div>
+        <div class="t-detail">招呼/回复/邀约/到面四段数据 + 群内日报</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三、招呼SOP -->
+  <div class="card">
+    <h2><span class="icon">👋</span> 三、招呼SOP（核心动作）</h2>
+    <h3 style="font-size:14px; margin-bottom:8px;">招呼节奏：一天2-3次循环 + 3次复打</h3>
+    <table>
+      <tr><th>轮次</th><th>时间</th><th>动作</th><th>耗时</th></tr>
+      <tr><td>第1轮</td><td>上午</td><td>批量招呼100个</td><td>10-15分钟</td></tr>
+      <tr><td>第2轮</td><td>下午</td><td>新一批招呼</td><td>10-15分钟</td></tr>
+      <tr><td>第3轮</td><td>晚上</td><td>补充招呼</td><td>10-15分钟</td></tr>
+      <tr><td>复打1-3</td><td>上午/下午/晚上</td><td>未回复候选人复打</td><td>快</td></tr>
+    </table>
+    <div class="callout">打法：<b>批量招呼 → 快速筛选 → 重点跟进</b>，不在一对一沟通上耗时间。</div>
+
+    <h3 style="font-size:14px; margin:16px 0 8px;">打招呼标准话术（3版）</h3>
+    <div class="quote"><span class="q-label">📌 通用版</span>你好，我们是XX公司，招XX岗位（地推/运营），薪资XX起+福利，工作地址在XX，方便了解一下吗？</div>
+    <div class="quote"><span class="q-label">💰 薪资吸引版</span>你好，XX岗位按单提成，结算快，可提前支取工资，可周结，时间灵活，考虑吗？</div>
+    <div class="quote"><span class="q-label">🎁 提成吸引版</span>你好，我们在招XX，按单提成，多劳多得，结算快，有兴趣聊一下？</div>
+    <div class="callout">原则：<b>简单直接，突出薪资+福利，有兴趣直接邀约，不废话。</b></div>
+
+    <h3 style="font-size:14px; margin:16px 0 8px;">后台沟通原则</h3>
+    <table>
+      <tr><th>原则</th><th>说明</th></tr>
+      <tr><td>引导为主</td><td>后台重点在于引导，不过多沟通</td></tr>
+      <tr><td>确认3件事</td><td>①地址是否接受 ②岗位是否了解 ③薪资是否满意</td></tr>
+      <tr><td>有兴趣→直接邀约</td><td>不绕弯子，约时间面试</td></tr>
+      <tr><td>没兴趣→不纠缠</td><td>标记跳过，节约时间</td></tr>
+      <tr><td>批量到量→批量面试</td><td>基础岗位凑够人数统一面试</td></tr>
+    </table>
+  </div>
+
+  <!-- 四、邀约面试 -->
+  <div class="card">
+    <h2><span class="icon">📝</span> 四、邀约面试SOP</h2>
+    <h3 style="font-size:14px; margin-bottom:8px;">邀约话术</h3>
+    <div class="quote"><span class="q-label">📅 邀约</span>XX你好，我们这边岗位还在招，方便的话明天上午/下午来面试？<br>地址：XX（发定位）时间：XX<br>记得直接带身份证+简历（我们这有打印，不用自己准备）</div>
+
+    <h3 style="font-size:14px; margin:16px 0 8px;">面试流程（标准化）</h3>
+    <div class="flow">
+      <span class="flow-step">候选人到公司</span><span class="flow-arrow">→</span>
+      <span class="flow-step">登记+引导（人资）</span><span class="flow-arrow">→</span>
+      <span class="flow-step">批量面试（汤总·转化）</span><span class="flow-arrow">→</span>
+      <span class="flow-step">当天反馈结果</span><span class="flow-arrow">→</span>
+      <span class="flow-step">入职办理（人资）</span>
+    </div>
+    <table>
+      <tr><th>环节</th><th>负责人</th><th>说明</th></tr>
+      <tr><td>候选人到公司</td><td>人资</td><td>登记+引导</td></tr>
+      <tr><td>批量面试</td><td><span class="tag tag-blue">汤总</span></td><td><b>地推运营团队批量面试及转化</b></td></tr>
+      <tr><td>结果反馈</td><td>汤总→人资</td><td>当天反馈录用结果</td></tr>
+      <tr><td>入职办理</td><td>人资</td><td>入职手续+账号分配</td></tr>
+    </table>
+    <div class="callout">
+      <b>RPO细节：</b>提醒候选人直接带简历（避免自行打印填写浪费时间）· 分批到场避免扎堆 · 汤总批量宣讲+现场答疑+当场确认意向
+    </div>
+  </div>
+
+  <!-- 五、数据管理 -->
+  <div class="card">
+    <h2><span class="icon">📊</span> 五、数据管理</h2>
+    <h3 style="font-size:14px; margin-bottom:8px;">每日必报（3处）</h3>
+    <table>
+      <tr><th>输出</th><th>时间</th><th>内容</th></tr>
+      <tr><td>后台数据截图</td><td>09:00</td><td>前日招呼/回复/邀约/到面</td></tr>
+      <tr><td>BOSS工作动态</td><td>09:00</td><td>每天至少1条</td></tr>
+      <tr><td>群内日报</td><td>下班前</td><td>当日四段漏斗数据</td></tr>
+    </table>
+    <h3 style="font-size:14px; margin:16px 0 8px;">周复盘（RPO漏斗视角·找断点）</h3>
+    <div class="flow">
+      <span class="flow-step">招呼总量</span><span class="flow-arrow">→</span>
+      <span class="flow-step">回复率</span><span class="flow-arrow">→</span>
+      <span class="flow-step">邀约数</span><span class="flow-arrow">→</span>
+      <span class="flow-step">到面数</span><span class="flow-arrow">→</span>
+      <span class="flow-step">入职数</span>
+    </div>
+    <table>
+      <tr><th>断点信号</th><th>问题所在</th></tr>
+      <tr><td>招呼多回复少</td><td>话术/岗位吸引力问题</td></tr>
+      <tr><td>回复多邀约少</td><td>跟进不及时/薪资没吸引力</td></tr>
+      <tr><td>邀约多到面少</td><td>地址/时间/候选人筛选问题</td></tr>
+      <tr><td>到面多入职少</td><td>面试环节/薪资确认问题</td></tr>
+    </table>
+  </div>
+
+  <!-- 六、团队配置 -->
+  <div class="card">
+    <h2><span class="icon">👥</span> 六、团队配置与账号管理</h2>
+    <div class="grid-2">
+      <div>
+        <h3 style="font-size:14px; margin-bottom:8px;">人资团队结构（当下重点=招聘）</h3>
+        <table>
+          <tr><th>角色</th><th>人数</th><th>说明</th></tr>
+          <tr><td>全职招聘</td><td>2人</td><td>核心，标准化执行</td></tr>
+          <tr><td>兼职招聘</td><td>2人长期+新增5名</td><td>可按天结算，兼职全职均可</td></tr>
+          <tr><td>电脑</td><td>4台</td><td>公司提供，人岗匹配</td></tr>
+        </table>
+        <div class="callout">公司至少4人在招（2全职+2兼职），长期循环招募，<b>满员进行</b>。</div>
+      </div>
+      <div>
+        <h3 style="font-size:14px; margin-bottom:8px;">账号管理（换人不换号）</h3>
+        <table>
+          <tr><th>规则</th><th>说明</th></tr>
+          <tr><td>公司配合</td><td>增加<b>至少2个内部员工招聘账号</b></td></tr>
+          <tr><td>使用方式</td><td>给循环兼职新人使用</td></tr>
+          <tr><td><span class="tag tag-purple">换人不换号</span></td><td>号固定人轮流，活跃度积累不中断</td></tr>
+          <tr><td>周末</td><td>同样可以兼职</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 七、风险红线 -->
+  <div class="card">
+    <h2><span class="icon">⚠️</span> 七、风险与红线</h2>
+    <table>
+      <tr><th>风险</th><th>对策</th></tr>
+      <tr><td>账号被限流/封禁</td><td>换人不换号；不群发违规词；不在后台发联系方式</td></tr>
+      <tr><td>兼职流动性大</td><td>满员进行，持续招募备胎；按天结算降低门槛</td></tr>
+      <tr><td>到面率低</td><td>复盘漏斗断点；邀约时确认3件事（地址/岗位/薪资）</td></tr>
+      <tr><td>汤总忙不过来</td><td>批量面试固定时段（如每天16:00一场），集中转化</td></tr>
+    </table>
+  </div>
+
+  <!-- 八、速查卡 -->
+  <div class="card" style="padding:0; background:transparent; box-shadow:none;">
+    <div class="cheat">
+      <h3>📋 一页速查卡（贴电脑用）</h3>
+      <div class="cheat-row"><span class="cheat-time">🕘 09:00</span><span class="cheat-text">数据截图 + BOSS动态 + 第一批招呼（60+）</span></div>
+      <div class="cheat-row"><span class="cheat-time">🕚 11:00</span><span class="cheat-text">复打第一轮</span></div>
+      <div class="cheat-row"><span class="cheat-time">🕑 14:00</span><span class="cheat-text">第二批招呼</span></div>
+      <div class="cheat-row"><span class="cheat-time">🕓 16:00</span><span class="cheat-text">复打 + 邀约确认 + 批量面试（汤总）</span></div>
+      <div class="cheat-row"><span class="cheat-time">🕕 18:00</span><span class="cheat-text">第三批招呼 / 复打</span></div>
+      <div class="cheat-row"><span class="cheat-time">📊 目标</span><span class="cheat-text">招呼100 / 邀约20 / 到面10-20</span></div>
+      <div class="cheat-row"><span class="cheat-time">🗣 话术</span><span class="cheat-text">按单提成+结算快+可周结吸引 → 有兴趣直接邀约 → 不废话</span></div>
+      <div class="cheat-row"><span class="cheat-time">👥 团队</span><span class="cheat-text">2全职+2兼职+新增5名循环 · 4台电脑</span></div>
+      <div class="cheat-row"><span class="cheat-time">📱 账号</span><span class="cheat-text">换人不换号 · 至少2个内部号给兼职用</span></div>
+    </div>
+  </div>
+
+  <div class="footer">招聘部门标准化SOP · V1.0 · 荣盈互动 · 试运行一周后按实际数据迭代V1.1</div>
+</div>
+</body>
+</html>
