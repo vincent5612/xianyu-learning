@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>优盾 · 荣盈AI智算钥匙 — 插上U盘，你就多了一支AI团队</title>
+<style>
+:root{
+  --bg:#f8fafc; --panel:#ffffff; --line:#e8ecf1;
+  --t1:#0f172a; --t2:#475569; --t3:#94a3b8;
+  --gold:#d4a574; --gold-d:#b8863b; --amber:#f59e0b;
+  --cyan:#38bdf8; --green:#16a34a;
+  --dark1:#0b1220; --dark2:#1e3a5f;
+  --shadow:0 1px 3px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.06);
+  --shadow-lg:0 12px 40px rgba(15,23,42,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--t1);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+section{padding:76px 0;border-bottom:1px solid var(--line)}
+section.alt{background:#fff}
+.sec-tag{font-size:12px;letter-spacing:3px;color:var(--gold-d);font-weight:700;margin-bottom:10px}
+h2{font-size:32px;font-weight:900;letter-spacing:-.5px;line-height:1.3}
+h2 .hl{color:var(--gold-d)}
+.sec-sub{font-size:16px;color:var(--t2);margin-top:12px;max-width:760px}
+@media(max-width:640px){h2{font-size:24px}section{padding:52px 0}}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)}
+.nav-in{max-width:1100px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:20px}
+.brand{font-size:16px;font-weight:900;letter-spacing:-.3px;white-space:nowrap}
+.brand span{color:var(--gold-d)}
+.nav-links{display:flex;gap:22px;margin-left:auto;flex-wrap:wrap}
+.nav-links a{font-size:13px;color:var(--t2);text-decoration:none;font-weight:500}
+.nav-links a:hover{color:var(--gold-d)}
+@media(max-width:820px){.nav-links{display:none}}
+
+/* HERO */
+.hero{background:linear-gradient(160deg,var(--dark1) 0%,#132033 45%,var(--dark2) 100%);
+  color:#fff;padding:96px 0 84px;position:relative;overflow:hidden;border-bottom:none}
+.hero .glow1{position:absolute;top:-180px;right:-140px;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.16),transparent 68%)}
+.hero .glow2{position:absolute;bottom:-160px;left:-120px;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,165,116,.14),transparent 68%)}
+.hero .grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:56px 56px}
+.hero .wrap{position:relative;z-index:2}
+.hero-badge{display:inline-block;font-size:12px;letter-spacing:2.5px;color:var(--gold);
+  border:1px solid rgba(212,165,116,.35);padding:6px 16px;border-radius:20px;font-weight:600}
+.hero h1{font-size:52px;font-weight:900;line-height:1.18;letter-spacing:-1px;margin:22px 0 0}
+.hero h1 .hl{color:var(--gold)}
+.hero .lead{font-size:18px;color:rgba(255,255,255,.62);margin-top:18px;max-width:660px}
+.hero .kicker{font-size:14px;color:rgba(255,255,255,.42);margin-top:14px}
+.hero-pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
+.pill{font-size:13px;padding:9px 16px;border-radius:10px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.85);font-weight:500}
+.pill b{color:var(--gold);font-weight:700}
+@media(max-width:640px){.hero h1{font-size:32px}.hero{padding:62px 0 56px}.hero .lead{font-size:15px}}
+
+/* 一句话讲明白 */
+.plain{background:linear-gradient(135deg,#fffaf2,#fff);border:1px solid #f0e4d2;border-radius:18px;
+  padding:34px 32px;box-shadow:var(--shadow)}
+.plain .big{font-size:24px;font-weight:800;line-height:1.6}
+.plain .big em{font-style:normal;color:var(--gold-d);border-bottom:3px solid rgba(212,165,116,.35)}
+.plain .note{font-size:15px;color:var(--t2);margin-top:16px}
+@media(max-width:640px){.plain{padding:24px 20px}.plain .big{font-size:19px}}
+
+/* 三个不用 */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+.three .item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 20px;box-shadow:var(--shadow)}
+.three .ico{font-size:26px}
+.three .t{font-size:16px;font-weight:800;margin-top:8px}
+.three .d{font-size:14px;color:var(--t2);margin-top:6px}
+@media(max-width:760px){.three{grid-template-columns:1fr}}
+
+/* 三层 */
+.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
+.layer{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;box-shadow:var(--shadow);position:relative}
+.layer .num{position:absolute;top:-14px;left:24px;width:30px;height:30px;border-radius:9px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-d));color:#fff;font-size:14px;font-weight:800;
+  display:flex;align-items:center;justify-content:center}
+.layer .ico{font-size:28px;margin-top:6px}
+.layer .t{font-size:18px;font-weight:800;margin-top:10px}
+.layer .d{font-size:14px;color:var(--t2);margin-top:8px}
+@media(max-width:820px){.layers{grid-template-columns:1fr}}
+
+/* 四个概念 */
+.concepts{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
+.concept{background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px 26px;box-shadow:var(--shadow)}
+.concept .head{display:flex;align-items:center;gap:12px}
+.concept .ci{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.concept .ct{font-size:19px;font-weight:900}
+.concept .cq{font-size:12px;color:var(--t3);margin-top:2px}
+.concept .why{font-size:14px;color:var(--t2);margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)}
+.concept .why b{color:var(--t1)}
+.concept ul{list-style:none;margin-top:14px}
+.concept li{font-size:14px;color:var(--t2);padding-left:20px;position:relative;margin-bottom:8px}
+.concept li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.c-brain .ci{background:#eef2ff}
+.c-clone .ci{background:#ecfeff}
+.c-safe .ci{background:#f0fdf4}
+.c-mem .ci{background:#fff7ed}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:14px;font-size:13px}
+.vs div{padding:9px 12px;border-bottom:1px solid var(--line)}
+.vs .h{background:#f8fafc;font-weight:700;font-size:12px;color:var(--t2)}
+.vs .a{color:var(--t3)}
+.vs .b{color:var(--t1);font-weight:600;background:#fffdf8}
+@media(max-width:820px){.concepts{grid-template-columns:1fr}}
+
+/* 功能 */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
+.feat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px 22px;box-shadow:var(--shadow);transition:.2s}
+.feat:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.feat .ico{font-size:24px}
+.feat .t{font-size:16px;font-weight:800;margin-top:10px;display:flex;align-items:center;gap:8px}
+.feat .tag{font-size:10px;padding:3px 8px;border-radius:5px;background:#fff7ed;color:var(--gold-d);font-weight:700;letter-spacing:.5px}
+.feat .d{font-size:14px;color:var(--t2);margin-top:8px}
+@media(max-width:900px){.feats{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.feats{grid-template-columns:1fr}}
+
+/* 怎么用 */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.step{background:linear-gradient(160deg,#fff,#fbfdff);border:1px solid var(--line);border-radius:16px;padding:26px 24px;box-shadow:var(--shadow)}
+.step .sn{font-size:13px;font-weight:800;color:var(--gold-d);letter-spacing:2px}
+.step .st{font-size:17px;font-weight:800;margin-top:8px}
+.step .sd{font-size:14px;color:var(--t2);margin-top:8px}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.day{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px}
+.day .d1{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;padding:18px 18px;box-shadow:var(--shadow)}
+.day .dt{font-size:13px;font-weight:800;color:var(--gold-d)}
+.day .dd{font-size:13px;color:var(--t2);margin-top:6px}
+@media(max-width:900px){.day{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.day{grid-template-columns:1fr}}
+
+/* 对比表 */
+.cmp{width:100%;border-collapse:collapse;margin-top:30px;background:#fff;border-radius:14px;overflow:hidden;
+  box-shadow:var(--shadow);font-size:14px}
+.cmp th,.cmp td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line)}
+.cmp th{background:#f8fafc;font-size:13px;color:var(--t2);font-weight:800;letter-spacing:.5px}
+.cmp th.y{color:var(--gold-d)}
+.cmp td:first-child{font-weight:700;white-space:nowrap}
+.cmp .no{color:var(--t3)}
+.cmp .yes{color:var(--t1);font-weight:600}
+@media(max-width:700px){.cmp{font-size:13px}.cmp th,.cmp td{padding:10px 10px}}
+
+/* 人群 */
+.who{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+.who .w{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 18px;box-shadow:var(--shadow)}
+.who .wi{font-size:22px}
+.who .wt{font-size:15px;font-weight:800;margin-top:8px}
+.who .wd{font-size:13px;color:var(--t2);margin-top:6px}
+@media(max-width:900px){.who{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.who{grid-template-columns:1fr}}
+
+/* FAQ */
+.faq{margin-top:30px}
+.q{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.q summary{padding:18px 22px;font-size:15px;font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:14px}
+.q summary::-webkit-details-marker{display:none}
+.q summary::after{content:"＋";color:var(--gold-d);font-weight:700}
+.q[open] summary::after{content:"－"}
+.q .a{padding:0 22px 20px;font-size:14px;color:var(--t2)}
+
+/* 服务 */
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.svc .s{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px 22px;box-shadow:var(--shadow)}
+.svc .si{font-size:22px}
+.svc .st{font-size:16px;font-weight:800;margin-top:10px}
+.svc .sd{font-size:14px;color:var(--t2);margin-top:6px}
+@media(max-width:760px){.svc{grid-template-columns:1fr}}
+
+/* CTA */
+.cta{background:linear-gradient(160deg,var(--dark1),var(--dark2));color:#fff;border-radius:20px;
+  padding:52px 40px;text-align:center;margin:0 auto;position:relative;overflow:hidden}
+.cta h3{font-size:30px;font-weight:900;letter-spacing:-.5px}
+.cta p{font-size:15px;color:rgba(255,255,255,.6);margin-top:14px}
+.cta .btns{display:flex;gap:14px;justify-content:center;margin-top:28px;flex-wrap:wrap}
+.cta .btn{display:inline-block;padding:14px 32px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:700}
+.btn-gold{background:linear-gradient(135deg,#f5c036,var(--gold-d));color:#3a2a10}
+.btn-line{border:1px solid rgba(255,255,255,.28);color:#fff}
+.cta .tip{font-size:12px;color:rgba(255,255,255,.35);margin-top:20px}
+@media(max-width:640px){.cta{padding:36px 22px}.cta h3{font-size:22px}}
+
+footer{background:#0b1220;color:rgba(255,255,255,.4);font-size:12.5px;padding:36px 24px;text-align:center;line-height:2}
+footer b{color:rgba(255,255,255,.75)}
+.disclaimer{font-size:12px;color:var(--t3);margin-top:14px;line-height:1.9}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand">优盾 <span>· 荣盈AI智算钥匙</span></div>
+    <div class="nav-links">
+      <a href="#plain">是什么</a>
+      <a href="#why">为什么</a>
+      <a href="#feat">核心功能</a>
+      <a href="#how">怎么用</a>
+      <a href="#who">适合谁</a>
+      <a href="#faq">常见问题</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="glow1"></div><div class="glow2"></div><div class="grid"></div>
+  <div class="wrap">
+    <div class="hero-badge">荣盈互动 · AI 智算钥匙</div>
+    <h1>插上U盘，<br>你就多了一支<span class="hl">AI团队</span></h1>
+    <p class="lead">不是又一个AI软件，而是一个能记住你、替你干活、随身携带的智能体团队。<br>插上就上班，拔掉就下班。</p>
+    <p class="kicker">不卖U盘，卖的是「插上就有的AI能力」——U盘是钥匙，服务才是商品。</p>
+    <div class="hero-pills">
+      <div class="pill">🧠 <b>第二大脑</b> · 长期记忆</div>
+      <div class="pill">👤 <b>第二分身</b> · 替你干活</div>
+      <div class="pill">🔐 <b>安全机密</b> · 本地加密</div>
+      <div class="pill">🖥️ <b>即插即用</b> · 换机不换数据</div>
+    </div>
+  </div>
+</div>
+
+<!-- 一句话讲明白 -->
+<section id="plain">
+  <div class="wrap">
+    <div class="sec-tag">先说人话</div>
+    <h2>这到底是<span class="hl">个什么东西</span>？</h2>
+    <p class="sec-sub">如果只用一句话解释——</p>
+    <div class="plain" style="margin-top:26px">
+      <div class="big">把U盘插到电脑上，就会出来一群「AI员工」——<em>写东西、做图、做视频、管店铺、回客户</em>，你交代它干活就行。</div>
+      <p class="note">它不占地方、不用发工资、不会离职、不会忘记你交代过的事。<br>
+      你不用去学什么提示词、不用注册一堆账号、不用配什么环境——插上，它自己就起来了。</p>
+    </div>
+    <div class="three">
+      <div class="item"><div class="ico">✅</div><div class="t">不用学技术</div>
+        <div class="d">插上就用，像用充电宝一样简单。它自己弹出工作台，不用你找图标。</div></div>
+      <div class="item"><div class="ico">✅</div><div class="t">不用配账号</div>
+        <div class="d">主流AI模型都已经接好了，省得你自己去注册一堆、再一个个试。</div></div>
+      <div class="item"><div class="ico">✅</div><div class="t">不用怕丢</div>
+        <div class="d">你的资料、聊天记录、知识库都存U盘里，拔走就是你的，换电脑也不丢。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 三层 -->
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-tag">三层说清楚</div>
+    <h2>一把钥匙，带出<span class="hl">一整个团队</span></h2>
+    <p class="sec-sub">从硬件到服务，分三层看就明白了。</p>
+    <div class="layers">
+      <div class="layer">
+        <div class="num">1</div><div class="ico">💾</div>
+        <div class="t">一个智能硬件载体</div>
+        <div class="d">内置安全芯片的智能U盘（64G / 128G）。插入电脑自动启动AI工作台——不用找图标、不用装环境、不用配账号。</div>
+      </div>
+      <div class="layer">
+        <div class="num">2</div><div class="ico">🤖</div>
+        <div class="t">一支AI智能体团队</div>
+        <div class="d">内容创作、研究分析、电商运营、职场办公……你把任务说出来，它自动拆解、分派给不同角色分工完成。不是单点问答工具，是能交付结果的执行端。</div>
+      </div>
+      <div class="layer">
+        <div class="num">3</div><div class="ico">📦</div>
+        <div class="t">一套持续升级的服务</div>
+        <div class="d">会员订阅 + 算力套餐 + 技能应用市场。系统持续迭代，能力持续增加——你买的是会进化的服务，U盘只是入口。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 四个概念 -->
+<section id="why">
+  <div class="wrap">
+    <div class="sec-tag">为什么这么叫</div>
+    <h2>第二大脑 · 第二分身 · 安全机密 · 长期记忆</h2>
+    <p class="sec-sub">这四个词不是包装出来的名字，每一个都对应一个真实存在的功能。下面把话说透。</p>
+
+    <div class="concepts">
+      <!-- 第二大脑 -->
+      <div class="concept c-brain">
+        <div class="head"><div class="ci">🧠</div>
+          <div><div class="ct">为什么叫「第二大脑」</div><div class="cq">SECOND BRAIN</div></div></div>
+        <ul>
+          <li>你平时用的AI：聊完就忘。关掉窗口，它就把你忘干净了，下次得从头讲一遍。</li>
+          <li>优盾：你说过的话、传过的资料、改过的方案、定过的偏好，都沉淀在U盘里。</li>
+          <li>你的业务是什么、客户叫什么、报价怎么算、哪些话不能说——它记着，而且能拿出来用。</li>
+        </ul>
+        <div class="why"><b>为什么敢叫「第二大脑」：</b>因为第一大脑会累、会忘、会漏；它不会。用一个月，它比你自己的备忘录更清楚你在干什么。</div>
+        <div class="vs">
+          <div class="h">普通AI助手</div><div class="h" style="color:var(--gold-d)">优盾</div>
+          <div class="a">关掉就失忆</div><div class="b">记得住、调得出</div>
+          <div class="a">每次重新解释背景</div><div class="b">一次说清，长期沿用</div>
+        </div>
+      </div>
+
+      <!-- 第二分身 -->
+      <div class="concept c-clone">
+        <div class="head"><div class="ci">👤</div>
+          <div><div class="ct">为什么叫「第二分身」</div><div class="cq">DIGITAL CLONE</div></div></div>
+        <ul>
+          <li>不是「一个聊天框」，而是一支能分工的团队：写文案的、做图的、查资料的、管店铺的，各干各的。</li>
+          <li>你交代一件事，它自己拆活、分角色、逐个做完，再汇总交给你。</li>
+          <li>你不在电脑前它也照干——定时任务设好，到点自动执行。</li>
+        </ul>
+        <div class="why"><b>为什么敢叫「第二分身」：</b>相当于把你复制一份，专门去干那些重复的、耗时间的活；你只留精力做最重要的决策。</div>
+        <div class="vs">
+          <div class="h">一个人干所有活</div><div class="h" style="color:var(--gold-d)">带一个分身</div>
+          <div class="a">写文案、做图、回客户全自己来</div><div class="b">交代下去，分工干完</div>
+          <div class="a">离开电脑就停摆</div><div class="b">定时任务自动跑</div>
+        </div>
+      </div>
+
+      <!-- 安全机密 -->
+      <div class="concept c-safe">
+        <div class="head"><div class="ci">🔐</div>
+          <div><div class="ct">为什么强调「安全机密」</div><div class="cq">PRIVATE &amp; SECURE</div></div></div>
+        <ul>
+          <li>你的资料、客户名单、报价、方案，存在U盘的加密区里，不强制上传到第三方空间。</li>
+          <li>拔掉U盘＝带走全部数据。换一台电脑，插上就是你的工作台，原电脑上不留东西。</li>
+          <li>指纹加密版：硬件级加密 + 防拷贝，商务人士和企业用户首选。</li>
+        </ul>
+        <div class="why"><b>为什么这件事重要：</b>做生意的资料就是命脉。放在别人服务器上，始终是寄人篱下；放在自己的U盘里，才是自己的。</div>
+        <div class="vs">
+          <div class="h">寄存在平台</div><div class="h" style="color:var(--gold-d)">优盾</div>
+          <div class="a">数据在别人服务器</div><div class="b">本地加密存储</div>
+          <div class="a">换账号、换设备就断</div><div class="b">U盘在哪，数据在哪</div>
+        </div>
+      </div>
+
+      <!-- 长期记忆 -->
+      <div class="concept c-mem">
+        <div class="head"><div class="ci">♾️</div>
+          <div><div class="ct">「长期记忆」是怎么实现的</div><div class="cq">LONG-TERM MEMORY</div></div></div>
+        <ul>
+          <li><b>存在本地：</b>记忆、文档、知识库落在U盘存储区，不随网页登录状态消失。</li>
+          <li><b>看得见：</b>记忆是可查、可改的——写错了能纠正，不满意的能删掉，不是玄学。</li>
+          <li><b>带得走：</b>换电脑、出差、换办公室，插上U盘，记忆和习惯一起跟着走。</li>
+        </ul>
+        <div class="why"><b>它和「免费AI网页」最大的区别就在这里：</b>免费工具用完即走，优盾是「越用越懂你」——时间是它的成本，也是它的价值。</div>
+        <div class="vs">
+          <div class="h">免费AI网页</div><div class="h" style="color:var(--gold-d)">优盾</div>
+          <div class="a">记忆存在平台账号里</div><div class="b">记忆存在你的U盘里</div>
+          <div class="a">换设备重新开始</div><div class="b">插上就接着用</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 核心功能 -->
+<section id="feat" class="alt">
+  <div class="wrap">
+    <div class="sec-tag">功能明细</div>
+    <h2>从「问一句答一句」<span class="hl">到「交代任务自动干完」</span></h2>
+    <p class="sec-sub">下面这些都能直接用在生意和日常里，不需要你做任何技术准备。</p>
+    <div class="feats">
+      <div class="feat"><div class="ico">👥</div><div class="t">智能体团队协作 <span class="tag">最核心</span></div>
+        <div class="d">告诉它你想做的事，AI自动判断需要哪些角色，组一个专属工作团队，分工把活干完。老板一个人也能顶一个团队。</div></div>
+      <div class="feat"><div class="ico">🧠</div><div class="t">长期记忆 · 第二大脑</div>
+        <div class="d">沟通、文档、偏好全部沉淀在U盘里。今天聊的明天还在，一个月后它比你自己更清楚你的业务脉络。</div></div>
+      <div class="feat"><div class="ico">🖥️</div><div class="t">本地运行 · 随身携带</div>
+        <div class="d">系统在U盘里运行，插上就用。家里、公司、出差、临时网吧，任何一台电脑插上就是你的工作台。</div></div>
+      <div class="feat"><div class="ico">🔐</div><div class="t">数据本地加密</div>
+        <div class="d">资料和知识库存于U盘加密区，自己的数据自己管。指纹版提供硬件级加密，防拷贝更安心。</div></div>
+      <div class="feat"><div class="ico">🌐</div><div class="t">多模型自由切换</div>
+        <div class="d">已接入 DeepSeek、Kimi、豆包、智谱、MiniMax 等主流大模型，不同任务选不同模型，各取所长。</div></div>
+      <div class="feat"><div class="ico">🧩</div><div class="t">技能市场即装即用</div>
+        <div class="d">公众号写作、电商选品、视频脚本、小红书爆款……技能包持续更新，随时给智能体加装新能力。</div></div>
+      <div class="feat"><div class="ico">🎤</div><div class="t">口述就能用</div>
+        <div class="d">不想打字就说话——写文案、查资料、整理文件，语音直接下指令。60、70岁的用户也能上手。</div></div>
+      <div class="feat"><div class="ico">⏰</div><div class="t">自动化定时任务</div>
+        <div class="d">规则设好，电脑开着，AI到点自动干活：自动回复、定时整理、批量处理。「电脑开在那里，AI自己上班」。</div></div>
+      <div class="feat"><div class="ico">🏪</div><div class="t">智能体市场 &amp; 需求悬赏</div>
+        <div class="d">不会搭？直接用现成的智能体。有本事？自己发布智能体、接悬赏单赚收益。生态越用越值钱。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 怎么用 -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-tag">上手步骤</div>
+    <h2>三步上手，<span class="hl">当天就能用</span></h2>
+    <div class="steps">
+      <div class="step"><div class="sn">STEP 01</div><div class="st">插上U盘</div>
+        <div class="sd">插进电脑，工作台自动弹出。不用找图标、不用装软件、不用记密码。</div></div>
+      <div class="step"><div class="sn">STEP 02</div><div class="st">说一下你是谁</div>
+        <div class="sd">做什么行业、做哪类生意、常用哪些事——它据此给你配好一套专属智能体和技能。</div></div>
+      <div class="step"><div class="sn">STEP 03</div><div class="st">交代任务</div>
+        <div class="sd">打字或直接说话。它自己拆解、分工、执行、交付。不满意就说一句，它改。</div></div>
+    </div>
+    <h2 style="font-size:22px;margin-top:52px">装上之后，一天大概是这样的</h2>
+    <div class="day">
+      <div class="d1"><div class="dt">早上</div><div class="dd">让它整理今天要做的事、查一下行业里有什么新动态，给你一份简报。</div></div>
+      <div class="d1"><div class="dt">上午</div><div class="dd">写3条朋友圈、出一篇公众号初稿、做一张宣传海报——一个上午全出来。</div></div>
+      <div class="d1"><div class="dt">下午</div><div class="dd">整理会议记录、写客服回复话术、把商品文案批量改好。</div></div>
+      <div class="d1"><div class="dt">晚上</div><div class="dd">设好定时任务，明天9点它自动整理数据——你不在它也照做。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 对比 -->
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-tag">说清楚区别</div>
+    <h2>它和<span class="hl">直接用免费AI</span>，差在哪？</h2>
+    <p class="sec-sub">免费AI工具不是不能用，是它服务的是「所有人」；优盾服务的是「你」。</p>
+    <table class="cmp">
+      <thead><tr><th>对比项</th><th>直接用免费AI网页</th><th class="y">优盾 · AI智算钥匙</th></tr></thead>
+      <tbody>
+        <tr><td>记忆</td><td class="no">关掉就忘，每次重新讲</td><td class="yes">存在U盘里，长期记忆、越用越懂你</td></tr>
+        <tr><td>数据</td><td class="no">上传到平台服务器</td><td class="yes">本地加密，自己的数据自己管</td></tr>
+        <tr><td>换设备</td><td class="no">换电脑重新开始</td><td class="yes">插上U盘就是你的工作台</td></tr>
+        <tr><td>能力形态</td><td class="no">一个对话框，一次干一件</td><td class="yes">一支智能体团队，自动分工协作</td></tr>
+        <tr><td>上手难度</td><td class="no">得自己琢磨怎么问</td><td class="yes">引导式，交代任务就行</td></tr>
+        <tr><td>场景</td><td class="no">通用聊天</td><td class="yes">行业技能包即装即用（写作/电商/短视频等）</td></tr>
+        <tr><td>离线自动化</td><td class="no">无</td><td class="yes">定时任务，到点自动干</td></tr>
+        <tr><td>谁来教</td><td class="no">没人管</td><td class="yes">有人带、有社群、有本地服务</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 适合谁 -->
+<section id="who">
+  <div class="wrap">
+    <div class="sec-tag">对号入座</div>
+    <h2>谁在用，<span class="hl">用在什么事上</span></h2>
+    <p class="sec-sub">不需要懂技术，也不需要会写提示词——都是现成的东西，交代就行。</p>
+    <div class="who">
+      <div class="w"><div class="wi">🎬</div><div class="wt">个人IP / 自媒体</div><div class="wd">选题、文案、脚本、配图、分发一条龙，一个人抵一个内容团队。</div></div>
+      <div class="w"><div class="wi">💼</div><div class="wt">职场人</div><div class="wd">报表、文档、会议纪要、资料整理，下班前把一天的活干完。</div></div>
+      <div class="w"><div class="wi">🚀</div><div class="wt">想做副业的人</div><div class="wd">用AI帮你理方向、做内容、跑流程，把一个人能干的边界撑开。</div></div>
+      <div class="w"><div class="wi">🏪</div><div class="wt">电商 / 个体户老板</div><div class="wd">选品分析、商品文案、客服话术、店铺运营，小生意配上大团队。</div></div>
+      <div class="w"><div class="wi">🍜</div><div class="wt">餐饮 / 本地商家</div><div class="wd">探店拍摄、宣传文案、短视频运营，不用每月花几千找第三方。</div></div>
+      <div class="w"><div class="wi">👨‍👩‍👧</div><div class="wt">小团队 / 创业者</div><div class="wd">一支不用发工资、不会离职的数字员工队伍，把重复活全接过去。</div></div>
+      <div class="w"><div class="wi">🧓</div><div class="wt">60 / 70岁用户</div><div class="wd">口述就能用，不用学电脑。想问什么直接说，它查好了讲给你听。</div></div>
+      <div class="w"><div class="wi">🏢</div><div class="wt">企业 / 公司</div><div class="wd">客服、运营、内容多岗位AI上岗，可做行业定制与统一管理。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 服务 -->
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-tag">买了之后</div>
+    <h2>不是买断一个U盘，<span class="hl">是请回一个会进化的团队</span></h2>
+    <div class="svc">
+      <div class="s"><div class="si">♻️</div><div class="st">持续升级</div>
+        <div class="sd">系统、技能、模型定期更新。今天的U盘，一年后能力更多。</div></div>
+      <div class="s"><div class="si">🧑‍🏫</div><div class="st">有人教</div>
+        <div class="sd">专属社群 + 使用指导，不会用有人带。AI产品不该靠你自己摸索。</div></div>
+      <div class="s"><div class="si">📍</div><div class="st">本地服务</div>
+        <div class="sd">线下部署、上门演示、行业定制——线上产品给不了的「温度」，我们给。</div></div>
+      <div class="s"><div class="si">🎟️</div><div class="st">积分透明</div>
+        <div class="sd">算力消耗看得见，用多少心里有数，签到还能拿积分。</div></div>
+      <div class="s"><div class="si">🏢</div><div class="st">企业定制</div>
+        <div class="sd">按你的业务定制智能体、知识库和工作流，团队版统一管理。</div></div>
+      <div class="s"><div class="si">💬</div><div class="st">用着用着，成为入口</div>
+        <div class="sd">AI只是第一步——公司后续的项目、内容、服务都会逐步接入，越用价值越大。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-tag">常见问题</div>
+    <h2>小白最常问的<span class="hl">8个问题</span></h2>
+    <div class="faq">
+      <details class="q" open><summary>我完全不懂电脑，能用吗？</summary>
+        <div class="a">能。插上U盘它会自己弹出界面，不想打字就直接说话（加个麦克风就行），它听懂照做。我们服务过不少60、70岁的用户，用的就是口述这一套。</div></details>
+      <details class="q"><summary>需要联网吗？</summary>
+        <div class="a">AI能力需要联网调用云端模型，所以用的时候要连网。但你的资料、记忆、知识库存的是本地U盘加密区，不上传第三方。</div></details>
+      <details class="q"><summary>我的资料会不会被别人看到？</summary>
+        <div class="a">资料存在U盘的加密区里，由你自己保管。拔掉U盘，数据跟着你走；指纹版提供硬件级加密和防拷贝。做生意的客户名单、报价、方案，不该躺在别人的服务器上。</div></details>
+      <details class="q"><summary>换电脑、换办公室怎么办？</summary>
+        <div class="a">插上U盘就是你的工作台，记忆、习惯、资料一起跟着走。这也是它和网页版AI最大的不同——你的东西不绑在某台电脑上。</div></details>
+      <details class="q"><summary>U盘丢了怎么办？</summary>
+        <div class="a">指纹版有硬件级加密，别人拿到也打不开。重要资料建议按常规做法另做一份备份——这是任何本地存储都适用的常识。</div></details>
+      <details class="q"><summary>它和我手机里那些AI软件有什么区别？</summary>
+        <div class="a">三点：<b>记得住</b>（长期记忆在你手里）、<b>能干活</b>（一支分工团队，不是单聊）、<b>带得走</b>（换设备不重来）。另外它是按行业配好技能的，不用你自己研究怎么用。</div></details>
+      <details class="q"><summary>多久能上手？</summary>
+        <div class="a">当天。插上、说一下你是谁、交代第一件事，剩下的边用边熟悉。有社群和使用指导，卡住了直接问。</div></details>
+      <details class="q"><summary>买了以后还要再花钱吗？</summary>
+        <div class="a">U盘本身是一次性购买，里面的AI服务按订阅方式使用（类似话费，用服务就续、不用就停）。算力消耗看得见，企业用户可做定制方案。具体版本和价格可以咨询了解。</div></details>
+    </div>
+    <p class="disclaimer">※ 本页用于产品介绍与宣传。AI生成内容存在不确定性，请结合实际情况判断使用；文中涉及的模型、平台与技能以实际开放状态为准。</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="border-bottom:none;background:#fff">
+  <div class="wrap">
+    <div class="cta">
+      <h3>一个人，带一个AI团队</h3>
+      <p>U盘揣兜里，团队跟着走 —— 插上就上班，拔掉就下班。</p>
+      <div class="btns">
+        <a class="btn btn-gold" href="javascript:;">预约现场体验</a>
+        <a class="btn btn-line" href="javascript:;">咨询行业定制方案</a>
+      </div>
+      <div class="tip">现场演示 · 上手体验 · 行业定制咨询</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <b>荣盈互动科技 · 优盾 AI智算钥匙</b><br>
+  AI驱动的企业增长服务商 · 自营电商 / 直播 / AI产品研发<br>
+  深圳市龙华区 ICC-Park 一期A座410室 · www.rongyinghudong.com<br>
+  <span style="font-size:11px;color:rgba(255,255,255,.25)">版本 v1.0 · 2026-09-10</span>
+</footer>
+
+</body>
+</html>
