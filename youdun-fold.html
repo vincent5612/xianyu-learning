@@ -9,6 +9,8 @@
 body{background:#1a1d24;font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;display:flex;flex-direction:column;align-items:center;padding:30px 10px}
 h1.doc{color:#8b93a5;font-size:13px;font-weight:400;margin-bottom:20px;letter-spacing:1px}
 h1.doc span{color:#f0b429}
+.doc,.fold-labels{display:none}
+body.guide .doc,body.guide .fold-labels{display:block;display:flex}
 
 /* ===== 折页展开容器 ===== */
 .fold{display:flex;width:1080px;max-width:100%;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);min-height:660px}
@@ -65,18 +67,26 @@ h1.doc span{color:#f0b429}
 .p4 .brand{display:flex;align-items:center;gap:6px;font-size:11px;color:#94a3b8;font-weight:700}
 .p4 .cta{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px}
 .p4 .cta .big{font-size:22px;font-weight:900;line-height:1.4}
+.p4 .spec{font-size:10.5px;color:#cbd5e1;letter-spacing:.3px}
 .p4 .qr{width:96px;height:96px;background:repeating-linear-gradient(45deg,#e8edf5 0 6px,#fff 6px 12px);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#64748b;border:2px dashed #94a3b8}
 .p4 .info{font-size:9.5px;color:#64748b;line-height:1.8;text-align:center}
 
 /* 页脚折线提示 */
-.fold-labels{display:flex;width:1080px;max-width:100%;margin-top:8px;color:#64748b;font-size:10px;text-align:center}
+.fold-labels{display:none;width:1080px;max-width:100%;margin-top:8px;color:#64748b;font-size:10px;text-align:center}
 .fold-labels div{flex:1}
 @media(max-width:860px){ .fold{flex-direction:column} .panel{width:100%!important;min-height:auto} }
+@media print{
+  body{background:#fff;padding:0;display:block}
+  .doc,.fold-labels{display:none!important}
+  .fold{display:flex;width:297mm;height:210mm;min-height:0;box-shadow:none;border-radius:0}
+  .p1{width:32.7%}.p2{width:22.2%}.p3{width:26%}.p4{width:19.1%}
+  @page{size:A4 landscape;margin:0}
+}
 </style>
 </head>
 <body>
 
-<h1 class="doc">优盾AI智算钥匙 · 地推三折页框架 <span>V1.0</span>（左→右：封面｜内页1｜内页2｜封底）</h1>
+<h1 class="doc">优盾AI智算钥匙 · 地推三折页 <span>V2.0</span>（左→右：封面｜内页1｜内页2｜封底）· 本行仅内部版式自查，对外自动隐藏</h1>
 
 <div class="fold">
 
@@ -90,7 +100,7 @@ h1.doc span{color:#f0b429}
     <div class="icon">🔑</div>
     <div class="main">插上U盘<br>AI团队<span class="gold">即刻开工</span></div>
     <div class="sub">一个U盘，让你的生意<br>多一支不用发工资的团队</div>
-    <div class="quote">不卖U盘，卖的是「插上就有的AI能力」<br>U盘是钥匙，服务才是商品</div>
+    <div class="quote">不卖U盘，卖的是「插上就有的AI能力」<br>一次入手，长期陪你升级</div>
   </div>
   <div class="foot">荣盈互动 ROYIN · 优盾</div>
 </div>
@@ -102,8 +112,8 @@ h1.doc span{color:#f0b429}
 
   <div class="sec-title">三个放心</div>
   <div class="item"><span class="ic">✅</span><span><b>不用学技术</b>——插上就用，像充电宝一样简单</span></div>
-  <div class="item"><span class="ic">✅</span><span><b>不用配账号</b>——AI都接好了</span></div>
-  <div class="item"><span class="ic">✅</span><span><b>不怕丢</b>——资料在U盘里，拔走就是你的</span></div>
+  <div class="item"><span class="ic">✅</span><span><b>不用配账号</b>——AI都接好了，开机就能用</span></div>
+  <div class="item"><span class="ic">✅</span><span><b>不绑平台</b>——资料存自己U盘里，随时拔走</span></div>
 
   <div class="sec-title">它能帮你干什么</div>
   <div class="item"><span class="ic">✍️</span><span><b>写东西</b>：朋友圈/公众号/产品介绍</span></div>
@@ -111,10 +121,10 @@ h1.doc span{color:#f0b429}
   <div class="item"><span class="ic">🎬</span><span><b>做视频</b>：脚本+剪辑建议</span></div>
   <div class="item"><span class="ic">🛒</span><span><b>管生意</b>：选品/文案/客服回复</span></div>
   <div class="item"><span class="ic">🧠</span><span><b>记事情</b>：资料想法越用越懂你</span></div>
-  <div class="item"><span class="ic">🎤</span><span><b>听指挥</b>：说话就干活，老人能用</span></div>
+  <div class="item"><span class="ic">🎤</span><span><b>听指挥</b>：说话就干活，不会电脑也能用</span></div>
 
   <div class="sec-title">真实场景</div>
-  <div class="scene"><b>🛠 想搞副业</b><p>帮你分析做什么 + 起号写内容——一个人跑通副业</p></div>
+  <div class="scene"><b>🛠 想搞副业</b><p>帮你分析做什么 + 做内容起步——一个人跑通副业</p></div>
   <div class="scene"><b>🏪 开店忙不过来</b><p>文案海报客户回复全包，省下外包钱</p></div>
   <div class="scene"><b>👤 一人干团队活</b><p>重复的活丢给它，你只干最重要的事</p></div>
 </div>
@@ -127,20 +137,20 @@ h1.doc span{color:#f0b429}
     <div class="cr"><span class="who">自媒体/IP</span><span class="val">选题文案配图 一人抵一团队</span></div>
     <div class="cr"><span class="who">副业党</span><span class="val">选方向做内容 工具撬动</span></div>
     <div class="cr"><span class="who">个体/实体老板</span><span class="val">文案海报自己搞 不花外包钱</span></div>
-    <div class="cr"><span class="who">餐饮/本地商家</span><span class="val">探店宣传短视频 有网感</span></div>
+    <div class="cr"><span class="who">餐饮/本地商家</span><span class="val">探店文案短视频 自己就能出</span></div>
     <div class="cr"><span class="who">小团队/创业者</span><span class="val">不发工资的数字员工</span></div>
     <div class="cr"><span class="who">企业公司</span><span class="val">客服运营内容 AI在岗</span></div>
   </div>
 
   <div class="sec-title">为什么信荣盈</div>
-  <div class="trust">自己先用再卖你——不是PPT产品</div>
-  <div class="trust">有人教——包教包会</div>
-  <div class="trust">持续升级——买的是进化服务</div>
-  <div class="trust">本地加密——数据自己管</div>
+  <div class="trust">自己先用——荣盈自家电商/招聘业务天天在用</div>
+  <div class="trust">有人教——上手有人带，包教包会</div>
+  <div class="trust">持续升级——新功能新玩法持续更新</div>
+  <div class="trust">指纹加密——核心资料自己管</div>
 
   <div class="partner">
-    <b>🤝 想一起干？当城市合伙人</b>
-    区域独家保护 · 卖一台有利润 · 不压货 · 客户续费长期分润<br>
+    <b>🤝 想一起干？做城市合伙人</b>
+    区域独家保护 · 一台也有得赚 · 不压货 · 客户续费长期分润<br>
     <b style="margin-top:6px;display:block">把AI带到你的城市，一起做市场</b>
   </div>
 </div>
@@ -150,8 +160,10 @@ h1.doc span{color:#f0b429}
   <div class="brand"><span class="dot" style="width:7px;height:7px;border-radius:50%;background:#f0b429"></span>荣盈互动 ROYIN</div>
   <div class="cta">
     <div class="big">今天插上<br><span class="gold">今天就多一支团队</span></div>
+    <div class="spec">两种配置 · 普通版 / 指纹加密版 · 64G / 128G</div>
     <div class="qr">二维码位</div>
-    <div style="font-size:12px;color:#94a3b8">扫码了解 · 添加微信咨询</div>
+    <div style="font-size:12px;color:#94a3b8">扫码加微信 · 现场演示看效果</div>
+    <div style="font-size:12px;color:#e8edf5;font-weight:700">微信：NineHalf95</div>
   </div>
   <div class="info">
     荣盈互动 · AI驱动的企业增长服务商<br>
@@ -167,5 +179,8 @@ h1.doc span{color:#f0b429}
   <div>封面 P1</div><div>内页1 P2</div><div>内页2 P3</div><div>封底 P4</div>
 </div>
 
+<script>
+if(new URLSearchParams(location.search).get('guide')==='1')document.body.classList.add('guide');
+</script>
 </body>
 </html>
