@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>安叔产品商店</title>
+<style>
+:root {
+  --bg: #f4f5f7;
+  --card: #ffffff;
+  --border: #e8eaed;
+  --accent: #FF8A00;
+  --accent2: #E06A00;
+  --accent-dim: rgba(255,138,0,0.08);
+  --text: #1f2329;
+  --text-dim: #6b7280;
+  --text-muted: #9aa1ab;
+  --green: #16a34a; --green-bg: #f0fdf4;
+  --blue: #2563eb; --blue-bg: #eff6ff;
+  --red: #dc2626; --red-bg: #fef2f2;
+  --purple: #7c3aed; --purple-bg: #f5f3ff;
+  --teal: #0d9488; --teal-bg: #f0fdfa;
+  --amber: #d97706; --amber-bg: #fffbeb;
+  --shadow-sm: 0 1px 2px rgba(16,24,40,0.04), 0 1px 3px rgba(16,24,40,0.06);
+  --shadow-lg: 0 10px 30px rgba(16,24,40,0.12), 0 4px 8px rgba(16,24,40,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system,"PingFang SC","Helvetica Neue",sans-serif;
+  background: var(--bg); color: var(--text);
+  max-width: 920px; margin: 0 auto; padding: 22px 16px 64px;
+}
+/* 顶部 Hero */
+.hero {
+  background: linear-gradient(135deg,#191a1f 0%,#2b2519 100%);
+  border-radius:20px; padding:30px 26px 26px; color:#fff; margin-bottom:14px;
+  position:relative; overflow:hidden;
+}
+.hero::before { content:""; position:absolute; right:-50px; top:-50px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle, rgba(255,138,0,0.20), transparent 70%); }
+.hero::after { content:""; position:absolute; right:-30px; bottom:-70px; width:180px; height:180px; border-radius:50%; background:radial-gradient(circle, rgba(255,138,0,0.10), transparent 70%); }
+.hero .eyebrow { font-size:11px; color:#ffb454; letter-spacing:4px; font-weight:600; position:relative; }
+.hero h1 { font-size:28px; font-weight:900; margin-top:8px; position:relative; letter-spacing:1px; }
+.hero h1 .ul { display:inline-block; width:42px; height:4px; border-radius:3px; background:linear-gradient(90deg,var(--accent),#ffd089); vertical-align:middle; margin-left:10px; }
+.hero .sub { font-size:13px; color:rgba(255,255,255,0.62); margin-top:10px; line-height:1.7; position:relative; }
+.hero .count { font-size:12px; color:rgba(255,255,255,0.45); margin-top:14px; position:relative; }
+/* 服务说明（客户友好，不含内部定价逻辑） */
+.service-note {
+  background:#fff; border:1px solid var(--border); border-left:4px solid var(--accent);
+  border-radius:12px; padding:13px 18px; margin-bottom:16px;
+  font-size:12px; color:var(--text-dim); line-height:1.7; box-shadow:var(--shadow-sm);
+}
+.service-note b { color:var(--accent2); }
+/* 分类筛选栏 */
+.filterbar {
+  display:flex; gap:8px; overflow-x:auto; padding:2px 2px 10px; margin-bottom:6px;
+  scrollbar-width:none;
+}
+.filterbar::-webkit-scrollbar { display:none; }
+.fpill {
+  flex:0 0 auto; border:1px solid var(--border); background:#fff; color:var(--text-dim);
+  font-size:12px; font-weight:600; padding:7px 15px; border-radius:20px; cursor:pointer;
+  white-space:nowrap; transition:all .15s; box-shadow:var(--shadow-sm);
+}
+.fpill:hover { border-color:#ffd9a8; color:var(--accent2); }
+.fpill.active { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border-color:var(--accent2); }
+/* 产品网格 */
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.product {
+  background:var(--card); border:1px solid var(--border); border-radius:16px;
+  padding:20px 18px; box-shadow:var(--shadow-sm); cursor:pointer; position:relative; overflow:hidden;
+  transition:box-shadow .18s, transform .18s, border-color .18s; display:flex; flex-direction:column;
+}
+.product::before { content:""; position:absolute; top:0; left:0; right:0; height:3px; background:var(--cat-color,#ccc); border-radius:16px 16px 0 0; opacity:.85; }
+.product:hover { box-shadow:var(--shadow-lg); transform:translateY(-3px); border-color:#ffd9a8; }
+.p-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:23px; margin-bottom:13px; box-shadow:inset 0 0 0 1px rgba(0,0,0,0.03); }
+.p-cat { font-size:10px; font-weight:700; letter-spacing:1px; margin-bottom:5px; }
+.p-name { font-size:15px; font-weight:800; margin-bottom:5px; line-height:1.35; }
+.p-desc { font-size:12px; color:var(--text-dim); line-height:1.65; flex:1; }
+.p-price { font-size:18px; font-weight:900; color:var(--accent2); margin-top:13px; }
+.p-price .unit { font-size:11px; color:var(--text-muted); font-weight:400; }
+.p-badge { font-size:10px; padding:3px 10px; border-radius:20px; font-weight:600; display:inline-block; margin-top:9px; align-self:flex-start; }
+.badge-hot { background:var(--red-bg); color:var(--red); }
+.badge-new { background:var(--green-bg); color:var(--green); }
+.badge-soon { background:var(--amber-bg); color:var(--amber); }
+/* 弹窗 */
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(16,24,40,0.5); z-index:1000; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px); }
+.modal-overlay.active { display:flex; }
+.modal { background:#fff; border-radius:18px; width:100%; max-width:640px; max-height:90vh; overflow:hidden; display:flex; flex-direction:column; box-shadow:var(--shadow-lg); animation:modalIn .25s ease; }
+@keyframes modalIn { 0%{opacity:0;transform:translateY(20px) scale(.98)} 100%{opacity:1;transform:translateY(0) scale(1)} }
+.modal-header { display:flex; align-items:center; justify-content:space-between; padding:18px 22px; border-bottom:1px solid #f1f2f4; }
+.modal-title { font-size:16px; font-weight:800; }
+.modal-close { border:none; background:#f3f4f6; width:32px; height:32px; border-radius:9px; cursor:pointer; font-size:15px; color:var(--text-dim); transition:background .15s; }
+.modal-close:hover { background:#e9eaee; }
+.modal-body { padding:22px; overflow-y:auto; font-size:13px; line-height:1.8; }
+.modal-body h4 { font-size:13px; color:var(--accent2); margin:18px 0 9px; }
+.modal-body h4:first-child { margin-top:0; }
+.prob-box { background:var(--blue-bg); border-left:3px solid var(--blue); padding:11px 15px; border-radius:0 8px 8px 0; margin:8px 0; }
+.sol-box { background:var(--green-bg); border-left:3px solid var(--green); padding:11px 15px; border-radius:0 8px 8px 0; margin:8px 0; }
+.price-box { background:var(--accent-dim); border-left:3px solid var(--accent); padding:14px 18px; border-radius:0 10px 10px 0; margin:12px 0; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.price-box .big { font-size:26px; font-weight:900; color:var(--accent2); white-space:nowrap; }
+.buy-btn { display:block; width:100%; padding:14px; border:none; border-radius:11px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-size:15px; font-weight:700; cursor:pointer; margin-top:18px; box-shadow:0 4px 12px rgba(224,106,0,0.28); transition:filter .15s; }
+.buy-btn:hover { filter:brightness(1.05); }
+.buy-hint { text-align:center; font-size:11px; color:var(--text-muted); margin-top:9px; }
+.steps { display:flex; flex-direction:column; gap:9px; }
+.step { display:flex; gap:11px; align-items:flex-start; font-size:12px; color:var(--text-dim); }
+.step .n { width:23px; height:23px; border-radius:50%; background:var(--accent); color:#fff; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+/* 需求收集箱 */
+.wishbox {
+  background:var(--card); border:1px solid var(--border); border-radius:16px;
+  padding:22px; margin-top:18px; box-shadow:var(--shadow-sm);
+  border-left:4px solid var(--accent);
+}
+.wish-head { margin-bottom:13px; }
+.wish-title { font-size:16px; font-weight:800; }
+.wish-sub { font-size:12px; color:var(--text-dim); margin-top:4px; }
+.wishbox textarea {
+  width:100%; min-height:82px; border:1.5px solid var(--border); border-radius:11px;
+  padding:13px; font-size:13px; font-family:inherit; color:var(--text); resize:vertical;
+  box-sizing:border-box;
+}
+.wishbox textarea:focus { outline:none; border-color:var(--accent); }
+.wish-row { display:flex; align-items:center; gap:12px; margin-top:13px; }
+.wish-btn {
+  border:none; border-radius:11px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff;
+  font-size:14px; font-weight:700; padding:12px 24px; cursor:pointer; box-shadow:0 4px 12px rgba(224,106,0,0.28);
+}
+.wish-btn:hover { filter:brightness(1.05); }
+.wish-count { font-size:11px; color:var(--text-muted); }
+.wish-tip { font-size:11px; color:var(--text-muted); margin-top:9px; }
+.wish-tip.ok { color:var(--green); font-weight:600; }
+.wish-admin { margin-top:12px; background:var(--card); border:1px dashed var(--border); border-radius:10px; overflow:hidden; }
+.wish-admin-head { font-size:12px; color:var(--text-muted); padding:10px 14px; cursor:pointer; }
+.wish-admin-head:hover { background:#fafafa; }
+.wish-list { display:none; padding:0 14px 12px; font-size:12px; }
+.wish-list.show { display:block; }
+.wish-item { display:flex; justify-content:space-between; gap:10px; padding:8px 0; border-bottom:1px solid #f3f4f6; }
+.wish-item:last-child { border-bottom:none; }
+.wish-item .w-text { color:var(--text); flex:1; line-height:1.5; }
+.wish-item .w-del { color:var(--red); cursor:pointer; font-size:12px; flex-shrink:0; }
+footer { text-align:center; font-size:11px; color:var(--text-muted); margin-top:32px; }
+@media(max-width:760px){ .grid{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:480px){ .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eyebrow">ANSHU PRODUCTS</div>
+  <h1>安叔产品商店<span class="ul"></span></h1>
+  <div class="sub">电商副业陪跑 · 知识工具 · 企业B端服务<br/>所有产品来自真实项���经验，解决真实问题</div>
+  <div class="count" id="heroCount">共 0 个产品 / 服务</div>
+</div>
+
+<div class="service-note">
+  <b>📦 交付说明：</b>知识产品 / 陪跑类通过微信交付，实体产品快递发出 · 价格以购买页或咨询沟通为准 · 付款后开通对应服务。
+</div>
+
+<div class="filterbar" id="filterBar"></div>
+
+<div class="grid" id="productGrid"></div>
+
+<!-- 需求收集箱 -->
+<div class="wishbox" id="wishbox">
+  <div class="wish-head">
+    <div class="wish-title">📮 需求收集箱</div>
+    <div class="wish-sub">这里没有你要的东西？告诉我你想要什么，我把它做出来</div>
+  </div>
+  <textarea id="wishInput" placeholder="例：我想要一个「闲鱼选品清单」/ 想要「京东店群实操视频课」/ 想要「社保代缴服务」……描述越具体，做出来越快"></textarea>
+  <div class="wish-row">
+    <button class="wish-btn" onclick="submitWish()">📮 提交需求</button>
+    <span class="wish-count" id="wishCount">已收集 0 条需求</span>
+  </div>
+  <div class="wish-tip">提交后需求直达安叔，做出来第一时间通知你</div>
+</div>
+
+<!-- 需求管理区（仅本机可见） -->
+<div class="wish-admin" id="wishAdmin">
+  <div class="wish-admin-head" onclick="toggleAdmin()">🔧 需求管理（点开查看收集到的需求）</div>
+  <div id="wishList" class="wish-list"></div>
+</div>
+
+<!-- 弹窗 -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">详情</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<footer>安叔产品商店 · 制作人：安叔 · 2026-08-01</footer>
+
+<script>
+// ===== 分类样式表 =====
+const CAT_STYLE = {
+  '实体产品': { bg:'#f3e9ff', grad:'linear-gradient(135deg,#f3e9ff,#e9d5ff)', fg:'#7c3aed', line:'#7c3aed' },
+  '陪跑服务': { bg:'#ffe9d9', grad:'linear-gradient(135deg,#ffe9d9,#ffd5ad)', fg:'#e66a19', line:'#e66a19' },
+  '知识产品': { bg:'#e6f2ff', grad:'linear-gradient(135deg,#e6f2ff,#cfe3ff)', fg:'#2563eb', line:'#2563eb' },
+  'B端咨询':  { bg:'#ccfbf1', grad:'linear-gradient(135deg,#ccfbf1,#99f6e4)', fg:'#0d9488', line:'#0d9488' },
+  '服务类':   { bg:'#e6ffef', grad:'linear-gradient(135deg,#e6ffef,#c7f9d6)', fg:'#16a34a', line:'#16a34a' },
+  '诊断服务': { bg:'#fef3c7', grad:'linear-gradient(135deg,#fef3c7,#fde68a)', fg:'#d97706', line:'#d97706' }
+};
+
+// ===== 产品数据（每生成一个新可卖物就追加） =====
+const PRODUCTS = [
+  {
+    id: 1, icon: "💾", cat: "实体产品", name: "荣盈AI智算钥匙（U盘）",
+    desc: "插上就能用的AI工具包：AI写文案/跟客户聊天/出日报，一人成军的生产力底座。",
+    price: "待定", unit: "元/套", badge: "badge-soon", badgeTxt: "🟡 开发中",
+    problem: "普通人想用AI干活，但不会配置工具链：装环境、调模型、写提示词——门槛劝退90%的人。",
+    solution: "把整套AI生产力工具打包进一个U盘，插上即用。已签约莫总开发，8/10前出V1.0演示版，8/8沙龙演示。",
+    delivery: "U盘快递发货（待供应链确认）",
+    priceDetail: "价格待定（上市前公布，预计300–2000元区间）",
+    steps: ["确认购买，微信转账", "发收货地址，U盘快递发出", "收到插上即用，附使用手册", "售后答疑群"],
+    status: "soon"
+  },
+  {
+    id: 2, icon: "🛒", cat: "陪跑服务", name: "京东店群陪跑（0学费）",
+    desc: "不收学费，你赚钱我们才赚钱。已有学员25天做到¥18,000（学员群自报+后台截图）。",
+    price: "0", unit: "学费 + 后端分佣", badge: "badge-hot", badgeTxt: "🔥 主线",
+    problem: "想做京东店群但怕被割韭菜：高价课程不落地，学了还是不会开店、不出单。",
+    solution: "0学费模式+真实陪跑：执照代办+发货软件+店铺保证金全程带，学员出单后按阶梯抽成（利润越高抽成比例越低）。",
+    delivery: "线下/线上陪跑，学员群交付",
+    priceDetail: "学费0元，仅收取执照/软件/保证金等必要硬成本（出单后从分佣中抵扣，不额外收费）",
+    steps: ["咨询确认方向", "交保证金+办执照", "注册京东+拉学员群", "培训开班+陪跑出单"],
+    status: "hot"
+  },
+  {
+    id: 3, icon: "🐟", cat: "知识产品", name: "闲鱼7天起号实操手册",
+    desc: "Day1选赛道→Day7数据复盘，完整起号路径+合规导流方法。新手照做就能启动。",
+    price: "9.9", unit: "元 起", badge: "badge-new", badgeTxt: "🆕 待上架",
+    problem: "闲鱼新手三大坑：不会选品、乱发被限流、想引流被平台警告甚至封号。",
+    solution: "把团队实操验证过的7天起号流程+合规导流方法（售后卡+简介聚合链接）整理成可照做的手册，附限流自救三板斧。",
+    delivery: "微信发送PDF + 配套表格",
+    priceDetail: "9.9元（标准版）· 含模板增强版49元",
+    steps: ["下单付款", "微信发《闲鱼7天起号手册》PDF", "附赠选品表/话术模板"],
+    status: "new"
+  },
+  {
+    id: 4, icon: "🐟", cat: "陪跑服务", name: "闲鱼AI上架陪跑服务",
+    desc: "闲鱼AI自动上架事故后的实战陪跑：关掉「闲鱼空间」权限、走通上架确认流程、照片防误标。手把手带一遍，避开AI误触风险。",
+    price: "49.9", unit: "元", badge: "badge-new", badgeTxt: "🆕 陪跑",
+    problem: "闲鱼AI自动识别上架出事故（照片被标价6000元上架），平台将加强上架确认——很多学员不知道自己的照片会被AI拿去上架，一不小心就违规。",
+    solution: "1对1陪跑：①关闭「闲鱼空间」权限 ②走通上架确认操作 ③照片防误标设置 ④出一份你自己的上架SOP。把事故复盘变成你能照做的流程。",
+    delivery: "微信1对1陪跑，交付上架SOP文档",
+    priceDetail: "49.9元（1次陪跑 + 上架SOP文档）",
+    steps: ["拍49.9元陪跑单", "微信发你的闲鱼后台截图", "1对1带关权限+走流程", "交付你的上架SOP"],
+    status: "new"
+  },
+  {
+    id: 5, icon: "📋", cat: "诊断服务", name: "副业方向AI诊断",
+    desc: "描述你的情况，AI基于安叔15年经验+实战体系，给出方向诊断+启动成本+避坑清单。",
+    price: "49", unit: "元/次", badge: "badge-new", badgeTxt: "🆕 待上架",
+    problem: "想搞副业但不知道适合做什么：没方向、没方法、怕被割韭菜，问AI又得到一堆鸡汤。",
+    solution: "把安叔的创业诊断方法（P/V/F/$$/X + 五维财富）做成AI诊断：输入你的情况→输出方向+启动成本+下一步+最该避开的坑。",
+    delivery: "网页在线诊断（已有原型 startup-engine）",
+    priceDetail: "49元/次 · 包月答疑可另购",
+    steps: ["在线填写情况", "AI分析出诊断报告", "不满意可加微信追问1次"],
+    status: "new"
+  },
+  {
+    id: 6, icon: "🚀", cat: "陪跑服务", name: "创业陪跑 · 全案",
+    desc: "从选项目到跑通第一单全程陪跑：京东/闲鱼/U盘三线可选，总经办视角的保姆级带教。",
+    price: "999", unit: "元 起", badge: "badge-soon", badgeTxt: "🟡 规划中",
+    problem: "副业没人带，遇到问题不知道问谁：选品卡住、平台处罚、心态崩了——课都上完了还是不会做。",
+    solution: "长期陪跑：选项目+定目标+每周复盘+问题随问，把安叔带学员的方法论标准化交付。",
+    delivery: "微信/线下，1对1或小班",
+    priceDetail: "999元起（按项目/周期分档报价）",
+    steps: ["预约沟通", "定方向+签陪跑协议", "按周期陪跑交付"],
+    status: "soon"
+  },
+  {
+    id: 7, icon: "📚", cat: "知识产品", name: "RPO全套SOP流程（HTML页面版）",
+    desc: "14年RPO实战沉淀做成可交互HTML页面：招聘=销售模型、账号权重管理、话术跟进转化、五维考核——拿来即用，手机电脑都能看。",
+    price: "199", unit: "元", badge: "badge-new", badgeTxt: "🆕 新上架",
+    problem: "企业招不到人，不是简历少，是把招聘当行政干了。招聘主管缺一套「销售化」的招聘打法：账号怎么养、话术怎么跟、转化怎么算。",
+    solution: "把安叔14年RPO经验做成可交互HTML页面：招聘=销售管理模型（账号权重=流量、话术=转化）、精准招聘话术库、五维考核评分制、3-7-15-30培训考核节点表——手机/电脑打开即用。",
+    delivery: "微信发送HTML页面 + 配套表格模板",
+    priceDetail: "199元（HTML交互版 + 表格模板）",
+    steps: ["下单付款", "微信发《RPO全套SOP流程》HTML", "附招聘SOP表格模板", "进入售后答疑群"],
+    status: "new"
+  },
+  {
+    id: 8, icon: "🏥", cat: "服务类", name: "社保规划养老服务",
+    desc: "灵活就业/自由职业社保规划：基数测算、避免断缴、养老退休金测算。针对年薪8万+正常缴税人群。",
+    price: "19.9", unit: "元 咨询起 · 方案定制", badge: "badge-new", badgeTxt: "🆕 新上架",
+    problem: "年薪8万+但社保规划混乱：基数不会选（交多亏/交少不够）、换工作断缴、不知道退休能拿多少、养老没底。",
+    solution: "社保规划服务分两步：①19.9元先做咨询评估（你的情况适合什么方案）②确认后再按个人情况定制正式方案：基数测算、断缴补缴指导、养老退休金测算报告、年度跟踪。",
+    delivery: "微信服务：先咨询评估 → 再定制方案",
+    priceDetail: "咨询评估19.9元（含初步判断+方案建议）· 正式规划按个人收入/年限/目标定制报价",
+    steps: ["拍19.9元咨询单", "微信提交收入/社保情况", "出初步评估+方案建议", "确认定制方案 → 按情况报价"],
+    status: "new"
+  },
+  {
+    id: 9, icon: "🧾", cat: "服务类", name: "个人二次退税服务",
+    desc: "个税年度汇算二次退税：专项附加扣除全梳理、年终奖计税方式测算，合法多退。针对年薪8万+正常缴税群体。",
+    price: "19.9", unit: "元 咨询起 · 按单定制", badge: "badge-new", badgeTxt: "🆕 新上架",
+    problem: "年薪8万+正常缴税，但每年汇算都少退：专项附加扣除没申报全（子女教育/房贷/赡养老人/继续教育）、年终奖计税方式选错，多缴了税自己不知道。",
+    solution: "退税服务分两步：①19.9元先做咨询评估（你的收入结构有没有可退空间、大概能退多少）②确认后再按单定制代办：专项附加逐项核查、年终奖计税方式测算、汇算申报代办、到账跟踪。合法合规，不搞虚假申报。",
+    delivery: "微信服务：先咨询评估 → 再按单代办",
+    priceDetail: "咨询评估19.9元（含可退空间预判）· 正式代办按收入结构/可退项复杂度定制报价",
+    steps: ["拍19.9元咨询单", "提交个税APP收入截图", "出可退空间评估", "确认代办 → 按单报价"],
+    status: "new"
+  },
+  {
+    id: 10, icon: "🏢", cat: "B端咨询", name: "招聘业务SOP搭建咨询",
+    desc: "帮企业从0搭可复制的招聘体系：账号权重、话术转化、五维考核、3-7-15-30节点。14年RPO实战，直接搬进你的团队。",
+    price: "3999", unit: "元 起 · 按规模定制", badge: "badge-hot", badgeTxt: "🔥 B端主线",
+    problem: "企业招人靠运气：HR当行政用，账号不养、话术不跟、转化不算，招3个月还缺人。老板想建招聘体系，但没人懂招聘=销售的打法。",
+    solution: "把安叔14年RPO体系搬进企业：①诊断现有招聘漏斗 ②搭账号权重+话术库 ③建五维考核评分制 ④定3-7-15-30培训考核节点 ⑤陪跑落地1个月见效。",
+    delivery: "线上诊断+工作坊/远程，文档+模板+1个月答疑",
+    priceDetail: "3999元起（单店/小团队标准化版）· 多门店/集团按规模定制（含现场工作坊+月度跟踪）",
+    steps: ["预约沟通，发企业招聘现状", "出诊断报告+搭建方案", "工作坊交付SOP+模板", "1个月陪跑落地+优化"],
+    status: "hot"
+  },
+  {
+    id: 11, icon: "🤖", cat: "B端咨询", name: "企业AI应用内训工作坊",
+    desc: "半天/1天，把AI怎么真正帮企业干活讲透：录音转写→知识库→一鱼多吃内容生产→成本控制。融银实战内容，拿来即用。",
+    price: "5800", unit: "元/场 起", badge: "badge-hot", badgeTxt: "🔥 B端",
+    problem: "企业花钱买了AI工具，员工还在用AI聊天。没有工作流、没有知识库、没有SOP，AI停留在玩具阶段，老板看不到回报。",
+    solution: "半天/1天工作坊：①个人AI工作台搭建 ②录音/文档转知识库 ③一鱼多吃内容生产流 ④成本控制（避免一天烧150）⑤现场带练。已为融银互动交付验证。",
+    delivery: "线下/线上工作坊，含实操手册+提示词包",
+    priceDetail: "5800元/场（半天，≤20人）· 9800元/天（含定制行业案例+1个月远程答疑）· 集团多场打包议价",
+    steps: ["确认参训人数+行业", "定制工作坊大纲", "现场交付+带练", "交付手册+1个月答疑"],
+    status: "hot"
+  },
+  {
+    id: 12, icon: "🎬", cat: "陪跑服务", name: "老板IP打造陪跑",
+    desc: "帮实体老板/专家从0做个人IP：人设定位→内容生产→多平台分发→私域承接。安叔新媒体团队全程带。",
+    price: "2999", unit: "元 起 · 分档", badge: "badge-new", badgeTxt: "🆕 团队交付",
+    problem: "老板想做IP但不会出镜、不会写脚本、没时间剪。找代运营被割、自己拍没流量，IP做成摆设。",
+    solution: "新媒体团队陪跑：人设定位+脚本拆解+一鱼多吃内容流+跨平台分发（公众号/视频号/抖音/小红书）+私域承接。把安叔自己跑通的路复制给你。",
+    delivery: "微信/线下，1对1或小班，团队交付",
+    priceDetail: "2999元起（多平台3个月陪跑）· 年度IP顾问另议",
+    steps: ["沟通人设方向", "出定位+内容规划", "陪跑生产+分发", "数据复盘优化"],
+    status: "new"
+  },
+  {
+    id: 13, icon: "📈", cat: "陪跑服务", name: "AI提效实操训练营",
+    desc: "14天，把安叔的AI工作流教给普通人：录音转写→知识库→一鱼多吃→成本控制。每天15分钟，从AI玩具到AI员工。",
+    price: "199", unit: "元 起", badge: "badge-new", badgeTxt: "🆕 待上架",
+    problem: "普通人装了一堆AI工具，每天还是手工搬砖。不会搭工作流、不会建知识库、不会用AI批量出内容，提效停留在想象。",
+    solution: "14天系统训练营：①个人AI工作台 ②录音/文档转知识库 ③一鱼多吃内容生产 ④成本控制技巧 ⑤实战作业点评。把安叔自用流程拆成小白能跟的步骤。",
+    delivery: "社群+录播+作业点评，微信交付",
+    priceDetail: "199元（录播+社群）· 499元（含1对1作业点评+提示词包）",
+    steps: ["报名进营", "Day1-3搭工作台", "Day4-10工作流实战", "Day11-14复盘出成果"],
+    status: "new"
+  },
+  {
+    id: 14, icon: "📱", cat: "陪跑服务", name: "新媒体矩阵起号陪跑",
+    desc: "把一鱼多吃跨平台内容流教给你：一个录音拆5条视频+5篇笔记+1篇公众号。公众号/视频号/抖音/小红书同步起量。",
+    price: "499", unit: "元 起", badge: "badge-new", badgeTxt: "🆕 待上架",
+    problem: "想做新媒体但每天为今天发什么累瘫。平台越多越乱，内容重复被限流，一个人根本跑不动矩���。",
+    solution: "陪跑交付安叔团队在用的跨平台SOP：内容中台搭建+一鱼多吃拆解+各平台适配+发布排期+数据复盘。一个人也能管4个号。",
+    delivery: "微信/线上，模板+带练",
+    priceDetail: "499元（单平台起号SOP+模板）· 1999元（4平台3个月陪跑）",
+    steps: ["现状诊断", "搭内容中台", "拆首批内容", "陪跑发布+复盘"],
+    status: "new"
+  },
+  {
+    id: 15, icon: "💰", cat: "服务类", name: "上班族财税省心包",
+    desc: "社保规划+个税二次退税打包：基数测算、断缴补缴、退休金测算、专项附加全梳理。年薪8万+上班族一年能省/多退好几千。",
+    price: "49.9", unit: "元 合集", badge: "badge-new", badgeTxt: "🆕 组合包",
+    problem: "年薪8万+正常缴税，社保交得懵、税退得少。两个低价服务分开买麻烦，想要一个打包方案。",
+    solution: "把现有社保规划+个人退税合并为组合包：先咨询评估，再打包定制，一次搞定居社保和税。",
+    delivery: "微信服务，先评估再定制",
+    priceDetail: "49.9元（两项咨询评估打包）· 正式方案按个人情况定制（社保+退税组合报价）",
+    steps: ["拍49.9组合单", "提交社保+收入情况", "出两项评估", "确认定制打包方案"],
+    status: "new"
+  },
+  {
+    id: 16, icon: "🔄", cat: "知识产品", name: "副业项目会员（月度）",
+    desc: "每月更新跑通的副业项目+新玩法：京东店群、闲鱼矩阵、AI工具流。持续跟，不踩坑、不落伍。",
+    price: "99", unit: "元/月", badge: "badge-new", badgeTxt: "🆕 会员制",
+    problem: "副业项目迭代快，今天能做的下月就过时。零散买课学完就忘，缺一个持续更新的项目情报站。",
+    solution: "会员制：每月更新安叔团队在跑的项目+实操数据+避坑更新。京东/闲鱼/AI三线持续供料，会员群随时答疑。",
+    delivery: "会员群+每月项目文档，微信交付",
+    priceDetail: "99元/月 · 999元/年（送历史全部项目库）",
+    steps: ["付费开通", "进会员群", "收每月项目更新", "群内随时答疑"],
+    status: "new"
+  },
+  {
+    id: 17, icon: "🧰", cat: "知识产品", name: "新媒体SOP工具包（模板+提示词）",
+    desc: "安叔团队在用的跨平台内容生产模板+AI提示词库：一鱼多吃拆解表、各平台适配模板、封面图提示词、成本控制清单。",
+    price: "99", unit: "元", badge: "badge-new", badgeTxt: "🆕 待上架",
+    problem: "看了安叔的一鱼多吃工作流想抄，但不知道具体提示词怎么写、表格怎么搭。要的是能直接用的模板，不是道理。",
+    solution: "把团队内部SOP工具化：①一鱼多吃拆解表 ②公众号/视频号/抖音/小红书适配模板 ③封面图AI提示词 ④AI成本控制清单 ⑤素材评估维度表。",
+    delivery: "微信发送模板包（表格+提示词文档）",
+    priceDetail: "99元（模板+提示词包）· 199元（含1次工作流答疑）",
+    steps: ["下单付款", "发工具包", "附使用说明", "进答疑群"],
+    status: "new"
+  },
+  {
+    id: 18, icon: "🤝", cat: "服务类", name: "35+副业转型社群",
+    desc: "30-45岁上班族的副业实战圈：真实项目+心态陪伴+避坑共享。安叔亲历收入空窗期，懂你的焦虑。",
+    price: "199", unit: "元/季", badge: "badge-new", badgeTxt: "🆕 社群",
+    problem: "30多岁想搞副业，但鸡汤号看一堆还是不敢动。缺一个真实、不割、能互相打气的圈子，尤其怕踩坑、怕被笑。",
+    solution: "季度社群：①真实副业项目共享（安叔在跑的）②每周话题+答疑 ③成员避坑互助 ④安叔亲身转型经历陪伴。重实操、重陪伴。",
+    delivery: "社群+周更，微信交付",
+    priceDetail: "199元/季 · 699元/年（送全部知识产品）",
+    steps: ["付费进群", "看项目库", "参与周话题", "随时互助答疑"],
+    status: "new"
+  },
+  {
+    id: 19, icon: "🛰️", cat: "知识产品", name: "电商规则情报 · 周报订阅",
+    desc: "每周一封：闲鱼/京东/抖音的规则变动、限流风控预警、被验证的玩法，附原文链接可自查。我们自己每天在用的那份情报，脱敏后发给你。",
+    price: "9.9", unit: "元/首月 · 续39/月", badge: "badge-new", badgeTxt: "🆕 内测价",
+    problem: "平台规则一个月改几次，等你踩了坑才知道；自己上网搜，搜到的全是过时干货和卖课软文，还分不清哪条是真的。",
+    solution: "我们每天用AI扫全平台规则/风控/玩法（多源检索+人工筛），只挑「会影响你出单和封号」的，每周一封讲清楚，每条附原文链接让你自己核。",
+    delivery: "微信发送（图文/PDF周报）· 每周一早上送达",
+    priceDetail: "首月9.9元体验（含4期），续费39元/月，随时可停；不承诺收益，只提供信息与判断参考",
+    steps: ["加微信 NineHalf95 备注「情报」", "付首月9.9元", "拉进情报收件名单", "每周一早上收周报"],
+    status: "new"
+  },
+  {
+    id: 20, icon: "🧩", cat: "B端咨询", name: "招商获客页定制（诊断H5+留资+FAQ机器人）",
+    desc: "给你自己的项目做一套能自己收线索的手机页面：AI诊断问卷 + 留资卡 + 常见问题机器人 + 微信弹窗，客户自己看、自己问、自己留联系方式。",
+    price: "999", unit: "元/套 起 · 含部署", badge: "badge-new", badgeTxt: "🆕 交付成品",
+    problem: "招商全靠人一句一句问、一句一句答，客户看完就没下文；自己不会做页面，找外包报价3000起，来回沟通一个月还改不明白。",
+    solution: "复用我们已跑通的招商页面模板（诊断问卷→AI分析→弹药展示→FAQ应答→微信弹窗），换成你的项目、你的话术、你的二维码，做好直接给你一个链接。",
+    delivery: "交付线上链接 + 源码文件 · 3天出初版 · 手机可直接打开",
+    priceDetail: "单项目999元起（含1次改稿）；需要接你自己的AI知识库/机器人的版本按需报价",
+    steps: ["加微信 NineHalf95 备注「建页」", "发项目资料+常见问题", "3天出初版页面", "确认后上线并交付链接"],
+    status: "new"
+  }
+];
+
+// ===== 价格展示格式化 =====
+function fmtPrice(price) {
+  if (price === '待定') return '待定';
+  if (price === '0') return '0元';
+  return '¥' + price;
+}
+
+// ===== 渲染筛选栏 =====
+let currentCat = '全部';
+const FILTER_ORDER = ['全部','陪跑服务','B端咨询','知识产品','实体产品','服务类','诊断服务'];
+function renderFilter() {
+  const bar = document.getElementById("filterBar");
+  bar.innerHTML = FILTER_ORDER.map(c =>
+    `<div class="fpill ${c === currentCat ? 'active' : ''}" onclick="setFilter('${c}')">${c}</div>`
+  ).join("");
+}
+function setFilter(cat) {
+  currentCat = cat;
+  renderFilter();
+  renderGrid();
+}
+
+// ===== 渲染产品网格 =====
+function renderGrid() {
+  const grid = document.getElementById("productGrid");
+  const list = currentCat === '全部' ? PRODUCTS : PRODUCTS.filter(p => p.cat === currentCat);
+  grid.innerHTML = list.map(p => {
+    const st = CAT_STYLE[p.cat] || {bg:'#eee', grad:'#eee', fg:'#666', line:'#ccc'};
+    return `
+    <div class="product" onclick="openModal(${p.id})" style="--cat-color:${st.line}">
+      <div class="p-icon" style="background:${st.grad}">${p.icon}</div>
+      <div class="p-cat" style="color:${st.fg}">${p.cat}</div>
+      <div class="p-name">${p.name}</div>
+      <div class="p-desc">${p.desc}</div>
+      <div class="p-price">${fmtPrice(p.price)}<span class="unit"> ${p.unit}</span></div>
+      <span class="p-badge ${p.badge}">${p.badgeTxt}</span>
+    </div>`;
+  }).join("");
+  document.getElementById("heroCount").textContent = `共 ${PRODUCTS.length} 个产品 / 服务` + (currentCat === '全部' ? '' : ` · 当前显示「${currentCat}」${list.length}个`);
+}
+
+// ===== 弹窗 =====
+function openModal(id) {
+  const p = PRODUCTS.find(x => x.id === id); if (!p) return;
+  document.getElementById("modalTitle").textContent = `${p.icon} ${p.name}`;
+  document.getElementById("modalBody").innerHTML = `
+    <h4>❓ 解决什么问题</h4>
+    <div class="prob-box">${p.problem}</div>
+    <h4>✅ 怎么解决</h4>
+    <div class="sol-box">${p.solution}</div>
+    <h4>💰 价格说明</h4>
+    <div class="price-box">
+      <div>${p.priceDetail}</div>
+      <div class="big">${fmtPrice(p.price)}</div>
+    </div>
+    <h4>📦 交付方式</h4>
+    <div>${p.delivery}</div>
+    <h4>🛒 购买流程</h4>
+    <div class="steps">
+      ${p.steps.map((s, i) => `<div class="step"><span class="n">${i+1}</span><span>${s}</span></div>`).join("")}
+    </div>
+    <button class="buy-btn" onclick="alert('当前为演示版：正式收款接入微信支付商户号后自动交付。现在购买请加安叔微信 NineHalf95 备注产品名。')">📩 立即购买 / 咨询</button>
+    <div class="buy-hint">付款后微信自动交付内容/开通服务 · 实体产品快递发出</div>
+  `;
+  document.getElementById("modalOverlay").classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+function closeModal() {
+  document.getElementById("modalOverlay").classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+// ===== 需求收集箱 =====
+const WISH_KEY = "anshuWishes";
+function loadWishes() {
+  try { return JSON.parse(localStorage.getItem(WISH_KEY)) || []; } catch(e) { return []; }
+}
+function saveWishes(list) {
+  try { localStorage.setItem(WISH_KEY, JSON.stringify(list)); } catch(e) {}
+}
+function renderWishCount() {
+  const n = loadWishes().length;
+  document.getElementById("wishCount").textContent = `已收集 ${n} 条需求`;
+}
+function renderWishList() {
+  const list = loadWishes();
+  const box = document.getElementById("wishList");
+  if (!list.length) { box.innerHTML = '<div style="color:var(--text-muted);padding:6px 0">暂无需求，等客户来投</div>'; }
+  else {
+    box.innerHTML = list.map((w, i) => `
+      <div class="wish-item">
+        <span class="w-text">📮 ${w.text}</span>
+        <span class="w-del" onclick="delWish(${i})">删除</span>
+      </div>
+    `).join("");
+  }
+}
+function submitWish() {
+  const input = document.getElementById("wishInput");
+  const text = input.value.trim();
+  if (!text) { input.focus(); return; }
+  const list = loadWishes();
+  list.push({ text: text, time: new Date().toLocaleString("zh-CN") });
+  saveWishes(list);
+  input.value = "";
+  renderWishCount();
+  renderWishList();
+  const tip = document.querySelector(".wish-tip");
+  tip.textContent = "✅ 需求已收到！安叔看到后会优先做出来，做出来第一时间通知你";
+  tip.classList.add("ok");
+  setTimeout(() => { alert("需求已记录 ✅\n\n想更快拿到，可以加安叔微信 NineHalf95，把需求直接发给我，备注「需求」"); }, 300);
+}
+function delWish(i) {
+  const list = loadWishes();
+  list.splice(i, 1);
+  saveWishes(list);
+  renderWishCount();
+  renderWishList();
+}
+function toggleAdmin() {
+  document.getElementById("wishList").classList.toggle("show");
+  renderWishList();
+}
+
+renderFilter();
+renderGrid();
+renderWishCount();
+</script>
+</body>
+</html>
