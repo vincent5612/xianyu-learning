@@ -442,7 +442,52 @@ table.tb .num{font-family:var(--mono);text-align:right}
   opacity:0;animation:rise 3.4s linear infinite}
 @keyframes rise{0%{opacity:0;transform:translateY(0)}12%{opacity:.9}100%{opacity:0;transform:translateY(-92vh)}}
 
-/* Toast */
+/* ══════════ 手机端（安叔路上要看，必须能看）══════════ */
+@media (max-width:900px){
+  body{overflow:auto}
+  .app{padding-bottom:64px}
+  .rail{
+    position:fixed;left:0;right:0;bottom:0;top:auto;width:auto;height:64px;flex-direction:row;
+    overflow-x:auto;overflow-y:hidden;border-right:none;border-top:1px solid var(--line);
+    padding:5px 8px;gap:4px;background:rgba(13,13,19,.96)
+  }
+  .rail::-webkit-scrollbar{height:0}
+  .rail-logo,.rail-sp{display:none}
+  .rail-btn{width:auto;min-width:64px;font-size:10px;padding:6px 8px}
+  .rail-btn i{font-size:17px}
+  .rail-btn.on::before{display:none}
+  .top{height:auto;flex-wrap:wrap;gap:8px;padding:9px 12px}
+  .top h1{font-size:14px;order:1}
+  .top h1 span{display:none}
+  .top-sp{display:none}
+  .pill{font-size:11px;padding:4px 9px}
+  .im{flex-direction:column}
+  .im-left{width:auto;height:auto;border-right:none;border-bottom:1px solid var(--line)}
+  .list-scroll{display:flex;overflow-x:auto;overflow-y:hidden;padding:8px;gap:6px;flex:0 0 auto}
+  .list-scroll .grp{display:none}
+  .ri{min-width:104px;flex:0 0 auto;flex-direction:column;align-items:center;text-align:center;gap:5px;margin:0}
+  .ri .rt b{font-size:12px}
+  .ri .rt span{display:none}
+  .im-right{display:none}
+  .msgs{padding:14px 14px 20px}
+  .msg{max-width:92%}
+  .scroll{padding:14px 12px 80px}
+  .grid.g2,.grid.g3,.grid.g4{grid-template-columns:1fr}
+  .id-grid{grid-template-columns:repeat(2,1fr)}
+  .style-grid{grid-template-columns:1fr}
+  .grow-hero{padding:15px;gap:14px}
+  .lv-ring{width:70px;height:70px}
+  .split{justify-content:center}
+  .set-row{flex-wrap:wrap}
+  .ob{padding:14px;align-items:flex-start}
+  .ob h2{font-size:19px}
+  .table-wrap{overflow-x:auto}
+  table.tb{min-width:560px}
+}
+@media (max-width:520px){
+  .id-grid{grid-template-columns:1fr}
+  .sign-cell{width:44px;height:64px;font-size:10px}
+}
 .toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);z-index:200;
   background:rgba(26,26,37,.96);border:1px solid rgba(128,136,251,.45);border-radius:12px;
   padding:11px 18px;font-size:13px;box-shadow:var(--sh-glow);animation:pop .25s}
