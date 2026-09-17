@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>口袋大脑-U · 求必应 ｜ 高保真原型 v1（赛博鎏金）</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="root">
+
+  <!-- ══════════ 主壳：左 Rail + 主区 ══════════ -->
+  <div class="app">
+    <aside class="rail" id="rail">
+      <div class="rail-logo">应</div>
+      <!-- 导航由 app.js 渲染 -->
+    </aside>
+
+    <div class="main">
+      <header class="top">
+        <h1 id="pg-title">智能体 <span id="pg-sub"></span></h1>
+        <div class="top-sp"></div>
+        <span class="pill gold" title="RY 积分（荣银）">💎 <b id="tp-points">0</b></span>
+        <span class="pill pri" title="当前等级 / 经验">⚡ <b id="tp-level">Lv.1</b></span>
+        <span class="pill" title="当前模型通道">🧠 <b id="tp-model">未接入</b></span>
+        <button class="btn ghost sm" id="btn-replay-ob">新手村</button>
+        <div class="avatar" id="avatar">安</div>
+      </header>
+      <div id="view" style="flex:1;min-height:0;display:flex;flex-direction:column"></div>
+    </div>
+  </div>
+
+  <!-- ══════════ 新手村（首次进入流程）══════════ -->
+  <div class="ob hidden" id="ob">
+    <div class="ob-card" id="ob-body"></div>
+  </div>
+
+  <!-- ══════════ 身份确认过渡动画 ══════════ -->
+  <div id="transit"></div>
+
+  <!-- ══════════ Toast ══════════ -->
+  <div id="toast"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
