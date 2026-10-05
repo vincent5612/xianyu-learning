@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>荣盈互动-国庆放假通知海报</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#eef2f7;display:flex;justify-content:center;padding:24px;
+       font-family:'PingFang SC','Noto Sans SC','Hiragino Sans GB',sans-serif}
+  .card{position:relative;width:1080px;height:1440px;flex-shrink:0;overflow:hidden;background:#fff;
+        display:flex;flex-direction:column;color:#1a2230;padding:78px 76px 70px}
+  .card::before{content:"";position:absolute;width:820px;height:820px;right:-340px;top:-300px;border-radius:50%;
+        background:radial-gradient(circle,rgba(55,138,221,.14) 0%,rgba(55,138,221,0) 68%)}
+  .card::after{content:"";position:absolute;width:700px;height:700px;left:-320px;bottom:-320px;border-radius:50%;
+        background:radial-gradient(circle,rgba(255,122,0,.10) 0%,rgba(255,122,0,0) 70%)}
+  .topbar{position:absolute;left:0;top:0;width:1080px;height:16px;
+        background:linear-gradient(90deg,#185FA5 0%,#378ADD 46%,#FF7A00 100%)}
+  .wrap{position:relative;z-index:2;display:flex;flex-direction:column;height:100%}
+
+  .brand{display:flex;align-items:center;gap:18px;margin-bottom:36px}
+  .brand .mark{width:64px;height:64px;border-radius:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+        background:linear-gradient(135deg,#185FA5 0%,#378ADD 55%,#FF7A00 100%);color:#fff;font-size:38px;font-weight:900;line-height:1;letter-spacing:0}
+  .brand .lgimg{height:64px;width:auto;display:none}
+  .brand .txt b{display:block;font-size:30px;font-weight:900;color:#042C53;letter-spacing:.5px}
+  .brand .txt span{display:block;font-size:16px;color:#5F6B7A;font-weight:600;letter-spacing:2.5px;margin-top:4px}
+  .brand .rt{margin-left:auto;text-align:right}
+  .brand .rt em{display:inline-block;font-style:normal;font-size:16px;font-weight:700;color:#0f4f8c;
+        background:#e6f1fb;border:1px solid #b5d4f4;border-radius:999px;padding:8px 17px}
+
+  h1{font-size:80px;line-height:1.1;font-weight:900;color:#042C53;letter-spacing:-1.5px}
+  h1 .hl{background:linear-gradient(120deg,#378ADD 0%,#FF7A00 100%);
+        -webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:23px;color:#5F6B7A;line-height:1.58;margin-top:15px;font-weight:500}
+
+  .datebox{display:flex;align-items:center;gap:32px;margin-top:32px;padding:30px 38px;border-radius:24px;
+        background:#f6f9fc;border:1px solid #e6ecf3}
+  .datebox .days{font-size:80px;font-weight:900;color:#185FA5;letter-spacing:-2px;line-height:1}
+  .datebox .days i{font-style:normal;font-size:28px;color:#FF7A00;font-weight:800;margin-left:8px;letter-spacing:0}
+  .datebox .dv{width:1px;height:84px;background:#dbe5ef}
+  .datebox .inf{font-size:24px;font-weight:700;color:#1a2230;line-height:1.64}
+  .datebox .inf em{font-style:normal;color:#FF7A00;font-weight:800}
+  .datebox .inf s{text-decoration:none;color:#185FA5;font-weight:800}
+
+  .rtitle{display:flex;align-items:center;gap:14px;margin:36px 0 16px}
+  .rtitle .bar{width:6px;height:26px;border-radius:3px;background:linear-gradient(180deg,#378ADD,#FF7A00)}
+  .rtitle b{font-size:27px;font-weight:900;color:#042C53;letter-spacing:.5px}
+
+  .rows{display:flex;flex-direction:column;gap:13px}
+  .row{display:flex;gap:16px;align-items:flex-start;padding:18px 24px;border-radius:16px;
+       background:#f6f9fc;border:1px solid #e6ecf3}
+  .row .n{width:36px;height:36px;flex-shrink:0;border-radius:11px;display:flex;align-items:center;justify-content:center;
+       background:#e6f1fb;border:1px solid #b5d4f4;color:#185FA5;font-size:19px;font-weight:900}
+  .row .c b{display:block;font-size:24px;font-weight:800;color:#042C53;margin-bottom:5px}
+  .row .c span{display:block;font-size:20px;color:#5F6B7A;line-height:1.5}
+
+  .sp{flex:1}
+
+  .cta{display:flex;align-items:center;justify-content:space-between;gap:24px;
+       background:#0a1f38;border-radius:22px;padding:26px 34px}
+  .cta .l b{display:block;font-size:25px;font-weight:900;color:#fff;margin-bottom:7px}
+  .cta .l span{display:block;font-size:19px;color:#a9b6cc;line-height:1.5}
+  .cta .r{text-align:right;flex-shrink:0}
+  .cta .r b{display:block;font-size:30px;font-weight:900;color:#FF7A00;letter-spacing:.5px}
+  .cta .r span{display:block;font-size:17px;color:#a9b6cc;margin-top:7px}
+
+  .foot{margin-top:22px;padding-top:16px;border-top:1px solid #e6ecf3;
+        display:flex;justify-content:space-between;align-items:center;font-size:18px;color:#5F6B7A}
+  .foot b{color:#042C53;font-weight:800;letter-spacing:.5px}
+</style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="topbar"></div>
+    <div class="wrap" id="wrap">
+
+      <div class="brand">
+        <img class="lgimg" id="lgimg" alt="荣盈互动">
+        <div class="mark" id="lgmark">荣</div>
+        <div class="txt">
+          <b>荣盈互动</b>
+          <span>ROYIN · AI 驱动的企业增长服务商</span>
+        </div>
+        <div class="rt"><em>行政人事部 · 通知</em></div>
+      </div>
+
+      <h1>国庆节<span class="hl">放假通知</span></h1>
+      <div class="sub">根据国务院办公厅 2026 年部分节假日安排，现将公司国庆假期安排通知如下。</div>
+
+      <div class="datebox">
+        <div class="days">10.01<i>— 10.07</i></div>
+        <div class="dv"></div>
+        <div class="inf">
+          放假 <em>7</em> 天，<s>10 月 8 日（周四）</s>正常上班<br>10 月 10 日（周六）补班 · 请提前安排行程
+        </div>
+      </div>
+
+      <div class="rtitle"><div class="bar"></div><b>放假要求</b></div>
+
+      <div class="rows">
+        <div class="row">
+          <div class="n">01</div>
+          <div class="c">
+            <b>离岗前全面检查</b>
+            <span>断电、关水、关窗、锁门，个人贵重物品随身带走，工位不留易燃物。</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="n">02</div>
+          <div class="c">
+            <b>工作交接清楚</b>
+            <span>在手事项交接完毕、节点对齐；外出期间保持通讯畅通，紧急事项联系部门负责人。</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="n">03</div>
+          <div class="c">
+            <b>出行与财产安全</b>
+            <span>错峰出行、注意人身安全；谨慎对待陌生来电与转账要求，谨防假期诈骗。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sp"></div>
+
+      <div class="cta">
+        <div class="l">
+          <b>假期紧急事务</b>
+          <span>请联系所在部门负责人 / 直属上级，节后上班首日同步处理结果。</span>
+        </div>
+        <div class="r">
+          <b>400-989-7768</b>
+          <span>rongyinghudong.com</span>
+        </div>
+      </div>
+
+      <div class="foot">
+        <b>深圳市荣盈互动科技有限公司</b>
+        <span>祝全体同事国庆愉快 · 平安返岗</span>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+(function(){
+  var lg = document.getElementById('lgimg');
+  var mk = document.getElementById('lgmark');
+  lg.style.display = 'none';
+  lg.addEventListener('load', function(){ lg.style.display='block'; mk.style.display='none'; });
+  lg.addEventListener('error', function(){ lg.style.display='none'; mk.style.display='flex'; });
+
+  var wrap = document.getElementById('wrap');
+  var over = wrap.scrollHeight - wrap.clientHeight;
+  var lastEl = wrap.lastElementChild;
+  var lb = Math.round(lastEl.getBoundingClientRect().bottom - wrap.getBoundingClientRect().top);
+  var tag = 'over=' + over + '|lastBottom=' + lb + '|vh=' + wrap.clientHeight;
+  var prev = '';
+  try { prev = localStorage.getItem('poster_last') || ''; } catch(e){}
+
+  if (location.hash !== '#render') { document.title = 'PREVIEW|' + tag + '|prev=' + prev; return; }
+  document.title = 'M|' + tag + '|prev=' + prev;
+
+  function buildSvg(){
+    var css = '';
+    for (var i=0;i<document.styleSheets.length;i++){
+      var rs = document.styleSheets[i].cssRules || [];
+      for (var j=0;j<rs.length;j++) css += rs[j].cssText + '\n';
+    }
+    var card = document.getElementById('card').outerHTML
+        .split('<br>').join('<br/>')
+        .replace(/<img([^>]*[^\/])>/g, '<img$1/>');
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1440">' +
+           '<foreignObject x="0" y="0" width="1080" height="1440">' +
+           '<div xmlns="http://www.w3.org/1999/xhtml"><style>' + css + '</style>' + card + '</div>' +
+           '</foreignObject></svg>';
+  }
+
+  function save(s){ try { localStorage.setItem('poster_last', s); } catch(e){} }
+
+  function run(withLogo, cb){
+    if (!withLogo){ lg.style.display='none'; mk.style.display='flex'; }
+    var img = new Image();
+    img.onload = function(){
+      try{
+        var cv = document.createElement('canvas'); cv.width=1080; cv.height=1440;
+        var ctx = cv.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,1080,1440);
+        ctx.drawImage(img,0,0,1080,1440);
+        ctx.getImageData(0,0,4,4);
+        cv.toBlob(function(b){
+          if(!b){ cb('BLOB-NULL'); return; }
+          var a = document.createElement('a');
+          a.href = URL.createObjectURL(b);
+          a.download = '荣盈互动-国庆放假通知海报-2026-v6.png';
+          document.body.appendChild(a); a.click();
+          var li = (lg.style.display === 'block') ? 1 : 0;
+          var cardR = document.getElementById('card').getBoundingClientRect();
+          function sample(sel){
+            var el = document.querySelector(sel); if (!el) return 'x';
+            var r = el.getBoundingClientRect();
+            var x = Math.round(r.left - cardR.left), y = Math.round(r.top - cardR.top);
+            var w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
+            if (x < 0 || y < 0 || x + w > 1080 || y + h > 1440) return 'oob';
+            var dd = ctx.getImageData(x, y, w, h).data, n = 0;
+            for (var q = 0; q < dd.length; q += 8) { if (dd[q] < 240 || dd[q+1] < 240 || dd[q+2] < 240) n++; }
+            return n + '@' + x + ',' + y + ',' + w + ',' + h;
+          }
+          var s1 = sample('h1'), s2 = sample('.brand .mark'), s3 = sample('.datebox'), s4 = sample('.cta');
+          var extra = 'h1=' + s1 + '|mark=' + s2 + '|date=' + s3 + '|cta=' + s4;
+          save('DONE bytes=' + b.size + ' logo=' + (withLogo?1:0) + ' logoimg=' + li + ' ' + extra + ' ' + tag);
+          document.title = 'DONE|bytes=' + b.size + '|logoimg=' + li + '|' + extra + '|' + tag;
+        },'image/png');
+      }catch(e){ cb('EXC:' + (e && e.name ? e.name : 'X')); }
+    };
+    img.onerror = function(){ cb('IMG-FAIL'); };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(buildSvg());
+  }
+
+  run(true, function(e1){
+    run(false, function(e2){
+      save('FAIL ' + e1 + ' / ' + e2 + ' ' + tag);
+      document.title = 'FAIL|' + e1 + '|' + e2 + '|' + tag;
+    });
+  });
+})();
+</script>
+</body>
+</html>

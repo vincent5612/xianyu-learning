@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>目标下达 → 执行 → 逐级签名确认</title>
+<style>
+:root{
+  --bg-body:#0a0e1a;
+  --bg-slide:linear-gradient(135deg,#0f1629 0%,#1a1f3a 50%,#0f1629 100%);
+  --bg-slide-border:rgba(100,140,255,0.15);
+  --bg-slide-shadow:0 20px 80px rgba(0,0,0,0.5),0 0 60px rgba(80,120,255,0.08);
+  --bg-slide-glow:radial-gradient(circle,rgba(80,120,255,0.06) 0%,transparent 70%);
+  --bg-card:rgba(255,255,255,0.03);
+  --bg-card-border:rgba(255,255,255,0.06);
+  --text-primary:#e0e6f0; --text-secondary:#8899bb; --text-tertiary:#5a6a8a; --text-muted:#3a4a6a; --text-white:#fff;
+  --color-blue:#5070ff; --color-blue-light:#7cacff; --color-blue-text:#a0b4ff; --color-blue-bg:rgba(80,112,255,0.12);
+  --color-purple:#7c3aed; --color-purple-light:#a78bfa; --color-purple-text:#c4b5fd; --color-purple-bg:rgba(124,58,237,0.12);
+  --color-green:#10b981; --color-green-light:#34d399; --color-green-text:#6ee7b7; --color-green-bg:rgba(16,185,129,0.12);
+  --color-orange:#f59e0b; --color-orange-light:#fbbf24; --color-orange-text:#fcd34d; --color-orange-bg:rgba(245,158,11,0.12);
+  --color-red:#ef4444; --color-red-text:#fca5a5; --color-red-bg:rgba(239,68,68,0.08);
+  --color-gray:#64748b; --color-gray-text:#cbd5e1; --color-gray-bg:rgba(100,116,139,0.15);
+  --gradient-title:linear-gradient(135deg,#ffffff 0%,#7cacff 50%,#a78bfa 100%);
+  --gradient-accent:linear-gradient(135deg,#5070ff,#a78bfa);
+  --slide-width:1280px; --slide-min-height:720px; --slide-padding:60px 70px; --slide-padding-content:40px 50px;
+  --slide-margin:40px auto; --slide-radius:20px; --card-radius:14px; --widget-radius:8px;
+  --gap-section:24px; --gap-card:16px; --gap-inline:8px;
+  --font-family:'Inter',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font-family);background:var(--bg-body);color:var(--text-primary);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* 进度条 + 导航 */
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--gradient-accent);z-index:99;transition:width .2s;}
+.dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:99;}
+.dots i{width:9px;height:9px;border-radius:50%;background:rgba(124,172,255,.25);display:block;cursor:pointer;transition:.2s;}
+.dots i.on{background:var(--color-blue-light);transform:scale(1.25);}
+
+.slide{max-width:var(--slide-width);width:100%;min-height:var(--slide-min-height);margin:var(--slide-margin);
+  background:var(--bg-slide);border-radius:var(--slide-radius);border:1px solid var(--bg-slide-border);
+  box-shadow:var(--bg-slide-shadow);padding:var(--slide-padding);position:relative;overflow:hidden;page-break-after:always;}
+.slide::before{content:'';position:absolute;top:-50%;right:-30%;width:800px;height:800px;background:var(--bg-slide-glow);pointer-events:none;}
+.slide.compact{padding:var(--slide-padding-content);}
+
+.slide-cover{display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:600px;text-align:center;}
+.cover-badge{display:inline-block;background:linear-gradient(135deg,var(--color-blue-bg),var(--color-purple-bg));
+  border:1px solid rgba(80,120,255,0.3);border-radius:30px;padding:8px 24px;font-size:14px;font-weight:500;
+  color:var(--color-blue-light);letter-spacing:2px;margin-bottom:30px;}
+.cover-title{font-size:52px;font-weight:800;background:var(--gradient-title);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;line-height:1.25;margin-bottom:20px;}
+.cover-subtitle{font-size:20px;color:var(--text-secondary);font-weight:400;margin-bottom:50px;max-width:900px;line-height:1.6;}
+.cover-meta{display:flex;gap:40px;color:var(--text-tertiary);font-size:14px;flex-wrap:wrap;justify-content:center;}
+
+.slide-header{margin-bottom:32px;}
+.slide-number{font-size:12px;font-weight:600;color:var(--color-blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+.slide-title{font-size:34px;font-weight:700;color:var(--text-white);line-height:1.3;}
+.slide-title span{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.slide-subtitle{font-size:15px;color:var(--text-secondary);margin-top:10px;}
+
+.card{background:var(--bg-card);border-radius:var(--card-radius);border:1px solid var(--bg-card-border);padding:24px;position:relative;transition:transform .2s;}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2);}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap-card);}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap-card);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap-card);}
+.kicker{font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;}
+.kicker.blue{color:var(--color-blue-text);} .kicker.purple{color:var(--color-purple-text);}
+.kicker.green{color:var(--color-green-text);} .kicker.orange{color:var(--color-orange-text);}
+.kicker.red{color:var(--color-red-text);} .kicker.gray{color:var(--color-gray-text);}
+.card h3{font-size:16px;font-weight:700;color:var(--text-white);margin-bottom:8px;}
+.card p{font-size:13.5px;color:var(--text-secondary);line-height:1.75;}
+.card .sig{display:inline-block;margin-top:12px;font-size:11px;font-weight:700;color:var(--color-blue-text);
+  background:var(--color-blue-bg);border-radius:6px;padding:4px 10px;}
+.num{font-size:40px;font-weight:800;line-height:1;}
+.grad-blue{background:linear-gradient(135deg,#a0b4ff,#5070ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.grad-green{background:linear-gradient(135deg,#6ee7b7,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.grad-orange{background:linear-gradient(135deg,#fcd34d,#ea580c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+.flow{display:flex;align-items:stretch;gap:12px;margin-top:8px;}
+.flow .step{flex:1;background:var(--bg-card);border:1px solid var(--bg-card-border);border-radius:12px;padding:18px 16px;position:relative;}
+.flow .step .idx{font-size:11px;font-weight:700;color:var(--color-blue-text);letter-spacing:1px;}
+.flow .step h4{font-size:15px;font-weight:700;color:var(--text-white);margin:6px 0 6px;}
+.flow .step p{font-size:12.5px;color:var(--text-secondary);line-height:1.7;}
+.arrow{align-self:center;color:var(--text-muted);font-size:18px;}
+
+.metric-table{width:100%;border-collapse:collapse;}
+.metric-table th,.metric-table td{padding:11px 14px;text-align:left;font-size:13.5px;border-bottom:1px solid var(--bg-card-border);}
+.metric-table th{font-weight:600;color:var(--text-secondary);font-size:11.5px;letter-spacing:1px;}
+.metric-table td{color:var(--text-primary);}
+.metric-table tr:last-child td{border-bottom:none;}
+.metric-table .tot{color:var(--text-white);font-weight:700;}
+.pending{color:var(--text-muted);font-size:12px;}
+
+.slide-footer{position:absolute;bottom:20px;left:50px;right:50px;display:flex;justify-content:space-between;align-items:center;color:var(--text-muted);font-size:11px;}
+.tag{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:3px 9px;margin-right:6px;}
+.tag.blue{color:var(--color-blue-text);background:var(--color-blue-bg);}
+.tag.green{color:var(--color-green-text);background:var(--color-green-bg);}
+.tag.orange{color:var(--color-orange-text);background:var(--color-orange-bg);}
+.tag.red{color:var(--color-red-text);background:var(--color-red-bg);}
+.tag.gray{color:var(--color-gray-text);background:var(--color-gray-bg);}
+.note{margin-top:18px;font-size:12.5px;color:var(--text-tertiary);border-left:3px solid rgba(124,172,255,.35);padding-left:14px;line-height:1.8;}
+.warn{background:var(--color-red-bg);border:1px solid rgba(239,68,68,.25);border-radius:12px;padding:16px 20px;font-size:13px;color:var(--color-red-text);line-height:1.8;}
+
+@media print{body{background:#fff;}.slide{box-shadow:none;border:1px solid #ddd;}.progress,.dots{display:none;}}
+</style>
+</head>
+<body>
+<div class="progress" id="pg"></div>
+<div class="dots" id="dots"></div>
+
+<!-- 1 封面 -->
+<section class="slide slide-cover">
+  <div class="cover-badge">总经办 · 内部机制说明</div>
+  <h1 class="cover-title">目标下达 → 执行 → 逐级签名确认</h1>
+  <p class="cover-subtitle">让目标派到人、做完有签字、卡点有人管、结果可追溯。<br>机制本身不是报表，是一条责任链。</p>
+  <div class="cover-meta">
+    <span>2026-10-04</span><span>适用范围：管理层先行，全员待定</span><span>密级：内部 · 仅总经办</span>
+  </div>
+</section>
+
+<!-- 2 三层闭环 -->
+<section class="slide compact">
+  <div class="slide-header">
+    <div class="slide-number">01 / 机制</div>
+    <h2 class="slide-title">三层闭环：<span>下达 · 执行 · 签名</span></h2>
+    <p class="slide-subtitle">每一层都要留痕：谁领的、做到哪、谁签的字。</p>
+  </div>
+  <div class="flow">
+    <div class="step"><div class="idx">① 目标下达（上 → 下）</div><h4>一层层派到人</h4><p>总经办定目标 → 主管 → 经理 → 员工<br>每一层确认「领到」，不是「知道了」</p></div>
+    <div class="arrow">➡</div>
+    <div class="step"><div class="idx">② 执行端（下 → 上）</div><h4>做完往上走</h4><p>员工执行 → 交出结果与证据 → 卡点当场报<br>不许「做完了」三个字交差</p></div>
+    <div class="arrow">➡</div>
+    <div class="step"><div class="idx">③ 签名确认（逐级背书）</div><h4>一级一级签</h4><p>员工签 → 主管签 → 经理签 → 总经办签<br>留痕自动生成：谁签的、什么时间</p></div>
+  </div>
+  <div class="note">报表给人看，签名链给人<b>追责</b>——签了字，目标没达成时就没有「我不知道」这个说法。</div>
+  <div class="slide-footer"><span>总经办 · 目标与确认机制</span><span>1 / 5</span></div>
+</section>
+
+<!-- 3 门禁 -->
+<section class="slide compact">
+  <div class="slide-header">
+    <div class="slide-number">02 / 关键一环</div>
+    <h2 class="slide-title">签字之前，<span>必须现有证据</span></h2>
+    <p class="slide-subtitle">空签等于没签。每一级签之前，先看到该级要看的证据。</p>
+  </div>
+  <div class="grid4">
+    <div class="card"><div class="kicker blue">门 1 · 目标确认</div><h3>领到没</h3><p>谁做、做什么、交期、验收物四项齐，缺一项不算领到。</p><span class="sig">签字人：员工</span></div>
+    <div class="card"><div class="kicker purple">门 2 · 执行证据</div><h3>做了没</h3><p>产出物 / 数据 / 截图 / 链接——能打开、能核对，不接受口头描述。</p><span class="sig">提交人：员工</span></div>
+    <div class="card"><div class="kicker green">门 3 · 结果确认</div><h3>做成没</h3><p>主管按验收物逐条核，不达标打回执行门，不许带病往上签。</p><span class="sig">签字人：主管</span></div>
+    <div class="card"><div class="kicker orange">门 4 · 逐级背书</div><h3>认不认</h3><p>经理、总经办各签一道；任一级可打回，打回要写原因。</p><span class="sig">签字人：经理 / 总经办</span></div>
+  </div>
+  <div class="warn">红线：任何一级签字前没有证据，视为「空签」——不进考核、不认结果、不算完成。</div>
+  <div class="slide-footer"><span>总经办 · 目标与确认机制</span><span>2 / 5</span></div>
+</section>
+
+<!-- 4 提前到岗 -->
+<section class="slide compact">
+  <div class="slide-header">
+    <div class="slide-number">03 / 立即执行</div>
+    <h2 class="slide-title">10/5–10/6 提前到岗：<span>今天必须定的四件</span></h2>
+    <p class="slide-subtitle">人到了没安排，比不来更伤士气——也白算出勤。</p>
+  </div>
+  <table class="metric-table">
+    <tr><th>要定什么</th><th>谁给</th><th>不定会怎样</th><th>状态</th></tr>
+    <tr><td>名单：岗位 + 主管 + 到岗日期</td><td>人资</td><td>通知发不出去</td><td><span class="tag red">待给</span></td></tr>
+    <tr><td>每人当日目标（一件事＋验收物＋交期）</td><td>直属主管</td><td>人来了坐着，白算一天</td><td><span class="tag orange">待出</span></td></tr>
+    <tr><td>加班 / 调休 / 出勤口径</td><td>人资</td><td>节后扯皮，钱谁出说不清</td><td><span class="tag orange">待定</span></td></tr>
+    <tr><td>当日 18:00 一句回执</td><td>值班主管</td><td>干没干没人知道</td><td><span class="tag blue">机制已备</span></td></tr>
+  </table>
+  <div class="note">这两天人少、时间短、可控——正好是这套机制的<b>第一次真跑</b>。跑顺了 10/8 全员照抄；跑不顺，只丢两个人两天。</div>
+  <div class="slide-footer"><span>总经办 · 目标与确认机制</span><span>3 / 5</span></div>
+</section>
+
+<!-- 5 横向收益表 -->
+<section class="slide compact">
+  <div class="slide-header">
+    <div class="slide-number">04 / 配套交付</div>
+    <h2 class="slide-title">京东 / 闲鱼 · <span>前端＋后端横向收益结构表</span></h2>
+    <p class="slide-subtitle">横向＝四条线并排比，一眼看出哪条线在赚、哪条在出血。抖音不并入。</p>
+  </div>
+  <table class="metric-table">
+    <tr><th>科目</th><th>京东 · 前端</th><th>京东 · 后端</th><th>闲鱼 · 前端</th><th>闲鱼 · 后端</th><th>合计</th></tr>
+    <tr><td>体验 / 引流款</td><td class="pending">待填</td><td class="pending">—</td><td class="pending">待填</td><td class="pending">—</td><td class="pending">待填</td></tr>
+    <tr><td>正式班 · 定金 / 尾款</td><td class="pending">待填</td><td class="pending">—</td><td class="pending">待填</td><td class="pending">—</td><td class="pending">待填</td></tr>
+    <tr><td>供货差价 / 代运营 / 工具复购</td><td class="pending">—</td><td class="pending">待填</td><td class="pending">—</td><td class="pending">待填</td><td class="pending">待填</td></tr>
+    <tr><td>支出（人力 / 流量 / 账号 / 佣金）</td><td class="pending">待填</td><td class="pending">待填</td><td class="pending">待填</td><td class="pending">待填</td><td class="pending">待填</td></tr>
+    <tr><td class="tot">净额</td><td class="pending">待填</td><td class="pending">待填</td><td class="pending">待填</td><td class="pending">待填</td><td class="pending">待填</td></tr>
+  </table>
+  <div class="note">前端＝拉新收入（兼获客成本），后端＝利润来源。<b>两笔钱必须分列</b>，混在一格里会互相抵消，看不出真实结构。所有数字待业务口径确认后填，页面不放未核数字。</div>
+  <div class="slide-footer"><span>总经办 · 目标与确认机制</span><span>4 / 5</span></div>
+</section>
+
+<!-- 6 下一步 -->
+<section class="slide compact">
+  <div class="slide-header">
+    <div class="slide-number">05 / 下一步</div>
+    <h2 class="slide-title">待确认四项，<span>确认即开工</span></h2>
+  </div>
+  <div class="grid2">
+    <div class="card"><div class="kicker orange">待定</div><h3>覆盖范围</h3><p>全员 31 人 / 管理层 8 人 / 先在京东·闲鱼两条线试点——先选一档。</p></div>
+    <div class="card"><div class="kicker orange">待定</div><h3>签名形式</h3><p>飞书审批流（需先在后台建一次「目标确认单」定义）/ 表格确认字段降级版。</p></div>
+    <div class="card"><div class="kicker orange">待定</div><h3>生效日</h3><p>10/5 提前到岗先跑 / 10/8 开工首日 / 下周。</p></div>
+    <div class="card"><div class="kicker blue">已备</div><h3>我这边就绪</h3><p>目标台账字段结构、四道门清单、到岗通知与当日目标表模板——名单一到即可出件。</p></div>
+  </div>
+  <div class="note">口径未定之前，不向员工宣布；管理者先签，员工后签。</div>
+  <div class="slide-footer"><span>总经办 · 目标与确认机制</span><span>5 / 5</span></div>
+</section>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')],pg=document.getElementById('pg'),dots=document.getElementById('dots');
+slides.forEach((s,i)=>{const d=document.createElement('i');d.onclick=()=>s.scrollIntoView({behavior:'smooth'});dots.appendChild(d);});
+function upd(){const y=scrollY,h=document.body.scrollHeight-innerHeight;pg.style.width=(h>0?y/h*100:0)+'%';
+  let cur=0;slides.forEach((s,i)=>{if(s.getBoundingClientRect().top<innerHeight*0.5)cur=i;});
+  [...dots.children].forEach((d,i)=>d.classList.toggle('on',i===cur));}
+addEventListener('scroll',upd);upd();
+addEventListener('keydown',e=>{let cur=0;slides.forEach((s,i)=>{if(s.getBoundingClientRect().top<innerHeight*0.5)cur=i;});
+  if(['ArrowDown','ArrowRight',' '].includes(e.key)){e.preventDefault();slides[Math.min(cur+1,slides.length-1)].scrollIntoView({behavior:'smooth'});}
+  if(['ArrowUp','ArrowLeft'].includes(e.key)){e.preventDefault();slides[Math.max(cur-1,0)].scrollIntoView({behavior:'smooth'});}});
+</script>
+</body>
+</html>
