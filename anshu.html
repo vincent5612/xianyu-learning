@@ -416,7 +416,7 @@ function openSB(id){
 }
 function openS(g,id){
   const p = IDX[g+'_'+id] || null; if(!p) return;
-  if(g==='p' && richSheet(String(p.id), p.name, p.cat, fmt(p.price)+' '+unit(p.unit), p.steps?[p.steps.length+' 步交付']:[])) return;
+  if(g==='p' && richSheet(String(p.id), p.name, p.cat, fmt(p.price)+' '+unit(p.unit), [])) return;
   document.getElementById('sheet').innerHTML = `
     <div class="sh"><h3>${p.icon} ${p.name}</h3><button class="x" onclick="closeS()">✕</button></div>
     <div class="chips"><b>${p.cat}</b><b>${fmt(p.price)} ${unit(p.unit)}</b><b>${(p.steps||[]).length} 步交付</b></div>
@@ -453,7 +453,7 @@ function richSheet(key, name, cat, price, tags){
   if(!r) return false;
   sheet(`
     <div class="sh"><h3>${name}</h3><button class="x" onclick="closeS()">✕</button></div>
-    <div class="chips"><b>${cat}</b><b>${price}</b>${(tags||[]).map(t=>`<b>${t}</b>`).join('')}</div>
+    <div class="chips"><b>${cat}</b><b>${price}</b><b>${r.flow.length} 步走完</b>${(tags||[]).map(t=>`<b>${t}</b>`).join('')}</div>
 
     <h4>这是什么</h4>
     <div class="box hi">${r.intro}</div>
