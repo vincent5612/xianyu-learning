@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07070a">
+<title>安叔 · 副业实验室｜个人学副业 · 企业做增长</title>
+<meta name="description" content="安叔：14 年电商与招聘实战。给个人：从 9.9 的起号手册到长期陪跑；给企业：招聘体系、AI 内训、获客页定制。全部来自真实跑过的项目。">
+<style>
+:root{
+ --bg:#07070a;--bg2:#0d0d12;--card:rgba(22,22,28,.72);--card2:rgba(255,255,255,.045);
+ --line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.17);
+ --t1:#f4f4f7;--t2:#c4c4cf;--t3:#9a9aa6;
+ --p:#ff8a00;--p2:#ffb454;--b:#2fd8c0;--v:#a98bff;
+ --ease:cubic-bezier(.22,1,.36,1);--mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+ --safe:env(safe-area-inset-bottom,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);line-height:1.68;overflow-x:hidden;
+ font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+ -webkit-font-smoothing:antialiased;padding-bottom:calc(66px + var(--safe))}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+main{position:relative;z-index:2}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+::selection{background:rgba(255,138,0,.3)}
+
+/* ============ 顶栏（手机：只有品牌 + 微信） ============ */
+.top{position:fixed;top:0;left:0;right:0;z-index:60;transition:.3s var(--ease)}
+.top.solid{background:rgba(7,7,10,.86);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.topin{display:flex;align-items:center;gap:10px;padding:11px 16px;max-width:1080px;margin:0 auto}
+.orb{width:24px;height:24px;border-radius:50%;flex:0 0 24px;position:relative;
+ background:radial-gradient(circle at 32% 28%,#ffd089,#ff8a00 44%,#b45309)}
+.orb::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(255,138,0,.35);animation:pl 3.2s var(--ease) infinite}
+@keyframes pl{0%,100%{transform:scale(1);opacity:.65}50%{transform:scale(1.3);opacity:0}}
+.bn{font-weight:800;font-size:15px;letter-spacing:.3px}
+.bn i{font-style:normal;font-weight:500;color:var(--t3);font-size:11px;font-family:var(--mono);letter-spacing:1px;margin-left:6px}
+.toplinks{margin-left:auto;display:none;gap:2px}
+.toplinks a{font-size:13px;color:var(--t2);padding:7px 11px;border-radius:9px}
+.toplinks a:active{background:var(--card2);color:var(--t1)}
+.topwx{display:none}
+@media(min-width:760px){.topwx{display:flex;align-items:center;gap:6px;margin-left:14px;font-size:12.5px;font-weight:750;padding:8px 14px;border-radius:999px;
+ background:linear-gradient(135deg,var(--p),#ff6a00);color:#1a1206;box-shadow:0 4px 16px rgba(255,138,0,.3)}}
+@media(min-width:760px){.toplinks{display:flex;margin-left:auto}.topwx{margin-left:14px}.bn i{display:inline}}
+
+/* ============ Hero（手机优先） ============ */
+.hero{padding:90px 18px 34px;max-width:1080px;margin:0 auto;position:relative}
+.badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:1.6px;
+ color:var(--p2);border:1px solid rgba(255,138,0,.3);background:rgba(255,138,0,.07);padding:6px 12px;border-radius:999px;margin-bottom:20px}
+.badge i{width:5px;height:5px;border-radius:50%;background:var(--p);box-shadow:0 0 8px var(--p);animation:bl 2.2s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.25}}
+h1{font-size:clamp(1.85rem,8.4vw,3.4rem);line-height:1.15;font-weight:900;letter-spacing:-1px}
+h1 em{font-style:normal;display:block;background:linear-gradient(100deg,var(--p2),var(--p) 40%,var(--v) 80%,var(--b));
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:230% auto;animation:fl 9s linear infinite}
+@keyframes fl{to{background-position:230% center}}
+.lead{margin-top:18px;color:var(--t2);font-size:14.5px;max-width:600px}
+.lead b{color:var(--t1);font-weight:700;white-space:nowrap}
+
+/* 两个大入口（手机：竖排全宽，拇指好按） */
+.duolead{font-family:var(--mono);font-size:11.5px;letter-spacing:1.4px;color:var(--t3);margin-top:26px;margin-bottom:10px}
+.duo{display:grid;gap:12px;margin-top:0}
+.duo a{display:flex;align-items:center;gap:13px;padding:17px 16px;border-radius:18px;border:1.5px solid var(--bd,rgba(255,255,255,.16));
+ background:linear-gradient(135deg,var(--gl,rgba(255,138,0,.14)),rgba(20,20,26,.92));
+ box-shadow:0 10px 30px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.06);
+ transition:.22s var(--ease);min-height:84px;position:relative;overflow:hidden}
+.duo a::before{content:"";position:absolute;inset:0;opacity:.5;background:radial-gradient(120% 100% at 88% 0%,var(--gl,rgba(255,138,0,.16)),transparent 62%)}
+.duo a:active{transform:scale(.985);border-color:var(--c,var(--p))}
+.duo .di{width:46px;height:46px;flex:0 0 46px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+ background:rgba(255,255,255,.05);border:1px solid var(--line);position:relative}
+.duo .di svg{width:23px;height:23px;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.duo .dt{position:relative;flex:1}
+.duo .dt b{display:block;font-size:16.5px;font-weight:850;letter-spacing:.2px}
+.duo .dt span{display:block;font-size:12.5px;color:var(--t3);margin-top:3px}
+.duo .ar{position:relative;font-size:18px;color:var(--t3)}
+.duo .dp{position:relative;flex:0 0 auto;font-family:var(--mono);font-size:12px;font-weight:750;color:var(--c,var(--p));
+ border:1px solid var(--bd,var(--line2));background:rgba(255,255,255,.05);padding:5px 10px;border-radius:999px;white-space:nowrap}
+@media(min-width:660px){.duo{grid-template-columns:1fr 1fr;gap:14px}}
+
+/* 数字条（手机：2×2 或横滑） */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.st{display:flex;flex-direction:column;gap:2px}
+.st b{font-family:var(--mono);font-size:17px;font-weight:700}
+.st b i{font-style:normal;color:var(--p);font-size:.6em;margin-left:2px}
+.st span{font-size:10px;color:var(--t3);line-height:1.4}
+@media(min-width:660px){.stats{gap:18px;margin-top:30px;padding-top:24px}.st b{font-size:26px}.st span{font-size:11px}}
+
+/* ============ 区块 ============ */
+section.blk{padding:44px 18px 14px;max-width:1080px;margin:0 auto}
+.bhead{margin-bottom:20px}
+.btag{font-family:var(--mono);font-size:10.5px;letter-spacing:2.2px;color:var(--acc,var(--p));margin-bottom:9px}
+.bhead h2{font-size:clamp(1.35rem,5.6vw,2.1rem);font-weight:880;letter-spacing:-.6px;line-height:1.24}
+.bhead p{color:var(--t2);font-size:13.5px;margin-top:9px}
+
+/* 档位头（个人三档） */
+.tier{display:flex;align-items:baseline;gap:10px;margin:26px 0 12px;padding-left:11px;border-left:2px solid var(--acc,var(--p))}
+.tier:first-of-type{margin-top:8px}
+.tier b{font-size:15px;font-weight:800}
+.tier em{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--acc,var(--p))}
+.tier span{font-size:11.5px;color:var(--t3);margin-left:auto;text-align:right}
+
+/* 商品卡（手机：紧凑列表卡，一屏 3–4 个） */
+.cards{display:grid;gap:10px}
+.cards.tw{grid-template-columns:1fr}
+@media(min-width:680px){.cards.tw{grid-template-columns:repeat(2,1fr);gap:14px}}
+@media(min-width:1000px){.cards.tw{grid-template-columns:repeat(3,1fr)}}
+.pc{display:flex;gap:13px;align-items:center;padding:15px 15px;border-radius:15px;background:var(--card);
+ border:1px solid var(--line);transition:.2s var(--ease);cursor:pointer;position:relative;min-height:74px}
+.pc:active{transform:scale(.985);border-color:var(--acc,var(--p));background:rgba(30,26,20,.85)}
+.pc .pi{width:40px;height:40px;flex:0 0 40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;border:1px solid var(--line)}
+.pc .pb{flex:1;min-width:0}
+.pc .pn{font-size:14.5px;font-weight:750;line-height:1.35;display:flex;align-items:center;gap:6px}
+.pc .pn .hot{font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:999px;background:linear-gradient(135deg,var(--p),#ff6a00);color:#1a1206;flex:0 0 auto}
+.pc .pd{font-size:12px;color:var(--t3);margin-top:4px;
+ display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.pc .pp{flex:0 0 auto;text-align:right}
+.pc .pp b{font-family:var(--mono);font-size:16px;font-weight:750;color:var(--acc,var(--p))}
+.pc .pp span{display:block;font-size:10px;color:var(--t3);margin-top:1px}
+
+/* 企业区（青色系） */
+.bizwrap{background:linear-gradient(180deg,rgba(47,216,192,.055),transparent);border:1px solid rgba(47,216,192,.16);
+ border-radius:20px;padding:20px 16px 16px;margin-top:6px}
+.bizcard{display:block;padding:16px;border-radius:14px;background:var(--card);border:1px solid var(--line);margin-bottom:10px;cursor:pointer;transition:.2s var(--ease)}
+.bizcard:active{transform:scale(.985);border-color:var(--b)}
+.bizcard:last-child{margin-bottom:0}
+.bizcard .bh{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.bizcard .bh b{font-size:15.5px;font-weight:800;flex:1}
+.bizcard .bh em{font-style:normal;font-family:var(--mono);font-size:15px;font-weight:750;color:var(--b)}
+.bizcard p{font-size:12.5px;color:var(--t2);line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.bizcard .bt{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
+.bizcard .bt span{font-family:var(--mono);font-size:10px;color:var(--t3);border:1px solid var(--line);padding:3px 8px;border-radius:6px}
+
+/* 案例 */
+.caselist{display:grid;gap:10px}
+@media(min-width:760px){.caselist{grid-template-columns:repeat(2,1fr);gap:14px}}
+.cs{padding:16px;border-radius:15px;background:var(--card);border:1px solid var(--line)}
+.cs .cy{font-family:var(--mono);font-size:10px;letter-spacing:1.4px;color:var(--p);margin-bottom:7px}
+.cs h3{font-size:14.5px;font-weight:780;margin-bottom:7px}
+.cs p{font-size:12.5px;color:var(--t2);line-height:1.65}
+.cs .m{margin-top:11px;padding-top:10px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--b)}
+
+/* 联系 */
+.cta{text-align:center;padding:44px 18px 30px;max-width:1080px;margin:0 auto}
+.cta h2{font-size:clamp(1.5rem,6.6vw,2.5rem);font-weight:880;letter-spacing:-.7px;line-height:1.22}
+.cta h2 em{font-style:normal;background:linear-gradient(100deg,var(--p),var(--v));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.cta p{color:var(--t2);font-size:13.5px;margin-top:13px}
+.wxcard{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px;padding:16px;border-radius:16px;
+ background:var(--card);border:1px solid var(--line2)}
+.wxcard .k{font-family:var(--mono);font-size:10px;color:var(--t3);letter-spacing:1.4px}
+.wxcard .v{font-family:var(--mono);font-size:19px;font-weight:800;color:var(--p);letter-spacing:1.2px}
+.mps{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.mps span{font-size:12px;color:var(--t2);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
+footer{border-top:1px solid var(--line);padding:22px 18px 26px;text-align:center;font-size:11px;color:var(--t3);line-height:1.9}
+
+/* ============ 底部固定操作条（拇指区） ============ */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:70;padding:10px 14px calc(10px + var(--safe));
+ background:rgba(9,9,13,.9);backdrop-filter:blur(18px);border-top:1px solid var(--line);
+ display:flex;gap:10px;align-items:center}
+.dock .dtxt{flex:1;min-width:0}
+.dock .dtxt b{display:block;font-size:12.5px;font-weight:750;line-height:1.3}
+.dock .dtxt span{font-size:10.5px;color:var(--t3)}
+.dock a{flex:0 0 auto;padding:12px 20px;border-radius:12px;font-size:13.5px;font-weight:800;
+ background:linear-gradient(135deg,var(--p),#ff6a00);color:#1a1206;box-shadow:0 5px 18px rgba(255,138,0,.32)}
+
+/* ============ 详情抽屉（手机全屏 / 桌面居中） ============ */
+.ovl{position:fixed;inset:0;background:rgba(4,4,7,.85);backdrop-filter:blur(8px);z-index:90;display:none}
+.ovl.on{display:block}
+.sheet{position:absolute;left:0;right:0;bottom:0;top:auto;max-height:92vh;overflow-y:auto;
+ background:linear-gradient(180deg,#16161d,#0c0c11);border:1px solid var(--line2);border-bottom:none;
+ border-radius:22px 22px 0 0;padding:22px 18px calc(30px + var(--safe));animation:up .4s var(--ease);
+ -webkit-overflow-scrolling:touch}
+@keyframes up{from{transform:translateY(52px);opacity:0}to{transform:none;opacity:1}}
+@media(min-width:700px){
+ .ovl{display:none;align-items:center;justify-content:center;padding:24px}
+ .ovl.on{display:flex}
+ .sheet{position:relative;left:auto;right:auto;bottom:auto;top:auto;width:100%;max-width:620px;border-radius:20px;border-bottom:1px solid var(--line2);padding-bottom:26px}
+}
+.sh{display:flex;align-items:flex-start;gap:11px;margin-bottom:16px}
+.sh h3{font-size:17.5px;font-weight:850;flex:1;line-height:1.36}
+.sh .x{flex:0 0 32px;height:32px;border-radius:10px;background:var(--card2);border:1px solid var(--line);color:var(--t2);font-size:15px;cursor:pointer}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.chips b{font-family:var(--mono);font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--t2)}
+.sheet h4{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;color:var(--p);margin:18px 0 8px}
+.box{background:var(--card2);border-left:2px solid var(--line2);border-radius:9px;padding:12px 14px;font-size:13.5px;color:var(--t2);line-height:1.75}
+.box.hi{border-left-color:var(--p);background:rgba(255,138,0,.07);color:var(--t1)}
+.bignum{font-family:var(--mono);font-size:29px;font-weight:800;color:var(--p);margin-top:7px}
+.steps{display:flex;flex-direction:column;gap:9px}
+.stp{display:flex;gap:10px;font-size:13px;color:var(--t2);align-items:flex-start}
+.stp .n{flex:0 0 21px;height:21px;border-radius:6px;background:rgba(255,138,0,.14);color:var(--p);font-family:var(--mono);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.wxbox{margin-top:20px;border:1px dashed rgba(255,138,0,.45);border-radius:14px;padding:15px;background:rgba(255,138,0,.05)}
+.wxbox .r{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-top:7px}
+.wxbox b{font-family:var(--mono);font-size:17px;color:var(--p);letter-spacing:1px}
+.cpbtn{padding:11px 18px;border-radius:10px;background:var(--p);color:#1a1206;border:none;font-size:13.5px;font-weight:800;cursor:pointer;min-height:44px}
+.cpbtn:active{background:var(--p2)}
+.wxbox .nt{font-size:11.5px;color:var(--t3);margin-top:9px;line-height:1.6}
+#toast{position:fixed;left:50%;bottom:calc(84px + var(--safe));transform:translate(-50%,14px);background:rgba(22,22,28,.97);
+ border:1px solid var(--line2);padding:12px 18px;border-radius:12px;font-size:13px;z-index:99;opacity:0;transition:.3s;pointer-events:none;max-width:90vw;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<header class="top" id="top">
+  <div class="topin">
+    <span class="orb"></span>
+    <span class="bn">安叔<i>副业实验室</i></span>
+    <nav class="toplinks">
+      <a href="#personal">给个人</a><a href="#biz">给企业</a><a href="#ai">AI</a><a href="#coop">合作</a><a href="#cases">案例</a>
+    </nav>
+    <a href="#contact" class="topwx">加微信</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="badge"><i></i>14 年电商与招聘实战</div>
+  <h1>把踩过的坑，<em>做成你能直接买的东西。</em></h1>
+  <p class="lead">闲鱼起号、社保规划、招聘体系、企业 AI 落地——<b>18 个东西</b>，全部来自真跑过的项目。不承诺收益，只保证来源真实。</p>
+
+  <div class="duolead">先选你的身份 —— 只看你要的</div>
+  <div class="duo">
+    <a href="#personal" style="--c:var(--p);--bd:rgba(255,138,0,.5);--gl:rgba(255,138,0,.20)">
+      <span class="di"><svg viewBox="0 0 24 24" stroke="#ff8a00"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c1.4-3.9 4.2-5.7 7.5-5.7s6.1 1.8 7.5 5.7"/></svg></span>
+      <span class="dt"><b>我是个人</b><span>学副业 · 职场提效 · 财税</span></span>
+      <span class="dp">¥9.9 起</span>
+      <span class="ar">›</span>
+    </a>
+    <a href="#biz" style="--c:var(--b);--bd:rgba(47,216,192,.5);--gl:rgba(47,216,192,.20)">
+      <span class="di"><svg viewBox="0 0 24 24" stroke="#2fd8c0"><path d="M3 21h18M5 21V6l7-3v18M19 21V11l-7-3"/><path d="M8.5 9.5h1M8.5 13h1M8.5 16.5h1M15 14h1M15 17.5h1"/></svg></span>
+      <span class="dt"><b>我是企业</b><span>招聘体系 · AI 落地 · 获客页</span></span>
+      <span class="dp">¥999 起</span>
+      <span class="ar">›</span>
+    </a>
+  </div>
+
+  <div class="stats">
+    <div class="st"><b>14<i>年</i></b><span>电商与招聘实战</span></div>
+    <div class="st"><b>18<i>个</i></b><span>可直接购买的服务</span></div>
+    <div class="st"><b>2<i>类</i></b><span>个人 · 企业</span></div>
+    <div class="st"><b>9.9<i>起</i></b><span>先花一顿饭钱试试</span></div>
+  </div>
+</section>
+
+<!-- 给个人 -->
+<section class="blk" id="personal" style="--acc:var(--p)">
+  <div class="bhead rv">
+    <div class="btag">FOR YOU / 给个人</div>
+    <h2>先看清楚你愿意投入多深</h2>
+    <p>不要一上来就交大钱。按你现在的确定程度挑一档——不确定就先花一顿饭钱。</p>
+  </div>
+  <div id="pwrap"></div>
+</section>
+
+<!-- 给企业 -->
+<section class="blk" id="biz" style="--acc:var(--b)">
+  <div class="bhead rv">
+    <div class="btag">FOR BIZ / 给企业</div>
+    <h2>企业只做三件事</h2>
+    <p>不铺产品线。招不到人、想用 AI 但落不了地、想自己收线索——就这三件。</p>
+  </div>
+  <div class="bizwrap rv" id="bwrap"></div>
+</section>
+
+
+<!-- AI 落地 -->
+<section class="blk" id="ai" style="--acc:var(--v)">
+  <div class="bhead rv">
+    <div class="btag">AI / 能帮你把 AI 真用起来</div>
+    <h2>不是卖工具，是给你能跑的工作流</h2>
+    <p>个人和企业都用得上。上面这些不是概念，是我自己每天在跑的东西。</p>
+  </div>
+  <div class="cards tw" id="aiwrap"></div>
+</section>
+
+<!-- 合作项目 -->
+<section class="blk" id="coop" style="--acc:var(--b)">
+  <div class="bhead rv">
+    <div class="btag">CO-OP / 合作项目</div>
+    <h2>这两件不是买服务，是一起做</h2>
+    <p>你投入，我们出运营或出方法，收益按约好的分。</p>
+  </div>
+  <div id="coopwrap"></div>
+</section>
+
+<!-- 案例 -->
+<section class="blk" id="cases" style="--acc:var(--p)">
+  <div class="bhead rv">
+    <div class="btag">EVIDENCE / 案例</div>
+    <h2>不是想法，是在跑的事</h2>
+  </div>
+  <div class="caselist">
+    <div class="cs rv"><div class="cy">GAME / 抖音小游戏</div><h3>联合开发 + 上线代运营</h3>
+      <p>已签约 4 家客户，客户出资开发、上线后长期分成。这是我目前唯一已经收到过钱的合作模型。</p><div class="m">4 家签约 · 长期分成</div></div>
+    <div class="cs rv"><div class="cy">XIANYU / 闲鱼矩阵</div><h3>多账号体系与合规导流</h3>
+      <p>多账号 IP 隔离 + 平台红线绕行：售后卡 + 简介聚合链接，私信绝口不提微信。一次降权三次封号，这是踩出来的。</p><div class="m">合规导流就两条路</div></div>
+    <div class="cs rv"><div class="cy">AI / 企业内训</div><h3>AI 应用工作坊交付</h3>
+      <p>把 AI 从聊天玩具变成员工每天用的工具：AI 工作台、录音转知识库、一鱼多吃内容流、算力成本控制。</p><div class="m">半天 / 1 天 · 已交付企业</div></div>
+    <div class="cs rv"><div class="cy">RPO / 招聘体系</div><h3>14 年招聘实战沉淀</h3>
+      <p>招聘=销售模型：账号权重是流量、话术是转化、五维考核算结果，配 3-7-15-30 培训考核节点。</p><div class="m">14 年 · 一套可复制的方法</div></div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <h2 class="rv">想聊哪个，<em>直接说名字。</em></h2>
+  <p class="rv">告诉我你要哪一个，我发你详情、说清价格和怎么交付。不绕弯子。</p>
+  <div class="wxcard rv">
+    <span class="k">WECHAT</span><span class="v" id="wxv">NineHalf95</span>
+    <button class="cpbtn" onclick="copyWx()">复制微信号</button>
+  </div>
+  <div class="mps"><span>公众号 · 伯乐说创业</span><span>公众号 · 安叔的副业实验室</span></div>
+</section>
+
+<footer>
+  安叔 · 副业实验室 ｜ 页面制作：总经办 刘惊涛 ｜ 更新 2026-11-15<br>
+  所有服务均来自真实项目经验；不承诺收益，不做"躺赚"。付款前请先沟通确认。
+</footer>
+</main>
+
+<div class="dock">
+  <div class="dtxt"><b>有想要的，直接说名字</b><span>回复最快的通道是微信</span></div>
+  <a href="#contact" onclick="copyWx();return false;">加微信 NineHalf95</a>
+</div>
+
+<div class="ovl" id="ovl"><div class="sheet" id="sheet"></div></div>
+<div id="toast"></div>
+
+<script>
+const G = {"s1": [{"id": 3, "icon": "🐟", "cat": "知识产品", "name": "闲鱼7天起号实操手册", "desc": "Day1选赛道→Day7数据复盘，完整起号路径+合规导流方法。新手照做就能启动。", "price": "9.9", "unit": "元 起", "badge": "badge-new", "badgeTxt": "🆕 待上架", "problem": "闲鱼新手三大坑：不会选品、乱发被限流、想引流被平台警告甚至封号。", "solution": "把团队实操验证过的7天起号流程+合规导流方法（售后卡+简介聚合链接）整理成可照做的手册，附限流自救三板斧。", "delivery": "微信发送PDF + 配套表格", "priceDetail": "9.9元（标准版）· 含模板增强版49元", "steps": ["下单付款", "微信发《闲鱼7天起号手册》PDF", "附赠选品表/话术模板"], "status": "new", "_id": 101}, {"id": 19, "icon": "🛰️", "cat": "知识产品", "name": "电商规则情报 · 周报订阅", "desc": "每周一封：闲鱼/京东/抖音的规则变动、限流风控预警、被验证的玩法，附原文链接可自查。我们自己每天在用的那份情报，脱敏后发给你。", "price": "9.9", "unit": "元/首月 · 续39/月", "badge": "badge-new", "badgeTxt": "🆕 内测价", "problem": "平台规则一个月改几次，等你踩了坑才知道；自己上网搜，搜到的全是过时干货和卖课软文，还分不清哪条是真的。", "solution": "我们每天用AI扫全平台规则/风控/玩法（多源检索+人工筛），只挑「会影响你出单和封号」的，每周一封讲清楚，每条附原文链接让你自己核。", "delivery": "微信发送（图文/PDF周报）· 每周一早上送达", "priceDetail": "首月9.9元体验（含4期），续费39元/月，随时可停；不承诺收益，只提供信息与判断参考", "steps": ["加微信 NineHalf95 备注「情报」", "付首月9.9元", "拉进情报收件名单", "每周一早上收周报"], "status": "new", "_id": 102}, {"id": 8, "icon": "🏥", "cat": "服务类", "name": "社保规划养老服务", "desc": "灵活就业/自由职业社保规划：基数测算、避免断缴、养老退休金测算。针对年薪8万+正常缴税人群。", "price": "19.9", "unit": "元 咨询起 · 方案定制", "badge": "badge-new", "badgeTxt": "🆕 新上架", "problem": "年薪8万+但社保规划混乱：基数不会选（交多亏/交少不够）、换工作断缴、不知道退休能拿多少、养老没底。", "solution": "社保规划服务分两步：①19.9元先做咨询评估（你的情况适合什么方案）②确认后再按个人情况定制正式方案：基数测算、断缴补缴指导、养老退休金测算报告、年度跟踪。", "delivery": "微信服务：先咨询评估 → 再定制方案", "priceDetail": "咨询评估19.9元（含初步判断+方案建议）· 正式规划按个人收入/年限/目标定制报价", "steps": ["拍19.9元咨询单", "微信提交收入/社保情况", "出初步评估+方案建议", "确认定制方案 → 按情况报价"], "status": "new", "_id": 103}, {"id": 9, "icon": "🧾", "cat": "服务类", "name": "个人二次退税服务", "desc": "个税年度汇算二次退税：专项附加扣除全梳理、年终奖计税方式测算，合法多退。针对年薪8万+正常缴税群体。", "price": "19.9", "unit": "元 咨询起 · 按单定制", "badge": "badge-new", "badgeTxt": "🆕 新上架", "problem": "年薪8万+正常缴税，但每年汇算都少退：专项附加扣除没申报全（子女教育/房贷/赡养老人/继续教育）、年终奖计税方式选错，多缴了税自己不知道。", "solution": "退税服务分两步：①19.9元先做咨询评估（你的收入结构有没有可退空间、大概能退多少）②确认后再按单定制代办：专项附加逐项核查、年终奖计税方式测算、汇算申报代办、到账跟踪。合法合规，不搞虚假申报。", "delivery": "微信服务：先咨询评估 → 再按单代办", "priceDetail": "咨询评估19.9元（含可退空间预判）· 正式代办按收入结构/可退项复杂度定制报价", "steps": ["拍19.9元咨询单", "提交个税APP收入截图", "出可退空间评估", "确认代办 → 按单报价"], "status": "new", "_id": 104}, {"id": 15, "icon": "💰", "cat": "服务类", "name": "上班族财税省心包", "desc": "社保规划+个税二次退税打包：基数测算、断缴补缴、退休金测算、专项附加全梳理。年薪8万+上班族一年能省/多退好几千。", "price": "49.9", "unit": "元 合集", "badge": "badge-new", "badgeTxt": "🆕 组合包", "problem": "年薪8万+正常缴税，社保交得懵、税退得少。两个低价服务分开买麻烦，想要一个打包方案。", "solution": "把现有社保规划+个人退税合并为组合包：先咨询评估，再打包定制，一次搞定居社保和税。", "delivery": "微信服务，先评估再定制", "priceDetail": "49.9元（两项咨询评估打包）· 正式方案按个人情况定制（社保+退税组合报价）", "steps": ["拍49.9组合单", "提交社保+收入情况", "出两项评估", "确认定制打包方案"], "status": "new", "_id": 105}, {"id": 4, "icon": "🐟", "cat": "陪跑服务", "name": "闲鱼AI上架陪跑服务", "desc": "闲鱼AI自动上架事故后的实战陪跑：关掉「闲鱼空间」权限、走通上架确认流程、照片防误标。手把手带一遍，避开AI误触风险。", "price": "49.9", "unit": "元", "badge": "badge-new", "badgeTxt": "🆕 陪跑", "problem": "闲鱼AI自动识别上架出事故（照片被标价6000元上架），平台将加强上架确认——很多学员不知道自己的照片会被AI拿去上架，一不小心就违规。", "solution": "1对1陪跑：①关闭「闲鱼空间」权限 ②走通上架确认操作 ③照片防误标设置 ④出一份你自己的上架SOP。把事故复盘变成你能照做的流程。", "delivery": "微信1对1陪跑，交付上架SOP文档", "priceDetail": "49.9元（1次陪跑 + 上架SOP文档）", "steps": ["拍49.9元陪跑单", "微信发你的闲鱼后台截图", "1对1带关权限+走流程", "交付你的上架SOP"], "status": "new", "_id": 106}, {"id": 5, "icon": "📋", "cat": "诊断服务", "name": "副业方向AI诊断", "desc": "描述你的情况，AI基于安叔15年经验+实战体系，给出方向诊断+启动成本+避坑清单。", "price": "49", "unit": "元/次", "badge": "badge-new", "badgeTxt": "🆕 待上架", "problem": "想搞副业但不知道适合做什么：没方向、没方法、怕被割韭菜，问AI又得到一堆鸡汤。", "solution": "把安叔的创业诊断方法（P/V/F/$$/X + 五维财富）做成AI诊断：输入你的情况→输出方向+启动成本+下一步+最该避开的坑。", "delivery": "网页在线诊断（已有原型 startup-engine）", "priceDetail": "49元/次 · 包月答疑可另购", "steps": ["在线填写情况", "AI分析出诊断报告", "不满意可加微信追问1次"], "status": "new", "_id": 107}], "s2": [{"id": 16, "icon": "🔄", "cat": "知识产品", "name": "副业项目会员（月度）", "desc": "每月更新跑通的副业项目+新玩法：京东店群、闲鱼矩阵、AI工具流。持续跟，不踩坑、不落伍。", "price": "99", "unit": "元/月", "badge": "badge-new", "badgeTxt": "🆕 会员制", "problem": "副业项目迭代快，今天能做的下月就过时。零散买课学完就忘，缺一个持续更新的项目情报站。", "solution": "会员制：每月更新安叔团队在跑的项目+实操数据+避坑更新。京东/闲鱼/AI三线持续供料，会员群随时答疑。", "delivery": "会员群+每月项目文档，微信交付", "priceDetail": "99元/月 · 999元/年（送历史全部项目库）", "steps": ["付费开通", "进会员群", "收每月项目更新", "群内随时答疑"], "status": "new", "_id": 201}, {"id": 17, "icon": "🧰", "cat": "知识产品", "name": "新媒体SOP工具包（模板+提示词）", "desc": "安叔团队在用的跨平台内容生产模板+AI提示词库：一鱼多吃拆解表、各平台适配模板、封面图提示词、成本控制清单。", "price": "99", "unit": "元", "badge": "badge-new", "badgeTxt": "🆕 待上架", "problem": "看了安叔的一鱼多吃工作流想抄，但不知道具体提示词怎么写、表格怎么搭。要的是能直接用的模板，不是道理。", "solution": "把团队内部SOP工具化：①一鱼多吃拆解表 ②公众号/视频号/抖音/小红书适配模板 ③封面图AI提示词 ④AI成本控制清单 ⑤素材评估维度表。", "delivery": "微信发送模板包（表格+提示词文档）", "priceDetail": "99元（模板+提示词包）· 199元（含1次工作流答疑）", "steps": ["下单付款", "发工具包", "附使用说明", "进答疑群"], "status": "new", "_id": 202}, {"id": 13, "icon": "📈", "cat": "陪跑服务", "name": "AI提效实操训练营", "desc": "14天，把安叔的AI工作流教给普通人：录音转写→知识库→一鱼多吃→成本控制。每天15分钟，从AI玩具到AI员工。", "price": "199", "unit": "元 起", "badge": "badge-new", "badgeTxt": "🆕 待上架", "problem": "普通人装了一堆AI工具，每天还是手工搬砖。不会搭工作流、不会建知识库、不会用AI批量出内容，提效停留在想象。", "solution": "14天系统训练营：①个人AI工作台 ②录音/文档转知识库 ③一鱼多吃内容生产 ④成本控制技巧 ⑤实战作业点评。把安叔自用流程拆成小白能跟的步骤。", "delivery": "社群+录播+作业点评，微信交付", "priceDetail": "199元（录播+社群）· 499元（含1对1作业点评+提示词包）", "steps": ["报名进营", "Day1-3搭工作台", "Day4-10工作流实战", "Day11-14复盘出成果"], "status": "new", "_id": 203}, {"id": 7, "icon": "📚", "cat": "知识产品", "name": "RPO全套SOP流程（HTML页面版）", "desc": "14年RPO实战沉淀做成可交互HTML页面：招聘=销售模型、账号权重管理、话术跟进转化、五维考核——拿来即用，手机电脑都能看。", "price": "199", "unit": "元", "badge": "badge-new", "badgeTxt": "🆕 新上架", "problem": "企业招不到人，不是简历少，是把招聘当行政干了。招聘主管缺一套「销售化」的招聘打法：账号怎么养、话术怎么跟、转化怎么算。", "solution": "把安叔14年RPO经验做成可交互HTML页面：招聘=销售管理模型（账号权重=流量、话术=转化）、精准招聘话术库、五维考核评分制、3-7-15-30培训考核节点表——手机/电脑打开即用。", "delivery": "微信发送HTML页面 + 配套表格模板", "priceDetail": "199元（HTML交互版 + 表格模板）", "steps": ["下单付款", "微信发《RPO全套SOP流程》HTML", "附招聘SOP表格模板", "进入售后答疑群"], "status": "new", "_id": 204}, {"id": 18, "icon": "🤝", "cat": "服务类", "name": "35+副业转型社群", "desc": "30-45岁上班族的副业实战圈：真实项目+心态陪伴+避坑共享。安叔亲历收入空窗期，懂你的焦虑。", "price": "199", "unit": "元/季", "badge": "badge-new", "badgeTxt": "🆕 社群", "problem": "30多岁想搞副业，但鸡汤号看一堆还是不敢动。缺一个真实、不割、能互相打气的圈子，尤其怕踩坑、怕被笑。", "solution": "季度社群：①真实副业项目共享（安叔在跑的）②每周话题+答疑 ③成员避坑互助 ④安叔亲身转型经历陪伴。重实操、重陪伴。", "delivery": "社群+周更，微信交付", "priceDetail": "199元/季 · 699元/年（送全部知识产品）", "steps": ["付费进群", "看项目库", "参与周话题", "随时互助答疑"], "status": "new", "_id": 205}, {"id": 14, "icon": "📱", "cat": "陪跑服务", "name": "新媒体矩阵起号陪跑", "desc": "把一鱼多吃跨平台内容流教给你：一个录音拆5条视频+5篇笔记+1篇公众号。公众号/视频号/抖音/小红书同步起量。", "price": "499", "unit": "元 起", "badge": "badge-new", "badgeTxt": "🆕 待上架", "problem": "想做新媒体但每天为今天发什么累瘫。平台越多越乱，内容重复被限流，一个人根本跑不动矩���。", "solution": "陪跑交付安叔团队在用的跨平台SOP：内容中台搭建+一鱼多吃拆解+各平台适配+发布排期+数据复盘。一个人也能管4个号。", "delivery": "微信/线上，模板+带练", "priceDetail": "499元（单平台起号SOP+模板）· 1999元（4平台3个月陪跑）", "steps": ["现状诊断", "搭内容中台", "拆首批内容", "陪跑发布+复盘"], "status": "new", "_id": 206}], "s3": [{"id": 6, "icon": "🚀", "cat": "陪跑服务", "name": "创业陪跑 · 全案", "desc": "从选项目到跑通第一单全程陪跑：京东/闲鱼/U盘三线可选，总经办视角的保姆级带教。", "price": "999", "unit": "元 起", "badge": "badge-soon", "badgeTxt": "🟡 规划中", "problem": "副业没人带，遇到问题不知道问谁：选品卡住、平台处罚、心态崩了——课都上完了还是不会做。", "solution": "长期陪跑：选项目+定目标+每周复盘+问题随问，把安叔带学员的方法论标准化交付。", "delivery": "微信/线下，1对1或小班", "priceDetail": "999元起（按项目/周期分档报价）", "steps": ["预约沟通", "定方向+签陪跑协议", "按周期陪跑交付"], "status": "soon", "_id": 301}, {"id": 12, "icon": "🎬", "cat": "陪跑服务", "name": "老板IP打造陪跑", "desc": "帮实体老板/专家从0做个人IP：人设定位→内容生产→多平台分发→私域承接。安叔新媒体团队全程带。", "price": "2999", "unit": "元 起 · 分档", "badge": "badge-new", "badgeTxt": "🆕 团队交付", "problem": "老板想做IP但不会出镜、不会写脚本、没时间剪。找代运营被割、自己拍没流量，IP做成摆设。", "solution": "新媒体团队陪跑：人设定位+脚本拆解+一鱼多吃内容流+跨平台分发（公众号/视频号/抖音/小红书）+私域承接。把安叔自己跑通的路复制给你。", "delivery": "微信/线下，1对1或小班，团队交付", "priceDetail": "2999元起（多平台3个月陪跑）· 年度IP顾问另议", "steps": ["沟通人设方向", "出定位+内容规划", "陪跑生产+分发", "数据复盘优化"], "status": "new", "_id": 302}], "sb": [{"id": 20, "icon": "🧩", "cat": "B端咨询", "name": "招商获客页定制（诊断H5+留资+FAQ机器人）", "desc": "给你自己的项目做一套能自己收线索的手机页面：AI诊断问卷 + 留资卡 + 常见问题机器人 + 微信弹窗，客户自己看、自己问、自己留联系方式。", "price": "999", "unit": "元/套 起 · 含部署", "badge": "badge-new", "badgeTxt": "🆕 交付成品", "problem": "招商全靠人一句一句问、一句一句答，客户看完就没下文；自己不会做页面，找外包报价3000起，来回沟通一个月还改不明白。", "solution": "复用我们已跑通的招商页面模板（诊断问卷→AI分析→弹药展示→FAQ应答→微信弹窗），换成你的项目、你的话术、你的二维码，做好直接给你一个链接。", "delivery": "交付线上链接 + 源码文件 · 3天出初版 · 手机可直接打开", "priceDetail": "单项目999元起（含1次改稿）；需要接你自己的AI知识库/机器人的版本按需报价", "steps": ["加微信 NineHalf95 备注「建页」", "发项目资料+常见问题", "3天出初版页面", "确认后上线并交付链接"], "status": "new", "_id": 401}, {"id": 10, "icon": "🏢", "cat": "B端咨询", "name": "招聘业务SOP搭建咨询", "desc": "帮企业从0搭可复制的招聘体系：账号权重、话术转化、五维考核、3-7-15-30节点。14年RPO实战，直接搬进你的团队。", "price": "3999", "unit": "元 起 · 按规模定制", "badge": "badge-hot", "badgeTxt": "🔥 B端主线", "problem": "企业招人靠运气：HR当行政用，账号不养、话术不跟、转化不算，招3个月还缺人。老板想建招聘体系，但没人懂招聘=销售的打法。", "solution": "把安叔14年RPO体系搬进企业：①诊断现有招聘漏斗 ②搭账号权重+话术库 ③建五维考核评分制 ④定3-7-15-30培训考核节点 ⑤陪跑落地1个月见效。", "delivery": "线上诊断+工作坊/远程，文档+模板+1个月答疑", "priceDetail": "3999元起（单店/小团队标准化版）· 多门店/集团按规模定制（含现场工作坊+月度跟踪）", "steps": ["预约沟通，发企业招聘现状", "出诊断报告+搭建方案", "工作坊交付SOP+模板", "1个月陪跑落地+优化"], "status": "hot", "_id": 402}, {"id": 11, "icon": "🤖", "cat": "B端咨询", "name": "企业AI应用内训工作坊", "desc": "半天/1天，把AI怎么真正帮企业干活讲透：录音转写→知识库→一鱼多吃内容生产→成本控制。融银实战内容，拿来即用。", "price": "5800", "unit": "元/场 起", "badge": "badge-hot", "badgeTxt": "🔥 B端", "problem": "企业花钱买了AI工具，员工还在用AI聊天。没有工作流、没有知识库、没有SOP，AI停留在玩具阶段，老板看不到回报。", "solution": "半天/1天工作坊：①个人AI工作台搭建 ②录音/文档转知识库 ③一鱼多吃内容生产流 ④成本控制（避免一天烧150）⑤现场带练。已为融银互动交付验证。", "delivery": "线下/线上工作坊，含实操手册+提示词包", "priceDetail": "5800元/场（半天，≤20人）· 9800元/天（含定制行业案例+1个月远程答疑）· 集团多场打包议价", "steps": ["确认参训人数+行业", "定制工作坊大纲", "现场交付+带练", "交付手册+1个月答疑"], "status": "hot", "_id": 403}]};
+const TIERS = [
+ {key:'s1', name:'先试水', range:'9.9 – 49.9', note:'先花一顿饭钱'},
+ {key:'s2', name:'系统学', range:'99 – 499',   note:'要一套能照做的'},
+ {key:'s3', name:'长期陪跑', range:'999 – 2999', note:'要人盯着跑'}
+];
+function fmt(p){ return p==='待定' ? '待定' : (p==='0' ? '0元' : '¥'+p); }
+function unit(u){ return String(u||'').replace(/元/g,'').replace(/\s+/g,' ').trim().slice(0,6); }
+
+/* 个人区：三档 */
+document.getElementById('pwrap').innerHTML = TIERS.map(t=>{
+  const list = G[t.key] || [];
+  if(!list.length) return '';
+  return `<div class="tier rv"><b>${t.name}</b><em>${t.range}</em><span>${t.note}</span></div>
+   <div class="cards tw">${list.map(p=>card(p)).join('')}</div>`;
+}).join('');
+
+/* 企业区 */
+document.getElementById('bwrap').innerHTML = (G.sb||[]).map(p=>`
+  <div class="bizcard" onclick="openS('b',${p._id})">
+    <div class="bh"><b>${p.name}</b><em>${fmt(p.price)}</em></div>
+    <p>${p.desc}</p>
+    <div class="bt">${(p.steps||[]).slice(0,3).map(s=>`<span>${s.length>14?s.slice(0,14)+'…':s}</span>`).join('')}</div>
+  </div>`).join('');
+
+function card(p){
+  const main = [3,9,19].includes(p.id);
+  return `<div class="pc" onclick="openS('p',${p._id})">
+    <span class="pi" style="background:rgba(255,138,0,.10)">${p.icon}</span>
+    <span class="pb">
+      <span class="pn">${p.name}${main?'<span class="hot">主打</span>':''}</span>
+      <span class="pd">${p.desc}</span>
+    </span>
+    <span class="pp"><b>${fmt(p.price)}</b><span>${unit(p.unit)}</span></span>
+  </div>`;
+}
+
+/* 索引：_id → 产品 */
+const IDX = {};
+['s1','s2','s3','sb'].forEach(k=>(G[k]||[]).forEach(p=>IDX[k+'_'+p._id]=p));
+function openS(g,id){
+  const p = IDX[g+'_'+id] || null; if(!p) return;
+  document.getElementById('sheet').innerHTML = `
+    <div class="sh"><h3>${p.icon} ${p.name}</h3><button class="x" onclick="closeS()">✕</button></div>
+    <div class="chips"><b>${p.cat}</b><b>${fmt(p.price)} ${unit(p.unit)}</b><b>${(p.steps||[]).length} 步交付</b></div>
+    <h4>解决什么问题</h4><div class="box hi">${p.problem}</div>
+    <h4>怎么解决</h4><div class="box">${p.solution}</div>
+    <h4>价格</h4><div class="box"><div>${p.priceDetail}</div><div class="bignum">${fmt(p.price)}<span style="font-size:12px;color:var(--t3);font-weight:400"> ${unit(p.unit)}</span></div></div>
+    <h4>交付方式</h4><div class="box">${p.delivery}</div>
+    <h4>怎么买</h4><div class="steps">${(p.steps||[]).map((s,i)=>`<div class="stp"><span class="n">${i+1}</span><span>${s}</span></div>`).join('')}</div>
+    <div class="wxbox">
+      <div style="font-family:var(--mono);font-size:10.5px;color:var(--t3);letter-spacing:1.3px">WECHAT</div>
+      <div class="r"><b>NineHalf95</b><button class="cpbtn" onclick="copyFor('${p.name}')">复制微信号</button></div>
+      <div class="nt">加好友备注「<b style="color:var(--t1)">${p.name}</b>」，我才知道你要哪个，处理最快。不经过第三方平台，直接对接。</div>
+    </div>`;
+  document.getElementById('ovl').classList.add('on');
+}
+function closeS(){ document.getElementById('ovl').classList.remove('on'); }
+document.getElementById('ovl').addEventListener('click', e=>{ if(e.target.id==='ovl') closeS(); });
+addEventListener('keydown', e=>{ if(e.key==='Escape') closeS(); });
+
+function cpy(t){
+  try{ navigator.clipboard.writeText(t); return true; }
+  catch(e){ const a=document.createElement('textarea'); a.value=t; a.style.position='fixed'; a.style.opacity=0;
+    document.body.appendChild(a); a.select(); try{document.execCommand('copy')}catch(_){}; a.remove(); return true; }
+}
+function toast(m){ const t=document.getElementById('toast'); t.innerHTML=m; t.classList.add('on'); clearTimeout(window._tt); window._tt=setTimeout(()=>t.classList.remove('on'),3400); }
+function copyWx(){ cpy('NineHalf95'); toast('微信号 NineHalf95 已复制 ✅<br>打开微信添加，备注你要的东西'); }
+function copyFor(n){ cpy('NineHalf95'); toast('已复制 ✅ 备注「'+n+'」，我直接发你详情'); }
+
+
+/* ===== AI 落地 ===== */
+const AI = [{"i": "🤖", "n": "AI 客服 / 智能应答", "d": "微信、企微自动答：接你自己的知识库，客户问过的问题 7×24 小时有人回。", "k": ["已跑通", "接自有知识库"]}, {"i": "📚", "n": "AI 知识库", "d": "把散在各处的资料、录音、文档，变成一个能问能答的库——你自己的资料，问一句就有答案。", "k": ["资料变资产"]}, {"i": "🎬", "n": "AI 内容生产线", "d": "一个录音拆成多条内容：公众号、视频号、小红书，一处生成多处发。", "k": ["一鱼多吃"]}, {"i": "🧰", "n": "AI 工作台", "d": "个人或小团队的工具链：装一次，写文案、出日报、回客户都交给它。", "k": ["插上就用"]}, {"i": "⚙️", "n": "AI 自动化流程", "d": "日报、监控、提醒、数据抓取——重复的活交给机器，你只看结果。", "k": ["省人力"]}, {"i": "🎓", "n": "AI 内训 / 带教", "d": "半天到几天，教你的团队真能用起来，不是听完就忘的课。", "k": ["已交付企业"]}];
+document.getElementById('aiwrap').innerHTML = AI.map((p,i)=>`
+  <div class="pc rv" style="--acc:var(--v)" onclick="openAI(${i})">
+    <span class="pi" style="background:rgba(169,139,255,.12)">${p.i}</span>
+    <span class="pb"><span class="pn">${p.n}</span><span class="pd">${p.d}</span></span>
+    <span class="pp"><b style="color:var(--v)">问</b><span>按需报价</span></span>
+  </div>`).join('');
+
+/* ===== 合作项目 ===== */
+const COOP = [{"i": "🎮", "n": "抖音小游戏 · 联合开发与代运营", "one": "客户出钱、我们出运营", "d": "游戏由我们统一开发和代打运营。客户不用懂运营、不用管账号，收益按约定比例分成、月度结算、明细可查。单款先试，跑通了再加款。", "k": ["单款起投", "月度结算", "明细可查"], "price": "单款起投", "note": "门槛约 1300–2800 元/款（按模式不同）"}, {"i": "🧍", "n": "OPC 一人公司 · 政策解读与起盘陪跑", "one": "深圳这波 OPC 政策，你的情况到底能拿到什么", "d": "政策给的是「空间 + 券 + 人才」，不是现金；券还要先真实投入再抵扣。帮你看清哪些能申、哪些是媒体吹的、你卡在哪，再用 AI 把一人公司真跑起来。", "k": ["按政策原文口径", "不承诺额度", "起盘陪跑"], "price": "按需报价", "note": "先做一次政策适配判断"}];
+document.getElementById('coopwrap').innerHTML = COOP.map((p,i)=>`
+  <div class="coop rv" onclick="openCoop(${i})">
+    <div class="coop-h"><span class="coop-i">${p.i}</span><b>${p.n}</b></div>
+    <div class="coop-one">${p.one}</div>
+    <p>${p.d}</p>
+    <div class="bt">${p.k.map(k=>`<span>${k}</span>`).join('')}</div>
+    <div class="coop-f"><em>${p.price}</em><span>${p.note}</span><i>›</i></div>
+  </div>`).join('');
+
+function openAI(i){
+  const p=AI[i];
+  sheet(`
+    <div class="sh"><h3>${p.i} ${p.n}</h3><button class="x" onclick="closeS()">✕</button></div>
+    <div class="chips"><b>AI 落地</b><b>按需报价</b><b>先聊需求</b></div>
+    <h4>能解决什么</h4><div class="box hi">${p.d}</div>
+    <h4>怎么开始</h4><div class="steps">
+      <div class="stp"><span class="n">1</span><span>加微信，说清你现在卡在哪</span></div>
+      <div class="stp"><span class="n">2</span><span>我给一个能落地的做法 + 报价</span></div>
+      <div class="stp"><span class="n">3</span><span>确认后动手，做完教到你会用</span></div>
+    </div>
+    <div class="wxbox"><div style="font-family:var(--mono);font-size:10.5px;color:var(--t3);letter-spacing:1.3px">WECHAT</div>
+    <div class="r"><b>NineHalf95</b><button class="cpbtn" onclick="copyFor('${p.n}')">复制微信号</button></div>
+    <div class="nt">备注「${p.n}」，我直接回你。</div></div>`);
+}
+function openCoop(i){
+  const p=COOP[i];
+  sheet(`
+    <div class="sh"><h3>${p.i} ${p.n}</h3><button class="x" onclick="closeS()">✕</button></div>
+    <div class="chips"><b>合作项目</b><b>${p.price}</b>${p.k.map(k=>`<b>${k}</b>`).join('')}</div>
+    <h4>怎么合作</h4><div class="box hi">${p.one}</div>
+    <h4>具体怎么走</h4><div class="box">${p.d}</div>
+    <h4>门槛</h4><div class="box">${p.note}</div>
+    <h4>先聊清楚再定</h4><div class="steps">
+      <div class="stp"><span class="n">1</span><span>加微信说你想投哪一类</span></div>
+      <div class="stp"><span class="n">2</span><span>我把合作条款、分成口径一次讲清</span></div>
+      <div class="stp"><span class="n">3</span><span>确认后签约，按约执行、按月对账</span></div>
+    </div>
+    <div class="wxbox"><div style="font-family:var(--mono);font-size:10.5px;color:var(--t3);letter-spacing:1.3px">WECHAT</div>
+    <div class="r"><b>NineHalf95</b><button class="cpbtn" onclick="copyFor('${p.n}')">复制微信号</button></div>
+    <div class="nt">合作项目不谈虚的：分成基数、结算周期、退出机制，我一次讲清。</div></div>`);
+}
+function sheet(html){ document.getElementById('sheet').innerHTML = html; document.getElementById('ovl').classList.add('on'); }
+
+/* 星空（手机降粒子省电） */
+(function(){
+  const c=document.getElementById('stars'), x=c.getContext('2d');
+  let w,h,st=[],me=[],mx=.5,my=.5,tx=.5,ty=.5;
+  function rs(){
+    const dpr=Math.min(devicePixelRatio||1,2);
+    w=c.width=innerWidth*dpr; h=c.height=innerHeight*dpr;
+    c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px';
+    const mob = innerWidth<700;
+    const n=Math.min(mob?190:520, Math.round(innerWidth*innerHeight/(mob?4200:3600)));
+    st=[];
+    for(let i=0;i<n;i++) st.push({x:Math.random()*w,y:Math.random()*h,z:Math.random()*.8+.2,r:Math.random()*1.05+.28,
+      vx:(Math.random()-.5)*.05,vy:(Math.random()-.5)*.05,a:Math.random()*.42+.45,ph:Math.random()*6.283,gold:Math.random()<.12});
+  }
+  addEventListener('resize',rs); rs();
+  addEventListener('mousemove',e=>{ tx=e.clientX/innerWidth; ty=e.clientY/innerHeight; },{passive:true});
+  addEventListener('touchmove',e=>{ const t=e.touches[0]; if(t){ tx=t.clientX/innerWidth; ty=t.clientY/innerHeight; } },{passive:true});
+  function draw(t){
+    const dpr=Math.min(devicePixelRatio||1,2);
+    mx+=(tx-mx)*.045; my+=(ty-my)*.045;
+    x.clearRect(0,0,w,h);
+    const ox=(mx-.5)*26*dpr, oy=(my-.5)*26*dpr;
+    st.forEach(s=>{
+      s.x+=s.vx*dpr; s.y+=s.vy*dpr;
+      if(s.x<0)s.x=w; if(s.x>w)s.x=0; if(s.y<0)s.y=h; if(s.y>h)s.y=0;
+      const px=s.x+ox*s.z, py=s.y+oy*s.z, r=s.r*dpr*s.z, tw=.80+.20*Math.sin(t*.0015+s.ph);
+      const g=x.createRadialGradient(px,py,0,px,py,r*4.2);
+      if(s.gold){ g.addColorStop(0,'rgba(255,236,208,'+(s.a*tw)+')'); g.addColorStop(.4,'rgba(255,168,60,'+(s.a*.32*tw)+')'); }
+      else { g.addColorStop(0,'rgba(255,255,255,'+(s.a*tw)+')'); g.addColorStop(.4,'rgba(202,220,255,'+(s.a*.22*tw)+')'); }
+      g.addColorStop(1,'rgba(150,180,255,0)');
+      x.fillStyle=g; x.beginPath(); x.arc(px,py,r*4.2,0,6.2832); x.fill();
+    });
+    if(Math.random()<.013 && me.length<3){
+      me.push({x:Math.random()*w*.8+w*.15,y:Math.random()*h*.35,len:0,sp:11+Math.random()*9,life:1,ang:2.36});
+    }
+    me.forEach(m=>{
+      m.len=Math.min(m.len+46,240); m.x+=Math.cos(m.ang)*m.sp*dpr; m.y-=Math.sin(m.ang)*m.sp*dpr; m.life-=.0072;
+      const ex=m.x-m.len*dpr, ey=m.y+m.len*.62*dpr;
+      const lg=x.createLinearGradient(m.x,m.y,ex,ey);
+      lg.addColorStop(0,'rgba(255,225,180,'+(.85*Math.max(m.life,0))+')');
+      lg.addColorStop(.4,'rgba(255,138,0,'+(.35*Math.max(m.life,0))+')');
+      lg.addColorStop(1,'rgba(255,138,0,0)');
+      x.strokeStyle=lg; x.lineWidth=1.7*dpr; x.beginPath(); x.moveTo(m.x,m.y); x.lineTo(ex,ey); x.stroke();
+    });
+    me=me.filter(m=>m.life>0 && m.x<w+320 && m.y>-320);
+  }
+  requestAnimationFrame(function loop(ts){ try{ draw(ts||0); }catch(e){} requestAnimationFrame(loop); });
+})();
+
+/* reveal + 顶栏 + 锚点 */
+const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); }),{threshold:.05,rootMargin:'160px 0px 120px 0px'});
+function bind(){ document.querySelectorAll('.rv:not(.in)').forEach(el=>io.observe(el)); }
+function fb(){ document.querySelectorAll('.rv:not(.in)').forEach(el=>{ const r=el.getBoundingClientRect(); if(r.top<innerHeight+300 && r.bottom>-300) el.classList.add('in'); }); }
+bind(); setTimeout(fb,1200); addEventListener('load',()=>setTimeout(fb,300));
+addEventListener('scroll',()=>{ document.getElementById('top').classList.toggle('solid',scrollY>30); clearTimeout(window._rf); window._rf=setTimeout(fb,220); },{passive:true});
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  const t=document.querySelector(a.getAttribute('href')); if(!t) return;
+  e.preventDefault();
+  const y=t.getBoundingClientRect().top+scrollY-58;
+  scrollTo({top:y,behavior:'smooth'});
+}));
+</script>
+</body>
+</html>
