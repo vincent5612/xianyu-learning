@@ -405,11 +405,11 @@ document.getElementById('aiwrap').innerHTML = AI.map((p,i)=>`
   <div class="pc rv" style="--acc:var(--v)" onclick="openAI(${i})">
     <span class="pi" style="background:rgba(169,139,255,.12)">${p.i}</span>
     <span class="pb"><span class="pn">${p.n}</span><span class="pd">${p.d}</span></span>
-    <span class="pp"><b style="color:var(--v)">问</b><span>按需报价</span></span>
+    <span class="pp"><b style="color:var(--v)">聊</b><span>先聊需求</span></span>
   </div>`).join('');
 
 /* ===== 合作项目 ===== */
-const COOP = [{"i": "🎮", "n": "抖音小游戏 · 联合开发与代运营", "one": "客户出钱、我们出运营", "d": "游戏由我们统一开发和代打运营。客户不用懂运营、不用管账号，收益按约定比例分成、月度结算、明细可查。单款先试，跑通了再加款。", "k": ["单款起投", "月度结算", "明细可查"], "price": "单款起投", "note": "门槛约 1300–2800 元/款（按模式不同）"}, {"i": "🧍", "n": "OPC 一人公司 · 政策解读与起盘陪跑", "one": "深圳这波 OPC 政策，你的情况到底能拿到什么", "d": "政策给的是「空间 + 券 + 人才」，不是现金；券还要先真实投入再抵扣。帮你看清哪些能申、哪些是媒体吹的、你卡在哪，再用 AI 把一人公司真跑起来。", "k": ["按政策原文口径", "不承诺额度", "起盘陪跑"], "price": "按需报价", "note": "先做一次政策适配判断"}];
+const COOP = [{"i": "🎮", "n": "抖音小游戏 · 联合开发与代运营", "one": "客户出钱、我们出运营", "d": "游戏由我们统一开发和代运营。客户不用懂运营、不用管账号，收益按约定比例分成、月度结算、明细可查。单款先试，跑通了再加款。", "k": ["单款起投", "月度结算", "收益不保证"], "price": "单款起投", "note": "门槛约 1300–2800 元/款（按模式不同）；收益按约定比例分成，不保证盈利"}, {"i": "🧍", "n": "OPC 一人公司 · 政策解读与起盘陪跑", "one": "深圳这波 OPC 政策，你的情况到底能拿到什么", "d": "OPC = One Person Company（一人公司）。深圳这波政策给的是「空间 + 券 + 人才」，不是现金；券还要先真实投入再抵扣。帮你看清哪些能申、哪些是媒体吹的、你卡在哪，再用 AI 把一人公司真跑起来。政策一律以官方原文为准，不构成申报承诺。", "k": ["按政策原文口径", "不承诺额度", "起盘陪跑"], "price": "先诊断后报价", "note": "先做一次政策适配判断（付费），看你这种主体到底够不够门槛"}];
 document.getElementById('coopwrap').innerHTML = COOP.map((p,i)=>`
   <div class="coop rv" onclick="openCoop(${i})">
     <div class="coop-h"><span class="coop-i">${p.i}</span><b>${p.n}</b></div>
@@ -423,7 +423,7 @@ function openAI(i){
   const p=AI[i];
   sheet(`
     <div class="sh"><h3>${p.i} ${p.n}</h3><button class="x" onclick="closeS()">✕</button></div>
-    <div class="chips"><b>AI 落地</b><b>按需报价</b><b>先聊需求</b></div>
+    <div class="chips"><b>AI 落地</b><b>先聊需求再报价</b><b>做完教到会用</b></div>
     <h4>能解决什么</h4><div class="box hi">${p.d}</div>
     <h4>怎么开始</h4><div class="steps">
       <div class="stp"><span class="n">1</span><span>加微信，说清你现在卡在哪</span></div>
