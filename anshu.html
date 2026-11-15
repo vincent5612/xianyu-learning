@@ -198,9 +198,49 @@ footer{border-top:1px solid var(--line);padding:22px 18px 26px;text-align:center
 #toast.on{opacity:1;transform:translate(-50%,0)}
 .rv{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
 .rv.in{opacity:1;transform:none}
+/* ===== 完整详情页：适合谁 / 交付清单 / 流程 / FAQ ===== */
+.whobox{display:flex;flex-wrap:wrap;gap:7px}
+.whobox span{font-size:12.5px;color:var(--t2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;background:var(--card2)}
+.deliver{display:flex;flex-direction:column;gap:9px}
+.dv{display:flex;gap:10px;font-size:13.5px;color:var(--t2);align-items:flex-start;line-height:1.65}
+.dv i{flex:0 0 18px;height:18px;border-radius:50%;background:rgba(255,138,0,.16);color:var(--p);font-size:11px;font-style:normal;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.flow{display:flex;flex-direction:column;padding-left:4px}
+.fw{display:flex;gap:12px;padding-bottom:16px;position:relative}
+.fw:last-child{padding-bottom:0}
+.fw::before{content:"";position:absolute;left:13px;top:28px;bottom:0;width:1px;background:var(--line)}
+.fw:last-child::before{display:none}
+.fn{flex:0 0 27px;height:27px;border-radius:9px;background:linear-gradient(135deg,var(--p),#ff6a00);color:#1a1206;font-family:var(--mono);font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.fb b{display:block;font-size:14px;font-weight:750;margin-bottom:3px}
+.fb span{font-size:12.5px;color:var(--t2);line-height:1.6}
+.faq{display:flex;flex-direction:column;gap:8px}
+.fq{border:1px solid var(--line);border-radius:12px;background:var(--card2);overflow:hidden;cursor:pointer}
+.fqq{display:flex;align-items:center;gap:10px;padding:13px 14px;font-size:13.5px;font-weight:700}
+.fqq i{margin-left:auto;font-style:normal;color:var(--p);font-size:15px;transition:.25s}
+.fq.open .fqq i{transform:rotate(45deg)}
+.fqa{max-height:0;overflow:hidden;transition:max-height .3s var(--ease);font-size:13px;color:var(--t2);line-height:1.7;padding:0 14px}
+.fq.open .fqa{max-height:280px;padding:0 14px 14px}
+#prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:99;background:linear-gradient(90deg,var(--p),var(--v),var(--b))}
+
+/* ===== 合作项目卡 ===== */
+.coop{padding:18px 16px;border-radius:16px;background:var(--card);border:1px solid var(--line);margin-bottom:12px;cursor:pointer;transition:.22s var(--ease)}
+.coop:active{transform:scale(.985);border-color:var(--b)}
+.coop-h{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.coop-i{width:38px;height:38px;flex:0 0 38px;border-radius:12px;background:rgba(47,216,192,.12);display:flex;align-items:center;justify-content:center;font-size:19px}
+.coop-h b{flex:1;font-size:15.5px;font-weight:820;line-height:1.35}
+.coop-one{font-size:13px;color:var(--b);font-weight:700;margin-bottom:8px}
+.coop p{font-size:12.5px;color:var(--t2);line-height:1.68}
+.coop .bt{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
+.coop .bt span{font-family:var(--mono);font-size:10px;color:var(--t3);border:1px solid var(--line);padding:3px 8px;border-radius:6px}
+.coop-f{display:flex;align-items:baseline;gap:9px;margin-top:13px;padding-top:11px;border-top:1px solid var(--line)}
+.coop-f em{font-style:normal;font-family:var(--mono);font-size:14px;font-weight:750;color:var(--b)}
+.coop-f span{font-size:11px;color:var(--t3);flex:1}
+.coop-f i{font-style:normal;font-size:16px;color:var(--t3)}
+@media(min-width:760px){#coopwrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}.coop{margin-bottom:0}}
+
 </style>
 </head>
 <body>
+<div id="prog"></div>
 <canvas id="stars"></canvas>
 
 <header class="top" id="top">
@@ -347,7 +387,7 @@ document.getElementById('pwrap').innerHTML = TIERS.map(t=>{
 
 /* 企业区 */
 document.getElementById('bwrap').innerHTML = (G.sb||[]).map(p=>`
-  <div class="bizcard" onclick="openS('b',${p._id})">
+  <div class="bizcard" onclick="openSB(${p._id})">
     <div class="bh"><b>${p.name}</b><em>${fmt(p.price)}</em></div>
     <p>${p.desc}</p>
     <div class="bt">${(p.steps||[]).slice(0,3).map(s=>`<span>${s.length>14?s.slice(0,14)+'…':s}</span>`).join('')}</div>
@@ -367,9 +407,16 @@ function card(p){
 
 /* 索引：_id → 产品 */
 const IDX = {};
-['s1','s2','s3','sb'].forEach(k=>(G[k]||[]).forEach(p=>IDX[k+'_'+p._id]=p));
+['s1','s2','s3'].forEach(k=>(G[k]||[]).forEach(p=>IDX['p_'+p._id]=p));
+(G.sb||[]).forEach(p=>IDX['sb_'+p._id]=p);
+function openSB(id){
+  const p = IDX['sb_'+id]; if(!p) return;
+  if(richSheet(String(p.id), p.name, p.cat, fmt(p.price)+' '+unit(p.unit), ['企业服务'])) return;
+  openS('sb', id);
+}
 function openS(g,id){
   const p = IDX[g+'_'+id] || null; if(!p) return;
+  if(g==='p' && richSheet(String(p.id), p.name, p.cat, fmt(p.price)+' '+unit(p.unit), p.steps?[p.steps.length+' 步交付']:[])) return;
   document.getElementById('sheet').innerHTML = `
     <div class="sh"><h3>${p.icon} ${p.name}</h3><button class="x" onclick="closeS()">✕</button></div>
     <div class="chips"><b>${p.cat}</b><b>${fmt(p.price)} ${unit(p.unit)}</b><b>${(p.steps||[]).length} 步交付</b></div>
@@ -399,6 +446,43 @@ function copyWx(){ cpy('NineHalf95'); toast('微信号 NineHalf95 已复制 ✅<
 function copyFor(n){ cpy('NineHalf95'); toast('已复制 ✅ 备注「'+n+'」，我直接发你详情'); }
 
 
+
+/* ===== 完整项目详情（有 RICH 数据时）===== */
+function richSheet(key, name, cat, price, tags){
+  const r = RICH[key] || null;
+  if(!r) return false;
+  sheet(`
+    <div class="sh"><h3>${name}</h3><button class="x" onclick="closeS()">✕</button></div>
+    <div class="chips"><b>${cat}</b><b>${price}</b>${(tags||[]).map(t=>`<b>${t}</b>`).join('')}</div>
+
+    <h4>这是什么</h4>
+    <div class="box hi">${r.intro}</div>
+
+    <h4>适合谁</h4>
+    <div class="whobox">${r.who.map(w=>`<span>${w}</span>`).join('')}</div>
+
+    <h4>你会拿到什么</h4>
+    <div class="deliver">${r.deliver.map(d=>`<div class="dv"><i>✓</i><span>${d}</span></div>`).join('')}</div>
+
+    <h4>流程怎么走</h4>
+    <div class="flow">${r.flow.map((f,i)=>`
+      <div class="fw">
+        <div class="fn">${i+1}</div>
+        <div class="fb"><b>${f.t}</b><span>${f.d}</span></div>
+      </div>`).join('')}</div>
+
+    <h4>常见问题</h4>
+    <div class="faq">${r.faq.map(f=>`<div class="fq" onclick="this.classList.toggle('open')">
+      <div class="fqq">${f.q}<i>＋</i></div><div class="fqa">${f.a}</div></div>`).join('')}</div>
+
+    <div class="wxbox">
+      <div style="font-family:var(--mono);font-size:10.5px;color:var(--t3);letter-spacing:1.3px">想了解清楚，直接找我</div>
+      <div class="r"><b>NineHalf95</b><button class="cpbtn" onclick="copyFor('${name}')">复制微信号</button></div>
+      <div class="nt">加好友备注「<b style="color:var(--t1)">${name}</b>」——我把细节、价格、怎么开始一次讲清，不合适我也会直说。</div>
+    </div>`);
+  return true;
+}
+
 /* ===== AI 落地 ===== */
 const AI = [{"i": "🤖", "n": "AI 客服 / 智能应答", "d": "微信、企微自动答：接你自己的知识库，客户问过的问题 7×24 小时有人回。", "k": ["已跑通", "接自有知识库"]}, {"i": "📚", "n": "AI 知识库", "d": "把散在各处的资料、录音、文档，变成一个能问能答的库——你自己的资料，问一句就有答案。", "k": ["资料变资产"]}, {"i": "🎬", "n": "AI 内容生产线", "d": "一个录音拆成多条内容：公众号、视频号、小红书，一处生成多处发。", "k": ["一鱼多吃"]}, {"i": "🧰", "n": "AI 工作台", "d": "个人或小团队的工具链：装一次，写文案、出日报、回客户都交给它。", "k": ["插上就用"]}, {"i": "⚙️", "n": "AI 自动化流程", "d": "日报、监控、提醒、数据抓取——重复的活交给机器，你只看结果。", "k": ["省人力"]}, {"i": "🎓", "n": "AI 内训 / 带教", "d": "半天到几天，教你的团队真能用起来，不是听完就忘的课。", "k": ["已交付企业"]}];
 document.getElementById('aiwrap').innerHTML = AI.map((p,i)=>`
@@ -409,6 +493,7 @@ document.getElementById('aiwrap').innerHTML = AI.map((p,i)=>`
   </div>`).join('');
 
 /* ===== 合作项目 ===== */
+const RICH = {"3": {"intro": "闲鱼起号不是发几个商品等人来问，是有顺序的：先选对赛道，再摸清平台的流量规则，然后按固定节奏发布、复盘。这份手册把团队实操验证过的 7 天流程写成能照做的步骤——第一天做什么、第七天看什么，都写死。", "who": ["完全没做过闲鱼的新手", "做过但一直不出单", "想搞副业但不知道从哪开始", "被限流或封过号、想搞懂规则"], "deliver": ["《7 天起号手册》PDF（Day1–Day7 每天做什么）", "选品表模板（按赛道分类）", "合规导流方法：售后卡 + 简介聚合链接", "限流自救三板斧"], "flow": [{"t": "下单", "d": "加微信备注产品名，转 9.9"}, {"t": "交付", "d": "微信发手册 PDF + 表格模板"}, {"t": "照做", "d": "按 Day1–Day7 走，卡住随时问"}, {"t": "复盘", "d": "第 7 天把数据发我，我帮你看卡在哪步"}], "faq": [{"q": "9.9 是不是引流，后面还有更贵的？", "a": "不含任何后续消费。9.9 就是完整手册加表格模板，看完能自己跑。"}, {"q": "完全没做过能看懂吗？", "a": "就是给没做过的人写的，每一步都是具体动作，不是讲道理。"}, {"q": "能保证出单吗？", "a": "不能。给的是方法和顺序，出单取决于你的执行和选品。"}]}, "11": {"intro": "很多公司买了 AI 工具，员工还是当聊天玩具用——没有工作流、没有知识库、没有 SOP，老板看不到回报。这个工作坊不讲「AI 是什么」，直接带你的团队把 AI 用进每天的活里：写文案、做报表、回客户、整资料。", "who": ["买了 AI 工具但用不起来的公司", "想给团队做 AI 提效、不知从哪下手", "内容/运营团队人手不够", "想把公司资料变成能查能问的知识库"], "deliver": ["半天或 1 天现场工作坊（含动手带练）", "实操手册 + 提示词包", "现场产出：至少 1 条能用的 AI 工作流", "1 个月远程答疑"], "flow": [{"t": "确认", "d": "参训人数、行业、想解决的具体场景"}, {"t": "定制", "d": "按你的行业出大纲和案例"}, {"t": "交付", "d": "现场讲 + 带练，当天出成果"}, {"t": "跟进", "d": "1 个月内远程答疑，帮你调到能用"}], "faq": [{"q": "和市面上 AI 培训有什么区别？", "a": "市面上多讲概念和工具清单；这个是带你现场把工作流跑起来，当天有产出。"}, {"q": "员工不会用电脑/不熟 AI 能跟上吗？", "a": "按零基础设计，现场一步步跟做，不用提前准备。"}, {"q": "讲的是不是就是卖工具？", "a": "不卖工具。用的是免费或你已经有的工具，重点在流程怎么搭。"}]}, "COOP0": {"intro": "客户出钱、我们出运营。游戏由我们统一开发和代运营，你不需要懂运营、不需要管账号，收益按约定比例分成、月度结算、明细可查。单款先试，跑通了再加款——不要求你一次压很多。", "who": ["手里有点闲钱、想找一个不用自己盯的合作", "试过别的项目被割过，想要能对账的", "不想学运营、只看结果的"], "deliver": ["开发 + 上架 + 日常代运营（我们做）", "月度收益对账明细", "单款可先试，随时可加款"], "flow": [{"t": "沟通", "d": "说清你想投几款、能接受什么模式"}, {"t": "讲清条款", "d": "分成基数、结算周期、退出机制一次讲明"}, {"t": "签约", "d": "确认后签合作合同"}, {"t": "执行", "d": "我们开发上架运营，按月对账结算"}], "faq": [{"q": "要不要我出时间？", "a": "不用。账号、上架、日常维护都是我们做，你只看结果和对账。"}, {"q": "保证赚钱吗？", "a": "不保证。收益按约定比例分成，不保证盈利——这点我会在合作前写清楚。"}, {"q": "分成怎么算？", "a": "分成基数、比例、结算周期在合作前一次性讲清并写进合同，不做两套口径。"}]}};
 const COOP = [{"i": "🎮", "n": "抖音小游戏 · 联合开发与代运营", "one": "客户出钱、我们出运营", "d": "游戏由我们统一开发和代运营。客户不用懂运营、不用管账号，收益按约定比例分成、月度结算、明细可查。单款先试，跑通了再加款。", "k": ["单款起投", "月度结算", "收益不保证"], "price": "单款起投", "note": "门槛约 1300–2800 元/款（按模式不同）；收益按约定比例分成，不保证盈利"}, {"i": "🧍", "n": "OPC 一人公司 · 政策解读与起盘陪跑", "one": "深圳这波 OPC 政策，你的情况到底能拿到什么", "d": "OPC = One Person Company（一人公司）。深圳这波政策给的是「空间 + 券 + 人才」，不是现金；券还要先真实投入再抵扣。帮你看清哪些能申、哪些是媒体吹的、你卡在哪，再用 AI 把一人公司真跑起来。政策一律以官方原文为准，不构成申报承诺。", "k": ["按政策原文口径", "不承诺额度", "起盘陪跑"], "price": "先诊断后报价", "note": "先做一次政策适配判断（付费），看你这种主体到底够不够门槛"}];
 document.getElementById('coopwrap').innerHTML = COOP.map((p,i)=>`
   <div class="coop rv" onclick="openCoop(${i})">
@@ -436,6 +521,7 @@ function openAI(i){
 }
 function openCoop(i){
   const p=COOP[i];
+  if(i===0 && richSheet('COOP0', p.n, '合作项目', p.price, p.k)) return;
   sheet(`
     <div class="sh"><h3>${p.i} ${p.n}</h3><button class="x" onclick="closeS()">✕</button></div>
     <div class="chips"><b>合作项目</b><b>${p.price}</b>${p.k.map(k=>`<b>${k}</b>`).join('')}</div>
@@ -507,7 +593,10 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.tar
 function bind(){ document.querySelectorAll('.rv:not(.in)').forEach(el=>io.observe(el)); }
 function fb(){ document.querySelectorAll('.rv:not(.in)').forEach(el=>{ const r=el.getBoundingClientRect(); if(r.top<innerHeight+300 && r.bottom>-300) el.classList.add('in'); }); }
 bind(); setTimeout(fb,1200); addEventListener('load',()=>setTimeout(fb,300));
-addEventListener('scroll',()=>{ document.getElementById('top').classList.toggle('solid',scrollY>30); clearTimeout(window._rf); window._rf=setTimeout(fb,220); },{passive:true});
+addEventListener('scroll',()=>{
+  const _p=document.getElementById('prog');
+  if(_p){ const h=document.documentElement.scrollHeight-innerHeight; _p.style.width=(h>0?(scrollY/h*100):0)+'%'; }
+  document.getElementById('top').classList.toggle('solid',scrollY>30); clearTimeout(window._rf); window._rf=setTimeout(fb,220); },{passive:true});
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
   const t=document.querySelector(a.getAttribute('href')); if(!t) return;
   e.preventDefault();
