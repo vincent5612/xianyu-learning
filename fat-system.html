@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>减脂执行系统 · 80 天</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --blue:#0b6bff; --blue-l:#eaf2ff; --ink:#1a1d24; --ink2:#5c6270; --ink3:#949aa6;
+  --line:#e8eaef; --bg:#f5f7fa; --card:#fff; --ok:#12b76a; --warn:#f79009; --bad:#f04438;
+}
+body{font:15px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+  color:var(--ink);background:var(--bg);padding-bottom:76px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px}
+
+/* 顶栏 */
+header{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.hd{display:flex;align-items:center;justify-content:space-between;padding:13px 14px}
+.hd h1{font-size:17px;font-weight:700;letter-spacing:0;min-width:0;overflow:visible}
+.hd .day{font-size:12px;color:var(--ink3);flex:none;margin-left:10px}
+.day b{color:var(--blue);font-size:15px}
+
+/* tab */
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);
+  display:flex;z-index:30;padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;border:0;background:none;padding:9px 2px 8px;font-size:10.5px;color:var(--ink3);
+  font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+nav button svg{width:21px;height:21px;stroke:var(--ink3);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--blue)}
+nav button.on svg{stroke:var(--blue)}
+
+.tab{display:none;padding-top:14px}
+.tab.on{display:block}
+
+.card{background:var(--card);border-radius:13px;padding:15px;margin-bottom:12px;
+  box-shadow:0 1px 3px rgba(20,25,40,.05)}
+h2{font-size:14.5px;font-weight:700;margin-bottom:11px;display:flex;align-items:center;gap:7px}
+h2 .n{display:inline-flex;width:19px;height:19px;border-radius:6px;background:var(--blue-l);color:var(--blue);
+  font-size:11px;align-items:center;justify-content:center;font-weight:700;flex:none}
+.sub{font-size:12.5px;color:var(--ink2);line-height:1.65}
+
+/* 表单 */
+.row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
+.f{display:flex;flex-direction:column;gap:5px}
+.f label{font-size:11.5px;color:var(--ink2);font-weight:600}
+.f input,.f select{border:1px solid var(--line);border-radius:9px;padding:10px;font-size:15px;
+  font-family:inherit;color:var(--ink);background:#fbfcfe;width:100%}
+.f input:focus{outline:0;border-color:var(--blue);background:#fff}
+.btn{width:100%;border:0;border-radius:11px;padding:14px;font-size:15px;font-weight:600;
+  background:var(--blue);color:#fff;font-family:inherit;cursor:pointer;margin-top:5px}
+.btn:active{opacity:.85}
+.btn.ghost{background:var(--blue-l);color:var(--blue);margin-top:9px}
+.btn.sm{padding:10px;font-size:13.5px}
+
+/* 结果块 */
+.rx{background:var(--blue-l);border-left:3px solid var(--blue);border-radius:9px;padding:12px 13px;margin-top:11px}
+.rx .t{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:5px}
+.rx .c{font-size:14px;line-height:1.7;color:var(--ink)}
+.rx.warn{background:#fff8ec;border-color:var(--warn)}.rx.warn .t{color:#b54708}
+.rx.bad{background:#fef3f2;border-color:var(--bad)}.rx.bad .t{color:#b42318}
+.rx.ok{background:#ecfdf3;border-color:var(--ok)}.rx.ok .t{color:#027a48}
+
+/* 统计 */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:11px}
+.st{background:#fbfcfe;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+.st .v{font-size:17px;font-weight:700;letter-spacing:-.3px}
+.st .k{font-size:10.5px;color:var(--ink3);margin-top:2px}
+.st.up .v{color:var(--ok)}.st.dn .v{color:var(--blue)}
+
+/* 曲线 */
+.chartbox{position:relative;height:170px;margin-top:4px}
+canvas{width:100%;height:170px;display:block}
+.legend{display:flex;gap:14px;font-size:11px;color:var(--ink2);margin-top:7px;flex-wrap:wrap}
+.legend i{display:inline-block;width:9px;height:3px;border-radius:2px;margin-right:4px;vertical-align:middle}
+
+/* 列表 */
+.item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.item:last-child{border-bottom:0}
+.item .d{color:var(--ink3);font-size:12px}
+.tag{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--blue-l);color:var(--blue);font-weight:600}
+.tag.ok{background:#ecfdf3;color:#027a48}.tag.warn{background:#fff8ec;color:#b54708}.tag.bad{background:#fef3f2;color:#b42318}
+
+/* 认知门禁 */
+.q{padding:11px 0;border-bottom:1px solid var(--line)}
+.q:last-of-type{border-bottom:0}
+.q p{font-size:14px;margin-bottom:7px}
+.opts{display:flex;gap:7px}
+.opts button{flex:1;border:1px solid var(--line);background:#fbfcfe;border-radius:8px;padding:8px;
+  font-size:13px;font-family:inherit;color:var(--ink2);cursor:pointer}
+.opts button.sel{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600}
+
+/* 日历 */
+.cal{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+.cal div{aspect-ratio:1;border-radius:5px;background:#eef1f6;font-size:9px;display:flex;
+  align-items:center;justify-content:center;color:var(--ink3)}
+.cal div.done{background:var(--blue);color:#fff;font-weight:600}
+.cal div.today{outline:2px solid var(--blue);outline-offset:1px}
+
+.note{font-size:11.5px;color:var(--ink3);line-height:1.6;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+.hide{display:none!important}
+.big{font-size:19px;font-weight:700;letter-spacing:-.3px}
+.big span{font-size:12px;font-weight:500;color:var(--ink3);margin-left:3px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap hd">
+    <h1>减脂执行系统</h1>
+    <div class="day">第 <b id="hdDay">0</b> 天 / 80</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ========== 今日处方 ========== -->
+<section class="tab on" id="t-today">
+  <div class="card" id="cRx">
+    <h2><span class="n">今</span>今天的处方</h2>
+    <div id="rxBody"><div class="sub">先完成「自测」（第 4 个标签页），这里就会每天给你今天该做什么。</div></div>
+  </div>
+  <div class="card" id="cQuick" style="display:none">
+    <h2><span class="n">快</span>30 秒快捷录入</h2>
+    <div class="row">
+      <div class="f"><label>今晨体重（斤）</label><input id="qW" type="number" step="0.1" inputmode="decimal" placeholder="130.5"></div>
+      <div class="f"><label>今晨体脂率（%）</label><input id="qF" type="number" step="0.1" inputmode="decimal" placeholder="12.7"></div>
+    </div>
+    <div class="row">
+      <div class="f"><label>昨天做了运动吗</label>
+        <select id="qE"><option value="">未选</option><option value="1">做了</option><option value="0">没做</option></select></div>
+      <div class="f"><label>昨天馋嘴/破戒了吗</label>
+        <select id="qC"><option value="">未选</option><option value="0">没有</option><option value="1">有</option></select></div>
+    </div>
+    <button class="btn" onclick="saveQuick()">存进档案 + 出今天的处方</button>
+  </div>
+</section>
+
+<!-- ========== 打卡档案 ========== -->
+<section class="tab" id="t-checkin">
+  <div class="card">
+    <h2><span class="n">测</span>六项指标（每周日全套测一次）</h2>
+    <div class="row">
+      <div class="f"><label>体重（斤）</label><input id="fW" type="number" step="0.1" inputmode="decimal"></div>
+      <div class="f"><label>BMI</label><input id="fB" type="number" step="0.1" inputmode="decimal"></div>
+    </div>
+    <div class="row">
+      <div class="f"><label>体脂率（%）</label><input id="fF" type="number" step="0.1" inputmode="decimal"></div>
+      <div class="f"><label>皮下脂肪（%）</label><input id="fS" type="number" step="0.1" inputmode="decimal"></div>
+    </div>
+    <div class="row">
+      <div class="f"><label>内脏脂肪（级）</label><input id="fV" type="number" step="0.1" inputmode="decimal"></div>
+      <div class="f"><label>体年龄（岁）</label><input id="fA" type="number" step="1" inputmode="numeric"></div>
+    </div>
+    <div class="row">
+      <div class="f"><label>腰围（cm）</label><input id="fC" type="number" step="0.5" inputmode="decimal"></div>
+      <div class="f"><label>日期</label><input id="fD" type="date"></div>
+    </div>
+    <button class="btn" onclick="saveFull()">存入档案</button>
+    <div class="note">铁律：同一时间、同一状态下测（早起 · 上完厕所 · 运动前）。条件不一致 = 数据不可比 = 反馈失效。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">录</span>全部记录</h2>
+    <div id="recList"><div class="sub">还没有记录。</div></div>
+    <button class="btn ghost sm" onclick="exportCSV()">导出 CSV（自己保管）</button>
+  </div>
+</section>
+
+<!-- ========== 曲线 ========== -->
+<section class="tab" id="t-chart">
+  <div class="card">
+    <h2><span class="n">线</span>体脂率曲线（主指标）</h2>
+    <div class="chartbox"><canvas id="cvF"></canvas></div>
+    <div class="legend"><span><i style="background:#0b6bff"></i>体脂率</span><span><i style="background:#f79009"></i>7 日均线</span></div>
+  </div>
+  <div class="card">
+    <h2><span class="n">线</span>体重曲线（辅助 · 会骗人）</h2>
+    <div class="chartbox"><canvas id="cvW"></canvas></div>
+    <div class="note">体重看 7 日均值，不看单日。单日波动 ±1kg 是水分噪声，不触发任何动作。</div>
+  </div>
+  <div class="card">
+    <h2><span class="n">判</span>系统判读</h2>
+    <div id="judgeBox"><div class="sub">至少 2 次记录后开始判读。</div></div>
+  </div>
+</section>
+
+<!-- ========== 自测 ========== -->
+<section class="tab" id="t-test">
+  <div class="card">
+    <h2><span class="n">0</span>认知门禁 · 先答完再进</h2>
+    <div class="sub" style="margin-bottom:9px">没被触动之前，方法再多也没用。这不是问卷，是让你面对自己。</div>
+    <div id="qZone"></div>
+    <button class="btn" onclick="genWhy()">生成我的「为什么」</button>
+    <div id="whyBox"></div>
+  </div>
+
+  <div class="card" id="cType">
+    <h2><span class="n">1</span>类型自测 · 3 题</h2>
+    <div class="q"><p>1. 我能管住嘴（能接受调整饮食结构）吗？</p>
+      <div class="opts" data-k="t1"><button onclick="pick(this,'t1',1)">能</button><button onclick="pick(this,'t1',0)">不太能</button></div></div>
+    <div class="q"><p>2. 我是一个爱运动的人吗？</p>
+      <div class="opts" data-k="t2"><button onclick="pick(this,'t2',2)">很爱动</button><button onclick="pick(this,'t2',1)">能动一点</button><button onclick="pick(this,'t2',0)">完全不爱动</button></div></div>
+    <div class="q"><p>3. 我的 BMI 大概在？</p>
+      <div class="opts" data-k="t3"><button onclick="pick(this,'t3',3)">≥28 大基数</button><button onclick="pick(this,'t3',2)">24-28</button><button onclick="pick(this,'t3',1)">&lt;24 小基数</button></div></div>
+    <button class="btn" onclick="calcType()">测出我的类型 + 处方</button>
+    <div id="typeBox"></div>
+  </div>
+</section>
+
+<!-- ========== 日历 ========== -->
+<section class="tab" id="t-cal">
+  <div class="card">
+    <h2><span class="n">日</span>80 天执行日历</h2>
+    <div class="stats">
+      <div class="st"><div class="v" id="stDone">0</div><div class="k">已打卡</div></div>
+      <div class="st"><div class="v" id="stStreak">0</div><div class="k">连续天数</div></div>
+      <div class="st"><div class="v" id="stLeft">80</div><div class="k">剩余天数</div></div>
+    </div>
+    <div class="cal" id="cal"></div>
+    <div class="note">蓝色 = 已打卡。每打一次卡亮一格 —— 这是给你自己看的证据链。</div>
+  </div>
+  <div class="card">
+    <h2><span class="n">奖</span>奖励日</h2>
+    <div class="sub">持续一周完成 → <b>周日中午放开吃一顿</b>（火锅/烧烤/自助，不吝啬）。<br>
+    中间馋的时候，告诉自己：我周天可以放开吃 —— 这是机制，不是意志力。</div>
+  </div>
+  <div class="card">
+    <h2><span class="n">退</span>什么时候该停</h2>
+    <div id="exitBox"></div>
+  </div>
+  <div class="card">
+    <h2><span class="n">隐</span>关于你的数据</h2>
+    <div class="sub">所有数据只存在<b>你自己这台手机/电脑的浏览器里</b>（localStorage），不上传、不共享、不联网。
+    换设备或清缓存会丢，重要数据请用上面的「导出 CSV」自己备份。</div>
+  </div>
+</section>
+
+</div>
+
+<nav>
+  <button class="on" onclick="go('today',this)">
+    <svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg>今日</button>
+  <button onclick="go('checkin',this)">
+    <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>打卡</button>
+  <button onclick="go('chart',this)">
+    <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/></svg>曲线</button>
+  <button onclick="go('test',this)">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>自测</button>
+  <button onclick="go('cal',this)">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>日历</button>
+</nav>
+
+<script>
+/* ================= 数据层 ================= */
+const K='anshu_fat_v1';
+let S = JSON.parse(localStorage.getItem(K) || '{}');
+S.rec = S.rec||[]; S.ans = S.ans||{}; S.why = S.why||''; S.type = S.type||null; S.start = S.start||null;
+const save = ()=>localStorage.setItem(K, JSON.stringify(S));
+const today = ()=>new Date().toISOString().slice(0,10);
+const dfmt = s=>s? s.slice(5).replace('-','/'):'';
+const dayN = ()=>{ if(!S.start) return 0; return Math.min(80, Math.floor((new Date(today())-new Date(S.start))/864e5)+1); };
+
+/* ================= 规则引擎（18 条） ================= */
+function judge(){
+  const r=[...S.rec].sort((a,b)=>a.d<b.d?-1:1), out=[];
+  if(r.length<2) return out;
+  const f7=(arr,key)=>{const v=arr.slice(-7).map(x=>x[key]).filter(x=>x!=null&&x!=='');return v.length?v.reduce((a,b)=>a+b,0)/v.length:null;};
+  const cur=r[r.length-1], prev=r[r.length-2];
+  const fNow=cur.f, fPrev=prev.f, wNow=cur.w, wPrev=prev.w;
+
+  // R2/R4 体重 vs 体脂
+  if(fPrev&&fNow&&wPrev&&wNow){
+    if(wNow<wPrev && fNow>=fPrev) out.push({lv:'warn',t:'体重降了但体脂没降',c:'掉的多半是水分或肌肉。<b>别庆祝体重</b>，回头查蛋白质够不够（每餐 1 拳），运动强度是否过高。'});
+    if(Math.abs(wNow-wPrev)<0.6 && fNow<fPrev) out.push({lv:'ok',t:'体重没动、体脂在降（最好的情况）',c:'体型正在变。<b>什么都别改，继续。</b>不要被体重数字带跑。'});
+  }
+  // R5 平台期
+  const twoWk = r.filter(x=> (new Date(cur.d)-new Date(x.d))/864e5 <= 14);
+  if(twoWk.length>=3){
+    const fs=twoWk.map(x=>x.f).filter(x=>x!=null&&x!=='');
+    if(fs.length>=3 && Math.abs(fs[0]-fs[fs.length-1])<0.3 && fNow>=fs[0])
+      out.push({lv:'bad',t:'体脂连续 2 周不动 → 平台期',c:'<b>不要靠更狠的节食。</b>按顺序动一个变量：① 运动时长 +5 分钟 ② 进食窗口收窄 1 小时 ③ 饮食加严一档（先控糖）。<b>一次只动一个。</b>'});
+  }
+  // R6 过度消耗
+  if(cur.note && /掉发|怕冷|没精神|失眠|头晕/.test(cur.note))
+    out.push({lv:'bad',t:'出现过度消耗信号',c:'<b>立刻加碳水，恢复进食窗口（别缩窗口）</b>，退回上一档。身体在抵抗时，加练是错的方向。'});
+  // R17 掉队
+  const gap = (new Date(today())-new Date(cur.d))/864e5;
+  if(gap>=3) out.push({lv:'warn',t:`已 ${Math.floor(gap)} 天没记录`,c:'<b>不要从中断点硬接。</b>把目标降到最小（跑步 1 公里 / 跳绳 5 分钟 / 深蹲 10 次 / 爬楼 5 层），今天先做 5 分钟。'});
+  else if(gap>=1.5) out.push({lv:'warn',t:'昨天没记录',c:'先降到最小目标，做 5 分钟再说 —— 别让"没做到"变成"算了"。'});
+  // R1 前 3 天
+  if(dayN()<=3 && dayN()>0) out.push({lv:'ok',t:'现在处在适应期（前 3 天）',c:'饿是正常的 —— 可以在 8 小时窗口内<b>多吃蔬菜和蛋白</b>。<b>饿到崩不是意志弱，是方法没调好。</b>'});
+  return out;
+}
+
+/* ================= 今日处方 ================= */
+function todayRx(){
+  const r=[...S.rec].sort((a,b)=>a.d<b.d?-1:1), J=judge();
+  let html='';
+  if(!S.type){
+    html=`<div class="rx warn"><div class="t">先做完自测</div><div class="c">去「自测」标签页，答完 3 题，这里就会每天给你今天该干什么。</div></div>`;
+    document.getElementById('rxBody').innerHTML=html; document.getElementById('cQuick').style.display='none'; return;
+  }
+  const st=S.type;
+  // 档位判断
+  const L = st.L||0;
+  const plan=[
+    {n:'L0 起步',d:'每天 5 分钟（跑步 1 公里 / 跳绳 5 分钟 / 深蹲 10 次 / 爬楼 5 层，四选一）'},
+    {n:'L1 基础',d:'每天 10–15 分钟'},
+    {n:'L2 常规',d:'每次 30 分钟，每周 3–4 次'},
+    {n:'L3 强化',d:'每次 45–60 分钟，每周 5 次，可加少量断/少碳水'}
+  ][Math.min(L,3)];
+  html += `<div class="rx"><div class="t">今天吃什么</div><div class="c">
+    <b>${st.kind==='B'?'168（8 小时窗口内正常吃）':'211（2 拳蔬菜 : 1 拳蛋白 : 1 拳碳水）'}</b><br>
+    ${st.kind==='B'?'窗口：如 8:00–16:00 吃完，其余 16 小时不进食。窗口选定后 30 天不改。':'用拳头量，不称重、不算卡。<b>蔬菜不设限、蛋白必须够、碳水最少。</b>'}
+    <br><span style="color:#5c6270;font-size:13px">加严顺序（不一步到位）：先控糖 → 再控油盐 → 再把碳水换粗粮 → 最后才断碳水</span></div></div>`;
+
+  html += `<div class="rx ok"><div class="t">今天动多少 · ${plan.n}</div><div class="c">${plan.d}<br>
+    <span style="color:#5c6270;font-size:13px">锚点：<b>不是"有空就练"，是"换完鞋就 5 分钟"</b> —— 挂在已有动作后面，不靠意志力。</span></div></div>`;
+
+  // 奖励日
+  const isSun = new Date().getDay()===0;
+  if(isSun) html += `<div class="rx ok"><div class="t">今天是奖励日</div><div class="c">这一周做到了 → <b>今天中午放开吃一顿</b>。不吝啬。</div></div>`;
+  else html += `<div class="rx"><div class="t">距离奖励日还有 ${7-new Date().getDay()} 天</div><div class="c">馋的时候告诉自己：<b>我周天可以放开吃。</b></div></div>`;
+
+  // 判读
+  J.forEach(j=>{ html += `<div class="rx ${j.lv}"><div class="t">${j.t}</div><div class="c">${j.c}</div></div>`; });
+
+  document.getElementById('rxBody').innerHTML=html;
+  document.getElementById('cQuick').style.display='block';
+}
+
+/* ================= 自测 ================= */
+const Q10=['我接受目前臃肿的自己吗？','我接受未来可能的三高吗？','我接受购买衣服的苦恼吗？','我对当下的状态满足吗？','我对目前的生活满足吗？','我的目标体重是多少？','我成功之后最想做的事情是什么？','生活中哪些方面可以刺激到自己？','我变美变瘦之后的样子是如何的？','我难道要胖着过完一生吗？'];
+function renderQ(){
+  document.getElementById('qZone').innerHTML = Q10.map((q,i)=>
+    `<div class="q"><p>${i+1}. ${q}</p><div class="opts" data-k="q${i}">
+      <button onclick="pick(this,'q${i}','要改变')">要改变</button>
+      <button onclick="pick(this,'q${i}','没想过')">没想过</button></div></div>`).join('');
+  Object.entries(S.ans).forEach(([k,v])=>{
+    document.querySelectorAll(`.opts[data-k="${k}"] button`).forEach(b=>{if(b.textContent===String(v))b.classList.add('sel')});
+  });
+}
+function pick(el,k,v){
+  el.parentNode.querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel'); S.ans[k]=v; save();
+}
+function genWhy(){
+  const want=Q10.filter((_,i)=>S.ans['q'+i]==='要改变').length;
+  const goal=S.ans['q5']||'';
+  document.getElementById('whyBox').innerHTML =
+    `<div class="rx ok"><div class="t">你的「为什么」</div><div class="c">
+     你已确认 <b>${want} / 10</b> 条理由。<br>
+     这不是问卷，是你接下来 80 天在深夜想放弃时，唯一能拉住你的东西。<br>
+     <span style="color:#5c6270;font-size:13px">方法大家都懂 —— 真正让人走完的是认知。${want>=6?'你已经够了，开始吧。':'再问自己一遍，直到被真正触动。'}</span>
+     </div></div>`;
+  S.why=want; save();
+}
+function calcType(){
+  const a=Number(S.ans.t1??-1), b=Number(S.ans.t2??-1), c=Number(S.ans.t3??-1);
+  if(a<0||b<0||c<0){document.getElementById('typeBox').innerHTML='<div class="rx warn"><div class="t">还有题没答</div><div class="c">3 题都选一下。</div></div>';return;}
+  let kind, name, desc;
+  if(a===0 && b===0){ kind='D'; name='第四类 · 先只做一件事'; desc='不要求你节食、不要求你运动 —— <b>只要求你每天早上称一次</b>。先把反馈建立起来，别的以后再说。';}
+  else if(b===0){ kind='A'; name='第一类 · 超级不爱运动'; desc='<b>只做 211/168，先不动运动。</b>等体脂连续降 2 周，再说运动的事。';}
+  else if(b===1){ kind='B'; name='第二类 · 适量运动'; desc='轻断食 + <b>每周 3–4 次 × 30 分钟</b>（慢跑/跳绳/跳操/瑜伽/游泳）。';}
+  else { kind='C'; name='第三类 · 可加运动'; desc='轻断食 + <b>每周 5–7 次 × 60 分钟</b>，可加断/少碳水。<b>蛋白质和膳食纤维一定要补足。</b>';}
+  let big='', note='';
+  if(c===3){ big='大基数'; note='<br><b>大基数注意：</b>用「走的速度跑」保护膝盖；跳绳先买<b>无绳负重款</b>（有绳要协调性，容易绊倒受挫）。';}
+  else if(c===2) big='中基数';
+  else { big='小基数'; note='<br><b>小基数注意：</b>掉得慢是正常的 —— 看体脂率，别被体重数字带跑。';}
+  S.type={kind,name,desc,big,L:kind==='C'?2:(kind==='B'?1:0)}; save();
+  document.getElementById('typeBox').innerHTML =
+    `<div class="rx ok"><div class="t">${name}</div><div class="c">${desc}${note}<br>
+     <span style="color:#5c6270;font-size:13px">类型不是定死的：每 4 周按体脂曲线复判一次。很多人一开始判成第一类，执行两周后自然升到第二类。</span></div></div>`;
+  todayRx();
+}
+
+/* ================= 存入 ================= */
+function saveQuick(){
+  const w=document.getElementById('qW').value, f=document.getElementById('qF').value;
+  if(!w&&!f){alert('至少填体重或体脂率');return;}
+  addRec({w,f,e:document.getElementById('qE').value,c:document.getElementById('qC').value});
+  document.getElementById('qW').value='';document.getElementById('qF').value='';
+  document.getElementById('qE').value='';document.getElementById('qC').value='';
+  alert('已存 ✓ 看看今天的处方');
+}
+function saveFull(){
+  const g=id=>document.getElementById(id).value;
+  if(!g('fD')) document.getElementById('fD').value=today();
+  if(!g('fW')&&!g('fF')){alert('至少填体重或体脂率');return;}
+  addRec({d:g('fD'),w:g('fW'),b:g('fB'),f:g('fF'),s:g('fS'),v:g('fV'),a:g('fA'),c:g('fC')});
+  ['fW','fB','fF','fS','fV','fA','fC'].forEach(i=>document.getElementById(i).value='');
+  alert('已存 ✓');
+}
+function addRec(o){
+  if(!S.start) S.start = o.d || today();
+  const d = o.d || today();
+  const i = S.rec.findIndex(x=>x.d===d);
+  const rec = Object.assign({d}, i>=0?S.rec[i]:{}, o); rec.d=d;
+  if(i>=0) S.rec[i]=rec; else S.rec.push(rec);
+  save(); renderAll();
+}
+
+/* ================= 渲染 ================= */
+function renderAll(){
+  document.getElementById('hdDay').textContent = dayN();
+  renderRec(); drawChart(); todayRx(); renderCal();
+}
+function renderRec(){
+  const r=[...S.rec].sort((a,b)=>a.d<b.d?1:-1);
+  document.getElementById('recList').innerHTML = r.length? r.map(x=>
+    `<div class="item"><div><b>${dfmt(x.d)}</b><div class="d">${[x.w&&x.w+'斤',x.f&&'体脂'+x.f+'%',x.v&&'内脏'+x.v,x.a&&'体龄'+x.a,x.c&&'腰'+x.c+'cm'].filter(Boolean).join(' · ')||'—'}</div></div>
+     ${x.e==='1'?'<span class="tag ok">有运动</span>':x.e==='0'?'<span class="tag">未运动</span>':''}</div>`).join('') : '<div class="sub">还没有记录。</div>';
+}
+function drawChart(){
+  const r=[...S.rec].sort((a,b)=>a.d<b.d?-1:1);
+  const mk=(id,key,color)=>{
+    const cv=document.getElementById(id); if(!cv) return;
+    const dpr=window.devicePixelRatio||1, W=cv.clientWidth, H=170;
+    if(!W) return;   // tab 隐藏时宽度为 0，切回来时 go() 会重画
+    cv.width=W*dpr; cv.height=H*dpr; const x=cv.getContext('2d'); x.scale(dpr,dpr); x.clearRect(0,0,W,H);
+    const pts=r.map((v,i)=>({i,v:parseFloat(v[key])})).filter(p=>!isNaN(p.v));
+    x.strokeStyle='#e8eaef'; x.lineWidth=1;
+    for(let k=1;k<4;k++){const y=H/4*k;x.beginPath();x.moveTo(0,y);x.lineTo(W,y);x.stroke();}
+    if(pts.length<2){x.fillStyle='#949aa6';x.font='12px -apple-system';x.fillText('至少 2 次记录才会出曲线',12,H/2);return;}
+    const vs=pts.map(p=>p.v), mn=Math.min(...vs), mx=Math.max(...vs), pad=(mx-mn)||1;
+    const px=p=>8+ (W-24) * (p.i/Math.max(r.length-1,1));
+    const py=v=>H-22 - (H-46) * ((v-mn)/(pad*1.15));
+    // 均线
+    x.strokeStyle='#f79009'; x.lineWidth=1.4; x.setLineDash([4,3]); x.beginPath();
+    pts.forEach((p,k)=>{const s=Math.max(0,k-2), a=pts.slice(s,k+1); const m=a.reduce((t,q)=>t+q.v,0)/a.length;
+      k?x.lineTo(px(p),py(m)):x.moveTo(px(p),py(m));}); x.stroke(); x.setLineDash([]);
+    // 主线
+    x.strokeStyle=color; x.lineWidth=2.2; x.beginPath();
+    pts.forEach((p,k)=>k?x.lineTo(px(p),py(p.v)):x.moveTo(px(p),py(p.v))); x.stroke();
+    pts.forEach(p=>{x.fillStyle=color;x.beginPath();x.arc(px(p),py(p.v),3,0,7);x.fill();});
+    x.fillStyle='#949aa6'; x.font='10px -apple-system';
+    x.fillText(mx.toFixed(1),2,py(mx)-4);
+    x.fillText(mn.toFixed(1),2,py(mn)+11);
+    x.fillText(dfmt(r[r.length-1].d),W-38,H-6);
+  };
+  mk('cvF','f','#0b6bff'); mk('cvW','w','#0b6bff');
+  const J=judge();
+  document.getElementById('judgeBox').innerHTML = J.length? J.map(j=>`<div class="rx ${j.lv}"><div class="t">${j.t}</div><div class="c">${j.c}</div></div>`).join('')
+    : '<div class="rx ok"><div class="t">一切正常</div><div class="c">按当前方案继续，什么都别改。</div></div>';
+}
+function renderCal(){
+  const done=new Set(S.rec.map(x=>x.d));
+  let h=''; const t=today();
+  if(!S.start){ for(let i=1;i<=80;i++) h+=`<div>${i}</div>`; }
+  else{
+    for(let i=1;i<=80;i++){
+      const d=new Date(new Date(S.start).getTime()+(i-1)*864e5).toISOString().slice(0,10);
+      const cls = done.has(d)?'done':(d===t?'today':'');
+      h+=`<div class="${cls}">${i}</div>`;
+    }
+  }
+  document.getElementById('cal').innerHTML=h;
+  document.getElementById('stDone').textContent=S.rec.length;
+  document.getElementById('stLeft').textContent=Math.max(0,80-S.rec.length);
+  // 连续天数
+  let st=0; const ds=[...done].sort().reverse();
+  if(ds.length){ let cur=new Date(t); if(ds[0]!==t) cur=new Date(new Date(ds[0]).getTime()+864e5);
+    for(let i=0;i<200;i++){const d=cur.toISOString().slice(0,10); if(done.has(d)){st++;cur=new Date(cur.getTime()-864e5);}else break;} }
+  document.getElementById('stStreak').textContent=st;
+  document.getElementById('exitBox').innerHTML=`
+   <div class="rx bad"><div class="t">立即停手、去问医生</div><div class="c">持续头晕乏力 · 心悸胸闷 · 月经停止或紊乱 · 脱发明显加重 · 连续失眠情绪低落</div></div>
+   <div class="rx warn"><div class="t">体系失效（这时该换方案，不是你不努力）</div><div class="c">严格执行 4 周体脂与腰围均无变化 → 回到自测重新分型 · 中断超 7 天 → 退回 L0 重新起步 · 复胖超 5 斤 → 重看锚点/反馈/加量三格</div></div>
+   <div class="rx"><div class="t">心理退出（同样重要）</div><div class="c">如果每天称重开始让你焦虑、一天称多次、多吃一口就自责 → <b>把每日称重改成每周一次</b>。<br>
+   当数字开始驱动情绪而不是驱动行为，这套系统的反馈机制就反了。</div></div>`;
+}
+function exportCSV(){
+  const r=[...S.rec].sort((a,b)=>a.d<b.d?-1:1);
+  if(!r.length){alert('还没有记录');return;}
+  const head=['日期','体重','BMI','体脂率','皮下脂肪','内脏脂肪','体年龄','腰围','运动','馋嘴'];
+  const rows=r.map(x=>[x.d,x.w||'',x.b||'',x.f||'',x.s||'',x.v||'',x.a||'',x.c||'',x.e==='1'?'有':'',x.c==='1'?'有':''].join(','));
+  const csv='\ufeff'+[head.join(','),...rows].join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='我的减脂数据.csv'; a.click();
+}
+function go(id,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('on'));
+  document.getElementById('t-'+id).classList.add('on'); el.classList.add('on');
+  if(id==='chart') drawChart();
+  window.scrollTo(0,0);
+}
+
+/* 启动 */
+document.getElementById('fD').value=today();
+renderQ(); renderAll();
+window.addEventListener('resize',drawChart);
+</script>
+</body>
+</html>
