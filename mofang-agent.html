@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<link href="data:image/png;base64,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" rel="icon" type="image/png">
+<title>荣盈魔方 AI U 盘 · 代理商招商方案</title>
+<style>
+  :root{
+    /* ===== 墨黑 + 香槟金 · 招商场景高端配色 ===== */
+    --ink:#14171B;        /* 标题 / 数字主色 */
+    --ink-2:#2E343B;      /* 次级正文 */
+    --muted:#767C84;      /* 辅助文字 */
+    --paper:#F6F5F1;      /* 页面底：暖米白 */
+    --card:#FFFFFF;
+    --line:#E6E2D9;
+    --line-2:#D3CDC0;
+
+    --gold:#8A6A2E;       /* 金色文字 / 收益数字 */
+    --gold-2:#C9A961;     /* 深底上的香槟金 */
+    --gold-3:#E3CE9B;
+    --gold-lt:#EFE7D6;
+    --sand:#F2EEE4;       /* 柔米色块 */
+
+    --dark:#101317;
+    --dark-2:#101317;
+    --dark-3:#2A2F36;
+
+    --shadow:0 1px 2px rgba(20,23,27,.04), 0 18px 40px -22px rgba(20,23,27,.28);
+    --shadow-lg:0 2px 4px rgba(20,23,27,.06), 0 44px 88px -40px rgba(20,23,27,.42);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    letter-spacing:.01em;
+  }
+  .wrap{max-width:1140px;margin:0 auto;padding:0 32px;}
+  .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
+
+  /* ---------- Nav ---------- */
+  .nav{
+    position:sticky;top:0;z-index:60;
+    background:rgba(246,245,241,.90);
+    backdrop-filter:saturate(180%) blur(14px);
+    -webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-in{
+    max-width:1140px;margin:0 auto;padding:0 32px;height:62px;
+    display:flex;align-items:center;gap:28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+  .brand-mark{
+    height:28px;width:auto;display:block;flex-shrink:0;
+    object-fit:contain;
+  }
+  .brand-txt{font-weight:700;font-size:14.5px;letter-spacing:.06em;}
+  .brand-txt small{display:block;font-size:9.5px;letter-spacing:.22em;color:var(--muted);font-weight:500;line-height:1.2;margin-top:1px;}
+  .nav-links{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap;}
+  .nav-links a{
+    color:var(--ink-2);text-decoration:none;font-size:13px;padding:7px 11px;border-radius:7px;
+    transition:.18s;white-space:nowrap;
+  }
+  .nav-links a:hover{background:var(--sand);color:var(--ink);}
+  .btn-print{
+    font:inherit;font-size:12.5px;cursor:pointer;
+    border:1px solid var(--line-2);background:#fff;color:var(--ink-2);
+    padding:7px 14px;border-radius:8px;transition:.18s;white-space:nowrap;
+  }
+  .btn-print:hover{border-color:var(--ink);color:var(--ink);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:
+      radial-gradient(860px 420px at 84% -14%,rgba(201,169,97,.18),transparent 62%),
+      radial-gradient(700px 400px at 2% 110%,rgba(24,29,34,.55),transparent 64%),
+      linear-gradient(168deg,#1E2329 0%,#101317 58%,#1E2329 100%);
+    color:#fff;position:relative;overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(120% 80% at 50% 0%,#000 15%,transparent 78%);
+    -webkit-mask-image:radial-gradient(120% 80% at 50% 0%,#000 15%,transparent 78%);
+    pointer-events:none;
+  }
+  .hero .wrap{position:relative;padding-top:74px;padding-bottom:68px;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;
+    color:#E3CE9B;margin-bottom:26px;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:linear-gradient(90deg,#C9A961,transparent);}
+  .hero h1{
+    font-size:clamp(34px,5.2vw,62px);
+    line-height:1.16;font-weight:700;letter-spacing:-.015em;
+    margin-bottom:26px;max-width:15em;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(96deg,#F3EBD8 0%,#C9A961 45%,#B99E6A 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .lede{
+    font-size:16px;line-height:1.9;color:rgba(247,246,242,.70);
+    max-width:44em;font-weight:300;
+  }
+  .hero-stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    margin-top:52px;background:rgba(255,255,255,.10);
+    border-top:1px solid rgba(255,255,255,.12);
+    border-bottom:1px solid rgba(255,255,255,.12);
+  }
+  .hstat{background:#101317;padding:22px 22px 20px;}
+  .hstat .v{
+    font-size:clamp(24px,3.4vw,34px);font-weight:600;letter-spacing:-.01em;
+    color:#F3EBD8;line-height:1.2;font-variant-numeric:tabular-nums;
+  }
+  .hstat .v span{font-size:.5em;font-weight:400;margin-left:3px;color:rgba(243,235,216,.6);}
+  .hstat .k{font-size:11.5px;letter-spacing:.13em;color:rgba(255,255,255,.5);margin-top:8px;}
+  .hero-cta{display:flex;gap:12px;margin-top:40px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:13px 26px;border-radius:9px;font-size:14px;font-weight:600;
+    text-decoration:none;transition:.2s;letter-spacing:.02em;
+  }
+  .btn-primary{
+    background:linear-gradient(140deg,#DCC59A,#BFA271);color:#14171B;
+    box-shadow:0 10px 26px -12px rgba(201,169,97,.6);
+  }
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 16px 34px -12px rgba(201,169,97,.8);}
+  .btn-ghost{border:1px solid rgba(255,255,255,.24);color:rgba(255,255,255,.88);}
+  .btn-ghost:hover{border-color:rgba(255,255,255,.52);background:rgba(255,255,255,.06);}
+
+  /* ---------- Sections ---------- */
+  section{padding:88px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .sec-head{margin-bottom:46px;max-width:62em;}
+  .sec-no{
+    display:inline-block;font-size:11px;letter-spacing:.22em;
+    color:var(--gold);font-weight:600;margin-bottom:12px;
+  }
+  .sec-head h2{
+    font-size:clamp(23px,3.1vw,33px);font-weight:700;
+    letter-spacing:-.012em;line-height:1.35;color:var(--ink);
+  }
+  .sec-head p{margin-top:14px;color:var(--muted);font-size:14.5px;font-weight:300;line-height:1.85;}
+
+  .grid{display:grid;gap:18px;}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:26px 26px 24px;box-shadow:var(--shadow);
+    position:relative;overflow:hidden;
+  }
+  .card h3{
+    font-size:16px;font-weight:700;letter-spacing:.01em;margin-bottom:12px;
+    display:flex;align-items:center;gap:9px;
+  }
+  .card h3 .dot{
+    width:20px;height:20px;border-radius:6px;flex-shrink:0;
+    background:var(--gold-lt);color:var(--gold);
+    display:grid;place-items:center;font-size:10.5px;font-weight:700;
+  }
+  .card p{font-size:13.5px;color:var(--ink-2);line-height:1.82;font-weight:300;}
+  .card p + p{margin-top:9px;}
+  .hl{color:var(--gold);font-weight:600;}
+  .hl-g{color:var(--gold);font-weight:600;}
+  ul.ticks{list-style:none;font-size:13.5px;color:var(--ink-2);}
+  ul.ticks li{position:relative;padding-left:18px;margin-bottom:8px;font-weight:300;line-height:1.75;}
+  ul.ticks li::before{
+    content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;
+    border-radius:50%;background:var(--gold-lt);box-shadow:inset 0 0 0 1px var(--gold);
+  }
+
+  /* price strip */
+  .price-strip{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);
+    border-radius:12px;overflow:hidden;margin-top:22px;
+  }
+  .ps-item{background:#fff;padding:20px 22px;}
+  .ps-item .lab{font-size:12px;letter-spacing:.14em;color:var(--muted);}
+  .ps-item .pv{font-size:22px;font-weight:600;margin-top:6px;letter-spacing:-.01em;}
+  .ps-item .pv small{font-size:12px;font-weight:400;color:var(--muted);margin-left:3px;}
+
+  /* ---------- Level cards ---------- */
+  .levels{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .lv{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:24px 22px 22px;cursor:pointer;transition:.22s;position:relative;
+    display:flex;flex-direction:column;
+  }
+  .lv:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--line-2);}
+  .lv-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px;}
+  .lv-name{font-size:20px;font-weight:700;letter-spacing:.02em;color:var(--ink);}
+  .lv-idx{font-size:10.5px;letter-spacing:.16em;color:var(--line-2);font-weight:700;}
+  .lv-th{margin-top:8px;font-size:12px;color:var(--muted);letter-spacing:.04em;}
+  .lv-th b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;}
+  .lv-rate{
+    margin-top:18px;padding:14px 0 12px;border-top:1px dashed var(--line);
+    display:flex;align-items:flex-end;gap:6px;
+  }
+  .lv-rate .rv{font-size:30px;font-weight:600;line-height:1;letter-spacing:-.02em;color:var(--gold);font-variant-numeric:tabular-nums;}
+  .lv-rate .rl{font-size:11.5px;color:var(--muted);padding-bottom:3px;}
+  .lv-prices{margin-top:6px;font-size:12px;color:var(--ink-2);line-height:1.95;font-variant-numeric:tabular-nums;}
+  .lv-prices div{display:flex;justify-content:space-between;gap:6px;}
+  .lv-prices .sp{color:var(--muted);}
+  .lv-prices .pp{font-weight:600;}
+  .lv-last{color:var(--muted);font-weight:400 !important;font-size:11.5px;}
+  .lv-more{
+    margin-top:auto;padding-top:16px;font-size:11.5px;color:var(--gold);
+    letter-spacing:.08em;font-weight:600;
+  }
+  .lv.feature{
+    background:linear-gradient(165deg,#1E2329 0%,#101317 100%);
+    border-color:#2A2F36;color:#fff;
+  }
+  .lv.feature .lv-name{color:#F3EBD8;font-size:17px;}
+  .lv.feature .lv-idx{color:rgba(243,235,216,.26);}
+  .lv.feature .lv-th{color:rgba(255,255,255,.52);}
+  .lv.feature .lv-th b{color:#fff;}
+  .lv.feature .lv-rate{border-top-color:rgba(255,255,255,.14);}
+  .lv.feature .lv-rate .rv{color:#E3CE9B;}
+  .lv.feature .lv-rate .rl{color:rgba(255,255,255,.52);}
+  .lv.feature .lv-prices{color:rgba(255,255,255,.78);}
+  .lv.feature .lv-prices .sp{color:rgba(255,255,255,.44);}
+  .lv.feature .lv-more{color:#C9A961;}
+
+  .badge{
+    display:inline-block;font-size:10.5px;letter-spacing:.1em;font-weight:600;
+    padding:3px 9px;border-radius:20px;background:var(--gold-lt);color:var(--gold);
+    border:1px solid #E6D9BE;
+  }
+  .badge-dark{background:rgba(243,235,216,.12);border-color:rgba(243,235,216,.3);color:#C9A961;}
+
+  .note{
+    margin-top:26px;background:#FCFBF7;border:1px solid var(--line);
+    border-left:3px solid var(--gold);border-radius:0 10px 10px 0;
+    padding:18px 22px;font-size:13px;color:var(--ink-2);line-height:1.85;font-weight:300;
+  }
+  .note b{font-weight:600;color:var(--ink);}
+
+  details.full-table{margin-top:26px;border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden;}
+  details.full-table summary{
+    cursor:pointer;list-style:none;padding:16px 22px;font-size:13px;
+    color:var(--ink-2);font-weight:600;display:flex;align-items:center;gap:9px;
+    transition:.18s;
+  }
+  details.full-table summary::-webkit-details-marker{display:none;}
+  details.full-table summary::after{content:"展开";margin-left:auto;font-size:11.5px;color:var(--gold);font-weight:600;letter-spacing:.08em;}
+  details.full-table[open] summary::after{content:"收起";}
+  details.full-table summary:hover{background:#FCFBF7;}
+  .tbl-wrap{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:860px;}
+  th,td{padding:13px 16px;text-align:left;border-top:1px solid var(--line);vertical-align:top;}
+  thead th{
+    background:#FCFBF7;font-weight:600;font-size:11.5px;letter-spacing:.06em;
+    color:var(--muted);white-space:nowrap;
+  }
+  tbody tr:hover{background:#FCFBF7;}
+  td:first-child{font-weight:700;color:var(--ink);white-space:nowrap;}
+  td.eq{font-variant-numeric:tabular-nums;}
+
+  /* ---------- Income / calculator ---------- */
+  .formula{
+    background:linear-gradient(150deg,#1E2329,#101317);color:#fff;
+    border-radius:14px;padding:30px 32px;margin-bottom:26px;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .formula .f-lab{font-size:11.5px;letter-spacing:.18em;color:rgba(255,255,255,.48);width:100%;}
+  .formula .f-main{font-size:clamp(15px,2.1vw,19px);font-weight:600;letter-spacing:.01em;color:#F3EBD8;}
+  .formula .f-main .op{color:rgba(255,255,255,.32);margin:0 8px;font-weight:300;}
+
+  .calc{
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:30px 32px;box-shadow:var(--shadow);
+  }
+  .calc-title{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:26px;}
+  .calc-title h3{font-size:16px;font-weight:700;}
+  .calc-title .tip{font-size:11.5px;color:var(--muted);letter-spacing:.04em;}
+  .sliders{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-bottom:8px;}
+  .sld .sld-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;}
+  .sld .sld-lab{font-size:13px;color:var(--ink-2);font-weight:600;}
+  .sld .sld-val{font-size:19px;font-weight:600;color:var(--gold);font-variant-numeric:tabular-nums;letter-spacing:-.01em;}
+  .sld .sld-val small{font-size:11.5px;color:var(--muted);font-weight:400;margin-left:2px;}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;
+    background:linear-gradient(90deg,var(--gold) 0%,var(--gold) var(--p,50%),#E7E3DA var(--p,50%),#E7E3DA 100%);
+    outline:none;cursor:pointer;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;
+    background:#fff;border:2px solid var(--gold);box-shadow:0 2px 8px rgba(20,23,27,.22);
+    transition:.15s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12);}
+  input[type=range]::-moz-range-thumb{
+    width:16px;height:16px;border-radius:50%;background:#fff;
+    border:2px solid var(--gold);box-shadow:0 2px 8px rgba(20,23,27,.22);
+  }
+  .sld-scale{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:9px;letter-spacing:.04em;}
+
+  .results{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px;}
+  .res{
+    border:1px solid var(--line);border-radius:12px;padding:20px 20px 18px;
+    background:linear-gradient(180deg,#FCFBF7,#fff);transition:.2s;
+  }
+  .res:hover{border-color:#DDD3BE;}
+  .res .r-lv{font-size:12.5px;font-weight:600;color:var(--ink-2);display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .res .r-rate{font-size:11px;color:#fff;background:var(--ink);padding:2px 7px;border-radius:5px;font-weight:600;letter-spacing:.04em;white-space:nowrap;}
+  .res .r-big{
+    font-size:clamp(22px,3vw,29px);font-weight:600;color:var(--gold);
+    letter-spacing:-.02em;margin-top:14px;line-height:1.05;font-variant-numeric:tabular-nums;
+  }
+  .res .r-big small{font-size:.45em;font-weight:500;color:var(--muted);margin-left:3px;}
+  .res .r-sub{font-size:11.5px;color:var(--muted);margin-top:9px;font-variant-numeric:tabular-nums;}
+  .res .r-sub b{color:var(--ink-2);font-weight:600;}
+
+  .disclaimer{
+    margin-top:22px;font-size:12px;color:var(--muted);line-height:1.85;
+    background:#FCFBF7;border:1px solid var(--line);border-radius:10px;padding:14px 18px;
+    font-weight:300;
+  }
+  .disclaimer b{color:var(--gold);font-weight:600;}
+
+  /* settlement flow */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:6px;}
+  .flow-i{position:relative;padding-top:6px;}
+  .flow-i .fi-n{
+    font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--gold);
+  }
+  .flow-i h4{font-size:14px;font-weight:700;margin:8px 0 6px;}
+  .flow-i p{font-size:12.5px;color:var(--muted);line-height:1.75;font-weight:300;}
+  .flow-i::after{
+    content:"";position:absolute;left:0;top:-6px;width:34px;height:2px;
+    background:linear-gradient(90deg,var(--gold-lt),transparent);
+  }
+
+  /* support */
+  .sup{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .sup-i{
+    background:#fff;border:1px solid var(--line);border-radius:13px;padding:24px 24px 22px;
+    transition:.2s;
+  }
+  .sup-i:hover{border-color:var(--line-2);box-shadow:var(--shadow);transform:translateY(-2px);}
+  .sup-i .si-ico{
+    width:34px;height:34px;border-radius:9px;background:var(--sand);
+    display:grid;place-items:center;margin-bottom:15px;
+  }
+  .sup-i .si-ico svg{width:17px;height:17px;stroke:var(--gold);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+  .sup-i h4{font-size:14.5px;font-weight:700;margin-bottom:8px;}
+  .sup-i p{font-size:12.8px;color:var(--ink-2);line-height:1.8;font-weight:300;}
+
+  /* rules */
+  .rules{display:grid;gap:12px;}
+  .rule{
+    display:flex;gap:18px;background:#fff;border:1px solid var(--line);
+    border-left:3px solid var(--ink);border-radius:0 11px 11px 0;padding:20px 24px;
+  }
+  .rule .r-n{
+    font-size:13px;font-weight:700;color:var(--ink);flex-shrink:0;
+    width:26px;height:26px;border-radius:7px;background:#EFE7D6;
+    display:grid;place-items:center;margin-top:1px;
+  }
+  .rule h4{font-size:14px;font-weight:700;margin-bottom:5px;}
+  .rule p{font-size:13px;color:var(--ink-2);line-height:1.8;font-weight:300;}
+
+  /* compare */
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .cmp-i{border-radius:14px;padding:28px 28px 26px;border:1px solid var(--line);background:#fff;}
+  .cmp-i.old{background:#FBF9F4;}
+  .cmp-i.new{background:linear-gradient(160deg,#1E2329,#101317);border-color:#2A2F36;color:#fff;}
+  .cmp-i .ci-tag{font-size:10.5px;letter-spacing:.18em;color:var(--muted);font-weight:600;}
+  .cmp-i.new .ci-tag{color:#C9A961;}
+  .cmp-i h4{font-size:17px;font-weight:700;margin:10px 0 16px;}
+  .cmp-i.new h4{color:#F3EBD8;}
+  .cmp-i ul{list-style:none;font-size:13.2px;line-height:1.9;font-weight:300;}
+  .cmp-i ul li{padding-left:16px;position:relative;color:var(--ink-2);}
+  .cmp-i.new ul li{color:rgba(255,255,255,.78);}
+  .cmp-i ul li::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%;background:var(--line-2);}
+  .cmp-i.new ul li::before{background:#C9A961;}
+
+  /* cta */
+  .cta{
+    background:linear-gradient(165deg,#1E2329 0%,#101317 62%,#171C21 100%);
+    color:#fff;border-radius:0;padding:80px 0;position:relative;overflow:hidden;
+  }
+  .cta::before{
+    content:"";position:absolute;right:-140px;top:-140px;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,169,97,.16),transparent 66%);
+  }
+  .cta .wrap{position:relative;}
+  .cta h2{font-size:clamp(24px,3.4vw,36px);font-weight:700;letter-spacing:-.015em;line-height:1.35;max-width:22em;}
+  .cta h2 em{font-style:normal;color:#C9A961;}
+  .cta p{color:rgba(255,255,255,.62);font-size:14px;margin-top:16px;max-width:40em;font-weight:300;line-height:1.9;}
+  .origin{
+    margin-top:40px;padding-top:28px;
+    border-top:1px solid rgba(255,255,255,.14);
+    display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  }
+  .origin .ok{font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.4);}
+  .origin .ov{
+    font-size:15px;font-weight:600;color:#F3EBD8;letter-spacing:.02em;
+    display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;line-height:1.7;
+  }
+  .origin .ov i{font-style:normal;font-weight:400;font-size:12.5px;color:#C9A961;}
+
+  footer{padding:34px 0;background:#0B0D10;color:rgba(255,255,255,.34);font-size:11.5px;}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;line-height:1.9;}
+
+  /* modal */
+  .modal{
+    position:fixed;inset:0;z-index:200;display:none;
+    background:rgba(16,19,23,.55);backdrop-filter:blur(6px);
+    align-items:center;justify-content:center;padding:24px;
+  }
+  .modal.on{display:flex;}
+  .modal-box{
+    background:#fff;border-radius:18px;max-width:560px;width:100%;
+    max-height:86vh;overflow-y:auto;box-shadow:var(--shadow-lg);
+    padding:34px 34px 30px;position:relative;
+    animation:pop .26s cubic-bezier(.2,.8,.3,1);
+  }
+  @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98);}to{opacity:1;transform:none;}}
+  .modal-close{
+    position:absolute;top:18px;right:18px;width:30px;height:30px;border-radius:8px;
+    border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--muted);
+    font-size:16px;line-height:1;display:grid;place-items:center;transition:.18s;
+  }
+  .modal-close:hover{background:var(--sand);color:var(--ink);}
+  .m-head .m-lv{font-size:24px;font-weight:700;letter-spacing:.02em;color:var(--ink);}
+  .m-head .m-th{font-size:12.5px;color:var(--muted);margin-top:6px;}
+  .m-rate{
+    margin:22px 0;padding:18px 20px;border-radius:12px;background:#FCFBF7;
+    border:1px solid var(--line);display:flex;align-items:baseline;gap:8px;
+  }
+  .m-rate .mv{font-size:34px;font-weight:600;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums;}
+  .m-rate .ml{font-size:12px;color:var(--muted);}
+  .m-prices{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:24px;}
+  .m-prices div{background:#fff;padding:14px 16px;}
+  .m-prices .mp-k{font-size:11px;color:var(--muted);letter-spacing:.08em;}
+  .m-prices .mp-v{font-size:15px;font-weight:600;margin-top:4px;font-variant-numeric:tabular-nums;}
+  .m-prices .mp-v.sm{font-size:12px;font-weight:500;color:var(--ink-2);line-height:1.5;}
+  .m-sec{font-size:11.5px;letter-spacing:.14em;color:var(--gold);font-weight:700;margin-bottom:12px;}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.2,.8,.3,1),transform .7s cubic-bezier(.2,.8,.3,1);}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media (max-width:1000px){
+    .levels{grid-template-columns:repeat(2,1fr);}
+    .g3,.sup{grid-template-columns:repeat(2,1fr);}
+    .flow{grid-template-columns:repeat(2,1fr);gap:20px;}
+    .results{grid-template-columns:1fr;}
+  }
+  @media (max-width:720px){
+    .wrap{padding:0 20px;}
+    .nav-links{display:none;}
+    .nav-in{padding:0 20px;}
+    section{padding:60px 0;}
+    .hero .wrap{padding-top:52px;padding-bottom:48px;}
+    .hero-stats{grid-template-columns:repeat(2,1fr);margin-top:38px;}
+    .levels,.g3,.g2,.sup,.cmp,.sliders,.price-strip{grid-template-columns:1fr;}
+    .flow{grid-template-columns:1fr;gap:22px;}
+    .calc{padding:24px 20px;}
+    .formula{padding:24px 22px;}
+    .origin{gap:8px;margin-top:32px;}
+    .origin .ov{font-size:14px;}
+    .modal-box{padding:26px 22px;}
+  }
+
+  @media print{
+    body{background:#fff;font-size:11pt;}
+    .nav,.btn-print,.hero-cta,.calc-title .tip,.modal{display:none !important;}
+    .hero{background:#fff;color:#111;border-bottom:2px solid #1E2329;}
+    .hero::before{display:none;}
+    .hero h1 em{color:#8A6A2E;-webkit-text-fill-color:#8A6A2E;background:none;}
+    .lede{color:#333;}
+    .eyebrow{color:#8A6A2E;}
+    .hero-stats{background:none;border-color:#ddd;}
+    .hstat{background:none;padding:14px 0;}
+    .hstat .v,.hstat .v span{color:#111;}
+    .hstat .k{color:#666;}
+    .lv.feature,.cmp-i.new,.formula,.cta{background:#fff !important;color:#111 !important;border:1px solid #ccc;}
+    .lv.feature .lv-name,.cta h2 em,.cmp-i.new h4,.formula .f-main{color:#111 !important;}
+    .lv.feature .lv-prices,.cmp-i.new ul li{color:#333 !important;}
+    .cta .origin{border-top-color:#ddd;}
+    .cta .origin .ov{color:#111;}
+    .cta .origin .ov i{color:#8A6A2E;}
+    .cta .origin .ok,.cta p,footer{color:#555;}
+    section{padding:26px 0;break-inside:avoid;}
+    .card,.sup-i,.rule,.lv,.res{break-inside:avoid;box-shadow:none;}
+    details.full-table{border:1px solid #ddd;}
+    details.full-table > .tbl-wrap{display:block !important;}
+    .reveal{opacity:1 !important;transform:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<!--pnid:z4MxhJqztU0yrOGeRTEHtK--><!-- NAV -->
+<div class="nav">
+  <div class="nav-in">
+    <div class="brand">
+      <img alt="荣盈魔方" class="brand-mark" src="data:image/png;base64,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">
+      <div class="brand-txt"><!--pnid:zWc8d0LvFXs9EbwpseGOf9-->荣盈魔方<small><!--pnid:KKk5XL9Bx0h68iqfcz8Yk4-->ROYIN CUBE</small></div>
+    </div>
+    <nav class="nav-links">
+      <a href="#model"><!--pnid:9QBTPQClbzO29FZz0iYz3V-->合作模式</a>
+      <a href="#levels"><!--pnid:ObVa6N1hPpuXjeJSBQwkVH-->代理等级</a>
+      <a href="#income"><!--pnid:kMwHQ9MInU9PRa73fTkzy3-->硬件收益</a>
+      <a href="#pipeline"><!--pnid:o2fDup3XuKwCYb9dzFn6FU-->管道收益</a>
+      <a href="#support"><!--pnid:GRsaqB5Uz6evxifywE71Oh-->扶持政策</a>
+      <a href="#rules"><!--pnid:e4BhD5UGLtKto92EpKER6S-->代理规则</a>
+    </nav>
+    <button class="btn-print" onclick="window.print()"><!--pnid:nG2XVBTJhUSGfQNLsPyE8l-->打印 / 存为 PDF</button>
+  </div>
+</div>
+
+<!--pnid:ppTcUHAfP4lRPl0UhwT2S8--><!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><!--pnid:YPMWlHsdQ2qxTxGR0AmrnG-->ROYIN CUBE · AI U DISK · 代理商招募</div>
+    <h1><!--pnid:Llwazbc5m7G5yYzrCFOq1w-->一次集采，<br><em><!--pnid:9A7r5f7a9lxNchzxm8eClo-->两条收益曲线</em></h1>
+    <p class="lede"><!--pnid:RcO3yK83scE4MIyPW33dYU-->
+      荣盈魔方 AI U 盘面向代理商开放集采合作。硬件差价兑现短期利润，Token 管道构建长期被动收入池。
+      L1 / L2 / L3 与大区合伙人四级体系按累计集采台量晋级，晋级只升不降，名下存量设备同步切换新等级分润比例。
+    </p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="v num"><!--pnid:MP5HYxOTc2HMl1bpv37veU-->100<span><!--pnid:ceJXBUQH7z3hnbTqDaahET-->台</span></div><div class="k"><!--pnid:m9qFZ6u1ALrrf7kdDAlsyz-->单次起订量</div></div>
+      <div class="hstat"><div class="v num"><!--pnid:R7cIGbePBScg37zpIV60UD-->4<span><!--pnid:ZSBopOzDymRKrwGmh5n0Nh-->级</span></div><div class="k"><!--pnid:Me8XiORy9taRc1pnXNu7Do-->代理等级体系</div></div>
+      <div class="hstat"><div class="v num"><!--pnid:p2pDUgRxy0oZsguQShwAZr-->15<span><!--pnid:aqS8cigYAvuGji11ZdcIG3-->%</span></div><div class="k"><!--pnid:EuhyBMrznJwcaOFKqu9P3K-->最高管道分润</div></div>
+      <div class="hstat"><div class="v" style="font-size:clamp(20px,2.6vw,26px)"><!--pnid:CLXrw1ZgUwsHqsEDesmI6u-->月结</div><div class="k"><!--pnid:PWg50FtUqHBzAYvQvl5W3s-->对公结算开票</div></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#levels"><!--pnid:iA1CPotOehB3fLpvJYfBIB-->查看代理等级与价格 →</a>
+      <a class="btn btn-ghost" href="#pipeline"><!--pnid:F9SIhSZkAyRoRi4xM6DyQ8-->测算管道收益</a>
+    </div>
+  </div>
+</header>
+
+<!--pnid:58MS1tMc0xbKSFuk7Y695P--><!-- 01 合作模式 -->
+<section id="model">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-no"><!--pnid:2JB3J488rckID0A5H3tOpA-->01</span>
+      <h2><!--pnid:ef8f8Ddt2cCBdopAc9wrlu-->代理商模式</h2>
+      <p><!--pnid:8lifPhCexnSEpMphb1N0Iy-->本合作仅设置集采模式，且仅适用于线下销售。合作须签署正式代理协议，单次拿货量不少于 100 台。</p>
+    </div>
+
+    <div class="grid g3">
+      <div class="card reveal">
+        <h3><span class="dot"><!--pnid:Vjfpjezw2qMCfFHzqaSlIV-->A</span><!--pnid:nxVNKscBu9hhbb3V8iTfLt-->集采模式</h3>
+        <p><!--pnid:e7pBawfrVPlAXdZcarvgWi-->乙方与甲方签订框架集采协议，按对应等级代理基准价向甲方采购<span class="hl"><!--pnid:meRIyUPJAcVlP6gO4dOAPL-->硬件 + 激活码</span><!--pnid:s63n0v3yzr9rBACmvjk2Gw-->。</p>
+        <p><!--pnid:LwgklMVAMITwsdEsbIEEN0-->乙方自建库存、自主收款销售，硬件销售差价归乙方所有。</p>
+        <p><!--pnid:MlyqHkfHb6LnSA7OxSplsg-->设备激活时绑定乙方归属台账，乙方享有对应等级的 <span class="hl-g"><!--pnid:gqStgqWbNogCuVvlbCDJ4H-->Token 管道分润</span><!--pnid:7MvxCapdsNwSjN5N3BVwte-->。</p>
+      </div>
+      <div class="card reveal">
+        <h3><span class="dot"><!--pnid:wy4d1AM9aB7eL36RVc0TaB-->B</span><!--pnid:WKWMyHp8xufHo752SOlnyX-->集采提货规则</h3>
+        <ul class="ticks">
+          <li><!--pnid:x8sXfhDUwjyj4Sh9klfZrZ-->框架协议约定总集采台量</li>
+          <li><!--pnid:rfE0sDdSLAZA1MZkoUVqTn-->剩余份额可分批次下单提货</li>
+          <li><!--pnid:7AYbETTeh14Odo726FpXge-->每一批次下单拿货数量不得少于 <b><!--pnid:W2DgxBaRlR3kDTamCbbvwO-->100 台</b></li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3><span class="dot"><!--pnid:6rX4fEYUyNowpkoSHf4Vwd-->C</span><!--pnid:PWTh2UmffPQkb5QC66kbyg-->销售限价与渠道范围</h3>
+        <p><!--pnid:pNm9kKeVC5tzliGzJ2GelU-->所有规格产品对外销售，售价<span class="hl"><!--pnid:rJKCyJKDl9LQ3gz93aJbSY-->不得低于零售指导价</span><!--pnid:bI5U6Bn9lZ7GMYvR9hxtRD-->。</p>
+        <p><!--pnid:xYI3uvqVs98mnMhXmFYuRA-->本合作模式<span class="hl"><!--pnid:nEOMNVOBgLQR0Ns1qWQhKk-->仅适用于线下销售</span><!--pnid:i9srVryqd5WCvTsTnZQhxk-->，不参与电商、直播等线上渠道销售。</p>
+      </div>
+    </div>
+
+    <div class="price-strip reveal">
+      <div class="ps-item"><div class="lab"><!--pnid:2VVTl5qUDm0kAVbKVBI8y4-->128G 零售指导价</div><div class="pv num"><!--pnid:0gtotj0pQ7t9T9rnQr5ceX-->¥699<small><!--pnid:rq51focYYkGX1Ur2wCw9ed-->/ 台</small></div></div>
+      <div class="ps-item"><div class="lab"><!--pnid:1I5QcJSrGhSDTR8Yyt6ohU-->512G 零售指导价</div><div class="pv num"><!--pnid:mTJPDldXuThm902UGkVdtQ-->¥1,399<small><!--pnid:rnnclPnP00DluQsEt3SLPl-->/ 台</small></div></div>
+      <div class="ps-item"><div class="lab"><!--pnid:Nui7n8tDu0OuuFwZqd3KDm-->1TB 零售指导价</div><div class="pv num"><!--pnid:7ujDz57J37ggOy1dRjCmzQ-->¥2,099<small><!--pnid:BLj6m10cIC1YF70XPLDtvW-->/ 台</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!--pnid:Cuxs9xT7Q6VBh72M0AMSXu--><!-- 02 代理等级 -->
+<section id="levels">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-no"><!--pnid:TnStAWgsxo47ZRkxqTFwZ2-->02</span>
+      <h2><!--pnid:N4pY5H3PBmKQJAn5wIYdt8-->代理等级说明</h2>
+      <p><!--pnid:HV8YEzHFpRIBMY9YjEwkBC-->按累计签约集采 128G 台量晋级，等级晋级后只升不降；晋级生效后，乙方名下全部存量激活设备统一按新等级分润比例执行。</p>
+    </div>
+
+    <div class="levels">
+      <div class="lv reveal" data-lv="0">
+        <div class="lv-top"><span class="lv-name"><!--pnid:A9s61Obh9UclyAQxtejZdv-->L1</span><span class="lv-idx"><!--pnid:UZ3jjh317L7FlAQ9fqWMS3-->TIER 01</span></div>
+        <div class="lv-th"><!--pnid:CYcubXEI1mSMMqP5Ygk0k6-->签约集采门槛 <b><!--pnid:bfmNIGgKYGWAFgtA91l5Vj-->≥ 100 台</b></div>
+        <div class="lv-rate"><span class="rv num"><!--pnid:3w8Q3qAxxUwUOpvocBSCBV-->0%</span><span class="rl"><!--pnid:o2mN68Sw8XB5y4JsyotQCw-->Token 管道分润</span></div>
+        <div class="lv-prices">
+          <div><span class="sp"><!--pnid:w4nlZ0n7G7qpHr7gWbU5Ew-->128G</span><span class="pp"><!--pnid:TolfkAhX3BZPpXVNOlPSMk-->¥499</span></div>
+          <div><span class="sp"><!--pnid:TViHhmsdDHXoxGdHcvQlo0-->512G</span><span class="pp"><!--pnid:vyiy3iN2IJsbtXgCo0P71U-->¥799</span></div>
+          <div><span class="sp"><!--pnid:L8EfzmaFWpRQZ7TnAmS2VA-->1TB</span><span class="pp"><!--pnid:qrFpgv6OOekQPWQ05gBU9y-->¥1,099</span></div>
+        </div>
+        <div class="lv-more"><!--pnid:DBoxtDlUjMEetfLPkztbnX-->查看权益 →</div>
+      </div>
+
+      <div class="lv reveal" data-lv="1">
+        <div class="lv-top"><span class="lv-name"><!--pnid:Xvj8yU2dPRfPTfUv4vSbQ7-->L2</span><span class="lv-idx"><!--pnid:axitzTA19VxMxMvFaj7N2e-->TIER 02</span></div>
+        <div class="lv-th"><!--pnid:ROi7Le6K9DOwC1kwVhEPBw-->签约集采门槛 <b><!--pnid:auV1IDXg1xS4s4DanJQAdg-->≥ 1,000 台</b></div>
+        <div class="lv-rate"><span class="rv num"><!--pnid:gmp301g4LIshVmrwXDiD0e-->5%</span><span class="rl"><!--pnid:Ru20W8fqm1KSfoAGVuhtNo-->Token 管道分润</span></div>
+        <div class="lv-prices">
+          <div><span class="sp"><!--pnid:lodyadwe4almA3WuKgsZoh-->128G</span><span class="pp"><!--pnid:e0v1NCwQ6mcrPQ8xrxnbgX-->¥499</span></div>
+          <div><span class="sp"><!--pnid:dnbVdBhUvK7HdwXG9TK5k6-->512G</span><span class="pp"><!--pnid:Sg7s3ZwI4fjh7UUGB8jOC3-->¥799</span></div>
+          <div><span class="sp"><!--pnid:dL6KQfIZYBcMB7eFoitXUO-->1TB</span><span class="pp"><!--pnid:ppPKHtmpV5bWVqMHpx6uKB-->¥1,099</span></div>
+        </div>
+        <div class="lv-more"><!--pnid:hnA5fJKvH6BU0Nef2SCf39-->查看权益 →</div>
+      </div>
+
+      <div class="lv reveal" data-lv="2">
+        <div class="lv-top"><span class="lv-name"><!--pnid:HCJGDmQaIXOkfAReKq7Ynx-->L3</span><span class="lv-idx"><!--pnid:rorkc8P1oH6sdufU7KFiKT-->TIER 03</span></div>
+        <div class="lv-th"><!--pnid:LfP5eSySOwbw9FPIDA45in-->签约集采门槛 <b><!--pnid:CBDgTVJyuXNKyXS4AxJWlF-->≥ 10,000 台</b></div>
+        <div class="lv-rate"><span class="rv num"><!--pnid:UwjU55ie18plY1bqsv40Fy-->10%</span><span class="rl"><!--pnid:1qB3IY7UoGqIjvBzLy2Hzv-->Token 管道分润</span></div>
+        <div class="lv-prices">
+          <div><span class="sp"><!--pnid:3N84WylwfGdhb6WD3X1MIO-->128G</span><span class="pp"><!--pnid:AhdKVyGH834tKzOrumDB3r-->¥399</span></div>
+          <div><span class="sp"><!--pnid:1bRhwEkB9e13jRBXZSdj07-->512G</span><span class="pp lv-last"><!--pnid:u0Wnpderzp6eMlHS6RNQ8g-->见补充协议</span></div>
+          <div><span class="sp"><!--pnid:YYRMrjx8HrwTimaof8V4zc-->1TB</span><span class="pp lv-last"><!--pnid:uQQ2J89KmZwDLtcZ5oTIv2-->见补充协议</span></div>
+        </div>
+        <div class="lv-more"><!--pnid:pnZ9bojXpkqb8MbcXqlo7q-->查看权益 →</div>
+      </div>
+
+      <div class="lv feature reveal" data-lv="3">
+        <div class="lv-top"><span class="lv-name"><!--pnid:7lUSqjy2sLelQlF8B2G1Iy-->大区合伙人</span><span class="lv-idx"><!--pnid:lo1dba1JmRXc7m9Aej8Xcv-->TIER 04</span></div>
+        <div class="lv-th"><!--pnid:Ag0VTlHWXwI6KYm0HKwyhV-->签约集采门槛 <b><!--pnid:awRGvhfDmICFwrpccxM04U-->≥ 100,000 台</b></div>
+        <div class="lv-rate"><span class="rv num"><!--pnid:bG4tVxksbFuMDZ33DVGdmU-->15%</span><span class="rl"><!--pnid:J7iuLzSBD0iKcQ54bHtgBJ-->Token 管道分润</span></div>
+        <div class="lv-prices">
+          <div><span class="sp"><!--pnid:fGFB22EQBLuJZnkJAJhrqs-->128G</span><span class="pp"><!--pnid:HZ0DmkOmuIn96O7dxrslJV-->¥399</span></div>
+          <div><span class="sp"><!--pnid:h4bGwfOGAv4hwQnkKngJ1w-->512G</span><span class="pp lv-last"><!--pnid:ql8fJf1iobXVIGhB3CjzrD-->见补充协议</span></div>
+          <div><span class="sp"><!--pnid:RSzrcVKwOJULgxrKuCCssL-->1TB</span><span class="pp lv-last"><!--pnid:lW5kymfRVva7ld0SicIQBd-->见补充协议</span></div>
+        </div>
+        <div class="lv-more"><!--pnid:N5PhfyoapHgmT5gDNpnFjC-->查看权益 →</div>
+      </div>
+    </div>
+
+    <div class="note reveal">
+      <b><!--pnid:LjP4SZ8By9trGbjVDVVFFm-->晋级规则：</b><!--pnid:aeOL5qQsJJO5aRcxH8HI8U-->按累计签约集采 128G 台量晋级，等级晋级后只升不降。晋级生效后，乙方名下全部存量激活设备统一按新等级分润比例执行。<br>
+      <b><!--pnid:oNPxrzk1BDpFNU36maRDgZ-->价格约定：</b><!--pnid:Ghs47CBBf5roKWqz3tKTlM-->协议期内，当前等级代理基准价保持稳定；甲方如需调整代理基准价，提前 <b><!--pnid:Xjk82Hj549jSna7baDUPPx-->15 日</b><!--pnid:6TWv4LSMucaRELqiItKop6-->出具书面通知。
+    </div>
+
+    <details class="full-table reveal">
+      <summary><!--pnid:kQHYrCDe08mR5LdnVGos3a-->完整价格与权益对照表（含全部权益条款）</summary>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><!--pnid:prwGqwFy2XSqbkQzHTQXaT-->代理等级</th>
+              <th><!--pnid:SFY6Br92QcRI7ulWV9e6wg-->签约集采门槛<br><!--pnid:q58TcPQ7odom5HNFedMasl-->（128G）</th>
+              <th><!--pnid:BhraCRmJh6YQao6BuTDOPH-->128G<br><!--pnid:35Hzoplank4eFt7Bvi37MQ-->基准价</th>
+              <th><!--pnid:bzQFhTA1vlTOaheuiGaX9z-->512G<br><!--pnid:9FeyU07OBMHEPyaxalrRJo-->基准价</th>
+              <th><!--pnid:rEostQRirp3hqg5zjm73s5-->1TB<br><!--pnid:KbEDFyBfFvBunV50yemsv3-->基准价</th>
+              <th><!--pnid:P9ZDlem1qSBQHQ7BvA38e2-->Token 管道<br><!--pnid:MYL6DfKAT5yPm18TRhFwUO-->分润比例</th>
+              <th><!--pnid:JJZt6nBTQMFtgeTmSeGdMC-->专属权益</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><!--pnid:WEcscWHTMbqtDCs0hYggZa-->L1</td>
+              <td class="eq"><!--pnid:1xahRpWrBewjrBzDxzS6AD-->≥ 100 台</td>
+              <td class="eq"><!--pnid:mBpJ9dFkTX3WhhA9hEvEft-->499 元</td>
+              <td class="eq"><!--pnid:uVKB78RJo9E8nKu3minCYN-->799 元</td>
+              <td class="eq"><!--pnid:N2DuSQaUR8DrSww7w93QCZ-->1,099 元</td>
+              <td class="eq"><!--pnid:bnOR5HNJcc35JBkn8Kp7b9-->0%</td>
+              <td><!--pnid:vs7UTmDFMp3OYb7zlJadna-->官方代理授权、营销物料、基础培训、售后对接；仅赚取硬件差价，无管道收益</td>
+            </tr>
+            <tr>
+              <td><!--pnid:yivQFGLin3L9cvwwqBpY38-->L2</td>
+              <td class="eq"><!--pnid:owOULcUkBUr2lZ8w1rZbFh-->≥ 1,000 台</td>
+              <td class="eq"><!--pnid:uHrr3ksTu5IOzgp6GGYj4d-->499 元</td>
+              <td class="eq"><!--pnid:499G0zulcz07ZU84KQsT3f-->799 元</td>
+              <td class="eq"><!--pnid:9bJOw1TzdAgMKILxziEedG-->1,099 元</td>
+              <td class="eq"><!--pnid:LDmzVikErctAxpcdUsJakR-->5%</td>
+              <td><!--pnid:3DNaN95FdG1NpNzJF1C9lD-->正式代理授权书、全套宣传素材、专属运营对接；每新增累计集采满 1,000 台，赠送算力卡（算力卡额度、有效期、使用规则、不可折现等另行签署补充协议）</td>
+            </tr>
+            <tr>
+              <td><!--pnid:lxZsmJE96M1c0SSblqJFz0-->L3</td>
+              <td class="eq"><!--pnid:lly0qlt3tG0dQJohCNQytS-->≥ 10,000 台</td>
+              <td class="eq"><!--pnid:VEHURAX0TP8m9717jWvHzD-->399 元</td>
+              <td><!--pnid:rmZtCL25dwszey4SRwzr70-->同步下调（见补充协议）</td>
+              <td><!--pnid:IGmGu6e51qZ6MBrpCckxqY-->同步下调（见补充协议）</td>
+              <td class="eq"><!--pnid:2Z4lL3tDx8lB9NVxq88Yxz-->10%</td>
+              <td><!--pnid:805VfBaPrnX50nUqIEWKZP-->底价采购权益、10% 持续管道分润；新品优先测试、行业方案支持、优先招商扶持</td>
+            </tr>
+            <tr>
+              <td><!--pnid:UEmyLMG135KtdNfLTOz5nY-->大区合伙人</td>
+              <td class="eq"><!--pnid:SBROTCYT67OMNHk2nBhBLV-->≥ 100,000 台</td>
+              <td class="eq"><!--pnid:dCFhikuIJd2zrbFLoiB39c-->399 元</td>
+              <td><!--pnid:l4HkszfidH7uxrSC0himuI-->同步下调（见补充协议）</td>
+              <td><!--pnid:7EjLYdKV3GG65CuoBLEkMb-->同步下调（见补充协议）</td>
+              <td class="eq"><!--pnid:NIS8ThGWmV8cbE68ifoLml-->15%</td>
+              <td><!--pnid:e2o9CSJxA7GwhldS3YRDz3-->最高档位管道分润；可洽谈区域保护、联合招商、专项项目政策</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!--pnid:C1Di8YMVpm6MkiIfCGIvj7--><!-- 03 硬件收益 -->
+<section id="income">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-no"><!--pnid:9oWJu9q0gl45gldA4EXQ7p-->03</span>
+      <h2><!--pnid:7ltkvu3tD9tRIyHf3SeKGm-->代理基准收益<span style="font-size:.6em; color:var(--muted); font-weight:400; letter-spacing:0"><!--pnid:BSBmxKHVCvkyMjEnHpwDRf-->　硬件一次性收益</span></h2>
+      <p><!--pnid:A3cHJT8ZPU5aI6wyT4y7pM-->代理商的硬件利润 = 产品零售指导价 − 该等级对应代理基准价，属于卖出即兑现的一次性收益。</p>
+    </div>
+
+    <div class="formula reveal">
+      <div class="f-lab"><!--pnid:zWf5hJaGQtCngthwcSCeMn-->硬件毛利计算公式</div>
+      <div class="f-main"><span class="num"><!--pnid:OZBjidsQrbkUv3K6G0dKj1-->零售指导价</span><span class="op"><!--pnid:IeWkQSeRHoYEfUzqyYp8GW-->−</span><span class="num"><!--pnid:Kp2EgIAtENG0uKtbmr9MKm-->代理基准价</span><span class="op"><!--pnid:UXczIERbrx1SNWo4yCFnUG-->=</span><span class="num"><!--pnid:7YQ3TvVscNlTf7mkMERE9Q-->单台硬件毛利</span></div>
+    </div>
+
+    <div class="grid g3">
+      <div class="card reveal">
+        <h3><span class="dot"><!--pnid:a4vxZ9JbDZzIyCSTWJdNMc-->1</span><!--pnid:mYiYLj1VdVt0HuecNgzLz0-->128G</h3>
+        <div style="display:flex; align-items:baseline; gap:8px; margin:4px 0 10px">
+          <span class="num" style="font-size:32px; font-weight:600; color:var(--gold); letter-spacing:-.02em"><!--pnid:SdnbuFhP3pVRwX3UiYaUWt-->¥200</span>
+          <span style="font-size:12px; color:var(--muted)"><!--pnid:Y3wBBmP6UD8Jw5K33cn3qY-->/ 台毛利</span>
+        </div>
+        <p style="color:var(--muted); font-size:12.5px"><!--pnid:YG94Iducy9KDvT7qQW9ZDc-->699 − 499 ＝ 200 元</p>
+      </div>
+      <div class="card reveal">
+        <h3><span class="dot"><!--pnid:EgmTvEeXwsAPmvlUxmH9En-->2</span><!--pnid:k5SuBPAWlHMZzbHziyBAQv-->512G</h3>
+        <div style="display:flex; align-items:baseline; gap:8px; margin:4px 0 10px">
+          <span class="num" style="font-size:32px; font-weight:600; color:var(--gold); letter-spacing:-.02em"><!--pnid:kERN5TmsllLqaJaTiX0apJ-->¥600</span>
+          <span style="font-size:12px; color:var(--muted)"><!--pnid:Ft2NTjcX2Rd8c756zdGwFJ-->/ 台毛利</span>
+        </div>
+        <p style="color:var(--muted); font-size:12.5px"><!--pnid:gHQi1sKd7ZMOooT5sDrGjA-->1,399 − 799 ＝ 600 元</p>
+      </div>
+      <div class="card reveal">
+        <h3><span class="dot"><!--pnid:0cA5uYj6PuOIErQDdVMQcN-->3</span><!--pnid:ZYMnNsABaEhvmlnaCbBXax-->1TB</h3>
+        <div style="display:flex; align-items:baseline; gap:8px; margin:4px 0 10px">
+          <span class="num" style="font-size:32px; font-weight:600; color:var(--gold); letter-spacing:-.02em"><!--pnid:U1nbVEmSmWc7YYGImi90kX-->¥1,000</span>
+          <span style="font-size:12px; color:var(--muted)"><!--pnid:jywvyQnzT2k5P5eSs7iu1g-->/ 台毛利</span>
+        </div>
+        <p style="color:var(--muted); font-size:12.5px"><!--pnid:3r9L9ejK1S3UKvykddTjnd-->2,099 − 1,099 ＝ 1,000 元</p>
+      </div>
+    </div>
+
+    <div class="note reveal">
+      <b><!--pnid:qFIYnby4G1MlFxYLp0HG4n-->以上举例为 L2（≥1,000 台）基准测算。</b><!--pnid:6m64Ligt2jU2sCHbndWZlr-->L1 与 L2 基准价一致，硬件毛利相同，差异在于 Token 管道分润比例为 0%；L3、大区合伙人 128G 基准价下调至 399 元，对应单台硬件毛利 300 元，512G / 1TB 基准价同步下调，以补充协议为准。
+    </div>
+  </div>
+</section>
+
+<!--pnid:EEgoN5QMncEDqvCXKyBgeL--><!-- 04 管道收益 -->
+<section id="pipeline">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-no"><!--pnid:SpprC8IHfDon5lZ0FS2lqO-->04</span>
+      <h2><!--pnid:oXt1oFZg4RDhRTHy018sTp-->Token 管道收益<span style="font-size:.6em; color:var(--muted); font-weight:400; letter-spacing:0"><!--pnid:Hl0ZFtJAAcwH6nZJk9L7R5-->　长期被动收益</span></h2>
+      <p><!--pnid:7t22gQclECXOzo6TGNcFMa-->区别于一次性硬件销售差价，管道收益来自乙方名下已售出、已激活设备后续产生的 Token 实际消耗流水，按代理等级比例持续计提。用户充值但未消耗的 Token 金额不计入分润基数。</p>
+    </div>
+
+    <div class="grid g3" style="margin-bottom:16px">
+      <div class="card reveal">
+        <h3><span class="dot"><!--pnid:WwbCfwwqXbdKdumU3tuIXh-->1</span><!--pnid:imkqkrOhtEBRglf6kYjISU-->归属绑定规则</h3>
+        <ul class="ticks">
+          <li><!--pnid:kARalG1xYmd3ficglEQFOY-->设备首次激活成交时绑定归属代理商</li>
+          <li><!--pnid:Y3UPoZdRPmQRfb1IJoaiLZ-->设备后续转售、转让，管道收益归属不变，不随设备流转变更</li>
+          <li><!--pnid:fhF7fcuDSxvpyqgPVwz2t3-->一台设备仅归属单一代理商，不重复分润</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3><span class="dot"><!--pnid:NyJwJcOf76kM0ZIvirUNsR-->2</span><!--pnid:tRGL1hkRDuFWkQikJnTHki-->收益终止条件</h3>
+        <ul class="ticks">
+          <li><!--pnid:zDs9N9te9gGaUTm3BJe4q3-->设备硬件报废、永久停用、激活失效</li>
+          <li><!--pnid:w2rQqNc7s0me7o3pOYkECJ-->不再产生 Token 消耗，即停止该台设备管道分润</li>
+          <li><!--pnid:dofilYAlfHPblA1gJRNopq-->后台设有独立归属台账，归属隔离、统一口径</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3><span class="dot"><!--pnid:9jqSxVLw3UPCIffm6pQonK-->3</span><!--pnid:nuV1gOI5x7jF9KDPVQo3KX-->等级联动与独立核算</h3>
+        <ul class="ticks">
+          <li><!--pnid:zYgibjEOEMvxS52BSgE6Eg-->代理商升级后，名下全部存量设备自动切换为新等级分润比例</li>
+          <li><!--pnid:LtQ3uqRhnkLhGzUDMdJVKg-->硬件差价收益、Token 管道收益为两笔独立收益</li>
+          <li><!--pnid:hwCBnoCN68KghCayEf1ME2-->分开对账、分开结算，互不冲抵</li>
+        </ul>
+      </div>
+    </div>
+
+    <!--pnid:RfKq74NZxh5Df2A1mc9vjg--><!-- Calculator -->
+    <div class="calc reveal" style="margin-top:18px">
+      <div class="calc-title">
+        <h3><!--pnid:mY7xmYhtlJi5IprS7rXpjA-->管道收益实时测算</h3>
+        <span class="tip"><!--pnid:OP2AXFKq4V1cawe5L7UOXk-->拖动滑块调整台数与日均 Token 消耗</span>
+      </div>
+      <div class="sliders">
+        <div class="sld">
+          <div class="sld-top">
+            <span class="sld-lab"><!--pnid:6zx6uSAeWysIibBXG3pH67-->稳定激活设备台数</span>
+            <span class="sld-val"><span id="vDevices"><!--pnid:ZepLTYHwKdsbVbfhVZxOkK-->1,000</span><small><!--pnid:GUqv56XEQyF8ndKPNsvVWk-->台</small></span>
+          </div>
+          <input id="rDevices" max="5000" min="100" step="100" type="range" value="1000">
+          <div class="sld-scale"><span><!--pnid:rSsv3eHqi6Slkicxq25S32-->100 台</span><span><!--pnid:GxSUIkP8YsMOc6D3kYcX9B-->5,000 台</span></div>
+        </div>
+        <div class="sld">
+          <div class="sld-top">
+            <span class="sld-lab"><!--pnid:SZaP4XPfH7QrBw0MVVDtJm-->单台日均 Token 消耗</span>
+            <span class="sld-val"><span id="vDaily"><!--pnid:cr0LitAsNSrLugmjta4Mza-->5.0</span><small><!--pnid:KwX5nTy6VbO3gT1Pnhqwm6-->元 / 天</small></span>
+          </div>
+          <input id="rDaily" max="20" min="1" step="0.5" type="range" value="5">
+          <div class="sld-scale"><span><!--pnid:IRTmyEz5HVF0Ek5evyg5Ng-->¥1</span><span><!--pnid:mzT9FQBsMUbwNspFVmMa59-->¥20</span></div>
+        </div>
+      </div>
+
+      <div class="results">
+        <div class="res">
+          <div class="r-lv"><!--pnid:bjkL4L5Opr4LRIOrm59wO5-->L2 <span class="r-rate"><!--pnid:xPXyZ9wu82GvTHbskuZsqM-->5%</span></div>
+          <div class="r-big num" id="o1"><!--pnid:KsY2bJo44sTWDgD9Kt9WJI-->¥7,500<small><!--pnid:BGCM3wAGqZx8KY42EBMoAW-->/ 月</small></div>
+          <div class="r-sub"><!--pnid:mX2Ng9T1XRnmDVnlDFVXd1-->单台月收益 <b id="p1"><!--pnid:yGyciRgWwUYC4Y3eDmAoZt-->¥7.50</b><!--pnid:cqe64GnxzQL9cRENY41zMh-->　·　年度约 <b id="y1"><!--pnid:836tBVTUNtnl0mhxAAVEHa-->¥90,000</b></div>
+        </div>
+        <div class="res">
+          <div class="r-lv"><!--pnid:51NnTrOddytCr0ZO6XKjur-->L3 <span class="r-rate"><!--pnid:kGo2wYXu6BzVKucQN6j4ZR-->10%</span></div>
+          <div class="r-big num" id="o2"><!--pnid:4vdAFcNoyJa9OLoBSl5Bkt-->¥15,000<small><!--pnid:6G9knyyyhm3XbcG4sRun4J-->/ 月</small></div>
+          <div class="r-sub"><!--pnid:mHeKxQXvKhXyoW4bKTZgAP-->单台月收益 <b id="p2"><!--pnid:hPpp0o5GJAd6FVddN7lU4r-->¥15.00</b><!--pnid:I69NKWOymJulGRPw7qTXkK-->　·　年度约 <b id="y2"><!--pnid:sqmOT97pJTxqp79WfnxJug-->¥180,000</b></div>
+        </div>
+        <div class="res">
+          <div class="r-lv"><!--pnid:fnQVTy5dWdiabs0KJ3TdVh-->大区合伙人 <span class="r-rate"><!--pnid:M2LwG82ykBoW8FvFVBkwJk-->15%</span></div>
+          <div class="r-big num" id="o3"><!--pnid:E3CbL4GpxV1WAU1XvCICxG-->¥22,500<small><!--pnid:k53HkHEPbbwFdwxsmGcEH8-->/ 月</small></div>
+          <div class="r-sub"><!--pnid:j144fcgSBmecRv2qgmctbl-->单台月收益 <b id="p3"><!--pnid:RJxcxiiuL2AE1tR8BqU94G-->¥22.50</b><!--pnid:iHFeLcFIRBfepwJGKxdznI-->　·　年度约 <b id="y3"><!--pnid:LEJKjeiqH9kLtBWcQLrO85-->¥270,000</b></div>
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        <b><!--pnid:rcN4bsDYDbPoLhZWgvmB1T-->重要提示：</b><!--pnid:lTQBvGOoLzEM6heJxGwKBg-->该测算仅为招商演示，Token 消耗取决于终端用户使用频次，甲方不承诺保底 Token 消耗、不承诺保底管道收益。L1 的 Token 管道分润比例为 0%，不产生管道收益。测算口径：单台月 Token 消耗 ＝ 日均消耗 × 30 天。
+      </div>
+    </div>
+
+    <!--pnid:c0rZb9qu0j5wERvg7ifu9p--><!-- Settlement -->
+    <div style="margin-top:56px">
+      <div class="sec-head reveal" style="margin-bottom:30px">
+        <h2 style="font-size:20px"><!--pnid:cV6CWaR2lL3YRIvdyRrqRO-->对账与结算规则</h2>
+      </div>
+      <div class="flow reveal">
+        <div class="flow-i">
+          <div class="fi-n"><!--pnid:mXHhgEZsGb58lgNMdoK5Ns-->STEP 01</div>
+          <h4><!--pnid:fCoasIygg7vJU6EXETs9qN-->按月结算</h4>
+          <p><!--pnid:9wSixR9WdmdZh90TC1sHaL-->结算周期为按月结算，甲方每月出具 Token 消耗明细对账报表。</p>
+        </div>
+        <div class="flow-i">
+          <div class="fi-n"><!--pnid:NwuL29Ol7UoPnCUKbBPHOj-->STEP 02</div>
+          <h4><!--pnid:yBWIW9MoS2y4FaQttjaQZa-->3 个工作日核对</h4>
+          <p><!--pnid:ELrTsRBppM1J4Egz9KLuzF-->乙方收到对账报表后 3 个工作日内核对确认，逾期无书面异议视为认可账单。</p>
+        </div>
+        <div class="flow-i">
+          <div class="fi-n"><!--pnid:Z8N0uR1YTWwsNlbvjnu9WQ-->STEP 03</div>
+          <h4><!--pnid:RrBCMvRuU5xKMm93OWfl5Z-->对公结算开票</h4>
+          <p><!--pnid:zFGd8DFccMBUGNSoayqnh9-->对公转账结算，乙方开具合规发票，税务合规走公司对公流程。</p>
+        </div>
+        <div class="flow-i">
+          <div class="fi-n"><!--pnid:gOYZ0Lp9vCckUij4jqU5Rc-->STEP 04</div>
+          <h4><!--pnid:f7Vkd9KovlSs6c8VI4YoAT-->分开对账结算</h4>
+          <p><!--pnid:OhCCIsnmiDz5JyQI7zqxXF-->硬件货款与 Token 管道分润分开对账、分开结算，两笔收益互不混同。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--pnid:id6MpkC4alzpbexY88Lb2A--><!-- 05 扶持政策 -->
+<section id="support">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-no"><!--pnid:xs1rgzqe1aK4pLYiAd6OL0-->05</span>
+      <h2><!--pnid:xyUC7pfRokYDDJHYmU9C9q-->代理商授权与配套保障</h2>
+      <p><!--pnid:YeZLgUqyKfJdkk6Pn5us0L-->签约即配套六项支持，覆盖资质、物料、技术、培训、售后与结算全链路。</p>
+    </div>
+
+    <div class="sup">
+      <div class="sup-i reveal">
+        <div class="si-ico"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h4><!--pnid:6yjFRdd8BFd0UOkrJHhNcz-->资质授权</h4>
+        <p><!--pnid:gRcdmZuy4HW5yRaWK3iHr1-->出具《荣盈魔方产品代理商授权书》，可用于投标、客户洽谈等线下场景；授权期限跟随代理协议考察期 / 合作周期。</p>
+      </div>
+      <div class="sup-i reveal">
+        <div class="si-ico"><svg viewBox="0 0 24 24"><rect height="14" rx="2" width="18" x="3" y="4"/><path d="M3 9h18M8 18v3M16 18v3"/></svg></div>
+        <h4><!--pnid:sZOdRAIpXZAplLOnVaNGhu-->物料支持</h4>
+        <p><!--pnid:NAfT8mqyNiFKj2QznVZ6mB-->产品手册、宣传图、短视频素材、产品 PPT、标准销售话术，开箱即用的销售工具包。</p>
+      </div>
+      <div class="sup-i reveal">
+        <div class="si-ico"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h7"/><circle cx="19" cy="16" r="3"/></svg></div>
+        <h4><!--pnid:Xep9jptAqK7m0AfAqqWjiL-->技术支持</h4>
+        <p><!--pnid:fpYvgN6XPg0vu95mFYfFo8-->激活码后台管理、设备激活查询、Token 消耗对账后台；线下渠道物料与价格合规审核、技术对接支持。</p>
+      </div>
+      <div class="sup-i reveal">
+        <div class="si-ico"><svg viewBox="0 0 24 24"><path d="M12 4L2 9l10 5 10-5-10-5z"/><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/></svg></div>
+        <h4><!--pnid:rwToQRC5meGGFDxg7mANMf-->培训支持</h4>
+        <p><!--pnid:UdDq06KibXePYf8SE2ssDb-->产品功能培训、销售培训、售后问题标准处理流程，帮助团队快速形成销售能力。</p>
+      </div>
+      <div class="sup-i reveal">
+        <div class="si-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 005.6 5.6l-8.5 8.5a2 2 0 01-2.8 0l-2.8-2.8a2 2 0 010-2.8l8.5-8.5z"/><path d="M5 19l-2 2"/></svg></div>
+        <h4><!--pnid:oatTH2Lmz5L8G4u3TORPk0-->售后支持</h4>
+        <p><!--pnid:RFpcKnvhVo8gTH8p2EVJIw-->硬件质保标准、故障返修流程、云端服务运维由甲方负责，代理商专注前端销售。</p>
+      </div>
+      <div class="sup-i reveal">
+        <div class="si-ico"><svg viewBox="0 0 24 24"><rect height="15" rx="2" width="18" x="3" y="5"/><path d="M3 10h18M7 15h4"/></svg></div>
+        <h4><!--pnid:q11OjIbTHxYFp36po1BxwS-->对账结算</h4>
+        <p><!--pnid:DigF5V6mUiRtIPrLbEMzw0-->Token 消耗分润按月对账，对公结算、依法开票，税务合规走公司对公流程。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--pnid:bPARchs0exAEABXlDbDo61--><!-- 06 硬性规则 -->
+<section id="rules">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-no"><!--pnid:Tn922EpXQ0vG1sciFJjFw7-->06</span>
+      <h2><!--pnid:wLwfaIUvFhafYkUbd0awki-->代理商硬性规则</h2>
+      <p><!--pnid:YsemdrWiwwxTPYC58Vbudu-->以下四条为合作红线，签约后纳入代理协议约束条款。</p>
+    </div>
+
+    <div class="rules">
+      <div class="rule reveal">
+        <div class="r-n"><!--pnid:kP03NSjALHdh0pkvARBioP-->1</div>
+        <div>
+          <h4><!--pnid:pH3rbtWX32gGP4dwU85fLs-->限价规则</h4>
+          <p><!--pnid:osCZWr8jx38MQH9snPYmuU-->严禁低于最低指导价倾销、乱价。甲方有权核查渠道售价，乱价按协议处罚，严重者可暂停分润、取消代理资格。</p>
+        </div>
+      </div>
+      <div class="rule reveal">
+        <div class="r-n"><!--pnid:FfVxD9F5kfnNUMmvLxSN0C-->2</div>
+        <div>
+          <h4><!--pnid:Kjf4oHgoKhPX2OFutv8cuO-->窜货管控</h4>
+          <p><!--pnid:lGUm1ts8DMecKg7h3woHxt-->集采批次设备绑定代理商台账，窜货行为按合作协议处理。</p>
+        </div>
+      </div>
+      <div class="rule reveal">
+        <div class="r-n"><!--pnid:ydjtMm5fsKTODOZj1DPFu8-->3</div>
+        <div>
+          <h4><!--pnid:QyVN2RglGUH0G4MIyxAIid-->渠道范围</h4>
+          <p><!--pnid:WhggOuQpNiL0zUtlDlA2DD-->本合作模式仅适用于线下销售，不参与电商、直播等线上渠道销售；代理商不得以任何形式在线上渠道上架、分销本产品。</p>
+        </div>
+      </div>
+      <div class="rule reveal">
+        <div class="r-n"><!--pnid:LTKCiNu63wmCdSzdSEBN3h-->4</div>
+        <div>
+          <h4><!--pnid:TCC96SKDe9xznwcg87NBhX-->经营范围要求</h4>
+          <p><!--pnid:b5IBhq2oBbmfJQjUKssS9H-->代理商公司营业执照经营范围须包含计算机软硬件销售、人工智能硬件销售、信息技术咨询等相关类目（以甲方提供的经营范围清单为准）。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--pnid:IiYKjjbACNHpjEvIKOVd26--><!-- 07 价值总结 -->
+<section id="value">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-no"><!--pnid:wM93fwkCJmQCkYjLvtLQm1-->07</span>
+      <h2><!--pnid:emHx04LF89ZNJKzyqKwWfQ-->为什么选择荣盈魔方</h2>
+      <p><!--pnid:e9vdl4nKQOtzgQY7Y0O9sv-->传统硬件代理卖一台赚一台，卖完收益结束；荣盈魔方代理让每一台已激活设备，都成为长期分润的起点。</p>
+    </div>
+
+    <div class="cmp">
+      <div class="cmp-i old reveal">
+        <div class="ci-tag"><!--pnid:5QinSiJGLpMGQkko70WSnQ-->TRADITIONAL</div>
+        <h4><!--pnid:pSjYyzyQgU60hbx65DgHzH-->传统硬件代理</h4>
+        <ul>
+          <li><!--pnid:n1PaEYzvp8mQhQIURm40gY-->卖一台赚一台差价，一次性结算</li>
+          <li><!--pnid:irUSbloascqx4FxckjDqId-->货卖完了，收益就结束了</li>
+          <li><!--pnid:KJoQZSjeLiWvv8m435PEto-->库存压在手里，全靠周转速度</li>
+          <li><!--pnid:bIgOF0ps2XX9ntH7gz602Q-->没有持续现金流，每年重新开打</li>
+        </ul>
+      </div>
+      <div class="cmp-i new reveal">
+        <div class="ci-tag"><!--pnid:pGUI6WwdFoiM2ur1iJjYuq-->ROYIN CUBE</div>
+        <h4><!--pnid:2zszXXb2udL02Zi3Uooesu-->荣盈魔方代理</h4>
+        <ul>
+          <li><!--pnid:bAtV5D7GGn9ecv98yqa1eg-->硬件差价兑现短期利润，即时回款</li>
+          <li><!--pnid:jXlUYZN2Zc3M7gwLVSvoXC-->Token 管道收益搭建长期被动收入池</li>
+          <li><!--pnid:TU0ZUz71M5wRiz79OxNi61-->激活设备越多，每月稳定分润基数越大</li>
+          <li><!--pnid:GA0UvhWxjK4DbVslFGNrMk-->等级只升不降，存量设备同步升级分润比例</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--pnid:ALo7hDQMUdstgOG4Z5mOOs--><!-- CTA -->
+<div class="cta" id="contact">
+  <div class="wrap">
+    <h2><!--pnid:HMAnvs1IFc4AgADZHNcXZ8-->从 100 台开始，<br><!--pnid:S7R1Zg920C7I5HaFdFCDn7-->先跑通一条<em><!--pnid:kJYY9YsqELWOO7IbrvYQkn-->属于自己的管道</em><!--pnid:Pt7Z3XSOsmWEYPcAGsWRwM-->。</h2>
+    <p><!--pnid:Fv9KMZyUJcgbp9hyWdgCKX-->集采签约、授权落地、后台开通，全流程由专属运营对接。欢迎实地看货、样品测试后再行签约。</p>
+    <div class="origin">
+      <span class="ok"><!--pnid:1woDOGo7A65lPv121JPqBq-->产品源自</span>
+      <span class="ov"><!--pnid:aV4fHofPIjGmEnIXWG7Sr6-->深圳市荣盈互动科技有限公司 <i><!--pnid:0aJwfwgmWsjZ4yNiLw5fe6-->×</i><!--pnid:yymWh4g1cPc9wvhFroqgm5--> 山东曜森科技有限公司</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div><!--pnid:opnXdBAFUfoXVfJrIrryrS-->© 2026 深圳市荣盈互动科技有限公司 · 荣盈魔方 ROYIN CUBE</div>
+    <div><!--pnid:rt5GuaNjTGaxViYCf1E1YP-->本方案为招商说明文件，具体条款以双方签署的代理协议及补充协议为准。</div>
+  </div>
+</footer>
+
+<!--pnid:btYtHkzpNRm8Mzb1ZPOYYD--><!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button aria-label="关闭" class="modal-close" id="mClose"><!--pnid:2sfet1C0jKfW9pGNpVXDJE-->✕</button>
+    <div class="m-head">
+      <div class="m-lv" id="mLv"><!--pnid:ZkWOWQAgiNr3V1Uarbfy2G-->L2</div>
+      <div class="m-th" id="mTh"><!--pnid:u19hhQ6neTeowxcLQWURFd-->签约集采门槛 ≥ 1,000 台（128G 计）</div>
+    </div>
+    <div class="m-rate">
+      <span class="mv num" id="mRate"><!--pnid:iO2YvaUglxjQbHezldHjg7-->5%</span>
+      <span class="ml"><!--pnid:1tES1cEFQXVFMZ1tNZSBT7-->Token 管道分润比例</span>
+    </div>
+    <div class="m-prices">
+      <div><div class="mp-k"><!--pnid:2m7K6R6iO6gyWABuW5vEhh-->128G 基准价</div><div class="mp-v num" id="mP1"><!--pnid:EzNyLDw47ATo0ofdhHWJDj-->499 元</div></div>
+      <div><div class="mp-k"><!--pnid:vyBz2Dc3IB3CgCVb8Z1bBI-->512G 基准价</div><div class="mp-v num" id="mP2"><!--pnid:v1pLZrYfwgMgMTibrp957s-->799 元</div></div>
+      <div><div class="mp-k"><!--pnid:LVkQcalhytIAvDSezW7uR6-->1TB 基准价</div><div class="mp-v num" id="mP3"><!--pnid:tYzjpPAacSCEVCdb4HKde1-->1,099 元</div></div>
+    </div>
+    <div class="m-sec"><!--pnid:fneYVB06xFzX6g7qsg0QeF-->专属权益</div>
+    <ul class="ticks" id="mRights"></ul>
+  </div>
+</div>
+
+<script>
+(function(){
+  var LEVELS = [
+    {
+      name:'L1',
+      th:'签约集采门槛 ≥ 100 台（128G 计）',
+      rate:'0%',
+      p:['499 元','799 元','1,099 元'],
+      rights:[
+        '官方代理授权',
+        '营销物料支持',
+        '基础产品培训',
+        '售后对接服务',
+        '仅赚取硬件差价（单台毛利 200 / 600 / 1,000 元），无管道收益'
+      ]
+    },
+    {
+      name:'L2',
+      th:'签约集采门槛 ≥ 1,000 台（128G 计）',
+      rate:'5%',
+      p:['499 元','799 元','1,099 元'],
+      rights:[
+        '正式代理授权书，可用于投标、客户洽谈等线下场景',
+        '全套宣传素材、专属运营对接',
+        '5% 持续 Token 管道分润',
+        '每新增累计集采满 1,000 台，赠送算力卡（额度、有效期、使用规则、不可折现等另行签署补充协议）',
+        '硬件毛利与 L1 一致：200 / 600 / 1,000 元每台'
+      ]
+    },
+    {
+      name:'L3',
+      th:'签约集采门槛 ≥ 10,000 台（128G 计）',
+      rate:'10%',
+      p:['399 元','见补充协议','见补充协议'],
+      rights:[
+        '底价采购权益（128G 基准价 399 元，单台硬件毛利 300 元）',
+        '10% 持续管道分润',
+        '新品优先测试',
+        '行业方案支持',
+        '优先招商扶持'
+      ]
+    },
+    {
+      name:'大区合伙人',
+      th:'签约集采门槛 ≥ 100,000 台（128G 计）',
+      rate:'15%',
+      p:['399 元','同步下调','同步下调'],
+      rights:[
+        '最高档位管道分润 15%',
+        '可洽谈区域保护',
+        '联合招商合作',
+        '专项项目政策支持',
+        '512G / 1TB 基准价同步下调，具体价格见补充协议'
+      ]
+    }
+  ];
+
+  /* ---------- Modal ---------- */
+  var modal = document.getElementById('modal');
+  var mRights = document.getElementById('mRights');
+
+  document.querySelectorAll('.lv').forEach(function(el){
+    el.addEventListener('click', function(){
+      var d = LEVELS[+el.dataset.lv];
+      document.getElementById('mLv').textContent = d.name;
+      document.getElementById('mTh').textContent = d.th;
+      document.getElementById('mRate').textContent = d.rate;
+      document.getElementById('mP1').textContent = d.p[0];
+      document.getElementById('mP2').textContent = d.p[1];
+      document.getElementById('mP3').textContent = d.p[2];
+      ['mP2','mP3'].forEach(function(id){
+        var n = document.getElementById(id);
+        n.className = 'mp-v num' + (n.textContent.indexOf('协议') > -1 || n.textContent.indexOf('下调') > -1 ? ' sm' : '');
+      });
+      mRights.innerHTML = d.rights.map(function(r){ return '<li>'+r+'</li>'; }).join('');
+      modal.classList.add('on');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeModal(){
+    modal.classList.remove('on');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('mClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+  /* ---------- Calculator ---------- */
+  var rD = document.getElementById('rDevices');
+  var rT = document.getElementById('rDaily');
+
+  function fmt(n, dec){
+    return n.toLocaleString('zh-CN', {minimumFractionDigits: dec||0, maximumFractionDigits: dec||0});
+  }
+  function paint(el){
+    var pct = (el.value - el.min) / (el.max - el.min) * 100;
+    el.style.setProperty('--p', pct + '%');
+  }
+  function calc(){
+    var dev = +rD.value;
+    var daily = +rT.value;
+    document.getElementById('vDevices').textContent = fmt(dev);
+    document.getElementById('vDaily').textContent = daily.toFixed(1);
+    paint(rD); paint(rT);
+
+    var rates = [0.05, 0.10, 0.15];
+    rates.forEach(function(rate, i){
+      var idx = i + 1;
+      var perMonth = daily * 30 * rate;
+      var total = Math.round(dev * perMonth);
+      document.getElementById('o'+idx).innerHTML = '¥' + fmt(total) + '<small>/ 月</small>';
+      document.getElementById('p'+idx).textContent = '¥' + fmt(perMonth, 2);
+      document.getElementById('y'+idx).textContent = '¥' + fmt(total * 12);
+    });
+  }
+  rD.addEventListener('input', calc);
+  rT.addEventListener('input', calc);
+  calc();
+
+  /* ---------- Reveal ---------- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:0.08, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
