@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AI 从「用」到「会用」· 荣盈互动内部培训</title>
+<style>
+:root{
+  --ink:#0f1b2d; --sub:#5b6b80; --blue:#0b6bff; --blue-s:#ebf3ff;
+  --red:#d62828; --red-s:#fdf0ef; --green:#0e9f6e; --green-s:#edfbf5;
+  --line:#e6edf7; --bg:#f5f8fc; --card:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.7;
+  font-size:16px; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 0 80px}
+
+/* 封面 */
+.hero{background:#0b0d12;color:#fff;padding:48px 24px 40px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(11,107,255,.14),transparent 60%);pointer-events:none}
+.hero h1{font-size:32px;font-weight:800;letter-spacing:-.5px;line-height:1.3;position:relative}
+.hero h1 em{font-style:normal;color:#4d9bff}
+.hero p{margin-top:12px;font-size:15px;color:#aab2c2;position:relative}
+.hero .meta{margin-top:22px;font-size:13px;color:#6f7787;position:relative;
+  border-top:1px solid rgba(255,255,255,.08);padding-top:16px}
+
+/* 章节 */
+section{padding:30px 22px 8px}
+.eyebrow{font-size:12.5px;font-weight:700;color:var(--blue);letter-spacing:.4px}
+h2{font-size:22px;font-weight:800;margin:6px 0 4px;line-height:1.35;letter-spacing:-.3px}
+h2.hl{color:var(--blue)}
+.rule{height:1px;background:var(--line);margin:14px 0 20px}
+
+/* 卡 */
+.cards{display:grid;gap:12px}
+.cards.c2{grid-template-columns:1fr 1fr}
+.cards.c3{grid-template-columns:1fr 1fr 1fr}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 15px 16px}
+.card .t{font-size:15px;font-weight:700;color:var(--blue);margin-bottom:6px}
+.card .b{font-size:13.5px;color:var(--sub);line-height:1.65}
+.card .tag{display:inline-block;margin-top:9px;font-size:12.5px;font-weight:700;color:var(--green);
+  background:var(--green-s);padding:2px 9px;border-radius:20px}
+.card .tag.b{color:var(--blue);background:var(--blue-s)}
+.card .tag.r{color:var(--red);background:var(--red-s)}
+
+/* 强调块 */
+.band{background:var(--blue-s);border-left:4px solid var(--blue);border-radius:10px;
+  padding:14px 16px;margin:16px 0;font-size:15px;font-weight:700;color:var(--blue);line-height:1.6}
+.band.red{background:var(--red-s);border-color:var(--red);color:var(--red)}
+.band.green{background:var(--green-s);border-color:var(--green);color:var(--green)}
+
+/* 大判据 */
+.bigq{background:var(--blue-s);border-radius:14px;padding:20px 18px;margin:16px 0}
+.bigq .q{font-size:17px;font-weight:800;color:var(--blue);line-height:1.5;margin-bottom:10px}
+.bigq .a{font-size:17px;font-weight:800;color:var(--ink)}
+.bigq .a span{color:var(--blue)}
+
+/* 表 */
+.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card);
+  border-radius:12px;overflow:hidden;min-width:320px}
+th{background:var(--blue);color:#fff;font-weight:700;text-align:left;padding:11px 12px;font-size:13px}
+td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink)}
+tr:nth-child(even) td{background:#fafcff}
+tr:last-child td{border-bottom:none}
+td.no{color:var(--red)}
+td.yes{color:var(--green);font-weight:600}
+
+/* 列表 */
+.steps{margin:14px 0}
+.step{display:flex;gap:11px;margin-bottom:11px;font-size:14.5px;line-height:1.65}
+.step .n{flex:0 0 24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;
+  font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.step .x{flex:1;color:var(--ink)}
+.step .x b{color:var(--blue)}
+
+.tip{font-size:13px;color:var(--sub);margin-top:10px;padding-left:2px}
+.tip b{color:var(--ink)}
+
+/* 底部 */
+.foot{background:#0b0d12;color:#aab2c2;padding:34px 22px;text-align:center;margin-top:36px}
+.foot .k{font-size:19px;font-weight:800;color:#fff;line-height:1.6;margin-bottom:12px}
+.foot .k em{font-style:normal;color:#4d9bff}
+.foot .s{font-size:12.5px;color:#6f7787}
+
+/* 锚点导航 */
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+  display:flex;gap:6px;padding:9px 14px;overflow-x:auto;font-size:13px}
+.nav a{flex:0 0 auto;color:var(--sub);text-decoration:none;padding:5px 11px;border-radius:20px;
+  background:var(--bg);font-weight:600;white-space:nowrap}
+.nav a.on{background:var(--blue);color:#fff}
+
+@media (max-width:420px){
+  .hero h1{font-size:26px} h2{font-size:19px}
+  .cards.c3{grid-template-columns:1fr}
+  .cards.c2{grid-template-columns:1fr}
+  body{font-size:15px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <h1>AI 从「用」到<em>「会用」</em><br>再到「用成系统」</h1>
+  <p>我自己的用法，拆成你能抄的步骤</p>
+  <div class="meta">荣盈互动 · 内部培训 ｜ 讲师：刘惊涛 ｜ 2026-11-19</div>
+</div>
+
+<nav class="nav">
+  <a href="#c1" class="on">① 怎么开始用</a>
+  <a href="#c2">② 怎么用对</a>
+  <a href="#c3">③ 怎么用成系统</a>
+</nav>
+
+<!-- ══ 开场 ══ -->
+<section id="s0">
+  <h2 class="hl">一句话说完今天要讲什么</h2>
+  <div class="rule"></div>
+  <div class="bigq">
+    <div class="q">凡是你自己能验证结果的，交给 AI；<br>凡是你得拍板担责的，自己留着。</div>
+    <div class="a">你的时间，只该花在<span>不能交给 AI 的那部分</span>。</div>
+  </div>
+  <div class="cards c3" style="margin-top:16px">
+    <div class="card"><div class="t">我以前怎么干</div><div class="b">一件事从头做到尾，时间全耗在搬运和整理上</div></div>
+    <div class="card"><div class="t">现在怎么干</div><div class="b">把可验证的部分交出去，只留判断和拍板</div></div>
+    <div class="card"><div class="t">差在哪</div><div class="b">不是 AI 变强了，是我把「哪步给它」想清楚了</div></div>
+  </div>
+</section>
+
+<!-- ══ 第一章 ══ -->
+<section id="c1">
+  <div class="eyebrow">第一章</div>
+  <h2>我的入口只有一个：录音 → 存起来 → 发链接</h2>
+  <div class="rule"></div>
+  <div class="band green">不要直接粘贴长文本。发链接，让它自己去取。</div>
+  <div class="cards c3">
+    <div class="card"><div class="t">① 录</div><div class="b">开会 / 路上 / 想到事<br>直接用语音记</div><div class="tag b">元宝录音</div></div>
+    <div class="card"><div class="t">② 存</div><div class="b">录音转成文字<br>存进 ima</div><div class="tag b">自动出链接</div></div>
+    <div class="card"><div class="t">③ 发</div><div class="b">把链接发给我<br>一句话说清要什么</div><div class="tag b">不用贴全文</div></div>
+  </div>
+
+  <h2 style="margin-top:26px;font-size:18px">为什么发链接，不贴文本</h2>
+  <div class="steps">
+    <div class="step"><div class="n">✕</div><div class="x"><b>贴文本</b>：你自己要复制、要分段，漏一段就丢内容</div></div>
+    <div class="step"><div class="n">✓</div><div class="x"><b>发链接</b>：我一次取全，还能去重、比对、归档</div></div>
+    <div class="step"><div class="n">✓</div><div class="x"><b>你说的话越少越好</b>：「分析」「存一下」「出稿」—— 说清目的就够</div></div>
+  </div>
+
+  <h2 style="margin-top:26px;font-size:18px">每一步我做什么（你不用管，知道就行）</h2>
+  <div class="tblwrap"><table>
+    <tr><th>你的动作</th><th>我自动做的</th><th>你得到什么</th></tr>
+    <tr><td>录音（语音记）</td><td>转写 → 清洗口语词 → 拼接分段</td><td>一份完整逐字稿</td></tr>
+    <tr><td>存进 ima</td><td>我要的时候直接取，不用你复制</td><td>不会漏段、不会串场</td></tr>
+    <tr><td>发链接给我</td><td>抓全文 → 判重 → 双存知识库 → 出分析</td><td>分析版 + 索引条目</td></tr>
+    <tr><td>说一句要什么</td><td>按你说的结构产出</td><td>能直接用的成品</td></tr>
+  </table></div>
+
+  <h2 style="margin-top:26px;font-size:18px">我一天里，跟 AI 打交道的真实样子</h2>
+  <div class="tblwrap"><table>
+    <tr><th>时间</th><th>我做什么</th><th>花多久</th></tr>
+    <tr><td>早上（路上）</td><td>语音记下今天要办的事</td><td>口述 2 分钟</td></tr>
+    <tr><td>到公司</td><td>把昨天的会议链接发出去「分析+存档」</td><td>发 1 条链接</td></tr>
+    <tr><td>中午</td><td>看一眼汇总，回一句「继续」</td><td class="yes">回 2 个字</td></tr>
+    <tr><td>下午</td><td>把要出的东西说清楚（要结构）</td><td>说 1 段话</td></tr>
+    <tr><td>收工</td><td>看一眼归档，缺什么补一句</td><td>回 1 句话</td></tr>
+  </table></div>
+  <div class="band green">★ 重点：我从来没有「整理好再给」。我给的都是原始的，整理是 AI 的活。</div>
+  <div class="tip"><b>这条最反直觉</b> —— 很多人卡在「我先弄整齐」，结果永远没发出去。</div>
+</section>
+
+<!-- ══ 第二章 ══ -->
+<section id="c2">
+  <div class="eyebrow">第二章</div>
+  <h2 class="hl">核心判据：能不能验证，决定谁来做</h2>
+  <div class="rule"></div>
+  <div class="bigq">
+    <div class="q">这一步「做对了没」，能不能不靠我拍板就验证？</div>
+    <div class="a">能 → 交给 AI　　不能 → <span>自己留着</span></div>
+  </div>
+  <div class="cards c3">
+    <div class="card"><div class="t">可验证的搬运</div><div class="b">抓取 / 转换 / 汇总<br>格式化 / 找资料 / 改格式</div><div class="tag b">AI 全做</div></div>
+    <div class="card"><div class="t">可验证的判断</div><div class="b">分类 / 初筛 / 打分<br>找矛盾 / 列选项</div><div class="tag">AI 先做，你抽检</div></div>
+    <div class="card"><div class="t">不可验证的</div><div class="b">拍板 / 对外承诺<br>担责 / 涉及人的决定</div><div class="tag r">你 100%</div></div>
+  </div>
+  <div class="band">AI 做前两档，你守第三档 —— 前两档做得越多，留给第三档的时间越多。</div>
+
+  <h2 style="margin-top:24px;font-size:18px">★ 当场拆一遍（拿这件事练）</h2>
+  <div class="tip" style="margin-bottom:12px"><b>把 30 个客户的微信记录整理成一张跟进表</b></div>
+  <div class="steps">
+    <div class="step"><div class="n">①</div><div class="x">把记录抓下来、去重、排成表 → <b>可验证的搬运</b> → 交给 AI</div></div>
+    <div class="step"><div class="n">②</div><div class="x">判断谁是重点客户、谁该先跟 → <b>可验证的判断</b>（标准我定）→ AI 先做，我抽检</div></div>
+    <div class="step"><div class="n">③</div><div class="x" style="color:var(--red)">决定这个客户要不要降价 → <b style="color:var(--red)">不可验证</b>（要担责）→ 我自己来</div></div>
+  </div>
+
+  <h2 style="margin-top:26px;font-size:18px">问法决定产出：要结构，不要「总结」</h2>
+  <div class="tblwrap"><table>
+    <tr><th>✕ 这样问</th><th>✓ 换成这样问</th></tr>
+    <tr><td class="no">「帮我总结一下」</td><td class="yes">「按这个结构出：结论 / 决策点 / 待办 / 红线」</td></tr>
+    <tr><td class="no">「看看这个怎么样」</td><td class="yes">「找出和上次不一致的地方，列成表」</td></tr>
+    <tr><td class="no">「写得好看点」</td><td class="yes">「标题写判断句，每条不超过 20 字」</td></tr>
+    <tr><td class="no">「有没有问题」</td><td class="yes">「列出风险点，每条标出依据在哪」</td></tr>
+  </table></div>
+  <div class="band">结构是你定的，内容是它填的 —— 这就是它出的东西能直接用的原因。</div>
+  <div class="tip"><b>★ 一句话模板（背下来）</b>：「我要的是 ___，按 ___ 的结构出，做完了我自己会验。」</div>
+
+  <h2 style="margin-top:26px;font-size:18px">它做完，我一定过三关</h2>
+  <div class="cards c3">
+    <div class="card"><div class="t">第一关<br>数字对不对</div><div class="b">有没有编出来的数，和源材料对一遍</div></div>
+    <div class="card"><div class="t">第二关<br>能不能落地</div><div class="b">它说的动作我能做吗，做不到就是空话</div></div>
+    <div class="card"><div class="t">第三关<br>谁拍板</div><div class="b">最后的「怎么办」是我拍的，不是它</div></div>
+  </div>
+  <div class="band red">★ 三关里最容易被跳过的是第一关 —— 而它恰恰决定你会不会把错的东西用出去。</div>
+  <div class="tblwrap"><table>
+    <tr><th>现象</th><th>说明什么</th><th>怎么办</th></tr>
+    <tr><td>数字对不上</td><td>它把口径混了</td><td>把口径写清楚再让它重做</td></tr>
+    <tr><td>说得漂亮但没动作</td><td>你给的结构太松</td><td>把结构写具体</td></tr>
+    <tr><td>它卡住 / 报错</td><td>★ 这件事本来就不该它做</td><td>你在让它做第三档的活</td></tr>
+  </table></div>
+
+  <h2 style="margin-top:26px;font-size:18px">为什么大多数人用 AI 用不出效果</h2>
+  <div class="tblwrap"><table>
+    <tr><th>他们的做法</th><th>结果</th></tr>
+    <tr><td>把 AI 当搜索引擎，问「怎么做」</td><td>得到一篇正确但没用的文章</td></tr>
+    <tr><td>让它做第三档的活（拍板 / 对外）</td><td>出错就得自己兜，还失去了信任</td></tr>
+    <tr><td>只说「帮我弄一下」，不说要什么</td><td>每次都返工，越用越烦</td></tr>
+    <tr><td>不验就用</td><td>一次出错就不敢再用</td></tr>
+  </table></div>
+  <div class="band">★ 用不出效果的真正原因：不是 AI 不行，是你没告诉它「哪一步该它做」。</div>
+</section>
+
+<!-- ══ 第三章 ══ -->
+<section id="c3">
+  <div class="eyebrow">第三章</div>
+  <h2>SKILL 是什么（人话版）</h2>
+  <div class="rule"></div>
+  <div class="band">SKILL = 把一个「你反复要做的事」写下来，让 AI 每次都照这个标准做。</div>
+  <div class="cards c2">
+    <div class="card"><div class="t">没有 SKILL</div><div class="b">每次都要重新交代<br>今天这样做、明天那样做<br>产出参差不齐</div><div class="tag r">不稳定</div></div>
+    <div class="card"><div class="t">有 SKILL</div><div class="b">标准写死了<br>每次都是同一套结构<br>产出稳定，能交给别人</div><div class="tag">可复用</div></div>
+  </div>
+  <div class="tip" style="margin-top:14px"><b>举个我自己的例子：</b></div>
+  <div class="steps">
+    <div class="step"><div class="n">·</div><div class="x">「会议录音怎么分析」→ 写成一份标准（板块怎么排、什么算红线、待办怎么分级）</div></div>
+    <div class="step"><div class="n">·</div><div class="x">「培训怎么准备」→ 写成七步流程（接需求 → 判余量 → 选案例 → 出讲稿 → 备演示）</div></div>
+    <div class="step"><div class="n">·</div><div class="x">写完之后，下一次做同类事，AI 直接按标准来，<b>我不用再讲一遍</b></div></div>
+  </div>
+
+  <h2 style="margin-top:26px;font-size:18px" class="hl">★ 装了不等于能用：验证三步</h2>
+  <div class="cards c3">
+    <div class="card"><div class="t">第一步</div><div class="b">拿真实素材跑一遍<br>不用准备的例子</div></div>
+    <div class="card"><div class="t">第二步</div><div class="b">看它出的东西<br>和你的标准差在哪</div></div>
+    <div class="card"><div class="t">第三步</div><div class="b">按真实场景再跑一次<br>（换个素材）</div></div>
+  </div>
+  <div class="band green">★ 判据：同一个 SKILL，换一份素材还能出对的东西 —— 才算真能用。</div>
+  <div class="tblwrap"><table>
+    <tr><th>验证中发现</th><th>说明</th><th>动作</th></tr>
+    <tr><td>它自己说「已完成」，但没产出</td><td>★ 自述不算证据</td><td>一定要看文件在不在、对不对</td></tr>
+    <tr><td>第一次对、第二次不对</td><td>标准写得太松</td><td>把最关键的判据写死</td></tr>
+    <tr><td>换个场景就崩</td><td>适用范围没写清</td><td>补上「什么时候不适用」</td></tr>
+  </table></div>
+
+  <h2 style="margin-top:26px;font-size:18px">合理使用：什么时候该用，什么时候不该</h2>
+  <div class="cards c2">
+    <div class="card"><div class="t" style="color:var(--green)">✓ 该用</div><div class="b">· 重复做的同一类事<br>· 有固定标准的产出<br>· 你自己能验结果的</div></div>
+    <div class="card"><div class="t" style="color:var(--red)">✕ 不该用</div><div class="b">· 第一次做的事<br>· 要拍板担责的事<br>· 涉及具体人情绪的事</div></div>
+  </div>
+  <div class="band red">★ 一条硬底线：对外的承诺、涉及人的决定 —— SKILL 只能帮你准备，不能替你说出口。</div>
+  <div class="tip"><b>三个常见误用：</b></div>
+  <div class="steps">
+    <div class="step"><div class="n">①</div><div class="x">把 SKILL 当万能 —— 它只在写好的场景里管用，出了边界就不可靠</div></div>
+    <div class="step"><div class="n">②</div><div class="x">SKILL 写完就不改 —— 标准要跟着实际经验更新，不然会过期</div></div>
+    <div class="step"><div class="n">③</div><div class="x">用了不记 —— 每次用完记一句「哪段有效」，下次才知道该改哪</div></div>
+  </div>
+
+  <h2 style="margin-top:26px;font-size:18px">从「做一次」到「每次都这样」</h2>
+  <div class="tblwrap"><table>
+    <tr><th>步</th><th>做什么</th><th>产出</th></tr>
+    <tr><td>① 做一次</td><td>先手动做完一遍</td><td>这次的结果</td></tr>
+    <tr><td>② 记录</td><td>把「怎么做的」写下来</td><td>一份步骤清单</td></tr>
+    <tr><td>③ 固定</td><td>把有效的那几步变成固定模块</td><td class="yes">一份 SOP</td></tr>
+    <tr><td>④ 复用</td><td>下次同类事直接套，只改内容</td><td>省下来的时间</td></tr>
+  </table></div>
+  <div class="band">★ 判据：如果第二次做同一件事你还在从头想 —— 说明第一次白做了。</div>
+</section>
+
+<!-- ══ 收尾 ══ -->
+<section id="end">
+  <div class="eyebrow">收尾</div>
+  <h2>今天就做三件（不用等准备好）</h2>
+  <div class="rule"></div>
+  <div class="cards c3">
+    <div class="card"><div class="t">今天就做</div><div class="b">把手上的一件事，按「结构」说一次<br>（不是「帮我弄一下」）</div></div>
+    <div class="card"><div class="t">这周做</div><div class="b">找一件你反复做的事，写下来 → 变成标准<br>（这就是你自己的 SKILL）</div></div>
+    <div class="card"><div class="t">一直做</div><div class="b">每次做完记一句「哪段有效」<br>三个月后你会有一整套</div></div>
+  </div>
+</section>
+
+<div class="foot">
+  <div class="k">凡你能验证的，交给 AI。<br><em>凡你不能验证的，你留着。</em></div>
+  <div class="s">我的经验就这一条 —— 剩下的都是它衍生出来的<br>荣盈互动 · 内部培训 · 2026-11-19</div>
+</div>
+
+</div>
+<script>
+// 滚动时高亮导航
+const links = [...document.querySelectorAll('.nav a')];
+const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+function up(){
+  const y = window.scrollY + 120;
+  let idx = 0;
+  secs.forEach((s,i)=>{ if(s && s.offsetTop <= y) idx = i; });
+  links.forEach((a,i)=>a.classList.toggle('on', i===idx));
+}
+window.addEventListener('scroll', up, {passive:true});
+up();
+</script>
+</body>
+</html>
